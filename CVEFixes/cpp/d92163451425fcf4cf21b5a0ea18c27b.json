@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:x2engine:x2crm:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/X2Engine/X2CRM/commit/10b72bfe7a1b9694f19a0adef72d85a754d4d3f8",
+        "version_end_excluding": {
+            "x2engine:x2crm": "unknown"
+        },
+        "path": {
+            "file_path": "x2engine/themes/x2engine/css/recordEdit.css"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5074"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

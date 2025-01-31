@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal:reactor_netty:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/reactor/reactor-netty/commit/656f9323bbc2a72a74b14d13fe767a7502bfd28f",
+        "version_end_excluding": {
+            "pivotal:reactor_netty": "0.8.11"
+        },
+        "path": {
+            "file_path": "src/main/java/reactor/netty/http/client/HttpClientConnect.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-11284"
+        ],
+        "CWE": [
+            "CWE-522"
+        ]
+    }
+}

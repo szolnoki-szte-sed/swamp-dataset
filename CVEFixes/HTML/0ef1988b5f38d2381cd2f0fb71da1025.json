@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mayan-edms:mayan_edms:0.13:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mayan-edms/mayan-edms/commit/398c480c10416d76e7c1dcb607e726e8fc988e72",
+        "version_end_excluding": {
+            "mayan-edms:mayan_edms": "unknown"
+        },
+        "path": {
+            "file_path": "apps/common/templates/generic_list.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-3840"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:semver-regex_project:semver-regex:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:semver-regex_project:semver-regex:4.0.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/sindresorhus/semver-regex/commit/11c66245f4e1976dccc52977ed183696a21a3fd7",
+        "version_end_excluding": {
+            "semver-regex_project:semver-regex": "unknown"
+        },
+        "path": {
+            "file_path": "index.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3795"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

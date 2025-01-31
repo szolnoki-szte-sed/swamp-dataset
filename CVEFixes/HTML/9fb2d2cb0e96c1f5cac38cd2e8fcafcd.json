@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:oracle:enterprise_communications_broker:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:embedthis:appweb:5.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:embedthis:appweb:5.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:embedthis:appweb:5.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:embedthis:appweb:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/embedthis/appweb/commit/7e6a925f5e86a19a7934a94bbd6959101d0b84eb",
+        "version_end_excluding": {
+            "oracle:enterprise_communications_broker": "unknown",
+            "embedthis:appweb": "unknown"
+        },
+        "path": {
+            "file_path": "doc/api/appweb.tags"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-9708"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

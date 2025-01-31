@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:nodemailer:nodemailer:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/nodemailer/nodemailer/commit/ba31c64c910d884579875c52d57ac45acc47aa54",
+        "version_end_excluding": {
+            "nodemailer:nodemailer": "6.4.16"
+        },
+        "path": {
+            "file_path": "lib/well-known/index.js"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-7769"
+        ],
+        "CWE": [
+            "CWE-88"
+        ]
+    }
+}

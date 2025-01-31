@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:dracut_project:dracut:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/dracutdevs/dracut/commit/0db98910a11c12a454eac4c8e86dc7a7bbc764a4",
+        "version_end_excluding": {
+            "dracut_project:dracut": "045"
+        },
+        "path": {
+            "file_path": "dracut.sh"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-8637"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

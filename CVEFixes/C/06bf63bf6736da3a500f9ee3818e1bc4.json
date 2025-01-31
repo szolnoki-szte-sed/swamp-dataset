@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sam2p_project:sam2p:0.49.4:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pts/sam2p/commit/b953f63307c4a83fa4615a4863e3fb250205cd98",
+        "version_end_excluding": {
+            "sam2p_project:sam2p": "unknown"
+        },
+        "path": {
+            "file_path": "input-tga.ci"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-19492"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

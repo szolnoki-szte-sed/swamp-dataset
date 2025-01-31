@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal_software:spring_data_jpa:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:spring_data_jpa:1.10.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-data-jpa/commit/b8e7fecccc7dc8edcabb4704656a7abe6352c08f",
+        "version_end_excluding": {
+            "pivotal_software:spring_data_jpa": "unknown"
+        },
+        "path": {
+            "file_path": "src/main/java/org/springframework/data/jpa/repository/query/QueryUtils.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-6652"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

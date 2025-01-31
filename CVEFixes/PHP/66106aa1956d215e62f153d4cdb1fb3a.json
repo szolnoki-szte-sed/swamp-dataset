@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:tdm_project:tdm:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/trollepierre/tdm/commit/2e89019d6a491f0a5ac3db8732181f6eb1d219aa",
+        "version_end_excluding": {
+            "tdm_project:tdm": "unknown"
+        },
+        "path": {
+            "file_path": "webhook.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-7871"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

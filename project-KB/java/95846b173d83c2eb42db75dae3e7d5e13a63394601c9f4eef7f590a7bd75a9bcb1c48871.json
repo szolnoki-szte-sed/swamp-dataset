@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:tapestry:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/tapestry-5/commit/95846b173d83c2eb42db75dae3e7d5e13a633946",
+        "version_end_excluding": {
+            "apache:tapestry": "unknown"
+        },
+        "path": {
+            "file_path": "tapestry-core/src/main/java/org/apache/tapestry5/services/ClientDataEncoder.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-1972"
+        ],
+        "CWE": [
+            "CWE-399"
+        ]
+    }
+}

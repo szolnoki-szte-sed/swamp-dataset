@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/193e87143c290ec16838f5368adc0e0bc94eb931",
+        "version_end_excluding": {
+            "linux:linux_kernel": "4.9.6"
+        },
+        "path": {
+            "file_path": "drivers/mtd/spi-nor/cadence-quadspi.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-10764"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

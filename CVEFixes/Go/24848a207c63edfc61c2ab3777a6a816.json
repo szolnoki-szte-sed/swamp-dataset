@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:kongchuanhujiao_project:kongchuanhujiao:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/kongchuanhujiao/server/commit/9a125624f219e496bdf4b07b404816d5a309bdc1",
+        "version_end_excluding": {
+            "kongchuanhujiao_project:kongchuanhujiao": "1.3.21"
+        },
+        "path": {
+            "file_path": "internal/app/kongchuanhujiao/account/apis.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21403"
+        ],
+        "CWE": [
+            "CWE-305"
+        ]
+    }
+}

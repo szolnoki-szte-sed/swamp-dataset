@@ -1,0 +1,47 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sqlite:sqlite:3.30.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:cloud_backup:-:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_desktop:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_workstation:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:opensuse:backports_sle:15.0:sp1:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:mysql_workbench:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:siemens:sinec_infrastructure_network_services:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/sqlite/sqlite/commit/75e95e1fcd52d3ec8282edb75ac8cd0814095d54",
+        "version_end_excluding": {
+            "sqlite:sqlite": "unknown",
+            "netapp:cloud_backup": "unknown",
+            "debian:debian_linux": "unknown",
+            "redhat:enterprise_linux_desktop": "unknown",
+            "redhat:enterprise_linux_server": "unknown",
+            "redhat:enterprise_linux_workstation": "unknown",
+            "opensuse:leap": "unknown",
+            "opensuse:backports_sle": "unknown",
+            "oracle:mysql_workbench": "unknown",
+            "siemens:sinec_infrastructure_network_services": "1.0.1.1"
+        },
+        "path": {
+            "file_path": "manifest.uuid"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-19880"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

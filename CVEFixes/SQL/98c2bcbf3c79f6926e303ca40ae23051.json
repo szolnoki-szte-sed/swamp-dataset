@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/sqlite/sqlite/commit/d1d43efa4fb0f2098c0e2c5bf2e807c58d5ec05b",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "manifest.uuid"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-20223"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

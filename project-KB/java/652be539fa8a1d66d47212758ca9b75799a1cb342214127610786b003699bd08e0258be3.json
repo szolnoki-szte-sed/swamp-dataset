@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:kie-server:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/kiegroup/droolsjbpm-integration/commit/652be539fa8a1d66d47212758ca9b75799a1cb34",
+        "version_end_excluding": {
+            "redhat:kie-server": "7.21.0"
+        },
+        "path": {
+            "file_path": "kie-server-parent/kie-server-controller/kie-server-controller-rest/src/main/java/org/kie/server/controller/rest/ControllerUtils.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-7043"
+        ],
+        "CWE": [
+            "CWE-260",
+            "CWE-255"
+        ]
+    }
+}

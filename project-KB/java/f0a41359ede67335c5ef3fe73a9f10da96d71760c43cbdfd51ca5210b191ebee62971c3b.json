@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pl\\/java_project:pl\\/java:*:*:*:*:*:postgresql:*:*"
+        ],
+        "fix_commit": "https://github.com/tada/pljava/commit/f0a41359ede67335c5ef3fe73a9f10da96d71760",
+        "version_end_excluding": {
+            "pl\\/java_project:pl\\/java": "unknown"
+        },
+        "path": {
+            "file_path": "pljava/src/main/java/org/postgresql/pljava/management/Commands.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-2192"
+        ],
+        "CWE": [
+            "CWE-269"
+        ]
+    }
+}

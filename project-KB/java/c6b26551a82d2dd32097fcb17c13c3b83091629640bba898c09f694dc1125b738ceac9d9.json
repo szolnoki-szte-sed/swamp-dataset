@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pippo:pippo:1.11.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pippo-java/pippo/commit/c6b26551a82d2dd32097fcb17c13c3b830916296",
+        "version_end_excluding": {
+            "pippo:pippo": "unknown"
+        },
+        "path": {
+            "file_path": "pippo-core/src/main/java/ro/pippo/core/util/WhitelistObjectInputStream.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-18628"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/b6878d9e03043695dbf3fa1caa6dfc09db225b16",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "drivers/md/md.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5697"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

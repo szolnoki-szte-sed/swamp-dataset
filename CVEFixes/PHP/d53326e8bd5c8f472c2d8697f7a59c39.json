@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:naviwebs:navigate_cms:2.8:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/NavigateCMS/Navigate-CMS/commit/6df73ccca64253a5e81c23356943fae50ffc836f",
+        "version_end_excluding": {
+            "naviwebs:navigate_cms": "unknown"
+        },
+        "path": {
+            "file_path": "lib/layout/navibars.class.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-17552"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

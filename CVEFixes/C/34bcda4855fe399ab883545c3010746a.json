@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:radare:radare2:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:31:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:32:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/radareorg/radare2/commit/04edfa82c1f3fa2bc3621ccdad2f93bdbf00e4f9",
+        "version_end_excluding": {
+            "radare:radare2": "4.5.0",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "shlr/sdb/src/disk.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15121"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

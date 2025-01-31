@@ -1,0 +1,38 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:discourse:discourse:2.8.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:2.8.0:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:2.8.0:beta3:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:2.8.0:beta4:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:2.8.0:beta5:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:2.8.0:beta6:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:2.8.0:beta7:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:2.8.0:beta9:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:2.8.0:beta10:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:2.8.0:beta8:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/discourse/discourse/commit/5e2e178fcfb490c37b9f8bb9f737185441b1d6de",
+        "version_end_excluding": {
+            "discourse:discourse": "unknown"
+        },
+        "path": {
+            "file_path": "lib/guardian/user_guardian.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-21678"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

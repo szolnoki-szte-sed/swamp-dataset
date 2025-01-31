@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:autolinks:autolinks:2.1:*:pro:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:19:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "autolinks:autolinks": "unknown",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2005-2782",
+            "CVE-2014-6394"
+        ],
+        "CWE": [
+            "CWE-1023"
+        ]
+    }
+}

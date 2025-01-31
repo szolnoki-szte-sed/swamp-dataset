@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:imagemagick:imagemagick:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:imagemagick:imagemagick:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fedoraproject:extra_packages_for_enterprise_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:36:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ImageMagick/ImageMagick/commit/9c9a84cec4ab28ee0b57c2b9266d6fbe68183512",
+        "version_end_excluding": {
+            "imagemagick:imagemagick": "7.1.0-28",
+            "redhat:enterprise_linux": "unknown",
+            "fedoraproject:extra_packages_for_enterprise_linux": "unknown",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "coders/psd.c"
+        }
+    },
+    "programming_language": "objective_c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-32545"
+        ],
+        "CWE": [
+            "CWE-190"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jpeg:libjpeg:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/thorfdbg/libjpeg/commit/4746b577931e926a49e50de9720a4946de3069a7",
+        "version_end_excluding": {
+            "jpeg:libjpeg": "1.64"
+        },
+        "path": {
+            "file_path": "README"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-32978"
+        ],
+        "CWE": [
+            "CWE-617"
+        ]
+    }
+}

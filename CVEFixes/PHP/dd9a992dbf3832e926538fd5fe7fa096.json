@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:misp:misp:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/MISP/MISP/commit/2989aa05225aa9b3a592ca50cbf8350ef256909c",
+        "version_end_excluding": {
+            "misp:misp": "2.4.126"
+        },
+        "path": {
+            "file_path": "app/View/Events/resolved_attributes.ctp"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-13153"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

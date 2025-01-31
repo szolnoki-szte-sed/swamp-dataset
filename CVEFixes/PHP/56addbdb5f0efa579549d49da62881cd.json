@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:limesurvey:limesurvey:3.21.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/LimeSurvey/LimeSurvey/commit/a5f317817da4577d9ff457fea9c96482b3d1df23",
+        "version_end_excluding": {
+            "limesurvey:limesurvey": "unknown"
+        },
+        "path": {
+            "file_path": "application/views/admin/quotas/_newanswer_equation.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-25799"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gonicus:gosa:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/gosa-project/gosa-core/commit/56070d6289d47ba3f5918885954dcceb75606001",
+        "version_end_excluding": {
+            "debian:debian_linux": "unknown",
+            "gonicus:gosa": "unknown"
+        },
+        "path": {
+            "file_path": "html/password.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-1000528"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

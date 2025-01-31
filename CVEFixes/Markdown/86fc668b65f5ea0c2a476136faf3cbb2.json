@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:7.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/9de4ee40547fd315d4a0ed1dd15a2fa3559ad707",
+        "version_end_excluding": {
+            "linux:linux_kernel": "4.16.6",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "drivers/cdrom/cdrom.c"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-10940"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

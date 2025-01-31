@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sensiolabs:symfony:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:sensiolabs:symfony:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:sensiolabs:symfony:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:sensiolabs:symfony:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:sensiolabs:symfony:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:drupal:drupal:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:drupal:drupal:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/symfony/symfony/commit/d2fb5893923292a1da7985f0b56960b5bb10737b",
+        "version_end_excluding": {
+            "sensiolabs:symfony": "2.7.51",
+            "drupal:drupal": "8.6.15"
+        },
+        "path": {
+            "file_path": "src/Symfony/Bridge/ProxyManager/LazyProxy/PhpDumper/ProxyDumper.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10910"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

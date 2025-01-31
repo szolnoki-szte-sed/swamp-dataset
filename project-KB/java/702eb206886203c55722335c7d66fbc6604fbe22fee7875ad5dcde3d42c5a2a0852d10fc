@@ -1,0 +1,588 @@
+diff --git a/geode-core/src/main/java/org/apache/geode/cache/DynamicRegionFactory.java b/geode-core/src/main/java/org/apache/geode/cache/DynamicRegionFactory.java
+index cd0750efe10f..bb401ff1bb31 100644
+--- a/geode-core/src/main/java/org/apache/geode/cache/DynamicRegionFactory.java
++++ b/geode-core/src/main/java/org/apache/geode/cache/DynamicRegionFactory.java
+@@ -138,7 +138,7 @@
+ @Deprecated
+ public abstract class DynamicRegionFactory {
+ 
+-  public static final String dynamicRegionListName = "__DynamicRegions";
++  public static final String DYNAMIC_REGION_LIST_NAME = "__DynamicRegions";
+ 
+   private Region dynamicRegionList = null;
+ 
+@@ -220,7 +220,7 @@ public Config getConfig() {
+   }
+ 
+   public static boolean regionIsDynamicRegionList(String regionPath) {
+-    return regionPath != null && regionPath.equals('/' + dynamicRegionListName);
++    return regionPath != null && regionPath.equals('/' + DYNAMIC_REGION_LIST_NAME);
+   }
+ 
+   /**
+@@ -240,7 +240,7 @@ protected void doInternalInit(InternalCache theCache) throws CacheException {
+ 
+     try {
+       this.cache = theCache;
+-      this.dynamicRegionList = theCache.getRegion(dynamicRegionListName);
++      this.dynamicRegionList = theCache.getRegion(DYNAMIC_REGION_LIST_NAME);
+       final boolean isClient = this.config.getPoolName() != null;
+       if (this.dynamicRegionList == null) {
+         InternalRegionArguments ira = new InternalRegionArguments().setDestroyLockFlag(true)
+@@ -276,6 +276,8 @@ protected void doInternalInit(InternalCache theCache) throws CacheException {
+           ira.setInternalMetaRegion(new LocalMetaRegion(af.create(), ira));
+         } else {
+           af.setScope(Scope.DISTRIBUTED_ACK);
++          af.setValueConstraint(DynamicRegionAttributes.class);
++
+           if (!this.config.getPersistBackup()) { // if persistBackup, the data policy has already
+                                                  // been set
+             af.setDataPolicy(DataPolicy.REPLICATE);
+@@ -289,7 +291,8 @@ protected void doInternalInit(InternalCache theCache) throws CacheException {
+         }
+ 
+         try {
+-          this.dynamicRegionList = theCache.createVMRegion(dynamicRegionListName, af.create(), ira);
++          this.dynamicRegionList =
++              theCache.createVMRegion(DYNAMIC_REGION_LIST_NAME, af.create(), ira);
+         } catch (IOException e) {
+           // only if loading snapshot, not here
+           throw new InternalGemFireError(
+@@ -873,7 +876,7 @@ protected void razeDynamicRegion(EntryEvent event) {
+   // the meta data
+   private class LocalMetaRegion extends LocalRegion {
+     protected LocalMetaRegion(RegionAttributes attrs, InternalRegionArguments ira) {
+-      super(dynamicRegionListName, attrs, null, DynamicRegionFactory.this.cache, ira);
++      super(DYNAMIC_REGION_LIST_NAME, attrs, null, DynamicRegionFactory.this.cache, ira);
+       Assert.assertTrue(attrs.getScope().isLocal());
+     }
+ 
+@@ -982,7 +985,7 @@ public void basicPutPart3(EntryEventImpl event, RegionEntry entry, boolean isIni
+   // distribution and notification order on the BridgeServer
+   private class DistributedMetaRegion extends DistributedRegion {
+     protected DistributedMetaRegion(RegionAttributes attrs) {
+-      super(dynamicRegionListName, attrs, null, DynamicRegionFactory.this.cache,
++      super(DYNAMIC_REGION_LIST_NAME, attrs, null, DynamicRegionFactory.this.cache,
+           new InternalRegionArguments());
+     }
+ 
+diff --git a/geode-core/src/main/java/org/apache/geode/cache/client/internal/ServerRegionProxy.java b/geode-core/src/main/java/org/apache/geode/cache/client/internal/ServerRegionProxy.java
+index 0c87974f5e81..9f44f0d0f966 100644
+--- a/geode-core/src/main/java/org/apache/geode/cache/client/internal/ServerRegionProxy.java
++++ b/geode-core/src/main/java/org/apache/geode/cache/client/internal/ServerRegionProxy.java
+@@ -125,7 +125,7 @@ public int size() {
+    *
+    */
+   public Object putForMetaRegion(Object key, Object value, byte[] deltaBytes, EntryEventImpl event,
+-      Object callbackArg, boolean isMetaRegionPutOp) {
++      Object callbackArg) {
+     if (this.region == null) {
+       return PutOp.execute(this.pool, this.regionName, key, value, deltaBytes, event,
+           Operation.CREATE, false, null, callbackArg, this.pool.getPRSingleHopEnabled());
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/admin/ClientHealthMonitoringRegion.java b/geode-core/src/main/java/org/apache/geode/internal/admin/ClientHealthMonitoringRegion.java
+index 74d737dfe796..d1c5bf63163a 100644
+--- a/geode-core/src/main/java/org/apache/geode/internal/admin/ClientHealthMonitoringRegion.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/admin/ClientHealthMonitoringRegion.java
+@@ -22,6 +22,7 @@
+ import org.apache.geode.cache.RegionAttributes;
+ import org.apache.geode.cache.Scope;
+ import org.apache.geode.cache.util.CacheListenerAdapter;
++import org.apache.geode.internal.admin.remote.ClientHealthStats;
+ import org.apache.geode.internal.cache.InternalCache;
+ import org.apache.geode.internal.cache.InternalRegionArguments;
+ 
+@@ -31,7 +32,7 @@
+  */
+ public class ClientHealthMonitoringRegion {
+ 
+-  static final String ADMIN_REGION_NAME = "__ADMIN_CLIENT_HEALTH_MONITORING__";
++  public static final String ADMIN_REGION_NAME = "__ADMIN_CLIENT_HEALTH_MONITORING__";
+ 
+   static final int ADMIN_REGION_EXPIRY_INTERVAL = 20;
+ 
+@@ -75,6 +76,7 @@ private static void initialize(InternalCache cache) {
+           new ExpirationAttributes(ADMIN_REGION_EXPIRY_INTERVAL, ExpirationAction.DESTROY));
+       cache.getLogger().fine("ClientHealthMonitoringRegion, setting TTL for entry....");
+       factory.addCacheListener(prepareCacheListener());
++      factory.setValueConstraint(ClientHealthStats.class);
+       factory.setStatisticsEnabled(true);
+       RegionAttributes regionAttrs = factory.create();
+ 
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/admin/ClientStatsManager.java b/geode-core/src/main/java/org/apache/geode/internal/admin/ClientStatsManager.java
+index 66a109da3bdb..9ffa195e048b 100644
+--- a/geode-core/src/main/java/org/apache/geode/internal/admin/ClientStatsManager.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/admin/ClientStatsManager.java
+@@ -86,7 +86,7 @@ public static synchronized void publishClientStats(PoolImpl pool) {
+       EntryEventImpl event = new EntryEventImpl((Object) null);
+       try {
+         event.setEventId(eventId);
+-        regionProxy.putForMetaRegion(ds.getDistributedMember(), stats, null, event, null, true);
++        regionProxy.putForMetaRegion(ds.getDistributedMember(), stats, null, event, null);
+       } finally {
+         event.release();
+       }
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/CreateRegionProcessor.java b/geode-core/src/main/java/org/apache/geode/internal/cache/CreateRegionProcessor.java
+index 7d0553b6f0a7..7d6d147c591f 100644
+--- a/geode-core/src/main/java/org/apache/geode/internal/cache/CreateRegionProcessor.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/CreateRegionProcessor.java
+@@ -542,7 +542,7 @@ protected String checkCompatibility(CacheDistributionAdvisee rgn, CacheProfile p
+       Set<String> otherGatewaySenderIds = ((LocalRegion) rgn).getGatewaySenderIds();
+       Set<String> myGatewaySenderIds = profile.gatewaySenderIds;
+       if (!otherGatewaySenderIds.equals(myGatewaySenderIds)) {
+-        if (!rgn.getFullPath().contains(DynamicRegionFactory.dynamicRegionListName)) {
++        if (!rgn.getFullPath().contains(DynamicRegionFactory.DYNAMIC_REGION_LIST_NAME)) {
+           result =
+               String.format(
+                   "Cannot create Region %s with %s gateway sender ids because another cache has the same region defined with %s gateway sender ids",
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/GemFireCacheImpl.java b/geode-core/src/main/java/org/apache/geode/internal/cache/GemFireCacheImpl.java
+index 6a9c16964a76..ce0195e81f33 100755
+--- a/geode-core/src/main/java/org/apache/geode/internal/cache/GemFireCacheImpl.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/GemFireCacheImpl.java
+@@ -3805,7 +3805,7 @@ public void addGatewaySender(GatewaySender sender) {
+     }
+ 
+     if (!sender.isParallel()) {
+-      Region dynamicMetaRegion = getRegion(DynamicRegionFactory.dynamicRegionListName);
++      Region dynamicMetaRegion = getRegion(DynamicRegionFactory.DYNAMIC_REGION_LIST_NAME);
+       if (dynamicMetaRegion == null) {
+         if (logger.isDebugEnabled()) {
+           logger.debug(" The dynamic region is null. ");
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccess.java b/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccess.java
+index 806211128eb6..f9ca77ea7bed 100644
+--- a/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccess.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccess.java
+@@ -40,6 +40,7 @@
+ import org.apache.geode.cache.Declarable;
+ import org.apache.geode.cache.DiskStore;
+ import org.apache.geode.cache.DiskStoreFactory;
++import org.apache.geode.cache.DynamicRegionFactory;
+ import org.apache.geode.cache.GatewayException;
+ import org.apache.geode.cache.Region;
+ import org.apache.geode.cache.RegionAttributes;
+@@ -72,6 +73,7 @@
+ import org.apache.geode.distributed.internal.membership.InternalDistributedMember;
+ import org.apache.geode.i18n.LogWriterI18n;
+ import org.apache.geode.internal.SystemTimer;
++import org.apache.geode.internal.admin.ClientHealthMonitoringRegion;
+ import org.apache.geode.internal.cache.InitialImageOperation.Entry;
+ import org.apache.geode.internal.cache.backup.BackupService;
+ import org.apache.geode.internal.cache.control.InternalResourceManager;
+@@ -109,8 +111,13 @@ public InternalCacheForClientAccess(InternalCache delegate) {
+   }
+ 
+   private void checkForInternalRegion(Region<?, ?> r) {
++    if (r == null) {
++      return;
++    }
+     InternalRegion ir = (InternalRegion) r;
+-    if (ir.isInternalRegion()) {
++    if (ir.isInternalRegion()
++        && !r.getName().equals(DynamicRegionFactory.DYNAMIC_REGION_LIST_NAME)
++        && !r.getName().equals(ClientHealthMonitoringRegion.ADMIN_REGION_NAME)) {
+       throw new NotAuthorizedException("The region " + r.getName()
+           + " is an internal region that a client is never allowed to access");
+     }
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/tier/CachedRegionHelper.java b/geode-core/src/main/java/org/apache/geode/internal/cache/tier/CachedRegionHelper.java
+index 0bf102d7b10d..7d8ce3994865 100644
+--- a/geode-core/src/main/java/org/apache/geode/internal/cache/tier/CachedRegionHelper.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/tier/CachedRegionHelper.java
+@@ -18,6 +18,7 @@
+ import org.apache.geode.SystemFailure;
+ import org.apache.geode.cache.Region;
+ import org.apache.geode.internal.cache.InternalCache;
++import org.apache.geode.internal.cache.InternalCacheForClientAccess;
+ 
+ /**
+  * Helper class that maintains a weak hashmap of referenced regions
+@@ -27,11 +28,13 @@
+ public class CachedRegionHelper {
+ 
+   private final InternalCache cache;
++  private final InternalCache realCache;
+ 
+   private volatile boolean shutdown = false;
+ 
+   public CachedRegionHelper(InternalCache cache) {
+-    this.cache = cache;
++    this.realCache = cache;
++    this.cache = new InternalCacheForClientAccess(cache);
+   }
+ 
+   public void checkCancelInProgress(Throwable e) throws CancelException {
+@@ -46,6 +49,10 @@ public InternalCache getCache() {
+     return this.cache;
+   }
+ 
++  public InternalCache getCacheForGatewayCommand() {
++    return this.realCache;
++  }
++
+   public void setShutdown(boolean shutdown) {
+     this.shutdown = shutdown;
+   }
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/tier/sockets/AcceptorImpl.java b/geode-core/src/main/java/org/apache/geode/internal/cache/tier/sockets/AcceptorImpl.java
+index 0308e7cfca29..b4318c13e76c 100755
+--- a/geode-core/src/main/java/org/apache/geode/internal/cache/tier/sockets/AcceptorImpl.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/tier/sockets/AcceptorImpl.java
+@@ -536,7 +536,7 @@ public AcceptorImpl(int port, String bindHostName, boolean notifyBySubscription,
+     }
+ 
+     this.cache = internalCache;
+-    this.crHelper = new CachedRegionHelper(this.cache);
++    this.crHelper = new CachedRegionHelper(cache);
+ 
+     this.clientNotifier = CacheClientNotifier.getInstance(cache, this.stats, maximumMessageCount,
+         messageTimeToLive, connectionListener, overflowAttributesList, isGatewayReceiver);
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/tier/sockets/command/GatewayReceiverCommand.java b/geode-core/src/main/java/org/apache/geode/internal/cache/tier/sockets/command/GatewayReceiverCommand.java
+index d331207931ef..aa67694daf01 100644
+--- a/geode-core/src/main/java/org/apache/geode/internal/cache/tier/sockets/command/GatewayReceiverCommand.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/tier/sockets/command/GatewayReceiverCommand.java
+@@ -64,7 +64,7 @@ public static Command getCommand() {
+   private GatewayReceiverCommand() {}
+ 
+   private void handleRegionNull(ServerConnection servConn, String regionName, int batchId) {
+-    InternalCache cache = servConn.getCachedRegionHelper().getCache();
++    InternalCache cache = servConn.getCachedRegionHelper().getCacheForGatewayCommand();
+     if (cache != null && cache.isCacheAtShutdownAll()) {
+       throw cache.getCacheClosedException("Shutdown occurred during message processing");
+     } else {
+@@ -315,7 +315,7 @@ public void cmdExecute(final Message clientMessage, final ServerConnection serve
+                   logger.warn(s);
+                   throw new Exception(s);
+                 }
+-                region = (LocalRegion) crHelper.getRegion(regionName);
++                region = (LocalRegion) crHelper.getCacheForGatewayCommand().getRegion(regionName);
+                 if (region == null) {
+                   handleRegionNull(serverConnection, regionName, batchId);
+                 } else {
+@@ -441,7 +441,7 @@ public void cmdExecute(final Message clientMessage, final ServerConnection serve
+                   logger.warn(s);
+                   throw new Exception(s);
+                 }
+-                region = (LocalRegion) crHelper.getRegion(regionName);
++                region = (LocalRegion) crHelper.getCacheForGatewayCommand().getRegion(regionName);
+                 if (region == null) {
+                   handleRegionNull(serverConnection, regionName, batchId);
+                 } else {
+@@ -545,7 +545,7 @@ public void cmdExecute(final Message clientMessage, final ServerConnection serve
+                   logger.warn(s);
+                   throw new Exception(s);
+                 }
+-                region = (LocalRegion) crHelper.getRegion(regionName);
++                region = (LocalRegion) crHelper.getCacheForGatewayCommand().getRegion(regionName);
+                 if (region == null) {
+                   handleRegionNull(serverConnection, regionName, batchId);
+                 } else {
+@@ -632,7 +632,7 @@ public void cmdExecute(final Message clientMessage, final ServerConnection serve
+                   throw new Exception(s);
+ 
+                 } else {
+-                  region = (LocalRegion) crHelper.getRegion(regionName);
++                  region = (LocalRegion) crHelper.getCacheForGatewayCommand().getRegion(regionName);
+ 
+                   if (region == null) {
+                     handleRegionNull(serverConnection, regionName, batchId);
+@@ -702,7 +702,7 @@ public void cmdExecute(final Message clientMessage, final ServerConnection serve
+ 
+         // Increment the batch id unless the received batch id is -1 (a
+         // failover batch)
+-        DistributedSystem ds = crHelper.getCache().getDistributedSystem();
++        DistributedSystem ds = crHelper.getCacheForGatewayCommand().getDistributedSystem();
+         String exceptionMessage = String.format(
+             "Exception occurred while processing a batch on the receiver running on DistributedSystem with Id: %s, DistributedMember on which the receiver is running: %s",
+             new Object[] {
+@@ -770,10 +770,12 @@ private boolean addPdxType(CachedRegionHelper crHelper, Object key, Object value
+     if (key instanceof EnumId) {
+       EnumId enumId = (EnumId) key;
+       value = BlobHelper.deserializeBlob((byte[]) value);
+-      crHelper.getCache().getPdxRegistry().addRemoteEnum(enumId.intValue(), (EnumInfo) value);
++      crHelper.getCacheForGatewayCommand().getPdxRegistry().addRemoteEnum(enumId.intValue(),
++          (EnumInfo) value);
+     } else {
+       value = BlobHelper.deserializeBlob((byte[]) value);
+-      crHelper.getCache().getPdxRegistry().addRemoteType((int) key, (PdxType) value);
++      crHelper.getCacheForGatewayCommand().getPdxRegistry().addRemoteType((int) key,
++          (PdxType) value);
+     }
+     return true;
+   }
+diff --git a/geode-core/src/test/java/org/apache/geode/internal/cache/InternalCacheForClientAccessTest.java b/geode-core/src/test/java/org/apache/geode/internal/cache/InternalCacheForClientAccessTest.java
+index 888d4f3f514f..2657df127102 100644
+--- a/geode-core/src/test/java/org/apache/geode/internal/cache/InternalCacheForClientAccessTest.java
++++ b/geode-core/src/test/java/org/apache/geode/internal/cache/InternalCacheForClientAccessTest.java
+@@ -47,8 +47,10 @@ public void setup() {
+     cache = new InternalCacheForClientAccess(delegate);
+     secretRegion = mock(DistributedRegion.class);
+     when(secretRegion.isInternalRegion()).thenReturn(true);
++    when(secretRegion.getName()).thenReturn("secretRegion");
+     applicationRegion = mock(DistributedRegion.class);
+     when(applicationRegion.isInternalRegion()).thenReturn(false);
++    when(applicationRegion.getName()).thenReturn("applicationRegion");
+     applicationRegions = Collections.singleton(applicationRegion);
+     secretRegions = Collections.singleton(secretRegion);
+   }
+diff --git a/geode-cq/src/distributedTest/java/org/apache/geode/cache/query/cq/dunit/CqQueryUsingPoolDUnitTest.java b/geode-cq/src/distributedTest/java/org/apache/geode/cache/query/cq/dunit/CqQueryUsingPoolDUnitTest.java
+index 1c1357ee899d..251660164395 100644
+--- a/geode-cq/src/distributedTest/java/org/apache/geode/cache/query/cq/dunit/CqQueryUsingPoolDUnitTest.java
++++ b/geode-cq/src/distributedTest/java/org/apache/geode/cache/query/cq/dunit/CqQueryUsingPoolDUnitTest.java
+@@ -1081,7 +1081,8 @@ public void waitForRegionInvalidate(VM vm, final String cqName) {
+   }
+ 
+   private void waitForEvent(VM vm, final int event, final String cqName, final String key) {
+-    vm.invoke(new CacheSerializableRunnable("validate cq count") {
++    vm.invoke(new CacheSerializableRunnable(
++        "wait for event (" + event + ") in cq " + cqName + "; key=" + key) {
+       @Override
+       public void run2() throws CacheException {
+         // Get CQ Service.
+diff --git a/geode-cq/src/distributedTest/java/org/apache/geode/cache/query/cq/dunit/PrCqUsingPoolDUnitTest.java b/geode-cq/src/distributedTest/java/org/apache/geode/cache/query/cq/dunit/PrCqUsingPoolDUnitTest.java
+index d3f63c05b9be..2d3fd6390314 100644
+--- a/geode-cq/src/distributedTest/java/org/apache/geode/cache/query/cq/dunit/PrCqUsingPoolDUnitTest.java
++++ b/geode-cq/src/distributedTest/java/org/apache/geode/cache/query/cq/dunit/PrCqUsingPoolDUnitTest.java
+@@ -236,7 +236,7 @@ public void testPartitionedCqOnAccessorBridgeServer() throws Exception {
+ 
+ 
+     // create values
+-    final int size = 1000;
++    final int size = 200;
+     createValues(server1, regions[0], size);
+ 
+     // wait for last creates...
+@@ -458,7 +458,7 @@ public void testPRCqOnSingleBridgeServerUpdatesOriginatingAtAccessor() throws Ex
+ 
+ 
+     // create values
+-    final int size = 400;
++    final int size = 200;
+     createValues(server1, regions[0], size);
+ 
+     // wait for last creates...
+@@ -543,7 +543,7 @@ public void testPRCqWithInvalidatesOnBridgeServer() {
+ 
+ 
+     // create values
+-    final int size = 400;
++    final int size = 200;
+     createValues(server1, regions[0], size);
+ 
+     // wait for last creates...
+@@ -630,7 +630,7 @@ public void testPRCqWithInvalidatesOnAccessorBridgeServer() throws Exception {
+ 
+ 
+     // create values
+-    final int size = 400;
++    final int size = 200;
+     createValues(server1, regions[0], size);
+ 
+     // wait for last creates...
+@@ -721,7 +721,7 @@ public void testPRCqWithUpdatesFromClients() throws Exception {
+ 
+ 
+     // create values
+-    final int size = 400;
++    final int size = 200;
+ 
+     createValues(client2, regions[0], size);
+ 
+@@ -818,7 +818,7 @@ public void testPRCqWithMultipleRegionsOnServer() throws Exception {
+     cqHelper.executeCQ(client, "testCQEvents_1", false, null);
+ 
+     // create values
+-    final int size = 400;
++    final int size = 200;
+     createValues(client2, regions[0], size);
+     createValues(client2, regions[1], size);
+ 
+@@ -939,7 +939,7 @@ public void testPRWithCQsAndProfileUpdates() throws Exception {
+     cqHelper.executeCQ(client, "testPRWithCQsAndProfileUpdates_1", false, null);
+ 
+     // create values
+-    final int size = 400;
++    final int size = 200;
+     createValues(client2, regions[0], size);
+     createValues(client2, regions[1], size);
+ 
+diff --git a/geode-dunit/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccessDUnitTest.java b/geode-dunit/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccessDUnitTest.java
+new file mode 100644
+index 000000000000..54635240501c
+--- /dev/null
++++ b/geode-dunit/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccessDUnitTest.java
+@@ -0,0 +1,178 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license
++ * agreements. See the NOTICE file distributed with this work for additional information regarding
++ * copyright ownership. The ASF licenses this file to You under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance with the License. You may obtain a
++ * copy of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software distributed under the License
++ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
++ * or implied. See the License for the specific language governing permissions and limitations under
++ * the License.
++ */
++package org.apache.geode.internal.cache;
++
++import static org.assertj.core.api.Assertions.assertThat;
++import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
++
++import java.util.ArrayList;
++import java.util.HashMap;
++import java.util.List;
++import java.util.Map;
++
++import org.assertj.core.api.ThrowableAssert;
++import org.junit.After;
++import org.junit.Before;
++import org.junit.Rule;
++import org.junit.Test;
++
++import org.apache.geode.cache.Cache;
++import org.apache.geode.cache.CacheFactory;
++import org.apache.geode.cache.GemFireCache;
++import org.apache.geode.cache.Region;
++import org.apache.geode.cache.RegionAttributes;
++import org.apache.geode.cache.RegionShortcut;
++import org.apache.geode.cache.client.ClientCache;
++import org.apache.geode.cache.client.ClientCacheFactory;
++import org.apache.geode.cache.client.ClientRegionShortcut;
++import org.apache.geode.cache.client.ServerOperationException;
++import org.apache.geode.cache.server.CacheServer;
++import org.apache.geode.distributed.ConfigurationProperties;
++import org.apache.geode.distributed.DistributedSystem;
++import org.apache.geode.security.NotAuthorizedException;
++import org.apache.geode.test.dunit.DistributedTestUtils;
++import org.apache.geode.test.dunit.VM;
++import org.apache.geode.test.dunit.rules.DistributedRule;
++
++public class InternalCacheForClientAccessDUnitTest<tearDown> implements java.io.Serializable {
++  public static final long serialVersionUID = 1l;
++
++  @Rule
++  public DistributedRule dunitRule = new DistributedRule();
++
++  VM serverVM;
++  VM clientVM;
++  static GemFireCache cache;
++
++  @Before
++  public void setup() {
++    serverVM = VM.getVM(0);
++    clientVM = VM.getVM(1);
++
++    final int locatorPort = DistributedTestUtils.getDUnitLocatorPort();
++    // create a server cache and a client cache
++    serverVM.invoke(() -> {
++      String locatorSpec = "localhost[" + locatorPort + "]";
++      CacheFactory config = new CacheFactory();
++      config.set(
++          ConfigurationProperties.LOCATORS, locatorSpec);
++      config.set(
++          ConfigurationProperties.NAME, "server1");
++
++      Cache serverCache = config.create();
++      cache = serverCache;
++
++      CacheServer cacheServer = serverCache.addCacheServer();
++      cacheServer.start();
++    });
++    clientVM.invoke(() -> {
++      ClientCacheFactory config = new ClientCacheFactory();
++      config.addPoolLocator("localhost", locatorPort);
++      config.setPoolSubscriptionEnabled(true);
++      cache = config.create();
++    });
++  }
++
++  @After
++  public void tearDown() {
++    serverVM.invoke(() -> {
++      DistributedSystem system = cache.getDistributedSystem();
++      cache.close();
++      cache = null;
++      assertThat(system.isConnected()).isFalse();
++    });
++    clientVM.invoke(() -> {
++      cache.close();
++      cache = null;
++    });
++  }
++
++  @Test
++  public void serverUsesFilteredCache() {
++    serverVM.invoke(() -> {
++      Cache serverCache = (Cache) cache;
++      serverCache.createRegionFactory(RegionShortcut.REPLICATE).create("region");
++    });
++    clientVM.invoke(() -> {
++      ClientCache clientCache = (ClientCache) cache;
++      Region<String, String> region =
++          clientCache.<String, String>createClientRegionFactory(ClientRegionShortcut.CACHING_PROXY)
++              .create("region");
++      region.put("Object1", "Value1");
++    });
++    serverVM.invoke(() -> {
++      Cache serverCache = (Cache) cache;
++      CacheServer server = serverCache.getCacheServers().stream().findFirst().get();
++      CacheServerImpl impl = (CacheServerImpl) server;
++      assertThat(impl.getAcceptor().getCachedRegionHelper().getCache())
++          .isInstanceOf(InternalCacheForClientAccess.class);
++    });
++  }
++
++  @Test
++  public void invokeClientOperationsOnInternalRegion() {
++    serverVM.invoke(() -> {
++      // we need to use internal APIs to create an "internal" region
++      GemFireCacheImpl serverCache = (GemFireCacheImpl) cache;
++      InternalRegionArguments internalRegionArguments = new InternalRegionArguments();
++      internalRegionArguments.setIsUsedForPartitionedRegionAdmin(true);
++      RegionAttributes<String, String> attributes =
++          serverCache.getRegionAttributes(RegionShortcut.REPLICATE.toString());
++      LocalRegion region = (LocalRegion) serverCache.createVMRegion("internalRegion", attributes,
++          internalRegionArguments);
++      assertThat(region.isInternalRegion()).isTrue();
++    });
++    clientVM.invoke(this::testAllOperations);
++  }
++
++  private void testAllOperations() {
++    ClientCache clientCache = (ClientCache) cache;
++    Region<String, String> region =
++        clientCache.<String, String>createClientRegionFactory(ClientRegionShortcut.CACHING_PROXY)
++            .create("internalRegion");
++
++    assertFailure(() -> region.create("Object1", "Value1"));
++    assertFailure(() -> region.put("Object1", "Value1"));
++    assertFailure(() -> region.putIfAbsent("Object1", "Value1"));
++
++    assertFailure(() -> region.get("Object1"));
++
++    Map<String, String> map = new HashMap<>();
++    map.put("Object1", "Value1");
++    assertFailure(() -> region.putAll(map));
++
++    List<String> list = new ArrayList<>();
++    list.add("Object1");
++    assertFailure(() -> region.getAll(list));
++    assertFailure(() -> region.removeAll(list));
++
++    assertFailure(() -> region.destroy("Object1"));
++    assertFailure(() -> region.remove("Object1"));
++    assertFailure(() -> region.replace("Object1", "oldValue", "newValue"));
++    assertFailure(() -> region.invalidate("Object1"));
++    assertFailure(region::keySetOnServer);
++
++    assertFailure(() -> region.registerInterest("Object1"));
++  }
++
++  private void assertFailure(final ThrowableAssert.ThrowingCallable callable) {
++    assertThatExceptionOfType(ServerOperationException.class).isThrownBy(callable)
++        .withCauseInstanceOf(
++            NotAuthorizedException.class)
++        .withMessageContaining(
++            "The region internalRegion is an internal region that a client is never allowed to access");
++
++  }
++}

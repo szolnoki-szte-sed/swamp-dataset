@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:opcfoundation:ua-.netstandard:1.4.357.28:*:*:*:*:*:*:*",
+            "cpe:2.3:a:opcfoundation:netstandard.opc.ua:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/eclipse/milo/commit/cac0e710bf2b8bed9c602fc597e9de1d8903abed",
+        "version_end_excluding": {
+            "opcfoundation:netstandard.opc.ua": "1.4.359.31"
+        },
+        "path": {
+            "file_path": "opc-ua-stack/stack-core/src/test/java/org/eclipse/milo/opcua/stack/core/util/NonceUtilTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Eclipse Public License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-19135"
+        ],
+        "CWE": [
+            "CWE-330"
+        ]
+    }
+}

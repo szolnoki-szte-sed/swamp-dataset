@@ -1,0 +1,693 @@
+diff --git a/common/build.gradle b/common/build.gradle
+index e33dd45d7b..40458c1cf1 100644
+--- a/common/build.gradle
++++ b/common/build.gradle
+@@ -15,10 +15,9 @@ dependencies {
+     compile "com.fasterxml.jackson.core:jackson-core:${revJacksonCore}"
+     compile "javax.inject:javax.inject:${revJavaxInject}"
+     compile "com.github.vmg.protogen:protogen-annotations:${revProtogenAnnotations}"
+-    compile "org.hibernate:hibernate-validator:${revHiberante}"
++    compile "org.apache.bval:bval-jsr:${revBval}"
++    compile "javax.validation:validation-api:${revValidationApi}"
+     compile "org.apache.commons:commons-lang3:${revCommonsLang3}"
+-    // Bean validation runtime dependencies
+-    compile "javax.el:javax.el-api:${revJavaElApi}"
+     // https://mvnrepository.com/artifact/org.glassfish/javax.el
+     compile group: 'org.glassfish', name: 'javax.el', version: "${revJavaElApi}"
+ }
+diff --git a/core/build.gradle b/core/build.gradle
+index 9f0a95c48e..29aaf54ae1 100644
+--- a/core/build.gradle
++++ b/core/build.gradle
+@@ -14,9 +14,8 @@ dependencies {
+     compile "org.apache.commons:commons-lang3:${revCommonsLang3}"
+     compile "com.spotify:completable-futures:${revSpotifyCompletableFutures}"
+     compile "com.amazonaws:aws-java-sdk-s3:${revAwsSdk}"
+-    compile "org.hibernate:hibernate-validator:${revHiberante}"
+-    // Bean validation runtime dependencies
+-    compile "javax.el:javax.el-api:${revJavaElApi}"
++    compile "org.apache.bval:bval-jsr:${revBval}"
++    compile "javax.validation:validation-api:${revValidationApi}"
+     // https://mvnrepository.com/artifact/org.glassfish/javax.el
+     compile group: 'org.glassfish', name: 'javax.el', version: "${revJavaElApi}"
+     
+diff --git a/core/src/main/java/com/netflix/conductor/core/config/ValidationModule.java b/core/src/main/java/com/netflix/conductor/core/config/ValidationModule.java
+index 1b000fd763..1a33d3d48a 100644
+--- a/core/src/main/java/com/netflix/conductor/core/config/ValidationModule.java
++++ b/core/src/main/java/com/netflix/conductor/core/config/ValidationModule.java
+@@ -3,17 +3,11 @@
+ import com.google.inject.AbstractModule;
+ import com.google.inject.Provides;
+ import com.google.inject.Singleton;
+-import com.google.inject.multibindings.MultibindingsScanner;
+-import com.google.inject.multibindings.ProvidesIntoSet;
+-import org.hibernate.validator.HibernateValidator;
+-import org.hibernate.validator.HibernateValidatorConfiguration;
+-import org.hibernate.validator.cfg.ConstraintMapping;
+-import com.netflix.conductor.validations.TaskDefConstraint;
++import org.apache.bval.jsr.ApacheValidationProvider;
++import org.apache.bval.util.reflection.Reflection;
+ 
+ import javax.validation.Validation;
+ import javax.validation.Validator;
+-import javax.validation.ValidatorContext;
+-import java.util.Set;
+ 
+ /**
+  * Most of the constraints validators are define at data model
+@@ -27,34 +21,22 @@
+  */
+ 
+ public class ValidationModule extends AbstractModule {
++    /**
++     * Custom validation mapping configuration for constraints defined in core module.
++     */
++    private static final String VALIDATION_MAPPING_FILE = "conductor-validation-mapping.xml";
+ 
++    @Override
+     protected void configure() {
+-        install(MultibindingsScanner.asModule());
+     }
+ 
+     @Provides
+     @Singleton
+-    public HibernateValidatorConfiguration getConfiguration() {
+-        return Validation.byProvider(HibernateValidator.class).configure();
++    public Validator getValidator() {
++        return Validation.byProvider(ApacheValidationProvider.class)
++                .configure()
++                .addMapping(Reflection.loaderFromThreadOrClass(this.getClass()).getResourceAsStream(VALIDATION_MAPPING_FILE))
++                .buildValidatorFactory()
++                .getValidator();
+     }
+-
+-    @Provides
+-    @Singleton
+-    public Validator getValidator(ValidatorContext validatorContext) {
+-        return validatorContext.getValidator();
+-    }
+-
+-    @Provides
+-    @Singleton
+-    public ValidatorContext getValidatorContext(HibernateValidatorConfiguration configuration, Set<ConstraintMapping> constraintMappings) {
+-        constraintMappings.forEach(configuration::addMapping);
+-        return configuration.buildValidatorFactory()
+-                .usingContext();
+-    }
+-
+-    @ProvidesIntoSet
+-    public ConstraintMapping getWorkflowTaskConstraint(final HibernateValidatorConfiguration configuration) {
+-        return TaskDefConstraint.getWorkflowTaskConstraint(configuration);
+-    }
+-
+ }
+diff --git a/core/src/main/java/com/netflix/conductor/validations/TaskDefConstraint.java b/core/src/main/java/com/netflix/conductor/validations/TaskDefConstraint.java
+deleted file mode 100644
+index 425f573738..0000000000
+--- a/core/src/main/java/com/netflix/conductor/validations/TaskDefConstraint.java
++++ /dev/null
+@@ -1,22 +0,0 @@
+-package com.netflix.conductor.validations;
+-
+-import com.google.inject.Singleton;
+-import com.google.inject.multibindings.ProvidesIntoSet;
+-import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
+-import org.hibernate.validator.HibernateValidatorConfiguration;
+-import org.hibernate.validator.cfg.ConstraintMapping;
+-
+-public class TaskDefConstraint {
+-    @Singleton
+-    @ProvidesIntoSet
+-    public static ConstraintMapping getWorkflowTaskConstraint(final HibernateValidatorConfiguration configuration) {
+-        ConstraintMapping mapping = configuration.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef())
+-                .constraint(new WorkflowTaskValidConstraintDef());
+-
+-        return mapping;
+-    }
+-
+-}
+diff --git a/core/src/main/java/com/netflix/conductor/validations/WorkflowTaskTypeConstraintDef.java b/core/src/main/java/com/netflix/conductor/validations/WorkflowTaskTypeConstraintDef.java
+deleted file mode 100644
+index e12bb81b0c..0000000000
+--- a/core/src/main/java/com/netflix/conductor/validations/WorkflowTaskTypeConstraintDef.java
++++ /dev/null
+@@ -1,11 +0,0 @@
+-package com.netflix.conductor.validations;
+-
+-import org.hibernate.validator.cfg.ConstraintDef;
+-
+-public class WorkflowTaskTypeConstraintDef extends ConstraintDef<WorkflowTaskTypeConstraintDef, WorkflowTaskTypeConstraint> {
+-
+-    public WorkflowTaskTypeConstraintDef() {
+-        super( WorkflowTaskTypeConstraint.class );
+-    }
+-
+-}
+diff --git a/core/src/main/java/com/netflix/conductor/validations/WorkflowTaskValidConstraintDef.java b/core/src/main/java/com/netflix/conductor/validations/WorkflowTaskValidConstraintDef.java
+deleted file mode 100644
+index f2cd19735c..0000000000
+--- a/core/src/main/java/com/netflix/conductor/validations/WorkflowTaskValidConstraintDef.java
++++ /dev/null
+@@ -1,11 +0,0 @@
+-package com.netflix.conductor.validations;
+-
+-import org.hibernate.validator.cfg.ConstraintDef;
+-
+-public class WorkflowTaskValidConstraintDef extends ConstraintDef<WorkflowTaskValidConstraintDef, WorkflowTaskValidConstraint> {
+-
+-    public WorkflowTaskValidConstraintDef() {
+-        super(WorkflowTaskValidConstraint.class);
+-    }
+-
+-}
+diff --git a/core/src/main/resources/conductor-validation-mapping.xml b/core/src/main/resources/conductor-validation-mapping.xml
+new file mode 100644
+index 0000000000..efea97b260
+--- /dev/null
++++ b/core/src/main/resources/conductor-validation-mapping.xml
+@@ -0,0 +1,15 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<constraint-mappings
++        xmlns="http://jboss.org/xml/ns/javax/validation/mapping"
++        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++        xsi:schemaLocation=
++                "http://jboss.org/xml/ns/javax/validation/mapping validation-mapping-1.0.xsd">
++    <default-package>com.netflix.conductor.common.metadata.workflow</default-package>
++
++    <bean class="WorkflowTask" ignore-annotations="false">
++        <class ignore-annotations="false">
++            <constraint annotation="com.netflix.conductor.validations.WorkflowTaskTypeConstraint"/>
++            <constraint annotation="com.netflix.conductor.validations.WorkflowTaskValidConstraint"/>
++        </class>
++    </bean>
++</constraint-mappings>
+\ No newline at end of file
+diff --git a/core/src/test/java/com/netflix/conductor/validations/WorkflowDefConstraintTest.java b/core/src/test/java/com/netflix/conductor/validations/WorkflowDefConstraintTest.java
+index c30f2b70ea..97d94ef24d 100644
+--- a/core/src/test/java/com/netflix/conductor/validations/WorkflowDefConstraintTest.java
++++ b/core/src/test/java/com/netflix/conductor/validations/WorkflowDefConstraintTest.java
+@@ -15,45 +15,42 @@
+  */
+ package com.netflix.conductor.validations;
+ 
+-import static org.junit.Assert.assertEquals;
+-import static org.junit.Assert.assertTrue;
+-import static org.mockito.Matchers.anyString;
+-import static org.mockito.Mockito.when;
+-
+ import com.netflix.conductor.common.metadata.tasks.TaskDef;
+ import com.netflix.conductor.common.metadata.workflow.TaskType;
+ import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
+ import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
++import com.netflix.conductor.core.config.ValidationModule;
+ import com.netflix.conductor.dao.MetadataDAO;
++import org.junit.Before;
++import org.junit.Test;
++import org.mockito.Mockito;
++
++import javax.validation.ConstraintViolation;
++import javax.validation.Validation;
++import javax.validation.Validator;
++import javax.validation.ValidatorFactory;
+ import java.util.ArrayList;
+ import java.util.HashMap;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
+-import javax.validation.ConstraintViolation;
+-import javax.validation.Validation;
+-import javax.validation.Validator;
+-import javax.validation.ValidatorFactory;
+-import org.hibernate.validator.HibernateValidator;
+-import org.hibernate.validator.HibernateValidatorConfiguration;
+-import org.junit.Before;
+-import org.junit.Test;
+-import org.mockito.Mockito;
++
++import static org.junit.Assert.assertEquals;
++import static org.junit.Assert.assertTrue;
++import static org.mockito.Matchers.anyString;
++import static org.mockito.Mockito.when;
+ 
+ public class WorkflowDefConstraintTest {
+ 
+     private Validator validator;
+     private MetadataDAO mockMetadataDao;
+-    private HibernateValidatorConfiguration config;
+ 
+     @Before
+     public void init() {
+-        ValidatorFactory vf = Validation.buildDefaultValidatorFactory();
+-        validator = vf.getValidator();
++        validator = new ValidationModule().getValidator();
+         mockMetadataDao = Mockito.mock(MetadataDAO.class);
++        when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+         ValidationContext.initialize(mockMetadataDao);
+-
+-        config = Validation.byProvider(HibernateValidator.class).configure();
+     }
+ 
+     @Test
+diff --git a/core/src/test/java/com/netflix/conductor/validations/WorkflowTaskTypeConstraintTest.java b/core/src/test/java/com/netflix/conductor/validations/WorkflowTaskTypeConstraintTest.java
+index 9ed833dfcd..0a65c818b0 100644
+--- a/core/src/test/java/com/netflix/conductor/validations/WorkflowTaskTypeConstraintTest.java
++++ b/core/src/test/java/com/netflix/conductor/validations/WorkflowTaskTypeConstraintTest.java
+@@ -4,23 +4,25 @@
+ import com.netflix.conductor.common.metadata.workflow.SubWorkflowParams;
+ import com.netflix.conductor.common.metadata.workflow.TaskType;
+ import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
++import com.netflix.conductor.core.config.ValidationModule;
+ import com.netflix.conductor.core.execution.tasks.Terminate;
+ import com.netflix.conductor.dao.MetadataDAO;
+-import org.hibernate.validator.HibernateValidator;
+-import org.hibernate.validator.HibernateValidatorConfiguration;
+-import org.hibernate.validator.cfg.ConstraintMapping;
+ import org.junit.Assert;
+ import org.junit.Before;
+ import org.junit.Test;
+ import org.mockito.Mockito;
+ 
+ import javax.validation.ConstraintViolation;
+-import javax.validation.Validation;
+ import javax.validation.Validator;
+-import javax.validation.ValidatorFactory;
+ import javax.validation.executable.ExecutableValidator;
+ import java.lang.reflect.Method;
+-import java.util.*;
++import java.util.ArrayList;
++import java.util.Arrays;
++import java.util.Collections;
++import java.util.HashMap;
++import java.util.List;
++import java.util.Map;
++import java.util.Set;
+ 
+ import static org.junit.Assert.assertEquals;
+ import static org.junit.Assert.assertTrue;
+@@ -28,24 +30,21 @@
+ import static org.mockito.Mockito.when;
+ 
+ public class WorkflowTaskTypeConstraintTest {
+-
+     private static Validator validator;
+     private MetadataDAO mockMetadataDao;
+-    private HibernateValidatorConfiguration config;
+ 
+     @Before
+     public void init() {
+-        ValidatorFactory vf = Validation.buildDefaultValidatorFactory();
+-        validator = vf.getValidator();
++        validator = new ValidationModule().getValidator();
+         mockMetadataDao = Mockito.mock(MetadataDAO.class);
+         ValidationContext.initialize(mockMetadataDao);
+-
+-       config = Validation.byProvider(HibernateValidator.class).configure();
+     }
+ 
+     @Test
+     public void testWorkflowTaskMissingReferenceName() {
+         WorkflowTask workflowTask = createSampleWorkflowTask();
++        workflowTask.setDynamicForkTasksParam("taskList");
++        workflowTask.setDynamicForkTasksInputParamName("ForkTaskInputParam");
+         workflowTask.setTaskReferenceName(null);
+ 
+         Set<ConstraintViolation<Object>> result = validator.validate(workflowTask);
+@@ -74,15 +73,6 @@ public void testWorkflowTaskTypeEvent() {
+         WorkflowTask workflowTask = createSampleWorkflowTask();
+         workflowTask.setType("EVENT");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -96,15 +86,6 @@ public void testWorkflowTaskTypeDynamic() {
+         WorkflowTask workflowTask = createSampleWorkflowTask();
+         workflowTask.setType("DYNAMIC");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -117,15 +98,6 @@ public void testWorkflowTaskTypeDecision() {
+         WorkflowTask workflowTask = createSampleWorkflowTask();
+         workflowTask.setType("DECISION");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -144,15 +116,6 @@ public void testWorkflowTaskTypeDoWhile() {
+         WorkflowTask workflowTask = createSampleWorkflowTask();
+         workflowTask.setType("DO_WHILE");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -175,15 +138,6 @@ public void testWorkflowTaskTypeDoWhileWithSubWorkflow() {
+         workflowTask2.setType("SUB_WORKFLOW");
+         workflowTask.setLoopOver(Arrays.asList(workflowTask2));
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -202,15 +156,6 @@ public void testWorkflowTaskTypeDecisionWithCaseParam() {
+         workflowTask.setType("DECISION");
+         workflowTask.setCaseExpression("$.valueCheck == null ? 'true': 'false'");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-            .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-            .buildValidatorFactory()
+-            .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -228,15 +173,6 @@ public void testWorkflowTaskTypeForJoinDynamic() {
+         WorkflowTask workflowTask = createSampleWorkflowTask();
+         workflowTask.setType("FORK_JOIN_DYNAMIC");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -256,15 +192,6 @@ public void testWorkflowTaskTypeForJoinDynamicLegacy() {
+         workflowTask.setType("FORK_JOIN_DYNAMIC");
+         workflowTask.setDynamicForkJoinTasksParam("taskList");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -278,15 +205,6 @@ public void testWorkflowTaskTypeForJoinDynamicWithForJoinTaskParam() {
+         workflowTask.setDynamicForkJoinTasksParam("taskList");
+         workflowTask.setDynamicForkTasksInputParamName("ForkTaskInputParam");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -306,15 +224,6 @@ public void testWorkflowTaskTypeForJoinDynamicValid() {
+         workflowTask.setDynamicForkTasksParam("ForkTasksParam");
+         workflowTask.setDynamicForkTasksInputParamName("ForkTaskInputParam");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -329,15 +238,6 @@ public void testWorkflowTaskTypeForJoinDynamicWithForJoinTaskParamAndInputTaskPa
+         workflowTask.setDynamicForkTasksInputParamName("ForkTaskInputParam");
+         workflowTask.setDynamicForkTasksParam("ForkTasksParam");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -356,15 +256,6 @@ public void testWorkflowTaskTypeHTTP() {
+         workflowTask.setType("HTTP");
+         workflowTask.getInputParameters().put("http_request", "http://www.netflix.com");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -376,15 +267,6 @@ public void testWorkflowTaskTypeHTTPWithHttpParamMissing() {
+         WorkflowTask workflowTask = createSampleWorkflowTask();
+         workflowTask.setType("HTTP");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -402,15 +284,6 @@ public void testWorkflowTaskTypeHTTPWithHttpParamInTaskDef() {
+         WorkflowTask workflowTask = createSampleWorkflowTask();
+         workflowTask.setType("HTTP");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         TaskDef taskDef = new TaskDef();
+         taskDef.setName("encode");
+         taskDef.getInputTemplate().put("http_request", "http://www.netflix.com");
+@@ -428,15 +301,6 @@ public void testWorkflowTaskTypeHTTPWithHttpParamInTaskDefAndWorkflowTask() {
+         workflowTask.setType("HTTP");
+         workflowTask.getInputParameters().put("http_request", "http://www.netflix.com");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         TaskDef taskDef = new TaskDef();
+         taskDef.setName("encode");
+         taskDef.getInputTemplate().put("http_request", "http://www.netflix.com");
+@@ -452,15 +316,6 @@ public void testWorkflowTaskTypeFork() {
+         WorkflowTask workflowTask = createSampleWorkflowTask();
+         workflowTask.setType("FORK_JOIN");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -554,15 +409,6 @@ public void testWorkflowTaskTypeKafkaPublish() {
+         workflowTask.setType("KAFKA_PUBLISH");
+         workflowTask.getInputParameters().put("kafka_request", "testInput");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -574,15 +420,6 @@ public void testWorkflowTaskTypeKafkaPublishWithRequestParamMissing() {
+         WorkflowTask workflowTask = createSampleWorkflowTask();
+         workflowTask.setType("KAFKA_PUBLISH");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         when(mockMetadataDao.getTaskDef(anyString())).thenReturn(new TaskDef());
+ 
+         Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+@@ -600,15 +437,6 @@ public void testWorkflowTaskTypeKafkaPublishWithKafkaParamInTaskDef() {
+         WorkflowTask workflowTask = createSampleWorkflowTask();
+         workflowTask.setType("KAFKA_PUBLISH");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         TaskDef taskDef = new TaskDef();
+         taskDef.setName("encode");
+         taskDef.getInputTemplate().put("kafka_request", "test_kafka_request");
+@@ -626,15 +454,6 @@ public void testWorkflowTaskTypeKafkaPublioshWithRequestParamInTaskDefAndWorkflo
+         workflowTask.setType("KAFKA_PUBLISH");
+         workflowTask.getInputParameters().put("kafka_request", "http://www.netflix.com");
+ 
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-
+-        Validator validator = config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-
+         TaskDef taskDef = new TaskDef();
+         taskDef.setName("encode");
+         taskDef.getInputTemplate().put("kafka_request", "test Kafka Request");
+@@ -646,22 +465,13 @@ public void testWorkflowTaskTypeKafkaPublioshWithRequestParamInTaskDefAndWorkflo
+     }
+ 
+     private List<String> getErrorMessages(WorkflowTask workflowTask) {
+-        Set<ConstraintViolation<WorkflowTask>> result = buildValidator().validate(workflowTask);
++        Set<ConstraintViolation<WorkflowTask>> result = validator.validate(workflowTask);
+         List<String> validationErrors = new ArrayList<>();
+         result.forEach(e -> validationErrors.add(e.getMessage()));
+ 
+         return validationErrors;
+     }
+ 
+-    private Validator buildValidator() {
+-        ConstraintMapping mapping = config.createConstraintMapping();
+-        mapping.type(WorkflowTask.class)
+-                .constraint(new WorkflowTaskTypeConstraintDef());
+-        return config.addMapping(mapping)
+-                .buildValidatorFactory()
+-                .getValidator();
+-    }
+-
+     private WorkflowTask createSampleWorkflowTask() {
+         WorkflowTask workflowTask = new WorkflowTask();
+         workflowTask.setName("encode");
+diff --git a/jersey/build.gradle b/jersey/build.gradle
+index 8f23e97444..2563e58dc4 100644
+--- a/jersey/build.gradle
++++ b/jersey/build.gradle
+@@ -8,7 +8,8 @@ dependencies {
+     compile "javax.ws.rs:jsr311-api:${revJsr311Api}"
+     compile "io.swagger:swagger-jaxrs:${revSwagger}"
+     compile "com.sun.jersey:jersey-bundle:${revJerseyBundle}"
+-    compile "org.hibernate:hibernate-validator:${revHiberante}"
++    compile "org.apache.bval:bval-jsr:${revBval}"
++    compile "javax.validation:validation-api:${revValidationApi}"
+ 
+     compileOnly "javax.servlet:javax.servlet-api:${revServletApi}"
+ }
+diff --git a/versionsOfDependencies.gradle b/versionsOfDependencies.gradle
+index 0e66081c19..375a3940d4 100644
+--- a/versionsOfDependencies.gradle
++++ b/versionsOfDependencies.gradle
+@@ -22,11 +22,12 @@ ext {
+     revGuiceMultiBindings = '4.1.0'
+     revGuiceServlet = '4.1.0'
+     revHealth = '1.1.+'
+-    revHiberante = '6.0.13.Final'
+     revHikariCP = '3.2.0'
+     revJsonPath = '2.2.0'
+     revJaxrsJackson = '2.10.0'
+     revJavaElApi = '3.0.0'
++    revBval = '2.0.3'
++    revValidationApi = '2.0.1.Final'
+     revJavaxInject = '1'
+     revJacksonCore = '2.10.0'
+     revJacksonDatabind = '2.10.0'

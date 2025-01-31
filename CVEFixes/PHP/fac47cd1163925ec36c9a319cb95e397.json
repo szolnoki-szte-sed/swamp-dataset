@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:getcomposer:composer:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:getcomposer:composer:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/composer/composer/commit/ca5e2f8d505fd3bfac6f7c85b82f2740becbc0aa",
+        "version_end_excluding": {
+            "getcomposer:composer": "2.1.9"
+        },
+        "path": {
+            "file_path": "src/Composer/Command/HomeCommand.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41116"
+        ],
+        "CWE": [
+            "CWE-77"
+        ]
+    }
+}

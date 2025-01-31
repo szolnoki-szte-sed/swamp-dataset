@@ -1,0 +1,13 @@
+diff --git a/templates/table/search/rows_zoom.phtml b/templates/table/search/rows_zoom.phtml
+index 0dcb712a040..a3f393a6519 100644
+--- a/templates/table/search/rows_zoom.phtml
++++ b/templates/table/search/rows_zoom.phtml
+@@ -78,7 +78,7 @@ for ($i = 0; $i < 4; $i++): ?>
+                    name="criteriaColumnTypes[<?= $i; ?>]"
+                    id="types_<?= $i; ?>"
+                 <?php if (isset($_POST['criteriaColumnTypes'][$i])): ?>
+-                    value="<?= $_POST['criteriaColumnTypes'][$i]; ?>"
++                    value="<?= htmlspecialchars($_POST['criteriaColumnTypes'][$i]); ?>"
+                 <?php endif; ?> />
+             <input type="hidden"
+                    name="criteriaColumnCollations[<?= $i; ?>]"

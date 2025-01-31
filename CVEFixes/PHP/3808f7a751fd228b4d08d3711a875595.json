@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:vestacp:vesta_control_panel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/serghey-rodin/vesta/commit/5f68c1b634abec2d5a4f83156bfd223d3a792f77",
+        "version_end_excluding": {
+            "vestacp:vesta_control_panel": "0.9.8-18"
+        },
+        "path": {
+            "file_path": "web/reset/index.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-1000884"
+        ],
+        "CWE": [
+            "CWE-203"
+        ]
+    }
+}

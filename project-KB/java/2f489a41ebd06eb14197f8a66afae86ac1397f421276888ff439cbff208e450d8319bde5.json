@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:keycloak:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/keycloak/keycloak/commit/2f489a41ebd06eb14197f8a66afae86ac1397f42",
+        "version_end_excluding": {
+            "redhat:keycloak": "9.0.2"
+        },
+        "path": {
+            "file_path": "services/src/main/java/org/keycloak/social/github/GitHubIdentityProviderFactory.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1727"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

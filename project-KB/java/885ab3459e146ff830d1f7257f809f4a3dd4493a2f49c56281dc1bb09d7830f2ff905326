@@ -1,0 +1,34 @@
+diff --git a/xwork-core/src/main/java/com/opensymphony/xwork2/DefaultActionProxy.java b/xwork-core/src/main/java/com/opensymphony/xwork2/DefaultActionProxy.java
+index ef0d3b4d03..f58b17aa52 100644
+--- a/xwork-core/src/main/java/com/opensymphony/xwork2/DefaultActionProxy.java
++++ b/xwork-core/src/main/java/com/opensymphony/xwork2/DefaultActionProxy.java
+@@ -23,12 +23,12 @@
+ import com.opensymphony.xwork2.util.logging.Logger;
+ import com.opensymphony.xwork2.util.logging.LoggerFactory;
+ import com.opensymphony.xwork2.util.profiling.UtilTimerStack;
++import org.apache.commons.lang.StringEscapeUtils;
++import org.apache.commons.lang.StringUtils;
+ 
+ import java.io.Serializable;
+ import java.util.Locale;
+ 
+-import org.apache.commons.lang.StringUtils;
+-
+ 
+ /**
+  * The Default ActionProxy implementation
+@@ -74,10 +74,10 @@ protected DefaultActionProxy(ActionInvocation inv, String namespace, String acti
+ 			LOG.debug("Creating an DefaultActionProxy for namespace " + namespace + " and action name " + actionName);
+ 		}
+ 
+-		this.actionName = actionName;
+-		this.namespace = namespace;
+-		this.executeResult = executeResult;
+-        this.method = methodName;
++        this.actionName = StringEscapeUtils.escapeHtml(actionName);
++        this.namespace = namespace;
++        this.executeResult = executeResult;
++        this.method = StringEscapeUtils.escapeJavaScript(StringEscapeUtils.escapeHtml(methodName));
+     }
+     
+     @Inject

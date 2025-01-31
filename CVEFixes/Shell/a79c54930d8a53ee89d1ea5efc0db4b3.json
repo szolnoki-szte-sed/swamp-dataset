@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:framasoft:peertube:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/chocobozzz/peertube/commit/0c058f256a195b92f124be10109c95d1fbe93ad8",
+        "version_end_excluding": {
+            "framasoft:peertube": "4.1.1"
+        },
+        "path": {
+            "file_path": ".github/actions/reusable-prepare-peertube-run/action.yml"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0881"
+        ],
+        "CWE": [
+            "CWE-922"
+        ]
+    }
+}

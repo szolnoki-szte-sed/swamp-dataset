@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:coder:code-server:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cdr/code-server/commit/ca617df135e78833f93c8320cb2d2cf8bba809f5",
+        "version_end_excluding": {
+            "coder:code-server": "3.12.0"
+        },
+        "path": {
+            "file_path": "src/node/util.ts"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3810"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

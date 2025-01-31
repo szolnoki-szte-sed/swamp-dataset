@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:openbsd:openssh:2.3.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "openbsd:openssh": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "verilog",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2001-1585"
+        ],
+        "CWE": [
+            "CWE-325"
+        ]
+    }
+}

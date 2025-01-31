@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mozilla:pollbot:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mozilla/PollBot/commit/6db74a4fcbff258c7cdf51a6ff0724fc10c485e5",
+        "version_end_excluding": {
+            "mozilla:pollbot": "1.4.4"
+        },
+        "path": {
+            "file_path": "pollbot/middlewares.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Mozilla Public License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21354"
+        ],
+        "CWE": [
+            "CWE-601"
+        ]
+    }
+}

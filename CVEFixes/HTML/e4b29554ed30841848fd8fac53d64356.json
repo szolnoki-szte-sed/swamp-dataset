@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:btcpayserver:btcpay_server:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/btcpayserver/btcpayserver/commit/fc4e47cec608cc3dba24b19d0145ac69320b975e",
+        "version_end_excluding": {
+            "btcpayserver:btcpay_server": "1.2.3"
+        },
+        "path": {
+            "file_path": "BTCPayServer/Components/NotificationsDropdown/Default.cshtml"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3646"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

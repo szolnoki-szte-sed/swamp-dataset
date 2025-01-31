@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:qpid_broker-j:7.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:qpid_broker-j:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/qpid-broker-j/commit/adb2a34306d67559ee81db155826dc67a02cc85e",
+        "version_end_excluding": {
+            "apache:qpid_broker-j": "unknown"
+        },
+        "path": {
+            "file_path": "broker-core/src/main/java/org/apache/qpid/server/queue/AbstractQueue.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-0200"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

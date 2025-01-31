@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:rocketmq:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/rocketmq/commit/f8f6fbe4aa7f5dee937e688322628c366b12a552",
+        "version_end_excluding": {
+            "apache:rocketmq": "unknown"
+        },
+        "path": {
+            "file_path": "broker/src/main/java/org/apache/rocketmq/broker/topic/TopicValidator.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-17572"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

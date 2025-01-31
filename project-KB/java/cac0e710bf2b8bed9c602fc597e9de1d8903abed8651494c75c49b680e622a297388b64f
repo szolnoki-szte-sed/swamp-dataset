@@ -1,0 +1,363 @@
+diff --git a/opc-ua-sdk/sdk-client/src/main/java/org/eclipse/milo/opcua/sdk/client/api/identity/UsernameProvider.java b/opc-ua-sdk/sdk-client/src/main/java/org/eclipse/milo/opcua/sdk/client/api/identity/UsernameProvider.java
+index eff78b74f9..b0d4f4df05 100644
+--- a/opc-ua-sdk/sdk-client/src/main/java/org/eclipse/milo/opcua/sdk/client/api/identity/UsernameProvider.java
++++ b/opc-ua-sdk/sdk-client/src/main/java/org/eclipse/milo/opcua/sdk/client/api/identity/UsernameProvider.java
+@@ -16,7 +16,6 @@
+ import java.security.GeneralSecurityException;
+ import java.security.cert.X509Certificate;
+ import java.util.List;
+-import java.util.Optional;
+ import java.util.function.Function;
+ import java.util.stream.Collectors;
+ import javax.crypto.Cipher;
+@@ -37,6 +36,7 @@
+ import org.eclipse.milo.opcua.stack.core.types.structured.UserNameIdentityToken;
+ import org.eclipse.milo.opcua.stack.core.types.structured.UserTokenPolicy;
+ import org.eclipse.milo.opcua.stack.core.util.CertificateUtil;
++import org.eclipse.milo.opcua.stack.core.util.NonceUtil;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
+@@ -134,8 +134,10 @@ public SignedIdentityToken getIdentityToken(EndpointDescription endpoint,
+             logger.warn("Error parsing SecurityPolicy for uri={}, falling back to no security.", securityPolicyUri);
+         }
+ 
++        NonceUtil.validateNonce(serverNonce);
++
+         byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8);
+-        byte[] nonceBytes = Optional.ofNullable(serverNonce.bytes()).orElse(new byte[0]);
++        byte[] nonceBytes = serverNonce.bytesOrEmpty();
+ 
+         ByteBuf buffer = Unpooled.buffer();
+ 
+diff --git a/opc-ua-sdk/sdk-client/src/main/java/org/eclipse/milo/opcua/sdk/client/api/identity/X509IdentityProvider.java b/opc-ua-sdk/sdk-client/src/main/java/org/eclipse/milo/opcua/sdk/client/api/identity/X509IdentityProvider.java
+index d266228f3d..c74d381657 100644
+--- a/opc-ua-sdk/sdk-client/src/main/java/org/eclipse/milo/opcua/sdk/client/api/identity/X509IdentityProvider.java
++++ b/opc-ua-sdk/sdk-client/src/main/java/org/eclipse/milo/opcua/sdk/client/api/identity/X509IdentityProvider.java
+@@ -22,6 +22,7 @@
+ import org.eclipse.milo.opcua.stack.core.types.structured.SignatureData;
+ import org.eclipse.milo.opcua.stack.core.types.structured.UserTokenPolicy;
+ import org.eclipse.milo.opcua.stack.core.types.structured.X509IdentityToken;
++import org.eclipse.milo.opcua.stack.core.util.NonceUtil;
+ import org.eclipse.milo.opcua.stack.core.util.SignatureUtil;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+@@ -67,6 +68,8 @@ public SignedIdentityToken getIdentityToken(EndpointDescription endpoint,
+             logger.warn("Error parsing SecurityPolicy for uri={}", securityPolicyUri);
+         }
+ 
++        NonceUtil.validateNonce(serverNonce);
++
+         X509IdentityToken token = new X509IdentityToken(
+             policyId,
+             ByteString.of(certificate.getEncoded())
+diff --git a/opc-ua-sdk/sdk-client/src/main/java/org/eclipse/milo/opcua/sdk/client/session/SessionFsmFactory.java b/opc-ua-sdk/sdk-client/src/main/java/org/eclipse/milo/opcua/sdk/client/session/SessionFsmFactory.java
+index 136d99d1aa..3741ec7af0 100644
+--- a/opc-ua-sdk/sdk-client/src/main/java/org/eclipse/milo/opcua/sdk/client/session/SessionFsmFactory.java
++++ b/opc-ua-sdk/sdk-client/src/main/java/org/eclipse/milo/opcua/sdk/client/session/SessionFsmFactory.java
+@@ -873,18 +873,20 @@ private static CompletableFuture<OpcUaSession> activateSession(
+         try {
+             EndpointDescription endpoint = client.getConfig().getEndpoint();
+ 
+-            ByteString serverNonce = csr.getServerNonce();
++            ByteString csrNonce = csr.getServerNonce();
++
++            NonceUtil.validateNonce(csrNonce);
+ 
+             SignedIdentityToken signedIdentityToken =
+                 client.getConfig().getIdentityProvider()
+-                    .getIdentityToken(endpoint, serverNonce);
++                    .getIdentityToken(endpoint, csrNonce);
+ 
+             UserIdentityToken userIdentityToken = signedIdentityToken.getToken();
+             SignatureData userTokenSignature = signedIdentityToken.getSignature();
+ 
+             ActivateSessionRequest request = new ActivateSessionRequest(
+                 client.newRequestHeader(csr.getAuthenticationToken()),
+-                buildClientSignature(client.getConfig(), serverNonce),
++                buildClientSignature(client.getConfig(), csrNonce),
+                 new SignedSoftwareCertificate[0],
+                 new String[0],
+                 ExtensionObject.encode(client.getSerializationContext(), userIdentityToken),
+@@ -896,19 +898,27 @@ private static CompletableFuture<OpcUaSession> activateSession(
+             return stackClient.sendRequest(request)
+                 .thenApply(ActivateSessionResponse.class::cast)
+                 .thenCompose(asr -> {
+-                    OpcUaSession session = new OpcUaSession(
+-                        csr.getAuthenticationToken(),
+-                        csr.getSessionId(),
+-                        client.getConfig().getSessionName().get(),
+-                        csr.getRevisedSessionTimeout(),
+-                        csr.getMaxRequestMessageSize(),
+-                        csr.getServerCertificate(),
+-                        csr.getServerSoftwareCertificates()
+-                    );
++                    try {
++                        ByteString asrNonce = asr.getServerNonce();
++
++                        NonceUtil.validateNonce(asrNonce);
++
++                        OpcUaSession session = new OpcUaSession(
++                            csr.getAuthenticationToken(),
++                            csr.getSessionId(),
++                            client.getConfig().getSessionName().get(),
++                            csr.getRevisedSessionTimeout(),
++                            csr.getMaxRequestMessageSize(),
++                            csr.getServerCertificate(),
++                            csr.getServerSoftwareCertificates()
++                        );
+ 
+-                    session.setServerNonce(asr.getServerNonce());
++                        session.setServerNonce(asrNonce);
+ 
+-                    return completedFuture(session);
++                        return completedFuture(session);
++                    } catch (UaException e) {
++                        return failedFuture(e);
++                    }
+                 });
+         } catch (Exception ex) {
+             return failedFuture(ex);
+diff --git a/opc-ua-sdk/sdk-server/src/main/java/org/eclipse/milo/opcua/sdk/server/SessionManager.java b/opc-ua-sdk/sdk-server/src/main/java/org/eclipse/milo/opcua/sdk/server/SessionManager.java
+index ab4307e94e..779c69014d 100644
+--- a/opc-ua-sdk/sdk-server/src/main/java/org/eclipse/milo/opcua/sdk/server/SessionManager.java
++++ b/opc-ua-sdk/sdk-server/src/main/java/org/eclipse/milo/opcua/sdk/server/SessionManager.java
+@@ -187,9 +187,7 @@ public void onCreateSession(ServiceRequest serviceRequest) throws UaException {
+ 
+         ByteString clientNonce = request.getClientNonce();
+ 
+-        if (clientNonce.isNotNull() && (clientNonce.length() < 32)) {
+-            throw new UaException(StatusCodes.Bad_NonceInvalid);
+-        }
++        NonceUtil.validateNonce(clientNonce);
+ 
+         if (securityPolicy != SecurityPolicy.None && clientNonces.contains(clientNonce)) {
+             throw new UaException(StatusCodes.Bad_NonceInvalid);
+diff --git a/opc-ua-stack/stack-client/src/main/java/org/eclipse/milo/opcua/stack/client/transport/uasc/UascClientMessageHandler.java b/opc-ua-stack/stack-client/src/main/java/org/eclipse/milo/opcua/stack/client/transport/uasc/UascClientMessageHandler.java
+index e5e644efd5..52cfe5113e 100644
+--- a/opc-ua-stack/stack-client/src/main/java/org/eclipse/milo/opcua/stack/client/transport/uasc/UascClientMessageHandler.java
++++ b/opc-ua-stack/stack-client/src/main/java/org/eclipse/milo/opcua/stack/client/transport/uasc/UascClientMessageHandler.java
+@@ -532,6 +532,8 @@ public void onMessageDecoded(ByteBuf message, long requestId) {
+                                 secureChannel.setChannelId(oscr.getSecurityToken().getChannelId().longValue());
+                                 logger.debug("Received OpenSecureChannelResponse.");
+ 
++                                NonceUtil.validateNonce(oscr.getServerNonce(), secureChannel.getSecurityPolicy());
++
+                                 installSecurityToken(ctx, oscr);
+ 
+                                 handshakeFuture.complete(secureChannel);
+diff --git a/opc-ua-stack/stack-core/src/main/java/org/eclipse/milo/opcua/stack/core/util/NonceUtil.java b/opc-ua-stack/stack-core/src/main/java/org/eclipse/milo/opcua/stack/core/util/NonceUtil.java
+index 81db7a9706..b5099857bf 100644
+--- a/opc-ua-stack/stack-core/src/main/java/org/eclipse/milo/opcua/stack/core/util/NonceUtil.java
++++ b/opc-ua-stack/stack-core/src/main/java/org/eclipse/milo/opcua/stack/core/util/NonceUtil.java
+@@ -16,12 +16,22 @@
+ import java.util.concurrent.TimeUnit;
+ import java.util.concurrent.atomic.AtomicReference;
+ 
++import org.bouncycastle.util.Arrays;
++import org.eclipse.milo.opcua.stack.core.StatusCodes;
++import org.eclipse.milo.opcua.stack.core.UaException;
+ import org.eclipse.milo.opcua.stack.core.security.SecurityPolicy;
+ import org.eclipse.milo.opcua.stack.core.types.builtin.ByteString;
+ import org.slf4j.LoggerFactory;
+ 
+ public class NonceUtil {
+ 
++    /**
++     * The minimum required nonce length for validation by {@link NonceUtil#validateNonce(ByteString)}.
++     * <p>
++     * This is specified by OPC UA Part 4 to be least 32 bytes in the CreateSession and ActivateSession services.
++     */
++    public static final int MINIMUM_NONCE_LENGTH = 32;
++
+     private static volatile boolean SECURE_RANDOM_ENABLED = true;
+ 
+     private static final AtomicReference<SecureRandom> SECURE_RANDOM = new AtomicReference<>();
+@@ -94,6 +104,9 @@ public static ByteString generateNonce(int length) {
+      * <p>
+      * The length is determined by the policy: see {@link #getNonceLength(SecurityPolicy)}.
+      *
++     * <b>Important</b>: this should only be used to generate a nonce exchanged when establishing a secure channel.
++     * The nonce used by sessions has different length requirements.
++     *
+      * @param securityPolicy the {@link SecurityPolicy} to use when determining the nonce length.
+      * @return a nonce of the appropriate length for the given security policy.
+      */
+@@ -111,7 +124,7 @@ public static ByteString generateNonce(SecurityPolicy securityPolicy) {
+      * @param securityPolicy the {@link SecurityPolicy} in use.
+      * @return the minimum nonce length for use with {@code securityPolicy}.
+      */
+-    public static int getNonceLength(SecurityPolicy securityPolicy) {
++    private static int getNonceLength(SecurityPolicy securityPolicy) {
+         switch (securityPolicy) {
+             case Basic128Rsa15:
+                 return 16;
+@@ -126,4 +139,50 @@ public static int getNonceLength(SecurityPolicy securityPolicy) {
+         }
+     }
+ 
++    /**
++     * Validate that {@code nonce} meets the minimum length requirement for {@code securityPolicy} and is non-zeroes.
++     * <p>
++     * <b>Important</b>: this should only be used to validate the nonce exchanged when establishing a secure channel.
++     * The nonce used by sessions has different length requirements.
++     *
++     * @param nonce          the nonce to validate.
++     * @param securityPolicy the {@link SecurityPolicy} dictating the minimum nonce length.
++     * @throws UaException if nonce validation failed.
++     */
++    public static void validateNonce(ByteString nonce, SecurityPolicy securityPolicy) throws UaException {
++        validateNonce(nonce, getNonceLength(securityPolicy));
++    }
++
++    /**
++     * Validate that {@code nonce} is at least {@link NonceUtil#MINIMUM_NONCE_LENGTH} and is non-zeroes.
++     *
++     * @param nonce the nonce to validate.
++     * @throws UaException if nonce validation failed.
++     */
++    public static void validateNonce(ByteString nonce) throws UaException {
++        validateNonce(nonce, MINIMUM_NONCE_LENGTH);
++    }
++
++    /**
++     * Validate that {@code nonce} is at least {@code minimumLength} and is non-zeroes.
++     *
++     * @param nonce         the nonce to validate.
++     * @param minimumLength the minimum required nonce length
++     * @throws UaException if nonce validation failed.
++     */
++    public static void validateNonce(ByteString nonce, int minimumLength) throws UaException {
++        byte[] bs = nonce.bytesOrEmpty();
++
++        if (bs.length < minimumLength) {
++            throw new UaException(
++                StatusCodes.Bad_NonceInvalid,
++                "nonce must be at least " + minimumLength + " bytes"
++            );
++        }
++
++        if (bs.length > 0 && Arrays.areAllZeroes(bs, 0, bs.length)) {
++            throw new UaException(StatusCodes.Bad_NonceInvalid, "nonce must be non-zero");
++        }
++    }
++
+ }
+diff --git a/opc-ua-stack/stack-core/src/test/java/org/eclipse/milo/opcua/stack/core/util/NonceUtilTest.java b/opc-ua-stack/stack-core/src/test/java/org/eclipse/milo/opcua/stack/core/util/NonceUtilTest.java
+new file mode 100644
+index 0000000000..62e60cd341
+--- /dev/null
++++ b/opc-ua-stack/stack-core/src/test/java/org/eclipse/milo/opcua/stack/core/util/NonceUtilTest.java
+@@ -0,0 +1,74 @@
++/*
++ * Copyright (c) 2019 the Eclipse Milo Authors
++ *
++ * This program and the accompanying materials are made
++ * available under the terms of the Eclipse Public License 2.0
++ * which is available at https://www.eclipse.org/legal/epl-2.0/
++ *
++ * SPDX-License-Identifier: EPL-2.0
++ */
++
++package org.eclipse.milo.opcua.stack.core.util;
++
++import java.util.Arrays;
++
++import org.eclipse.milo.opcua.stack.core.UaException;
++import org.eclipse.milo.opcua.stack.core.security.SecurityPolicy;
++import org.eclipse.milo.opcua.stack.core.types.builtin.ByteString;
++import org.testng.annotations.Test;
++
++import static org.testng.Assert.assertEquals;
++import static org.testng.Assert.assertThrows;
++
++public class NonceUtilTest {
++
++    @Test
++    public void testSecureChannelNonceGeneration() {
++        for (SecurityPolicy securityPolicy : SecurityPolicy.values()) {
++            ByteString nonce = NonceUtil.generateNonce(securityPolicy);
++
++            switch (securityPolicy) {
++                case None:
++                    assertEquals(nonce.length(), 0);
++                    break;
++                case Basic128Rsa15:
++                    assertEquals(nonce.length(), 16);
++                    break;
++                default:
++                    assertEquals(nonce.length(), 32);
++            }
++        }
++    }
++
++    @Test
++    public void testNonceGeneration() throws UaException {
++        for (int i = 32; i < 256; i++) {
++            ByteString nonce = NonceUtil.generateNonce(i);
++            assertEquals(nonce.length(), i);
++            NonceUtil.validateNonce(nonce);
++        }
++    }
++
++    @Test
++    public void testShortNonceThrows() {
++        ByteString nonce = NonceUtil.generateNonce(NonceUtil.MINIMUM_NONCE_LENGTH - 1);
++
++        assertThrows(() -> NonceUtil.validateNonce(nonce));
++    }
++
++    @Test
++    public void testNonceOfZeroesThrows() {
++        byte[] bs = new byte[NonceUtil.MINIMUM_NONCE_LENGTH];
++        Arrays.fill(bs, (byte) 0);
++        ByteString nonce = ByteString.of(bs);
++
++        assertThrows(() -> NonceUtil.validateNonce(nonce));
++    }
++
++    @Test
++    public void testZeroLengthNonceValidation() throws UaException {
++        // an empty nonce is valid in the secure channel layer when no security is used.
++        NonceUtil.validateNonce(ByteString.of(new byte[0]), 0);
++    }
++
++}
+diff --git a/opc-ua-stack/stack-server/src/main/java/org/eclipse/milo/opcua/stack/server/transport/uasc/UascServerAsymmetricHandler.java b/opc-ua-stack/stack-server/src/main/java/org/eclipse/milo/opcua/stack/server/transport/uasc/UascServerAsymmetricHandler.java
+index 8a62972bfc..23ebf2719e 100644
+--- a/opc-ua-stack/stack-server/src/main/java/org/eclipse/milo/opcua/stack/server/transport/uasc/UascServerAsymmetricHandler.java
++++ b/opc-ua-stack/stack-server/src/main/java/org/eclipse/milo/opcua/stack/server/transport/uasc/UascServerAsymmetricHandler.java
+@@ -58,13 +58,13 @@
+ import org.eclipse.milo.opcua.stack.core.types.structured.ResponseHeader;
+ import org.eclipse.milo.opcua.stack.core.util.BufferUtil;
+ import org.eclipse.milo.opcua.stack.core.util.EndpointUtil;
++import org.eclipse.milo.opcua.stack.core.util.NonceUtil;
+ import org.eclipse.milo.opcua.stack.server.UaStackServer;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
+ import static org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.Unsigned.uint;
+ import static org.eclipse.milo.opcua.stack.core.util.NonceUtil.generateNonce;
+-import static org.eclipse.milo.opcua.stack.core.util.NonceUtil.getNonceLength;
+ 
+ public class UascServerAsymmetricHandler extends ByteToMessageDecoder implements HeaderDecoder {
+ 
+@@ -434,17 +434,7 @@ private OpenSecureChannelResponse openSecureChannel(
+             // Validate the remote nonce; it must be non-null and the correct length for the security algorithm.
+             ByteString remoteNonce = request.getClientNonce();
+ 
+-            if (remoteNonce == null || remoteNonce.isNull()) {
+-                throw new UaException(StatusCodes.Bad_SecurityChecksFailed, "remote nonce must be non-null");
+-            }
+-
+-            if (remoteNonce.length() < getNonceLength(secureChannel.getSecurityPolicy())) {
+-                String message = String.format(
+-                    "remote nonce length must be at least %d bytes",
+-                    getNonceLength(secureChannel.getSecurityPolicy()));
+-
+-                throw new UaException(StatusCodes.Bad_SecurityChecksFailed, message);
+-            }
++            NonceUtil.validateNonce(remoteNonce, secureChannel.getSecurityPolicy());
+ 
+             ByteString localNonce = generateNonce(secureChannel.getSecurityPolicy());
+ 

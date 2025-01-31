@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sonarsource:sonarqube:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/SonarSource/sonarqube/commit/7b567ba3d15ed7dd0b0bba0330686487e35af85c",
+        "version_end_excluding": {
+            "sonarsource:sonarqube": "7.4"
+        },
+        "path": {
+            "file_path": "server/sonar-server/src/test/java/org/sonar/server/user/ws/SearchActionTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-19413"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:glpi-project:glpi:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/glpi-project/glpi/commit/f1ae6c8481e5c19a6f1801a5548cada45702e01a",
+        "version_end_excluding": {
+            "glpi-project:glpi": "9.5.0"
+        },
+        "path": {
+            "file_path": "ajax/mailcollector.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-11031"
+        ],
+        "CWE": [
+            "CWE-327"
+        ]
+    }
+}

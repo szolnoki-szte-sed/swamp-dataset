@@ -1,0 +1,52 @@
+diff --git a/ChangeLog b/ChangeLog
+index 482edaa856..f178c424fd 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,10 @@
++2019-04-23  Dirk Frederickx (brushed AT apache DOT org)
++
++       * 2.11.0-M4-git-06
++
++       * [JSPWIKI-1109] ReferredPagesPlugin with illegal characters in parameters
++         causes XSS vulnerability
++
+ 2019-04-23  Dirk Frederickx (brushed AT apache DOT org)
+ 
+        * 2.11.0-M4-git-05
+diff --git a/jspwiki-main/src/main/java/org/apache/wiki/Release.java b/jspwiki-main/src/main/java/org/apache/wiki/Release.java
+index f8b77bee61..6e288d65d5 100644
+--- a/jspwiki-main/src/main/java/org/apache/wiki/Release.java
++++ b/jspwiki-main/src/main/java/org/apache/wiki/Release.java
+@@ -72,7 +72,7 @@ public final class Release {
+      *  <p>
+      *  If the build identifier is empty, it is not added.
+      */
+-    public static final String     BUILD         = "05";
++    public static final String     BUILD         = "06";
+ 
+     /**
+      *  This is the generic version string you should use when printing out the version.  It is of
+diff --git a/jspwiki-main/src/main/java/org/apache/wiki/plugin/ReferredPagesPlugin.java b/jspwiki-main/src/main/java/org/apache/wiki/plugin/ReferredPagesPlugin.java
+index a737f27b68..0d8059d9dc 100644
+--- a/jspwiki-main/src/main/java/org/apache/wiki/plugin/ReferredPagesPlugin.java
++++ b/jspwiki-main/src/main/java/org/apache/wiki/plugin/ReferredPagesPlugin.java
+@@ -134,8 +134,8 @@ public String execute( WikiContext context, Map<String, String> params ) throws
+ 
+         m_result.append("<div class=\"ReferredPagesPlugin\">\n");
+         m_result.append("<a class=\"wikipage\" href=\""+ href +
+-                        "\" title=\"" + title +
+-                        "\">" + rootname + "</a>\n");
++                        "\" title=\"" + TextUtil.replaceEntities(title) +
++                        "\">" + TextUtil.replaceEntities(rootname) + "</a>\n");
+         m_exists.add(rootname);
+ 
+         // pre compile all needed patterns
+@@ -232,7 +232,7 @@ private void handleLinks(WikiContext context,Collection<String> links, int depth
+                 }
+             } else {
+                 if( !isUL ) {
+-                    isUL = true; 
++                    isUL = true;
+                     m_result.append("<ul>\n");
+                 }
+ 

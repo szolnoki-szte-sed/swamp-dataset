@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:nifi:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/nifi/commit/dbf259508c2b8e176d8cb837177aaadbf44f0670",
+        "version_end_excluding": {
+            "apache:nifi": "unknown"
+        },
+        "path": {
+            "file_path": "nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-web/nifi-jetty/src/test/java/org/apache/nifi/web/server/JettyServerTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-17192"
+        ],
+        "CWE": [
+            "CWE-1021"
+        ]
+    }
+}

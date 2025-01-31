@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:tapestry:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/tapestry-5/commit/6dd7219fd4707467a36091e2f7f5f6460c619099",
+        "version_end_excluding": {
+            "apache:tapestry": "unknown"
+        },
+        "path": {
+            "file_path": "tapestry-ioc/src/main/java/org/apache/tapestry5/ioc/internal/util/AbstractResource.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-0207"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:hbase:0.94.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.92.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.92.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.92.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.94.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.94.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.94.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.94.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.94.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.94.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.94.6.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.94.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.94.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/hbase/commit/408eb243ad51bbad593d83ad2cfd35cc0e90b38e",
+        "version_end_excluding": {
+            "apache:hbase": "unknown"
+        },
+        "path": {
+            "file_path": "security/src/main/java/org/apache/hadoop/hbase/ipc/SecureClient.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-2193"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mongodb:libbson:1.12.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mongodb/mongo-c-driver/commit/0d9a4d98bfdf4acd2c0138d4aaeb4e2e0934bd84",
+        "version_end_excluding": {
+            "mongodb:libbson": "unknown"
+        },
+        "path": {
+            "file_path": "src/libbson/src/bson/bson-iter.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-16790"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

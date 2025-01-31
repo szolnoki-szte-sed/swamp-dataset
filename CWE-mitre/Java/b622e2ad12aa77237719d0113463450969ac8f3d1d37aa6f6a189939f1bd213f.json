@@ -1,0 +1,49 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:python-poetry:poetry:*:*:*:*:*:python:*:*",
+            "cpe:2.3:a:apache:http_server:1.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:zyxel:nas326_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:hestiacp:control_panel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pfsense:pfsense:2.5.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fortinet:fcm-mb40_firmware:1.2.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:graphicsmagick:graphicsmagick:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:titanhq:spamtitan:7.07:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "python-poetry:poetry": "unknown",
+            "apache:http_server": "unknown",
+            "zyxel:nas326_firmware": "unknown",
+            "hestiacp:control_panel": "unknown",
+            "pfsense:pfsense": "unknown",
+            "fortinet:fcm-mb40_firmware": "unknown",
+            "graphicsmagick:graphicsmagick": "unknown",
+            "titanhq:spamtitan": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-36069",
+            "CVE-1999-0067",
+            "CVE-2020-9054",
+            "CVE-2022-1509",
+            "CVE-2021-41282",
+            "CVE-2019-13398",
+            "CVE-2019-12921",
+            "CVE-2020-11698"
+        ],
+        "CWE": [
+            "CWE-77"
+        ]
+    }
+}

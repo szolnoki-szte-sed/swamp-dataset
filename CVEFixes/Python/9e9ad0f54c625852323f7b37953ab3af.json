@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:calibre-web_project:calibre-web:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/janeczku/calibre-web/commit/e0e04220109920575179a8f924543449c6de0706",
+        "version_end_excluding": {
+            "calibre-web_project:calibre-web": "0.6.16"
+        },
+        "path": {
+            "file_path": "cps/constants.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0406"
+        ],
+        "CWE": [
+            "CWE-863"
+        ]
+    }
+}

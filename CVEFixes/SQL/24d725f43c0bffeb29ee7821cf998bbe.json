@@ -1,0 +1,64 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ruby-lang:ruby:2.3.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:2.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:2.4.0:preview1:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:2.3.0:preview1:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:2.3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:2.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:2.3.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:2.3.0:preview2:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:2.4.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:2.4.0:preview2:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:2.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:2.4.0:preview3:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:2.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:17.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_desktop:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_workstation:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server_aus:7.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server_eus:7.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server_tus:7.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server_eus:7.5:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server_tus:7.6:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server_eus:7.6:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server_aus:7.6:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/flori/json/commit/8f782fd8e181d9cfe9387ded43a5ca9692266b85",
+        "version_end_excluding": {
+            "ruby-lang:ruby": "unknown",
+            "debian:debian_linux": "unknown",
+            "canonical:ubuntu_linux": "unknown",
+            "redhat:enterprise_linux_desktop": "unknown",
+            "redhat:enterprise_linux_workstation": "unknown",
+            "redhat:enterprise_linux_server": "unknown",
+            "redhat:enterprise_linux_server_aus": "unknown",
+            "redhat:enterprise_linux_server_eus": "unknown",
+            "redhat:enterprise_linux_server_tus": "unknown"
+        },
+        "path": {
+            "file_path": "ext/json/ext/generator/generator.h"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-14064"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

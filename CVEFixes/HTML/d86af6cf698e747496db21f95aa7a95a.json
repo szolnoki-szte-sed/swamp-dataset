@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:novnc:novnc:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.04:*:*:*:esm:*:*:*",
+            "cpe:2.3:a:redhat:openstack:13:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/novnc/noVNC/commit/6048299a138e078aed210f163111698c8c526a13",
+        "version_end_excluding": {
+            "novnc:novnc": "0.6.2",
+            "debian:debian_linux": "unknown",
+            "canonical:ubuntu_linux": "unknown",
+            "redhat:openstack": "unknown"
+        },
+        "path": {
+            "file_path": "tests/input.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-18635"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/ericcornelissen/shescape/commit/07a069a66423809cbedd61d980c11ca44a29ea2b",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "CHANGELOG.md"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Mozilla Public License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21384"
+        ],
+        "CWE": [
+            "CWE-88"
+        ]
+    }
+}

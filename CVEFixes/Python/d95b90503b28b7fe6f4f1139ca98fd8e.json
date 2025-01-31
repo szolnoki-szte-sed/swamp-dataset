@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bower:bower:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/bower/bower/commit/45c6bfa86f6e57731b153baca9e0b41a1cc699e3",
+        "version_end_excluding": {
+            "bower:bower": "1.8.8"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-5484"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

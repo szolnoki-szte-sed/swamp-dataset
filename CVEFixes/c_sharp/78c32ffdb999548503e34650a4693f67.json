@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:kavita:kavita:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/kareadita/kavita/commit/9c31f7e7c81b919923cb2e3857439ec0d16243e4",
+        "version_end_excluding": {
+            "kavita:kavita": "0.5.4.1"
+        },
+        "path": {
+            "file_path": "Kavita.Common/Kavita.Common.csproj"
+        }
+    },
+    "programming_language": "c_sharp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2756"
+        ],
+        "CWE": [
+            "CWE-918"
+        ]
+    }
+}

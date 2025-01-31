@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:maxsite:maxsite_cms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/maxsite/cms/commit/6b0ab1de9f3d471485d1347e800a9ce43fedbf1a",
+        "version_end_excluding": {
+            "maxsite:maxsite_cms": "106"
+        },
+        "path": {
+            "file_path": "application/maxsite/plugins/global_cache/index.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-35265"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

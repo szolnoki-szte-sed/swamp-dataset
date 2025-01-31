@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:arm:mbed_tls:2.8.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ARMmbed/mbedtls/commit/027f84c69f4ef30c0693832a6c396ef19e563ca1",
+        "version_end_excluding": {
+            "arm:mbed_tls": "2.1.11",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "library/ssl_cli.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-9988"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

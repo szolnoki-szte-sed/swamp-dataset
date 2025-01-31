@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:async-http-client_project:async-http-client:*:beta24:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_fuse:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/AsyncHttpClient/async-http-client/commit/df6ed70e86c8fc340ed75563e016c8baa94d7e72",
+        "version_end_excluding": {
+            "redhat:jboss_fuse": "unknown"
+        },
+        "path": {
+            "file_path": "api/src/main/java/org/asynchttpclient/util/SslUtils.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-7397"
+        ],
+        "CWE": [
+            "CWE-345"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:eclipse:rdf4j:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/eclipse/rdf4j/commit/df15a4d7a8f2789c043b27c9eafe1b30316cfa79",
+        "version_end_excluding": {
+            "eclipse:rdf4j": "2.5.0"
+        },
+        "path": {
+            "file_path": "util/src/main/java/org/eclipse/rdf4j/common/io/ZipUtil.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20227"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

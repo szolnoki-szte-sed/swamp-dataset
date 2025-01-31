@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:v2fly:v2ray-core:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/v2fly/v2ray-core/commit/c1af2bfd7aa59a4482aa7f6ec4b9208c1d350b5c",
+        "version_end_excluding": {
+            "v2fly:v2ray-core": "4.44.0"
+        },
+        "path": {
+            "file_path": "proxy/vmess/encoding/commands.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-4070"
+        ],
+        "CWE": [
+            "CWE-193"
+        ]
+    }
+}

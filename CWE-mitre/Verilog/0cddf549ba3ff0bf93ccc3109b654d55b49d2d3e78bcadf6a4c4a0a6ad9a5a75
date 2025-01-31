@@ -1,0 +1,4 @@
+-
+-			.REGISTER_WIDTH (32), 
+-			.REGISTER_DEFAULT (1225) // Correct default value set, to enable Secure_mode 
+-		      

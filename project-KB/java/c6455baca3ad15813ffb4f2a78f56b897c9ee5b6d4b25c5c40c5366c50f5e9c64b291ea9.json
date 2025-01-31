@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linuxfoundation:open_network_operating_system:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/opennetworkinglab/onos/commit/c6455baca3ad15813ffb4f2a78f56b897c9ee5b6",
+        "version_end_excluding": {
+            "linuxfoundation:open_network_operating_system": "unknown"
+        },
+        "path": {
+            "file_path": "apps/yang/web/src/main/java/org/onosproject/yang/web/YangWebResource.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-1010245"
+        ],
+        "CWE": [
+            "CWE-20",
+            "CWE-78"
+        ]
+    }
+}

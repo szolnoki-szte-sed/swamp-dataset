@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:hestiacp:control_panel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/hestiacp/hestiacp/commit/b178b9719bb2c98cf8a6db70065086f596afad81",
+        "version_end_excluding": {
+            "hestiacp:control_panel": "1.6.6"
+        },
+        "path": {
+            "file_path": "install/hst-install-debian.sh"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2626"
+        ],
+        "CWE": [
+            "CWE-266"
+        ]
+    }
+}

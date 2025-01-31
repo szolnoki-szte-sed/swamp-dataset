@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal_software:spring_framework:4.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.1.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-framework/commit/dc5b5ca8ee09c890352f89b2dae58bc0132d6545",
+        "version_end_excluding": {
+            "pivotal_software:spring_framework": "unknown"
+        },
+        "path": {
+            "file_path": "spring-websocket/src/test/java/org/springframework/web/socket/sockjs/transport/handler/DefaultSockJsServiceTests.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-0201"
+        ],
+        "CWE": [
+            "CWE-254"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:websocket-extensions_project:websocket-extensions:*:*:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/faye/websocket-extensions-ruby/commit/aa156a439da681361ed6f53f1a8131892418838b",
+        "version_end_excluding": {
+            "websocket-extensions_project:websocket-extensions": "0.1.5"
+        },
+        "path": {
+            "file_path": "lib/websocket/extensions/parser.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-7663"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

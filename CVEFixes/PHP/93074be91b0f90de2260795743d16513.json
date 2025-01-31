@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:devome:grr:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/JeromeDevome/GRR/commit/2c6edacd9e15c75a0c2ef472470481ffb6edc7d8",
+        "version_end_excluding": {
+            "devome:grr": "3.4.1c"
+        },
+        "path": {
+            "file_path": "include/functions.inc.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-10562"
+        ],
+        "CWE": [
+            "CWE-434"
+        ]
+    }
+}

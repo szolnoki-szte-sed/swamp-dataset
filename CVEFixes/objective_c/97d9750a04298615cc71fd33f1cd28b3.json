@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:inverse:sogo:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/inverse-inc/sogo/commit/582baf2960969c73f98643e46cfb49432c30b711",
+        "version_end_excluding": {
+            "debian:debian_linux": "unknown",
+            "inverse:sogo": "3.1.0"
+        },
+        "path": {
+            "file_path": "UI/MailerUI/UIxMailListActions.m"
+        }
+    },
+    "programming_language": "objective_c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5395"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

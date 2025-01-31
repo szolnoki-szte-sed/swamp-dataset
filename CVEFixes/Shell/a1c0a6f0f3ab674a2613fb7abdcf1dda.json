@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/298a58e165e447ccfaae35fe9f651f9d7e15166f",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "arch/arm/configs/footbridge_defconfig"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32078"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

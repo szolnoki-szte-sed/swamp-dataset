@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pingidentity:mod_auth_openidc:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pingidentity/mod_auth_openidc/commit/21e3728a825c41ab41efa75e664108051bb9665e",
+        "version_end_excluding": {
+            "pingidentity:mod_auth_openidc": "unknown"
+        },
+        "path": {
+            "file_path": "configure.ac"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-6413"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

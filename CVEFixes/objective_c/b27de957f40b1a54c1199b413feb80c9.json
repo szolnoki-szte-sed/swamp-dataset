@@ -1,0 +1,41 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:imagemagick:imagemagick:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:imagemagick:imagemagick:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:19.04:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:19.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ImageMagick/ImageMagick/commit/a77d8d97f5a7bced0468f0b08798c83fb67427bc",
+        "version_end_excluding": {
+            "imagemagick:imagemagick": "7.0.8-41",
+            "debian:debian_linux": "unknown",
+            "canonical:ubuntu_linux": "unknown",
+            "opensuse:leap": "unknown"
+        },
+        "path": {
+            "file_path": "MagickCore/feature.c"
+        }
+    },
+    "programming_language": "objective_c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-14981"
+        ],
+        "CWE": [
+            "CWE-369"
+        ]
+    }
+}

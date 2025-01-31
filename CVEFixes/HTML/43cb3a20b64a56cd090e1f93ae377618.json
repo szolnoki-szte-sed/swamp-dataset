@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:chatwoot:chatwoot:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/chatwoot/chatwoot/commit/27ddd77a1b621f503fe89a436a49f44b0b1204b5",
+        "version_end_excluding": {
+            "chatwoot:chatwoot": "2.5.0"
+        },
+        "path": {
+            "file_path": "app/javascript/dashboard/components/widgets/conversation/bubble/Text.vue"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-1022"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

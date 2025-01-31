@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:single_sign_on:7.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:keycloak:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:single_sign_on:7.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server:7.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/keycloak/keycloak/commit/a78cfa4b2ca979a1981fb371cfdf2c7212f7b6e2",
+        "version_end_excluding": {
+            "redhat:keycloak": "2.4.0"
+        },
+        "path": {
+            "file_path": "services/src/main/java/org/keycloak/services/resources/admin/UsersResource.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-8629"
+        ],
+        "CWE": [
+            "CWE-264",
+            "CWE-284"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:thunderdome:planning_poker:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/StevenWeathers/thunderdome-planning-poker/commit/f1524d01e8a0f2d6c3db5461c742456c692dd8c1",
+        "version_end_excluding": {
+            "thunderdome:planning_poker": "1.16.3"
+        },
+        "path": {
+            "file_path": "auth.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41232"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:struts:2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:struts:2.0.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:struts:2.0.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:struts:2.0.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:struts:2.0.6:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/struts/commit/bd3f2f59c9b09f70aed3ebab6bb69b464ee2d6cb",
+        "version_end_excluding": {
+            "apache:struts": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/main/java/org/apache/struts2/views/util/UrlHelper.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2008-6682"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

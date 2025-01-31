@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:inverse:sogo:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/inverse-inc/sogo/commit/80a09407652ec04e8c9fb6cb48e1029e69a15765",
+        "version_end_excluding": {
+            "inverse:sogo": "unknown"
+        },
+        "path": {
+            "file_path": "NEWS"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-9905"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:nystudio107:seomatic:*:*:*:*:*:craft_cms:*:*"
+        ],
+        "fix_commit": "https://github.com/nystudio107/craft-seomatic/commit/1e7d1d084ac3a89e7ec70620f2749110508d1ce1",
+        "version_end_excluding": {
+            "nystudio107:seomatic": "3.1.4"
+        },
+        "path": {
+            "file_path": "src/seomatic-config/globalmeta/GlobalVars.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-14716"
+        ],
+        "CWE": [
+            "CWE-94"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:firefly-iii:firefly_iii:4.7.17.4:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/firefly-iii/firefly-iii/commit/15d4d185bbedf2bb9db4a8fa2ccf9fc359a06194",
+        "version_end_excluding": {
+            "firefly-iii:firefly_iii": "unknown"
+        },
+        "path": {
+            "file_path": "resources/views/v1/transactions/convert.twig"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-14667"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

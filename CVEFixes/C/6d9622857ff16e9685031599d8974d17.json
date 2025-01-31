@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:19.10:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/6f3ef5c25cc762687a7341c18cbea5af54461407",
+        "version_end_excluding": {
+            "linux:linux_kernel": "5.3.11",
+            "debian:debian_linux": "unknown",
+            "canonical:ubuntu_linux": "unknown"
+        },
+        "path": {
+            "file_path": "drivers/net/wimax/i2400m/op-rfkill.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-19051"
+        ],
+        "CWE": [
+            "CWE-401"
+        ]
+    }
+}

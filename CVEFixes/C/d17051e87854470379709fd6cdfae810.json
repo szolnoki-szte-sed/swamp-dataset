@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:reddit:snudown:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/reddit/snudown/commit/1ac2c130b210539ee1e5d67a7bac93f9d8007c0e",
+        "version_end_excluding": {
+            "reddit:snudown": "1.7.0"
+        },
+        "path": {
+            "file_path": "snudown.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41168"
+        ],
+        "CWE": [
+            "CWE-327"
+        ]
+    }
+}

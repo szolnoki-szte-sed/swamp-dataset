@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:eclipse:paho_java_client:1.2.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/eclipse/paho.mqtt.java/commit/a0bbf1e7da158ae191582f032343c6171e6a0b44",
+        "version_end_excluding": {
+            "eclipse:paho_java_client": "unknown"
+        },
+        "path": {
+            "file_path": "org.eclipse.paho.client.mqttv3/src/main/java/org/eclipse/paho/client/mqttv3/internal/SSLNetworkModule.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-11777"
+        ],
+        "CWE": [
+            "CWE-346",
+            "CWE-755"
+        ]
+    }
+}

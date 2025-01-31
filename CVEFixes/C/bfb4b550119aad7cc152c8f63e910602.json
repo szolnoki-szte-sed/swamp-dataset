@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:google:android:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/c623b33b4e9599c6ac5076f7db7369eb9869aa04",
+        "version_end_excluding": {
+            "google:android": "unknown",
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "arch/arm64/kernel/sys.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-8967"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

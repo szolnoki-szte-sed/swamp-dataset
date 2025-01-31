@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:squareup:okhttp3:3.0.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:squareup:okhttp3:3.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:squareup:okhttp3:3.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:squareup:okhttp3:3.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:squareup:okhttp3:3.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:squareup:okhttp:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/square/okhttp/commit/3ccb46dd16b6ec98f70b0ee53eafe5ed6380891e",
+        "version_end_excluding": {
+            "squareup:okhttp": "unknown"
+        },
+        "path": {
+            "file_path": "okhttp/src/main/java/okhttp3/CertificatePinner.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-2402"
+        ],
+        "CWE": [
+            "CWE-295"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:graphpaperpress:sell_media:*:*:*:*:*:wordpress:*:*"
+        ],
+        "fix_commit": "https://github.com/graphpaperpress/Sell-Media/commit/8ac8cebf332e0885863d0a25e16b4b180abedc47",
+        "version_end_excluding": {
+            "graphpaperpress:sell_media": "unknown"
+        },
+        "path": {
+            "file_path": "js/macy.min.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-6112"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

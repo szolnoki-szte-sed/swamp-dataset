@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:area17:twill:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/area17/twill/commit/81d80d1fbbdd8bb73c020f03c623fd4487bd9b78",
+        "version_end_excluding": {
+            "area17:twill": "unknown"
+        },
+        "path": {
+            "file_path": "routes/auth.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3932"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

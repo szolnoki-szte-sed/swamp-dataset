@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:grocy:grocy:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/grocy/grocy/commit/0df2590de27c60c18b7db6e056347bd2aff5a887",
+        "version_end_excluding": {
+            "grocy:grocy": "unknown"
+        },
+        "path": {
+            "file_path": "public/viewjs/batteries.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15253"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

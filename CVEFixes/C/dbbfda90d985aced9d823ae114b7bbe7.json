@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_mrg:2.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/87c48fa3b4630905f98268dde838ee43626a060c",
+        "version_end_excluding": {
+            "linux:linux_kernel": "3.1",
+            "redhat:enterprise_linux": "unknown",
+            "redhat:enterprise_mrg": "unknown"
+        },
+        "path": {
+            "file_path": "net/ipv6/udp.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-2699"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

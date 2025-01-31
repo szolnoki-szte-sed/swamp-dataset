@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:git-pull-or-clone_project:git-pull-or-clone:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/feross/git-pull-or-clone/commit/f9ce092be13cc32e685dfa26e7705e9c6e3108a3",
+        "version_end_excluding": {
+            "git-pull-or-clone_project:git-pull-or-clone": "2.0.2"
+        },
+        "path": {
+            "file_path": "index.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24437"
+        ],
+        "CWE": [
+            "CWE-77"
+        ]
+    }
+}

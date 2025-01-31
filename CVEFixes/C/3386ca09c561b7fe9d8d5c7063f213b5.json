@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:openrc_project:openrc:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/OpenRC/openrc/commit/bb8334104baf4d5a4a442a8647fb9204738f2204",
+        "version_end_excluding": {
+            "openrc_project:openrc": "0.44.7"
+        },
+        "path": {
+            "file_path": "src/rc/checkpath.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 2-Clause \"Simplified\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-42341"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

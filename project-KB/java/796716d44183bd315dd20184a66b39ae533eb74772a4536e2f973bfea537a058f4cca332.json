@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:archiva:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/archiva/commit/796716d44183bd315dd20184a66b39ae533eb747",
+        "version_end_excluding": {
+            "apache:archiva": "unknown"
+        },
+        "path": {
+            "file_path": "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-default/src/test/java/org/apache/archiva/admin/repository/admin/ArchivaAdministrationTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-0214"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

@@ -1,0 +1,43 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal:spring_security_oauth:1.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:2.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:1.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:2.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:1.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:1.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:2.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:2.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:2.0.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:2.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:2.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:1.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:2.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:2.0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:1.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:spring_security_oauth:2.0.8:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-security-oauth/commit/fff77d3fea477b566bcacfbfc95f85821a2bdc2d",
+        "version_end_excluding": {
+            "pivotal:spring_security_oauth": "unknown"
+        },
+        "path": {
+            "file_path": "spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/endpoint/SpelView.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-4977"
+        ],
+        "CWE": [
+            "CWE-19"
+        ]
+    }
+}

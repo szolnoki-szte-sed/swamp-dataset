@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:vmware:spring_security:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-security/commit/b2d4fec3617c497c5a8eb9c7e5270e0c7db293ee",
+        "version_end_excluding": {
+            "vmware:spring_security": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/main/java/org/springframework/security/authentication/encoding/PlaintextPasswordEncoder.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-11272"
+        ],
+        "CWE": [
+            "CWE-522",
+            "CWE-287"
+        ]
+    }
+}

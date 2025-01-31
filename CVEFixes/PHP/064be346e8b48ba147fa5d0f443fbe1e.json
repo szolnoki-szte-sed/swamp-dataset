@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ampache:ampache:4.4.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ampache/ampache/commit/c9453841e1b517a1660c3da1efd1fe5d623c93a5",
+        "version_end_excluding": {
+            "ampache:ampache": "unknown"
+        },
+        "path": {
+            "file_path": "random.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32644"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

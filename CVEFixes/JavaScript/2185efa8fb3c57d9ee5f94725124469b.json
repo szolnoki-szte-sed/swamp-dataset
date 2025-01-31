@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:getgophish:gophish:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/gophish/gophish/commit/4e9b94b641755f359542b246cc0c555fa3bc6715",
+        "version_end_excluding": {
+            "getgophish:gophish": "0.11.0"
+        },
+        "path": {
+            "file_path": "static/js/dist/app/settings.min.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-24712"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

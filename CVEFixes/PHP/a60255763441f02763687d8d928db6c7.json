@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mediawiki:mediawiki:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mediawiki:mediawiki:1.24.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mediawiki:mediawiki:1.24.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mediawiki:mediawiki:1.24.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mediawiki:mediawiki:1.25.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mediawiki:mediawiki:1.25.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:15.04:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/wikimedia/mediawiki/commit/5faabfa1bbf65536ea36108887040198afcb3c82",
+        "version_end_excluding": {
+            "mediawiki:mediawiki": "unknown",
+            "canonical:ubuntu_linux": "unknown"
+        },
+        "path": {
+            "file_path": "includes/specials/SpecialDeletedContributions.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-6727"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

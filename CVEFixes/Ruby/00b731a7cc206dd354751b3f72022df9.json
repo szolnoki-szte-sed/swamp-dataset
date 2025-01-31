@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mongodb:bson:*:*:*:*:*:ruby:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:22:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:21:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mongodb/bson-ruby/commit/976da329ff03ecdfca3030eb6efe3c85e6db9999",
+        "version_end_excluding": {
+            "mongodb:bson": "3.0.4",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "lib/bson/object_id.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-4411"
+        ],
+        "CWE": [
+            "CWE-400"
+        ]
+    }
+}

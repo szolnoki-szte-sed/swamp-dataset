@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:oracle:linux:5:-:*:*:*:*:*:*",
+            "cpe:2.3:o:oracle:linux:6:-:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/86acdca1b63e6890540fa19495cfc708beff3d8b",
+        "version_end_excluding": {
+            "linux:linux_kernel": "2.6.33",
+            "oracle:linux": "unknown"
+        },
+        "path": {
+            "file_path": "fs/proc/base.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-0203"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

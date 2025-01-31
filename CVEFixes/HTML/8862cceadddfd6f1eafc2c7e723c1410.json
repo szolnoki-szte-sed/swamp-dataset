@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apereo:opencast:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/opencast/opencast/commit/59cb6731067283e54f15462be38b6117d8b9ea8b",
+        "version_end_excluding": {
+            "apereo:opencast": "9.10"
+        },
+        "path": {
+            "file_path": "modules/security-aai/pom.xml"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Educational Community License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-43807"
+        ],
+        "CWE": [
+            "CWE-290"
+        ]
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/schneems/wicked/commit/fe31bb2533fffc9d098c69ebeb7afc3b80509f53",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "VERSION"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-4413"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

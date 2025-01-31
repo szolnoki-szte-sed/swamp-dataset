@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:google:asylo:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/google/asylo/commit/299f804acbb95a612ab7c504d25ab908aa59ae93",
+        "version_end_excluding": {
+            "google:asylo": "0.6.0"
+        },
+        "path": {
+            "file_path": "asylo/platform/host_call/trusted/host_calls.cc"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-8905"
+        ],
+        "CWE": [
+            "CWE-120"
+        ]
+    }
+}

@@ -1,0 +1,65 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.0.2:cr2:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.0.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.1.1:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.0.1:cr2:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.1.0:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.2.1:cr3:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.3.0:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.1.1:cr2:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.1.0:ga:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.1.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.3.0:alpha:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.1.0:sp1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.2.0:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.3.0:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.1.2:cr2:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.0.2:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.0.0:ga:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.0.1:ga:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.0.0:cr3:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.0.3:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.1.1:ga:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.2.1:cr2:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.0.2:ga:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.3.1:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.1.2:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.1.0:alpha1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.3.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.0.0:cr2:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.2.1:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.0.0:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.0.1:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.0.2:sp1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_seam_2_framework:2.2.0:ga:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/seam2/jboss-seam/commit/090aa6252affc978a96c388e3fc2c1c2688d9bb5",
+        "version_end_excluding": {
+            "redhat:jboss_seam_2_framework": "unknown"
+        },
+        "path": {
+            "file_path": "jboss-seam/src/main/java/org/jboss/seam/util/XML.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-6447"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

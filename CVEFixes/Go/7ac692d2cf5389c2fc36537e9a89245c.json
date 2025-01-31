@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ory:fosite:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ory/fosite/commit/cdee51ebe721bfc8acca0fd0b86b030ca70867bf",
+        "version_end_excluding": {
+            "ory:fosite": "0.34.1"
+        },
+        "path": {
+            "file_path": "helper_test.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15233"
+        ],
+        "CWE": [
+            "CWE-601"
+        ]
+    }
+}

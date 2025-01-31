@@ -1,0 +1,42 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gitphp_project:gitphp:0.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.2.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.2.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.0.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.0.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitphp_project:gitphp:0.2.5:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Enalean/gitphp/commit/160621785ee812d6d90e20878bd6175e42c13c94",
+        "version_end_excluding": {
+            "gitphp_project:gitphp": "unknown"
+        },
+        "path": {
+            "file_path": "include/git/blob/BlobLoad_Base.class.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-1000214"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

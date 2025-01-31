@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bouncycastle:legion-of-the-bouncy-castle-java-crytography-api:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macromedia:coldfusion:6.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "bouncycastle:legion-of-the-bouncy-castle-java-crytography-api": "unknown",
+            "macromedia:coldfusion": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-1000613",
+            "CVE-2004-2331"
+        ],
+        "CWE": [
+            "CWE-470"
+        ]
+    }
+}

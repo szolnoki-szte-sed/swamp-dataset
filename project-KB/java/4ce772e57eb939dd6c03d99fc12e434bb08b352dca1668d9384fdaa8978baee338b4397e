@@ -1,0 +1,38 @@
+diff --git a/target-platform/config/kura.target-platform.build.properties b/target-platform/config/kura.target-platform.build.properties
+index a68e53bc451..a8e4248cb9d 100644
+--- a/target-platform/config/kura.target-platform.build.properties
++++ b/target-platform/config/kura.target-platform.build.properties
+@@ -9,7 +9,7 @@ com.gwt.user.version=1.1.0
+ jdk.dio.version=1.0.400
+ org.eclipse.kura.camel.sun.misc.version=1.0.300
+ org.eclipse.kura.sun.misc.version=1.0.300
+-org.eclipse.kura.jetty.customizer.version=1.0.0
++org.eclipse.kura.jetty.customizer.version=1.0.100-SNAPSHOT
+ 
+ org.moka7.version=1.0.200
+ 
+diff --git a/target-platform/org.eclipse.kura.jetty.customizer/src/main/java/org/eclipse/kura/jetty/customizer/KuraJettyCustomizer.java b/target-platform/org.eclipse.kura.jetty.customizer/src/main/java/org/eclipse/kura/jetty/customizer/KuraJettyCustomizer.java
+index a963b0ae119..887c931ee9f 100644
+--- a/target-platform/org.eclipse.kura.jetty.customizer/src/main/java/org/eclipse/kura/jetty/customizer/KuraJettyCustomizer.java
++++ b/target-platform/org.eclipse.kura.jetty.customizer/src/main/java/org/eclipse/kura/jetty/customizer/KuraJettyCustomizer.java
+@@ -5,6 +5,11 @@
+  * are made available under the terms of the Eclipse Public License v1.0
+  * which accompanies this distribution, and is available at
+  * http://www.eclipse.org/legal/epl-v10.html
++ *
++ * Contributors:
++ *  Red Hat Inc
++ *  Eurotech
++ *
+  *******************************************************************************/
+ package org.eclipse.kura.jetty.customizer;
+ 
+@@ -47,6 +52,8 @@ private void customizeConnector(Object connector) {
+ 
+             final HttpConnectionFactory httpConnectionFactory = (HttpConnectionFactory) factory;
+ 
++            httpConnectionFactory.getHttpConfiguration().setSendServerVersion(false);
++
+             List<Customizer> customizers = httpConnectionFactory.getHttpConfiguration().getCustomizers();
+             if (customizers == null) {
+                 customizers = new LinkedList<>();

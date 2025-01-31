@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:milkytracker_project:milkytracker:1.03.00:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/milkytracker/MilkyTracker/commit/3a5474f9102cbdc10fbd9e7b1b2c8d3f3f45d91b",
+        "version_end_excluding": {
+            "milkytracker_project:milkytracker": "unknown"
+        },
+        "path": {
+            "file_path": "src/milkyplay/LoaderXM.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-34927"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

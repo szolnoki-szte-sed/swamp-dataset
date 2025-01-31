@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gnome:librsvg:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:7.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ImageMagick/librsvg/commit/f9d69eadd2b16b00d1a1f9f286122123f8e547dd",
+        "version_end_excluding": {
+            "gnome:librsvg": "2.41.2",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "rsvg-io.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-1000041"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

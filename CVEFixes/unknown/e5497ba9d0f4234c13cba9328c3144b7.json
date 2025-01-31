@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:moped_project:moped:-:*:*:*:*:ruby:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:22:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:21:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mongoid/moped/commit/dd5a7c14b5d2e466f7875d079af71ad19774609b",
+        "version_end_excluding": {
+            "moped_project:moped": "unknown",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "spec/moped_spec.rb"
+        }
+    },
+    "programming_language": "unknown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-4410"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

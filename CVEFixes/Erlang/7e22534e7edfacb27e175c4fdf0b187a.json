@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:publify_project:publify:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/publify/publify/commit/fefd5f76302adcc425b2b6e7e7d23587cfc0083e",
+        "version_end_excluding": {
+            "publify_project:publify": "unknown"
+        },
+        "path": {
+            "file_path": "publify_core/app/views/articles/_article_excerpt.html.erb"
+        }
+    },
+    "programming_language": "erlang",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-25974"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

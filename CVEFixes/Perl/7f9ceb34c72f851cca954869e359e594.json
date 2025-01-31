@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:dbd-mysql_project:dbd-mysql:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/perl5-dbi/DBD-mysql/commit/793b72b1a0baa5070adacaac0e12fd995a6fbabe",
+        "version_end_excluding": {
+            "dbd-mysql_project:dbd-mysql": "unknown"
+        },
+        "path": {
+            "file_path": "lib/Bundle/DBD/mysql.pm"
+        }
+    },
+    "programming_language": "perl",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-1249"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

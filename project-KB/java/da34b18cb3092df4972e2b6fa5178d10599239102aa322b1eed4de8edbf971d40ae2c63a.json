@@ -1,0 +1,38 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:solr:4.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:4.0.0:alpha:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:4.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:4.0.0:beta:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:4.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:4.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:4.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:4.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:4.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:4.4.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/lucene-solr/commit/da34b18cb3092df4972e2b6fa5178d1059923910",
+        "version_end_excluding": {
+            "apache:solr": "unknown"
+        },
+        "path": {
+            "file_path": "solr/core/src/java/org/apache/solr/core/SolrResourceLoader.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-6397"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:resteasy:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:32:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:33:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/resteasy/Resteasy/commit/acf15f2a8067f7e4cf5838342cecfa0b78a174fb",
+        "version_end_excluding": {
+            "redhat:resteasy": "3.12.0"
+        },
+        "path": {
+            "file_path": "testsuite/unit-tests/src/test/java/org/jboss/resteasy/test/mediatype/MediaTypeHeaderTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1695"
+        ],
+        "CWE": [
+            "NVD-CWE-Other",
+            "CWE-20"
+        ]
+    }
+}

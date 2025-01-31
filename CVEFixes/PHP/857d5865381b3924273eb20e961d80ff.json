@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:3.5.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:3.5.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:3.5.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:3.5.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:3.5.0.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/phpmyadmin/phpmyadmin/commit/50edafc0884aa15d0a1aa178089ac6a1ad2eb18a",
+        "version_end_excluding": {
+            "phpmyadmin:phpmyadmin": "unknown"
+        },
+        "path": {
+            "file_path": "libraries/header_http.inc.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-5368"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

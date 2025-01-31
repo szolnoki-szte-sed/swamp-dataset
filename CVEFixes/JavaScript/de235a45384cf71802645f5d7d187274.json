@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:omeka:omeka:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/omeka/Omeka/commit/ba841892116544847d76d3838781c9708cb92221",
+        "version_end_excluding": {
+            "omeka:omeka": "2.6.1"
+        },
+        "path": {
+            "file_path": "admin/themes/default/javascripts/items.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-13423"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

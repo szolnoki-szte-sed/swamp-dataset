@@ -1,0 +1,52 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:icq:icq:2000a:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:forms_builder:9.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pgp:corporate_desktop:7.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jetico:bcwipe:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:east-tec:eraser:2002:*:*:*:*:*:*:*",
+            "cpe:2.3:a:tolvanen:eraser:5.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pgp:personal_privacy:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:accessdata:secureclean:3:build_2.0:*:*:*:*:*:*",
+            "cpe:2.3:a:bea:weblogic_server:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "icq:icq": "unknown",
+            "oracle:forms_builder": "unknown",
+            "pgp:corporate_desktop": "unknown",
+            "jetico:bcwipe": "2.35.1",
+            "east-tec:eraser": "unknown",
+            "tolvanen:eraser": "unknown",
+            "pgp:personal_privacy": "6.5.8",
+            "accessdata:secureclean": "unknown",
+            "bea:weblogic_server": "7.0"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2000-0552",
+            "CVE-2005-2293",
+            "CVE-2002-0788",
+            "CVE-2002-2066",
+            "CVE-2002-2067",
+            "CVE-2002-2068",
+            "CVE-2002-2069",
+            "CVE-2002-2070",
+            "CVE-2005-1744"
+        ],
+        "CWE": [
+            "CWE-459"
+        ]
+    }
+}

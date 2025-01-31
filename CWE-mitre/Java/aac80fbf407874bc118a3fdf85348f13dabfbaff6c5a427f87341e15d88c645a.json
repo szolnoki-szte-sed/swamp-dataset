@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:keep_project:keep:1.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "keep_project:keep": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-30877"
+        ],
+        "CWE": [
+            "CWE-506"
+        ]
+    }
+}

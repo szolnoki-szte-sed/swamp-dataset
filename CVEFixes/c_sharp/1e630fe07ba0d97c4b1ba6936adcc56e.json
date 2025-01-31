@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:rackspace:openstack_windows_guest_agent:*:-:-:*:-:xen_server:*:*"
+        ],
+        "fix_commit": "https://github.com/rackerlabs/openstack-guest-agents-windows-xenserver/commit/ef16f88f20254b8083e361f11707da25f8482401",
+        "version_end_excluding": {
+            "rackspace:openstack_windows_guest_agent": "unknown"
+        },
+        "path": {
+            "file_path": "src/Rackspace.Cloud.Server.Agent.DiffieHellman/Properties/AssemblyInfo.cs"
+        }
+    },
+    "programming_language": "c_sharp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-6795"
+        ],
+        "CWE": [
+            "CWE-94"
+        ]
+    }
+}

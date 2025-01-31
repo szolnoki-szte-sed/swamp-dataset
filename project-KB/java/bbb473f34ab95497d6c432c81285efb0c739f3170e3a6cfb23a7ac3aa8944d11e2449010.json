@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apereo:opencast:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apereo:opencast:8.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/opencast/opencast/commit/bbb473f34ab95497d6c432c81285efb0c739f317",
+        "version_end_excluding": {
+            "apereo:opencast": "7.6"
+        },
+        "path": {
+            "file_path": "modules/common/src/main/java/org/opencastproject/mediapackage/identifier/IdImpl.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Educational Community License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-5230"
+        ],
+        "CWE": [
+            "CWE-74",
+            "CWE-99"
+        ]
+    }
+}

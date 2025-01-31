@@ -1,0 +1,82 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:bakerhughes:bently_nevada_3701\\/40_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:emerson:openbsi:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:emerson:deltav_distributed_control_system_sq_controller_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:yokogawa:stardom_fcj_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:honeywell:safety_manager_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:motorola:ace1000_firmware:-:*:*:*:*:*:*:*",
+            "cpe:2.3:h:trixie:tx9_automatic_food_dispenser:-:*:*:*:*:*:*:*",
+            "cpe:2.3:o:zyxel:nbg6818_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:theforeman:katello:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:siemens:simatic_wincc:6.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:debian:pyftpd:0.8.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linksys:wap54g_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:satellite:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:emc:diskxtender:6.20.060:*:*:*:*:*:*:*",
+            "cpe:2.3:o:zyxel:zywall_1050_firmware:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:utimaco:safeguard:4.30:*:*:*:*:*:*:*",
+            "cpe:2.3:o:utstarcom:f1000_wi-fi_firmware:2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:cisco:unified_wireless_ip_phone_7920_firmware:1.0\\(8\\):*:*:*:*:*:*:*",
+            "cpe:2.3:a:arkeia:network_backup:5.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "bakerhughes:bently_nevada_3701\\/40_firmware": "unknown",
+            "emerson:openbsi": "unknown",
+            "emerson:deltav_distributed_control_system_sq_controller_firmware": "2022-04-29",
+            "yokogawa:stardom_fcj_firmware": "r4.31",
+            "honeywell:safety_manager_firmware": "unknown",
+            "motorola:ace1000_firmware": "unknown",
+            "trixie:tx9_automatic_food_dispenser": "unknown",
+            "zyxel:nbg6818_firmware": "unknown",
+            "theforeman:katello": "1.0",
+            "siemens:simatic_wincc": "unknown",
+            "debian:pyftpd": "unknown",
+            "linksys:wap54g_firmware": "3.04.03",
+            "redhat:satellite": "unknown",
+            "emc:diskxtender": "unknown",
+            "zyxel:zywall_1050_firmware": "unknown",
+            "utimaco:safeguard": "unknown",
+            "utstarcom:f1000_wi-fi_firmware": "unknown",
+            "cisco:unified_wireless_ip_phone_7920_firmware": "unknown",
+            "arkeia:network_backup": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "asp_net",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-29953",
+            "CVE-2022-29960",
+            "CVE-2022-29964",
+            "CVE-2022-30997",
+            "CVE-2022-30314",
+            "CVE-2022-30271",
+            "CVE-2021-37555",
+            "CVE-2021-35033",
+            "CVE-2012-3503",
+            "CVE-2010-2772",
+            "CVE-2010-2073",
+            "CVE-2010-1573",
+            "CVE-2008-2369",
+            "CVE-2008-0961",
+            "CVE-2008-1160",
+            "CVE-2006-7142",
+            "CVE-2005-3716",
+            "CVE-2005-3803",
+            "CVE-2005-0496"
+        ],
+        "CWE": [
+            "CWE-798"
+        ]
+    }
+}

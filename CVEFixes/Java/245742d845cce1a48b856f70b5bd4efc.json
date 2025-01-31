@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:thoughtworks:gocd:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/gocd/gocd-ldap-authentication-plugin/commit/87fa7dac5d899b3960ab48e151881da4793cfcc3",
+        "version_end_excluding": {
+            "thoughtworks:gocd": "22.1.0"
+        },
+        "path": {
+            "file_path": "src/main/java/cd/go/authentication/ldap/LdapClient.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24832"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

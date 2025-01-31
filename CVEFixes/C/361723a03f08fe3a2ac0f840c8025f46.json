@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:clusterlabs:booth:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:11.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ClusterLabs/booth/commit/35bf0b7b048d715f671eb68974fb6b4af6528c67",
+        "version_end_excluding": {
+            "clusterlabs:booth": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "src/main.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2553"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

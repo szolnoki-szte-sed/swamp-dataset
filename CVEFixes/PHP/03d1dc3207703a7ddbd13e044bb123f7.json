@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gitit_project:gitit:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jgm/gitit/commit/eed32638f4f6e3b2f4b8a9a04c4b72001acf9ad8",
+        "version_end_excluding": {
+            "gitit_project:gitit": "0.15.0.0"
+        },
+        "path": {
+            "file_path": "data/templates/pagetools.st"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-38711"
+        ],
+        "CWE": [
+            "CWE-552"
+        ]
+    }
+}

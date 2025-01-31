@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:opennetworking:onos:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/opennetworkinglab/onos/commit/4b19da6ce94de4865a365c200d6e8169ffb2184f",
+        "version_end_excluding": {
+            "opennetworking:onos": "unknown"
+        },
+        "path": {
+            "file_path": "core/common/src/main/java/org/onosproject/common/app/ApplicationArchive.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-1999020"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

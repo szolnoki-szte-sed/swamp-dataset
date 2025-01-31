@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:voten:voten:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/voten-co/voten/commit/ee6a322568166e28465da075159a6d4adbf74d53",
+        "version_end_excluding": {
+            "voten:voten": "2017-08-25"
+        },
+        "path": {
+            "file_path": "resources/views/layouts/app.blade.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-7663"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

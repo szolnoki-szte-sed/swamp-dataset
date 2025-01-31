@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:kobe-beauty:php-contact-form:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/kobebeauty/php-contact-form/commit/e7d094ca8ab15215c32d6fa04d17e8519c8d21cf",
+        "version_end_excluding": {
+            "kobe-beauty:php-contact-form": "2016-05-18"
+        },
+        "path": {
+            "file_path": "contact/confirm.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-1222"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

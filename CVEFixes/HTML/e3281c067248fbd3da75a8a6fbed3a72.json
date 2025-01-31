@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wire:wire-webapp:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/wireapp/wire-webapp/commit/056e39d327bb10c1b0958dfbea0c39752692a1b0",
+        "version_end_excluding": {
+            "wire:wire-webapp": "2021-06-01"
+        },
+        "path": {
+            "file_path": "src/page/template/content/conversation/input-bar.htm"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32683"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

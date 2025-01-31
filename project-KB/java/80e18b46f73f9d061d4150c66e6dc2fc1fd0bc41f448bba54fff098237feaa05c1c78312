@@ -1,0 +1,225 @@
+diff --git a/host-controller/src/main/java/org/jboss/as/domain/controller/operations/DomainServerLifecycleHandlers.java b/host-controller/src/main/java/org/jboss/as/domain/controller/operations/DomainServerLifecycleHandlers.java
+index 0f3e7c3f5f0..16a16dc49a0 100644
+--- a/host-controller/src/main/java/org/jboss/as/domain/controller/operations/DomainServerLifecycleHandlers.java
++++ b/host-controller/src/main/java/org/jboss/as/domain/controller/operations/DomainServerLifecycleHandlers.java
+@@ -513,7 +513,7 @@ public void execute(OperationContext context, ModelNode operation) throws Operat
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+-                    context.authorize(operation, EnumSet.of(Action.ActionEffect.WRITE_RUNTIME));
++                    context.authorize(operation, EnumSet.of(Action.ActionEffect.WRITE_RUNTIME)).failIfDenied(operation);
+                     context.completeStep(new OperationContext.ResultHandler() {
+                         @Override
+                         public void handleResult(OperationContext.ResultAction resultAction, OperationContext context, ModelNode operation) {
+@@ -551,7 +551,7 @@ public void execute(OperationContext context, ModelNode operation) throws Operat
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+-                    context.authorize(operation, EnumSet.of(Action.ActionEffect.WRITE_RUNTIME));
++                    context.authorize(operation, EnumSet.of(Action.ActionEffect.WRITE_RUNTIME)).failIfDenied(operation);
+                     context.completeStep(new OperationContext.ResultHandler() {
+                         @Override
+                         public void handleResult(OperationContext.ResultAction resultAction, OperationContext context, ModelNode operation) {
+diff --git a/host-controller/src/main/java/org/jboss/as/host/controller/operations/ServerProcessHandlers.java b/host-controller/src/main/java/org/jboss/as/host/controller/operations/ServerProcessHandlers.java
+index 2c04916a7d0..dc053f61846 100644
+--- a/host-controller/src/main/java/org/jboss/as/host/controller/operations/ServerProcessHandlers.java
++++ b/host-controller/src/main/java/org/jboss/as/host/controller/operations/ServerProcessHandlers.java
+@@ -49,7 +49,7 @@ public void execute(final OperationContext context, final ModelNode operation) t
+         context.addStep(new OperationStepHandler() {
+             @Override
+             public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+-                context.authorize(operation, EnumSet.of(Action.ActionEffect.WRITE_RUNTIME));
++                context.authorize(operation, EnumSet.of(Action.ActionEffect.WRITE_RUNTIME)).failIfDenied(operation);
+                 context.completeStep(new OperationContext.ResultHandler() {
+                     @Override
+                     public void handleResult(OperationContext.ResultAction resultAction, OperationContext context, ModelNode operation) {
+diff --git a/host-controller/src/main/java/org/jboss/as/host/controller/operations/ServerStopHandler.java b/host-controller/src/main/java/org/jboss/as/host/controller/operations/ServerStopHandler.java
+index 99e1262dd2e..3dcf3508d5e 100644
+--- a/host-controller/src/main/java/org/jboss/as/host/controller/operations/ServerStopHandler.java
++++ b/host-controller/src/main/java/org/jboss/as/host/controller/operations/ServerStopHandler.java
+@@ -71,7 +71,7 @@ public void execute(OperationContext context, ModelNode operation) throws Operat
+                 // If another op that is a step in a composite step with this op needs to modify the container
+                 // it will have to wait for container stability, so skipping this only matters for the case
+                 // where this step is the only runtime change.
+-                context.authorize(operation, EnumSet.of(Action.ActionEffect.WRITE_RUNTIME));
++                context.authorize(operation, EnumSet.of(Action.ActionEffect.WRITE_RUNTIME)).failIfDenied(operation);
+ 
+                 final ServerStatus status = serverInventory.stopServer(serverName, timeout, blocking);
+                 try {
+diff --git a/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/rbac/AbstractHostScopedRolesTestCase.java b/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/rbac/AbstractHostScopedRolesTestCase.java
+index 1ed19761fee..eb860ab9a5c 100644
+--- a/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/rbac/AbstractHostScopedRolesTestCase.java
++++ b/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/rbac/AbstractHostScopedRolesTestCase.java
+@@ -163,6 +163,12 @@ public void testMonitor() throws Exception {
+ 
+         testWLFY2299(client, Outcome.UNAUTHORIZED, MONITOR_USER);
+         restartServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, MONITOR_USER);
++
++        stopServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, MONITOR_USER);
++        killServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, MONITOR_USER);
++        destroyServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, MONITOR_USER);
++        killServersInGroup(client, Outcome.UNAUTHORIZED, MONITOR_USER);
++        destroyServersInGroup(client, Outcome.UNAUTHORIZED, MONITOR_USER);
+     }
+ 
+     @Test
+@@ -261,6 +267,12 @@ public void testDeployer() throws Exception {
+ 
+         testWLFY2299(client, Outcome.UNAUTHORIZED, DEPLOYER_USER);
+         restartServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, DEPLOYER_USER);
++
++        stopServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, DEPLOYER_USER);
++        killServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, DEPLOYER_USER);
++        destroyServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, DEPLOYER_USER);
++        killServersInGroup(client, Outcome.UNAUTHORIZED, DEPLOYER_USER);
++        destroyServersInGroup(client, Outcome.UNAUTHORIZED, DEPLOYER_USER);
+     }
+ 
+     @Test
+@@ -326,6 +338,12 @@ public void testAuditor() throws Exception {
+ 
+         testWLFY2299(client, Outcome.UNAUTHORIZED, AUDITOR_USER);
+         restartServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, AUDITOR_USER);
++
++        stopServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, AUDITOR_USER);
++        killServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, AUDITOR_USER);
++        destroyServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, AUDITOR_USER);
++        killServersInGroup(client, Outcome.UNAUTHORIZED, AUDITOR_USER);
++        destroyServersInGroup(client, Outcome.UNAUTHORIZED, AUDITOR_USER);
+     }
+ 
+     @Test
+diff --git a/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/rbac/AbstractRbacTestCase.java b/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/rbac/AbstractRbacTestCase.java
+index d7ca158280e..f01631a209d 100644
+--- a/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/rbac/AbstractRbacTestCase.java
++++ b/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/rbac/AbstractRbacTestCase.java
+@@ -22,31 +22,7 @@
+ 
+ package org.jboss.as.test.integration.domain.rbac;
+ 
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.ACCESS_CONTROL;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.ADD;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.AUTO_START;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.BLOCKING;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.BYTES;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.CHILD_TYPE;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.CONTENT;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.DESCRIBE;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.ENABLED;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.GROUP;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.HOST;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OPERATIONS;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OUTCOME;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.PASSWORD;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.PATH;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.PROFILE;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.READ_CHILDREN_NAMES_OPERATION;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.READ_CONFIG_AS_XML_OPERATION;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.READ_RESOURCE_DESCRIPTION_OPERATION;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.READ_RESOURCE_OPERATION;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.REMOVE;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.RESTART;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.RESULT;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUBSYSTEM;
+-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUCCESS;
++import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.*;
+ import static org.jboss.as.test.integration.management.util.ModelUtil.createOpNode;
+ import static org.junit.Assert.assertEquals;
+ 
+@@ -313,6 +289,53 @@ protected void restartServer(ModelControllerClient client, String host, String s
+         RbacUtil.executeOperation(client, op, expectedOutcome);
+     }
+ 
++    protected void stopServer(ModelControllerClient client, String host, String server,
++                                 Outcome expectedOutcome, String... roles) throws IOException {
++        String fullAddress = String.format("host=%s/server-config=%s", host, server);
++        ModelNode op = createOpNode(fullAddress, STOP);
++        op.get(BLOCKING).set(true);
++        configureRoles(op, roles);
++        RbacUtil.executeOperation(client, op, expectedOutcome);
++    }
++
++    protected void killServer(ModelControllerClient client, String host, String server,
++                              Outcome expectedOutcome, String... roles) throws IOException {
++        String fullAddress = String.format("host=%s/server-config=%s", host, server);
++        ModelNode op = createOpNode(fullAddress, KILL);
++        op.get(BLOCKING).set(true);
++        configureRoles(op, roles);
++        RbacUtil.executeOperation(client, op, expectedOutcome);
++    }
++
++    protected void destroyServer(ModelControllerClient client, String host, String server,
++                              Outcome expectedOutcome, String... roles) throws IOException {
++        String fullAddress = String.format("host=%s/server-config=%s", host, server);
++        ModelNode op = createOpNode(fullAddress, DESTROY);
++        op.get(BLOCKING).set(true);
++        configureRoles(op, roles);
++        RbacUtil.executeOperation(client, op, expectedOutcome);
++    }
++
++    protected void killServersInGroup(ModelControllerClient client, Outcome expectedOutcome, String... roles)
++            throws IOException {
++        final String serverGroupAddress = String.format("server-group=%s", SERVER_GROUP_A);
++        // check
++        ModelNode op = createOpNode(serverGroupAddress, KILL_SERVERS);
++        op.get(BLOCKING).set(true);
++        configureRoles(op, roles);
++        RbacUtil.executeOperation(client, op, expectedOutcome);
++    }
++
++    protected void destroyServersInGroup(ModelControllerClient client, Outcome expectedOutcome, String... roles)
++            throws IOException {
++        final String serverGroupAddress = String.format("server-group=%s", SERVER_GROUP_A);
++        // check
++        ModelNode op = createOpNode(serverGroupAddress, DESTROY_SERVERS);
++        op.get(BLOCKING).set(true);
++        configureRoles(op, roles);
++        RbacUtil.executeOperation(client, op, expectedOutcome);
++    }
++
+     protected ModelNode getServerConfigAccessControl(ModelControllerClient client, String... roles) throws IOException {
+         ModelNode op = createOpNode(GENERIC_SERVER_CONFIG_ADDRESS, READ_RESOURCE_DESCRIPTION_OPERATION);
+         op.get(ACCESS_CONTROL).set("trim-descriptions");
+diff --git a/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/rbac/AbstractStandardRolesTestCase.java b/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/rbac/AbstractStandardRolesTestCase.java
+index 33deaaed26d..3a9b6bede97 100644
+--- a/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/rbac/AbstractStandardRolesTestCase.java
++++ b/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/rbac/AbstractStandardRolesTestCase.java
+@@ -98,6 +98,12 @@ public void testMonitor() throws Exception {
+ 
+         // Monitor can't shutdown
+         testWCORE1067(client, MONITOR_USER);
++
++        stopServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, MONITOR_USER);
++        killServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, MONITOR_USER);
++        destroyServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, MONITOR_USER);
++        killServersInGroup(client, Outcome.UNAUTHORIZED, MONITOR_USER);
++        destroyServersInGroup(client, Outcome.UNAUTHORIZED, MONITOR_USER);
+     }
+ 
+     @Test
+@@ -169,6 +175,12 @@ public void testDeployer() throws Exception {
+ 
+         // Deployer can't shutdown
+         testWCORE1067(client, DEPLOYER_USER);
++
++        stopServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, DEPLOYER_USER);
++        killServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, DEPLOYER_USER);
++        destroyServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, DEPLOYER_USER);
++        killServersInGroup(client, Outcome.UNAUTHORIZED, DEPLOYER_USER);
++        destroyServersInGroup(client, Outcome.UNAUTHORIZED, DEPLOYER_USER);
+     }
+ 
+     @Test
+@@ -218,6 +230,12 @@ public void testAuditor() throws Exception {
+ 
+         // Auditor can't shutdown
+         testWCORE1067(client, AUDITOR_USER);
++
++        stopServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, AUDITOR_USER);
++        killServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, AUDITOR_USER);
++        destroyServer(client, MASTER, MASTER_A, Outcome.UNAUTHORIZED, AUDITOR_USER);
++        killServersInGroup(client, Outcome.UNAUTHORIZED, AUDITOR_USER);
++        destroyServersInGroup(client, Outcome.UNAUTHORIZED, AUDITOR_USER);
+     }
+ 
+     @Test

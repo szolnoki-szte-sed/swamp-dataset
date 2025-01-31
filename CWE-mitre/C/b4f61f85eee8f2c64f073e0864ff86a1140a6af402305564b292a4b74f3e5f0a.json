@@ -1,0 +1,70 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:sun:solaris:8.0:*:x86:*:*:*:*:*",
+            "cpe:2.3:a:macromedia:coldfusion:4.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:linux_powertools:6.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:next:next:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:mac_os_x:10.3.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:dave_mills:ntpd:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eggheads:eggdrop_irc_bot:1.6.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:ibm:aix:5.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:fedora:7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:symantec:veritas_file_system:5.0:mp2:aix:*:*:*:*:*",
+            "cpe:2.3:a:samsung:scx-4200_driver:2.00.95:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:sql_server:2000:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:internet_explorer:5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:2.0.34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "sun:solaris": "unknown",
+            "macromedia:coldfusion": "unknown",
+            "redhat:linux_powertools": "unknown",
+            "next:next": "2.1",
+            "apple:mac_os_x": "unknown",
+            "dave_mills:ntpd": "4.2.0.a.2004-06-17_4.fc3",
+            "eggheads:eggdrop_irc_bot": "unknown",
+            "ibm:aix": "unknown",
+            "redhat:fedora": "unknown",
+            "symantec:veritas_file_system": "unknown",
+            "samsung:scx-4200_driver": "unknown",
+            "microsoft:sql_server": "unknown",
+            "microsoft:internet_explorer": "unknown",
+            "debian:debian_linux": "unknown",
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2001-1555",
+            "CVE-2001-1514",
+            "CVE-2001-0128",
+            "CVE-1999-1193",
+            "CVE-2005-2741",
+            "CVE-2005-2496",
+            "CVE-2004-0274",
+            "CVE-2007-4217",
+            "CVE-2007-5159",
+            "CVE-2008-4638",
+            "CVE-2007-3931",
+            "CVE-2002-1981",
+            "CVE-2002-1671",
+            "CVE-2000-0315",
+            "CVE-2000-0506"
+        ],
+        "CWE": [
+            "CWE-269"
+        ]
+    }
+}

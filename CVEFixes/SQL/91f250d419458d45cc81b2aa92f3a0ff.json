@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:yetiforce:yetiforce_customer_relationship_management:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/yetiforcecompany/yetiforcecrm/commit/8dccd93442725f245b4b71986bbe6f4f48639239",
+        "version_end_excluding": {
+            "yetiforce:yetiforce_customer_relationship_management": "unknown"
+        },
+        "path": {
+            "file_path": "install/install_schema/data.sql"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-4117"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

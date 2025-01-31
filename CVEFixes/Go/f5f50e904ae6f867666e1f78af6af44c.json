@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pion:dtls:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pion/dtls/commit/e0b2ce3592e8e7d73713ac67b363a2e192a4cecf",
+        "version_end_excluding": {
+            "pion:dtls": "2.1.4"
+        },
+        "path": {
+            "file_path": "fragment_buffer.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-29190"
+        ],
+        "CWE": [
+            "CWE-835"
+        ]
+    }
+}

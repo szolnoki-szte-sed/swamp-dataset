@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:richard_cook:rgpg:0.2.0:-:*:*:*:ruby:*:*",
+            "cpe:2.3:a:richard_cook:rgpg:0.2.1:-:*:*:*:ruby:*:*",
+            "cpe:2.3:a:richard_cook:rgpg:*:-:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/rcook/rgpg/commit/b819b13d198495f3ecd2762a0dbe27bb6fae3505",
+        "version_end_excluding": {
+            "richard_cook:rgpg": "unknown"
+        },
+        "path": {
+            "file_path": "lib/rgpg/gem_info.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-4203"
+        ],
+        "CWE": [
+            "CWE-94"
+        ]
+    }
+}

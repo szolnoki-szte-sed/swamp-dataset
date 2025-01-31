@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:single_sign_on:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:single_sign_on:7.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:keycloak:keycloak:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/keycloak/keycloak/commit/9b75b603e3a5f5ba6deff13cbb45b070bf2d2239",
+        "version_end_excluding": {
+            "redhat:single_sign_on": "unknown"
+        },
+        "path": {
+            "file_path": "services/src/main/java/org/keycloak/services/resources/AbstractSecuredLocalService.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-12159"
+        ],
+        "CWE": [
+            "CWE-613"
+        ]
+    }
+}

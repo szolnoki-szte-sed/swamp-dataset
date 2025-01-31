@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:getgophish:gophish:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/gophish/gophish/commit/90fed5a575628b89eaf941e1627b49e0f3693812",
+        "version_end_excluding": {
+            "getgophish:gophish": "0.11.0"
+        },
+        "path": {
+            "file_path": "static/js/dist/app/sending_profiles.min.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-24708"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

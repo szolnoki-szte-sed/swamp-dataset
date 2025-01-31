@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/libgd/libgd/commit/53110871935244816bbb9d131da0bccff734bfe9",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "src/gd_io_dp.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-8670"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

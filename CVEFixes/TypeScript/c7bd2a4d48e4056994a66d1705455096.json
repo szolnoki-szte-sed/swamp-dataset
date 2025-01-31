@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pac-resolver_project:pac-resolver:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/TooTallNate/node-degenerator/commit/ccc3445354135398b6eb1a04c7d27c13b833f2d5",
+        "version_end_excluding": {
+            "pac-resolver_project:pac-resolver": "5.0.0"
+        },
+        "path": {
+            "file_path": "src/index.ts"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23406"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

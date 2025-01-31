@@ -1,0 +1,71 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:recurly:recurly_client_.net:1.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.0.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.0.0:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.0.0:beta3:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.0.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.0.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.0.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.0.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.0.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.1.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.1.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.1.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.1.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.1.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.2.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.2.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.13:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.4.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.6.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:recurly:recurly_client_.net:1.8.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/recurly/recurly-client-net/commit/9eef460c0084afd5c24d66220c8b7a381cf9a1f1",
+        "version_end_excluding": {
+            "recurly:recurly_client_.net": "unknown"
+        },
+        "path": {
+            "file_path": "Library/AccountBalance.cs"
+        }
+    },
+    "programming_language": "c_sharp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-0907"
+        ],
+        "CWE": [
+            "CWE-918"
+        ]
+    }
+}

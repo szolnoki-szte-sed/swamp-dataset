@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:django-anymail_project:django-anymail:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/anymail/django-anymail/commit/1a6086f2b58478d71f89bf27eb034ed81aefe5ef",
+        "version_end_excluding": {
+            "django-anymail_project:django-anymail": "unknown"
+        },
+        "path": {
+            "file_path": "docs/esps/mandrill.rst"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-1000089"
+        ],
+        "CWE": [
+            "CWE-532"
+        ]
+    }
+}

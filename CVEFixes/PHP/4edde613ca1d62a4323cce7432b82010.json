@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gnuboard:gnuboard5:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/gnuboard/gnuboard5/commit/b1fc952c7600b825c4b02e2789ddafdea18c8d13",
+        "version_end_excluding": {
+            "gnuboard:gnuboard5": "5.3.1.6"
+        },
+        "path": {
+            "file_path": "adm/boardgroup_form.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-15580"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

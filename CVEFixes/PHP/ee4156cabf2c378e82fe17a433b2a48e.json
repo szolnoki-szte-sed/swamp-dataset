@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:dolibarr:dolibarr:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:data_integrator:11.1.1.9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:data_integrator:12.2.1.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:data_integrator:12.2.1.4.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Dolibarr/dolibarr/commit/83b762b681c6dfdceb809d26ce95f3667b614739",
+        "version_end_excluding": {
+            "dolibarr:dolibarr": "7.0.2",
+            "oracle:data_integrator": "unknown"
+        },
+        "path": {
+            "file_path": "htdocs/accountancy/admin/categories.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-9019"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

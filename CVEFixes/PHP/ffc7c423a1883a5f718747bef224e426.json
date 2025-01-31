@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:databox_project:databox_plugin:*:*:*:*:*:geeklog:*:*",
+            "cpe:2.3:a:userbox_project:userbox_plugin:*:*:*:*:*:geeklog:*:*",
+            "cpe:2.3:a:assist_project:assist_plugin:*:*:*:*:*:geeklog:*:*"
+        ],
+        "fix_commit": "https://github.com/ivywe/geeklog-ivywe/commit/fe20a1bccdfec96125ab3d8dbee6ccbd0767c0be",
+        "version_end_excluding": {
+            "databox_project:databox_plugin": "unknown",
+            "userbox_project:userbox_plugin": "unknown",
+            "assist_project:assist_plugin": "unknown"
+        },
+        "path": {
+            "file_path": "extended/plugins/assist/functions.inc"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-4875"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

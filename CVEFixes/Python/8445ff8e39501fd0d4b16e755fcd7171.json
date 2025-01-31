@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ratcf:ratcf:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ractf/core/commit/cebb67bd16a8296121201805332365ffccb29638",
+        "version_end_excluding": {
+            "ratcf:ratcf": "2021-02-26"
+        },
+        "path": {
+            "file_path": "src/authentication/views.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21329"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

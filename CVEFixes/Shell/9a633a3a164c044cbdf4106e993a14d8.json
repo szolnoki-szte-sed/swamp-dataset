@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apcupsd:apcupsd:0.3.91_5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netgate:pfsense:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netgate:pfsense:2.4.4:p1:*:*:*:*:*:*",
+            "cpe:2.3:a:netgate:pfsense:2.4.4:p3:*:*:*:*:*:*",
+            "cpe:2.3:a:netgate:pfsense:2.4.4:p2:*:*:*:*:*:*",
+            "cpe:2.3:a:netgate:pfsense:2.4.4:-:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pfsense/FreeBSD-ports/commit/b492c0ea47aba8dde2f14183e71498ba207594e3",
+        "version_end_excluding": {
+            "apcupsd:apcupsd": "unknown",
+            "netgate:pfsense": "unknown"
+        },
+        "path": {
+            "file_path": "sysutils/pfSense-pkg-apcupsd/Makefile"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-12584"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

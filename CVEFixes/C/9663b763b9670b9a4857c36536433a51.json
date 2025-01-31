@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:spnego_http_authentication_module_project:spnego_http_authentication_module:*:*:*:*:*:nginx:*:*"
+        ],
+        "fix_commit": "https://github.com/stnoonan/spnego-http-auth-nginx-module/commit/a06f9efca373e25328b1c53639a48decd0854570",
+        "version_end_excluding": {
+            "spnego_http_authentication_module_project:spnego_http_authentication_module": "1.1.1"
+        },
+        "path": {
+            "file_path": "ngx_http_auth_spnego_module.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21335"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

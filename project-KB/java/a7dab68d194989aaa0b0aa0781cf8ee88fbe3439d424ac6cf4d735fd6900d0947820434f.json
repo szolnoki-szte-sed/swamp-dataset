@@ -1,0 +1,40 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:fuse:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:active_iq_unified_manager:-:*:*:*:*:vmware_vsphere:*:*",
+            "cpe:2.3:a:redhat:openshift_application_runtimes:-:*:*:*:text-only:*:*:*",
+            "cpe:2.3:a:redhat:jboss_data_grid:-:*:*:*:text-only:*:*:*",
+            "cpe:2.3:a:redhat:single_sign-on:-:*:*:*:text-only:*:*:*",
+            "cpe:2.3:a:netapp:active_iq_unified_manager:-:*:*:*:*:windows:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:-:*:*:*:text-only:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:active_iq_unified_manager:-:*:*:*:*:linux:*:*",
+            "cpe:2.3:a:infinispan:infinispan:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/infinispan/infinispan/commit/a7dab68d194989aaa0b0aa0781cf8ee88fbe3439",
+        "version_end_excluding": {
+            "infinispan:infinispan": "8.2.12"
+        },
+        "path": {
+            "file_path": "core/src/main/java/org/infinispan/factories/impl/SecurityActions.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10174"
+        ],
+        "CWE": [
+            "CWE-470"
+        ]
+    }
+}

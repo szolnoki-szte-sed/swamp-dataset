@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:fedoraproject:fedora:24:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:13.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ocaml:ocaml:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ocaml/ocaml/commit/659615c7b100a89eafe6253e7a5b9d84d0e8df74",
+        "version_end_excluding": {
+            "fedoraproject:fedora": "unknown",
+            "opensuse:opensuse": "unknown",
+            "ocaml:ocaml": "unknown"
+        },
+        "path": {
+            "file_path": "VERSION"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-8869"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

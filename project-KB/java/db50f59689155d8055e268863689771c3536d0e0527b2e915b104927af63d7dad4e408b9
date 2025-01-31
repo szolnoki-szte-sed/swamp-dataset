@@ -1,0 +1,374 @@
+diff --git a/ext/client-proxy/src/main/java/org/apache/olingo/ext/proxy/AbstractService.java b/ext/client-proxy/src/main/java/org/apache/olingo/ext/proxy/AbstractService.java
+index 6a2d8ce0e0..a4bbfbc32d 100644
+--- a/ext/client-proxy/src/main/java/org/apache/olingo/ext/proxy/AbstractService.java
++++ b/ext/client-proxy/src/main/java/org/apache/olingo/ext/proxy/AbstractService.java
+@@ -19,21 +19,27 @@
+ package org.apache.olingo.ext.proxy;
+ 
+ import java.io.ByteArrayInputStream;
++import java.io.IOException;
++import java.io.InputStream;
+ import java.io.ObjectInputStream;
+ import java.lang.reflect.Proxy;
++import java.util.Collections;
++import java.util.HashSet;
+ import java.util.Map;
++import java.util.Set;
+ import java.util.concurrent.ConcurrentHashMap;
+ import java.util.zip.GZIPInputStream;
+ 
+ import org.apache.commons.codec.binary.Base64;
+ import org.apache.commons.io.IOUtils;
++import org.apache.commons.io.serialization.ValidatingObjectInputStream;
+ import org.apache.olingo.client.api.EdmEnabledODataClient;
+ import org.apache.olingo.client.api.edm.xml.XMLMetadata;
+ import org.apache.olingo.client.core.ODataClientFactory;
+ import org.apache.olingo.client.core.edm.ClientCsdlEdmProvider;
+-import org.apache.olingo.commons.api.ex.ODataRuntimeException;
+ import org.apache.olingo.commons.api.edm.Edm;
+ import org.apache.olingo.commons.api.edm.constants.ODataServiceVersion;
++import org.apache.olingo.commons.api.ex.ODataRuntimeException;
+ import org.apache.olingo.commons.api.format.ContentType;
+ import org.apache.olingo.commons.core.edm.EdmProviderImpl;
+ import org.apache.olingo.ext.proxy.api.AbstractTerm;
+@@ -52,6 +58,14 @@
+  */
+ public abstract class AbstractService<C extends EdmEnabledODataClient> {
+ 
++  /**
++   * A set of classes which are allowed to be deserialized by default.
++   */
++  private static final Set<String> DEFAULT_ALLOWED_CLASSES;
++  static {
++    DEFAULT_ALLOWED_CLASSES = Collections.singleton("org.apache.olingo.*");
++  }
++
+   protected static final Logger LOG = LoggerFactory.getLogger(AbstractService.class);
+ 
+   private final Map<Class<?>, Object> ENTITY_CONTAINERS = new ConcurrentHashMap<Class<?>, Object>();
+@@ -75,7 +89,7 @@ protected AbstractService(final String compressedMetadata, final String metadata
+       // use commons codec's Base64 in this fashion to stay compatible with Android
+       bais = new ByteArrayInputStream(new Base64().decode(compressedMetadata.getBytes("UTF-8")));
+       gzis = new GZIPInputStream(bais);
+-      ois = new ObjectInputStream(gzis);
++      ois = createObjectInputStream(gzis);
+       metadata = (XMLMetadata) ois.readObject();
+     } catch (Exception e) {
+       LOG.error("While deserializing compressed metadata", e);
+@@ -88,7 +102,7 @@ protected AbstractService(final String compressedMetadata, final String metadata
+     if (metadata != null) {
+       ClientCsdlEdmProvider provider = new ClientCsdlEdmProvider(metadata.getSchemaByNsOrAlias());
+       edm = new EdmProviderImpl(provider);
+-    }else{
++    } else {
+       edm = null;
+     }
+     if (version.compareTo(ODataServiceVersion.V40) < 0) {
+@@ -151,4 +165,36 @@ public <T> T getEntityContainer(final Class<T> reference) throws IllegalStateExc
+     }
+     return reference.cast(ENTITY_CONTAINERS.get(reference));
+   }
++
++  /**
++   * Returns a set of classes which are allowed for deserialization.<br/>
++   * By default, only classes from the "org.apache.olingo" package are allowed.
++   * Subclasses should override this method if they expect other classes to be deserialized.
++   *
++   * @return A set of classes which are allowed for deserialization.
++   */
++  protected Set<String> getAllowedClasses() {
++    return Collections.emptySet();
++  }
++
++  /**
++   * Wraps a specified {@link InputStream} into a {@link ValidatingObjectInputStream}
++   * which allowed only a limited set of classes for deserialization.
++   * The method calls {@link #getAllowedClasses()} to get a set of classes
++   * which allowed for deserialization.
++   *
++   * @param is The input stream to be wrapped.
++   * @return An instance of {@link ValidatingObjectInputStream}.
++   * @throws IOException If something went wrong.
++   */
++  private ObjectInputStream createObjectInputStream(InputStream is) throws IOException {
++    ValidatingObjectInputStream vois = new ValidatingObjectInputStream(is);
++    Set<String> allowedClasses = new HashSet<>();
++    allowedClasses.addAll(DEFAULT_ALLOWED_CLASSES);
++    allowedClasses.addAll(getAllowedClasses());
++    for (String clazz : allowedClasses) {
++      vois.accept(clazz);
++    }
++    return vois;
++  }
+ }
+diff --git a/fit/src/test/java/org/apache/olingo/fit/proxy/MetadataDeserializationTest.java b/fit/src/test/java/org/apache/olingo/fit/proxy/MetadataDeserializationTest.java
+new file mode 100644
+index 0000000000..39e0fb3880
+--- /dev/null
++++ b/fit/src/test/java/org/apache/olingo/fit/proxy/MetadataDeserializationTest.java
+@@ -0,0 +1,164 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements. See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership. The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License. You may obtain a copy of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied. See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++package org.apache.olingo.fit.proxy;
++
++import static org.junit.Assert.assertFalse;
++import static org.junit.Assert.assertTrue;
++
++import java.io.ByteArrayOutputStream;
++import java.io.IOException;
++import java.io.ObjectOutputStream;
++import java.util.Collections;
++import java.util.HashSet;
++import java.util.Set;
++import java.util.zip.GZIPOutputStream;
++
++import org.apache.commons.codec.binary.Base64;
++import org.apache.olingo.commons.api.edm.constants.ODataServiceVersion;
++import org.apache.olingo.ext.proxy.AbstractService;
++import org.apache.olingo.ext.proxy.api.AbstractTerm;
++import org.custom.CustomXMLMetadata;
++import org.junit.Test;
++
++public class MetadataDeserializationTest {
++
++  @Test
++  public void testDeserializationWithNotAllowedCustomClass() throws IOException {
++    CustomXMLMetadata metadata = new CustomXMLMetadata();
++    assertTrue(CustomXMLMetadata.detectedMethodCalls());
++    CustomXMLMetadata.forgetMethodCalls();
++
++    ByteArrayOutputStream baos = new ByteArrayOutputStream();
++    GZIPOutputStream gos = new GZIPOutputStream(baos);
++    ObjectOutputStream oos = new ObjectOutputStream(gos);
++
++    oos.writeObject(metadata);
++    oos.flush();
++    gos.finish();
++    gos.flush();
++
++    String compressedCustomMetadata = new Base64().encodeToString(baos.toByteArray());
++
++    assertFalse(CustomXMLMetadata.detectedMethodCalls());
++    try {
++      new ServiceImpl(compressedCustomMetadata, "etag", ODataServiceVersion.V40, null, false);
++    } catch (Exception e) {
++      // okay
++    }
++
++    assertFalse(CustomXMLMetadata.detectedMethodCalls());
++  }
++
++  @Test
++  public void testDeserializationWithAllowedCustomClass() throws IOException {
++    CustomXMLMetadata metadata = new CustomXMLMetadata();
++    assertTrue(CustomXMLMetadata.detectedMethodCalls());
++    CustomXMLMetadata.forgetMethodCalls();
++
++    ByteArrayOutputStream baos = new ByteArrayOutputStream();
++    GZIPOutputStream gos = new GZIPOutputStream(baos);
++    ObjectOutputStream oos = new ObjectOutputStream(gos);
++
++    oos.writeObject(metadata);
++    oos.flush();
++    gos.finish();
++    gos.flush();
++
++    String compressedCustomMetadata = new Base64().encodeToString(baos.toByteArray());
++
++    assertFalse(CustomXMLMetadata.detectedMethodCalls());
++    try {
++      new CustomService(compressedCustomMetadata, "etag", ODataServiceVersion.V40, null, false);
++    } catch (Exception e) {
++      // okay
++    }
++
++    assertTrue(CustomXMLMetadata.detectedMethodCalls());
++  }
++
++  private static class ServiceImpl extends AbstractService {
++
++    ServiceImpl(String compressedMetadata, String metadataETag,
++        ODataServiceVersion version, String serviceRoot, boolean transactional) {
++      super(compressedMetadata, metadataETag, version, serviceRoot, transactional);
++    }
++
++    @Override
++    public Class<?> getEntityTypeClass(String name) {
++      throw new UnsupportedOperationException();
++    }
++
++    @Override
++    public Class<?> getComplexTypeClass(String name) {
++      throw new UnsupportedOperationException();
++    }
++
++    @Override
++    public Class<?> getEnumTypeClass(String name) {
++      throw new UnsupportedOperationException();
++    }
++
++    @Override
++    public Class<? extends AbstractTerm> getTermClass(String name) {
++      throw new UnsupportedOperationException();
++    }
++  }
++
++  /*
++   * A service which allows custom XML metadata.
++   */
++  public static class CustomService extends AbstractService {
++
++    CustomService(String compressedMetadata, String metadataETag,
++        ODataServiceVersion version, String serviceRoot, boolean transactional) {
++      super(compressedMetadata, metadataETag, version, serviceRoot, transactional);
++    }
++
++    @Override
++    public Class<?> getEntityTypeClass(String name) {
++      throw new UnsupportedOperationException();
++    }
++
++    @Override
++    public Class<?> getComplexTypeClass(String name) {
++      throw new UnsupportedOperationException();
++    }
++
++    @Override
++    public Class<?> getEnumTypeClass(String name) {
++      throw new UnsupportedOperationException();
++    }
++
++    @Override
++    public Class<? extends AbstractTerm> getTermClass(String name) {
++      throw new UnsupportedOperationException();
++    }
++
++    /*
++     * Allows CustomXMLMetadata.
++     */
++    @Override
++    protected Set<String> getAllowedClasses() {
++      Set<String> classes = new HashSet<>();
++      classes.add(CustomXMLMetadata.class.getCanonicalName());
++      return Collections.unmodifiableSet(classes);
++    }
++  }
++
++}
+diff --git a/fit/src/test/java/org/custom/CustomXMLMetadata.java b/fit/src/test/java/org/custom/CustomXMLMetadata.java
+new file mode 100644
+index 0000000000..bbabf1545d
+--- /dev/null
++++ b/fit/src/test/java/org/custom/CustomXMLMetadata.java
+@@ -0,0 +1,95 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements. See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership. The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License. You may obtain a copy of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied. See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++package org.custom;
++
++import java.io.Serializable;
++import java.util.List;
++import java.util.Map;
++
++import org.apache.olingo.client.api.edm.xml.Reference;
++import org.apache.olingo.client.api.edm.xml.XMLMetadata;
++import org.apache.olingo.commons.api.edm.provider.CsdlSchema;
++
++public class CustomXMLMetadata implements XMLMetadata, Serializable {
++
++  /*
++   * This flag shows if a method of the class was called.
++   */
++  private static boolean methodsCalled = false;
++
++  /*
++   * Clear the methodsCalled flag.
++   */
++  public static void forgetMethodCalls() {
++    methodsCalled = false;
++  }
++
++  /*
++   * Returns true if any method of this class was called.
++   */
++  public static boolean detectedMethodCalls() {
++    return methodsCalled;
++  }
++
++  public CustomXMLMetadata() {
++    methodsCalled = true;
++  }
++
++  @Override
++  public CsdlSchema getSchema(int index) {
++    methodsCalled = true;
++    throw new UnsupportedOperationException();
++  }
++
++  @Override
++  public CsdlSchema getSchema(String key) {
++    methodsCalled = true;
++    throw new UnsupportedOperationException();
++  }
++
++  @Override
++  public List<CsdlSchema> getSchemas() {
++    methodsCalled = true;
++    throw new UnsupportedOperationException();
++  }
++
++  @Override
++  public Map<String, CsdlSchema> getSchemaByNsOrAlias() {
++    methodsCalled = true;
++    throw new UnsupportedOperationException();
++  }
++
++  @Override
++  public List<Reference> getReferences() {
++    methodsCalled = true;
++    throw new UnsupportedOperationException();
++  }
++
++  @Override
++  public List<List<String>> getSchemaNamespaces() {
++    methodsCalled = true;
++    throw new UnsupportedOperationException();
++  }
++
++  @Override
++  public String getEdmVersion() {
++    methodsCalled = true;
++    throw new UnsupportedOperationException();
++  }
++}

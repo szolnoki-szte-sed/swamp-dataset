@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:rbsoft:autoupdater.net:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ravibpatel/AutoUpdater.NET/commit/1dc25f2bea6ea522dbac1512b5563c4746d539c3",
+        "version_end_excluding": {
+            "rbsoft:autoupdater.net": "1.5.8"
+        },
+        "path": {
+            "file_path": "AutoUpdater.NET/build/Autoupdater.NET.Official.nuspec"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-20627"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

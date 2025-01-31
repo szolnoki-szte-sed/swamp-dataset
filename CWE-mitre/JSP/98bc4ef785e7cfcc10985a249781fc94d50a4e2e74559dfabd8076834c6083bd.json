@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bea:aqualogic_interaction:5.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:tincan:webbler_cms:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wordpress:wordpress:2.7.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "bea:aqualogic_interaction": "unknown",
+            "tincan:webbler_cms": "3.1.4",
+            "wordpress:wordpress": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "jsp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2007-6197",
+            "CVE-2007-4072",
+            "CVE-2009-2431"
+        ],
+        "CWE": [
+            "CWE-615"
+        ]
+    }
+}

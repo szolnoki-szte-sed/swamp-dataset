@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:google:tensorflow:2.7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/tensorflow/tensorflow/commit/e746adbfcfee15e9cfdb391ff746c765b99bdf9b",
+        "version_end_excluding": {
+            "google:tensorflow": "unknown"
+        },
+        "path": {
+            "file_path": "tensorflow/core/kernels/image/decode_image_op.cc"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-23584"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

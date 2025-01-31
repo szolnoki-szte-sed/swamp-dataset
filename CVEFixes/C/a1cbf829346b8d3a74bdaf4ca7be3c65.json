@@ -1,0 +1,41 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:10.04:*:*:*:-:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_server:11:sp1:*:*:*:vmware:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_desktop:11:sp1:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_server:11:sp1:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_server:11:sp2:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_desktop:11:sp2:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_high_availability_extension:11:sp1:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/b69f2292063d2caf37ca9aec7d63ded203701bf3",
+        "version_end_excluding": {
+            "linux:linux_kernel": "2.6.33",
+            "canonical:ubuntu_linux": "unknown",
+            "debian:debian_linux": "unknown",
+            "suse:linux_enterprise_server": "unknown",
+            "suse:linux_enterprise_desktop": "unknown",
+            "suse:linux_enterprise_high_availability_extension": "unknown"
+        },
+        "path": {
+            "file_path": "kernel/exit.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-0879"
+        ],
+        "CWE": [
+            "CWE-400"
+        ]
+    }
+}

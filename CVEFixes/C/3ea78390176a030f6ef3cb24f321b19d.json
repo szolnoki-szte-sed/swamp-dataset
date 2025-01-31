@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:unixodbc:unixodbc:2.3.5:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/lurcher/unixODBC/commit/45ef78e037f578b15fc58938a3a3251655e71d6f",
+        "version_end_excluding": {
+            "unixodbc:unixodbc": "unknown"
+        },
+        "path": {
+            "file_path": "exe/iusql.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v2.1"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-7485"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

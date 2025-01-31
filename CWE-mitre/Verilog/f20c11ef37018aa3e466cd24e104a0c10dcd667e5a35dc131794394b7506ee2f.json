@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:xen:xen:4.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:h:ftsafe:k13:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gskill:trident_z_lighting_control:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:ubuntu:ubuntu:12.04:*:lts:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "xen:xen": "unknown",
+            "ftsafe:k13": "unknown",
+            "gskill:trident_z_lighting_control": "1.00.08",
+            "ubuntu:ubuntu": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "verilog",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-2915",
+            "CVE-2021-3011",
+            "CVE-2020-12446",
+            "CVE-2015-2150"
+        ],
+        "CWE": [
+            "CWE-1262"
+        ]
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:torproject:tor:0.3.0.3:alpha:*:*:*:*:*:*",
+            "cpe:2.3:a:torproject:tor:0.3.0.1:alpha:*:*:*:*:*:*",
+            "cpe:2.3:a:torproject:tor:0.3.0.2:alpha:*:*:*:*:*:*",
+            "cpe:2.3:a:torproject:tor:0.3.0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:torproject:tor:0.3.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:torproject:tor:0.3.0.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:torproject:tor:0.3.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:torproject:tor:0.3.0.6:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torproject/tor/commit/665baf5ed5c6186d973c46cdea165c0548027350",
+        "version_end_excluding": {
+            "torproject:tor": "unknown"
+        },
+        "path": {
+            "file_path": "src/or/nodelist.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-0377"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

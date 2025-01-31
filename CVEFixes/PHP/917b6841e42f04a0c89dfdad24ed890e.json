@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wwbn:avideo:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/WWBN/AVideo/commit/218c98cbd4a4a2c15745852bcd0f29faf101bd8c",
+        "version_end_excluding": {
+            "wwbn:avideo": "8.9"
+        },
+        "path": {
+            "file_path": "plugin/LiveLinks/proxy.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-23490"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:genixcms:genixcms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/semplon/GeniXCMS/commit/d885eb20006099262c0278932b9f8aca3c1ac97f",
+        "version_end_excluding": {
+            "genixcms:genixcms": "unknown"
+        },
+        "path": {
+            "file_path": "assets/css/bootstrap.css.map"
+        }
+    },
+    "programming_language": "c_sharp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-10096"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

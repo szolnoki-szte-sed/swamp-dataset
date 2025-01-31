@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mitmproxy:mitmproxy:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mitmproxy/mitmproxy/commit/b06fb6d157087d526bd02e7aadbe37c56865c71b",
+        "version_end_excluding": {
+            "mitmproxy:mitmproxy": "unknown"
+        },
+        "path": {
+            "file_path": "test/mitmproxy/proxy/layers/http/test_http2.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24766"
+        ],
+        "CWE": [
+            "CWE-444"
+        ]
+    }
+}

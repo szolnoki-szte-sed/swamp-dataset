@@ -1,0 +1,12 @@
+diff --git a/core/src/main/java/io/undertow/server/HttpServerExchange.java b/core/src/main/java/io/undertow/server/HttpServerExchange.java
+index 5c307cab0d..5e68664285 100644
+--- a/core/src/main/java/io/undertow/server/HttpServerExchange.java
++++ b/core/src/main/java/io/undertow/server/HttpServerExchange.java
+@@ -2441,6 +2441,6 @@ public T create() {
+ 
+     @Override
+     public String toString() {
+-        return "HttpServerExchange{ " + getRequestMethod().toString() + " " + getRequestURI() + " request " + requestHeaders + " response " + responseHeaders + '}';
++        return "HttpServerExchange{ " + getRequestMethod().toString() + " " + getRequestURI() + '}';
+     }
+ }

@@ -1,0 +1,48 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:macournoyer:thin:0.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.5.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:1.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.8.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.8.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.6.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.6.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.7.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:1.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:1.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:1.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.5.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.5.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:1.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macournoyer:thin:0.5.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/macournoyer/thin/commit/7bd027914c5ffd36bb408ef47dc749de3b6e063a",
+        "version_end_excluding": {
+            "macournoyer:thin": "unknown"
+        },
+        "path": {
+            "file_path": "lib/thin/connection.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2009-3287"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

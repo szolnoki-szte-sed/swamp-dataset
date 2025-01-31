@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:matrix:dendrite:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:matrix:gomatrixserverlib:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/matrix-org/gomatrixserverlib/commit/723fd495dde835d078b9f2074b6b62c06dea4575",
+        "version_end_excluding": {
+            "matrix:dendrite": "unknown",
+            "matrix:gomatrixserverlib": "unknown"
+        },
+        "path": {
+            "file_path": "eventcontent.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-36009"
+        ],
+        "CWE": [
+            "CWE-863"
+        ]
+    }
+}

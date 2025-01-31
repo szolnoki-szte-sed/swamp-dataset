@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:vim:vim:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:35:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/vim/vim/commit/9f1a39a5d1cd7989ada2d1cb32f97d84360e050f",
+        "version_end_excluding": {
+            "vim:vim": "8.2.4040",
+            "fedoraproject:fedora": "unknown",
+            "apple:macos": "11.6.8"
+        },
+        "path": {
+            "file_path": "src/message.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Vim License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0156"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

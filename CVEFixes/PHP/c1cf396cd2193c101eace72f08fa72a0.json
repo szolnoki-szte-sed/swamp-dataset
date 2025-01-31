@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ecommerce-codeigniter-bootstrap_project:ecommerce-codeigniter-bootstrap:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/kirilkirkov/Ecommerce-CodeIgniter-Bootstrap/commit/7c3c32d6526268b1c78d6d5741361e79292e9c22",
+        "version_end_excluding": {
+            "ecommerce-codeigniter-bootstrap_project:ecommerce-codeigniter-bootstrap": "2020-08-03"
+        },
+        "path": {
+            "file_path": "application/modules/admin/views/advanced_settings/languages.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-25086"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

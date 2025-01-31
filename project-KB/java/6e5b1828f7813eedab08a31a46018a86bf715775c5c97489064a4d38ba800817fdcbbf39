@@ -1,0 +1,292 @@
+diff --git a/openmeetings-install/src/main/java/org/apache/openmeetings/backup/BackupExport.java b/openmeetings-install/src/main/java/org/apache/openmeetings/backup/BackupExport.java
+index 6c843d3efd..21d1553e61 100644
+--- a/openmeetings-install/src/main/java/org/apache/openmeetings/backup/BackupExport.java
++++ b/openmeetings-install/src/main/java/org/apache/openmeetings/backup/BackupExport.java
+@@ -27,17 +27,10 @@
+ import java.io.OutputStreamWriter;
+ import java.net.URI;
+ import java.nio.charset.StandardCharsets;
+-import java.util.Date;
+ import java.util.List;
+-import java.util.Set;
+ import java.util.zip.ZipEntry;
+ import java.util.zip.ZipOutputStream;
+ 
+-import javax.servlet.ServletContext;
+-import javax.servlet.ServletException;
+-import javax.servlet.http.HttpServletRequest;
+-import javax.servlet.http.HttpServletResponse;
+-
+ import org.apache.commons.transaction.util.FileHelper;
+ import org.apache.openmeetings.db.dao.basic.ChatDao;
+ import org.apache.openmeetings.db.dao.basic.ConfigurationDao;
+@@ -51,10 +44,9 @@
+ import org.apache.openmeetings.db.dao.server.LdapConfigDao;
+ import org.apache.openmeetings.db.dao.server.OAuth2Dao;
+ import org.apache.openmeetings.db.dao.server.ServerDao;
+-import org.apache.openmeetings.db.dao.server.SessiondataDao;
+ import org.apache.openmeetings.db.dao.user.GroupDao;
+-import org.apache.openmeetings.db.dao.user.PrivateMessageFolderDao;
+ import org.apache.openmeetings.db.dao.user.PrivateMessageDao;
++import org.apache.openmeetings.db.dao.user.PrivateMessageFolderDao;
+ import org.apache.openmeetings.db.dao.user.UserContactDao;
+ import org.apache.openmeetings.db.dao.user.UserDao;
+ import org.apache.openmeetings.db.entity.basic.ChatMessage;
+@@ -69,10 +61,7 @@
+ import org.apache.openmeetings.db.entity.user.PrivateMessage;
+ import org.apache.openmeetings.db.entity.user.State;
+ import org.apache.openmeetings.db.entity.user.User;
+-import org.apache.openmeetings.db.entity.user.User.Right;
+ import org.apache.openmeetings.db.entity.user.User.Salutation;
+-import org.apache.openmeetings.db.util.AuthLevelUtil;
+-import org.apache.openmeetings.util.CalendarPatterns;
+ import org.apache.openmeetings.util.OmFileHelper;
+ import org.red5.logging.Red5LoggerFactory;
+ import org.simpleframework.xml.Serializer;
+@@ -103,8 +92,6 @@ public class BackupExport {
+ 	@Autowired
+ 	private AppointmentDao appointmentDao;
+ 	@Autowired
+-	private SessiondataDao sessiondataDao;
+-	@Autowired
+ 	private FileExplorerItemDao fileExplorerItemDao;
+ 	@Autowired
+ 	private RecordingDao recordingDao;
+@@ -464,106 +451,10 @@ public void exportUsers(OutputStream os, List<User> list) throws Exception {
+ 		
+ 		writeList(serializer, os, "users", list);
+ 	}
+-	/*
+-	 * (non-Javadoc)
+-	 * 
+-	 * @see
+-	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest
+-	 * , javax.servlet.http.HttpServletResponse)
+-	 */
+-	public void service(HttpServletRequest request, HttpServletResponse response, ServletContext ctx) throws ServletException, IOException {
+-		String sid = request.getParameter("sid");
+-		if (sid == null) {
+-			sid = "default";
+-		}
+-		log.debug("sid: " + sid);
+-
+-		Long userId = sessiondataDao.checkSession(sid);
+-		Set<Right> rights = userDao.get(userId).getRights();
+-
+-		log.debug("userId: " + userId);
+-		log.debug("user level: " + rights);
+-
+-		if (AuthLevelUtil.hasAdminLevel(rights)) {
+-			// if (true) {
+-
+-			String includeFileOption = request.getParameter("includeFileOption");
+-			boolean includeFiles = includeFileOption == null || "yes".equals(includeFileOption);
+-
+-			String moduleName = request.getParameter("moduleName");
+-			if (moduleName == null) {
+-				moduleName = "moduleName";
+-			}
+-			log.debug("moduleName: " + moduleName);
+-
+-			if (moduleName.equals("backup")) {
+-
+-				/*
+-				 * ##################### Create Base Folder structure
+-				 */
+-
+-				File working_dir = OmFileHelper.getUploadBackupDir();
+-
+-				String dateString = "backup_"
+-						+ CalendarPatterns.getTimeForStreamId(new Date());
+-
+-				File backup_dir = new File(working_dir, dateString);
+-				String requestedFile = dateString + ".zip";
+-				File backupFile = new File(backup_dir, requestedFile);
+-
+-				try {
+-					performExport(backupFile, backup_dir, includeFiles, new ProgressHolder());
+-
+-					response.reset();
+-					response.resetBuffer();
+-					response.setContentType("APPLICATION/OCTET-STREAM");
+-					response.setHeader("Content-Disposition", "attachment; filename=\"" + requestedFile + "\"");
+-					response.setHeader("Content-Length", "" + backupFile.length());
+-
+-					OutputStream out = response.getOutputStream();
+-					OmFileHelper.copyFile(backupFile, out);
+-
+-					out.flush();
+-					out.close();
+-				} catch (Exception er) {
+-					log.error("Error exporting: ", er);
+-				}
+-
+-				if (backupFile.exists()) {
+-					// log.debug("DELETE :1: "+backupFile.getCanonicalPath());
+-					backupFile.delete();
+-				}
+-
+-				FileHelper.removeRec(backup_dir);
+-			}
+-		} else {
+-			log.error("BackupExport: not authorized FileDownload ");
+-		}
+-	}
+ 
+ 	private void writeZipDir(File directoryToZip, File zipFile) throws IOException {
+-		FileOutputStream fos = null;
+-		ZipOutputStream zos = null;
+-		try {
+-			fos = new FileOutputStream(zipFile);
+-			zos = new ZipOutputStream(fos);
+-			
++		try (FileOutputStream fos = new FileOutputStream(zipFile); ZipOutputStream zos = new ZipOutputStream(fos)) {
+ 			writeZipDir(directoryToZip.toURI(), directoryToZip, zos, zipFile);
+-		} finally {
+-			if (zos != null) {
+-				try {
+-					zos.close();
+-				} catch (IOException e) {
+-					log.debug("Enexpected error while closing ZipOutputStream", e);
+-				}
+-			}
+-			if (fos != null) {
+-				try {
+-					fos.close();
+-				} catch (IOException e) {
+-					log.debug("Enexpected error while closing FileOutputStream", e);
+-				}
+-			}
+ 		}
+ 	}
+ 	
+diff --git a/openmeetings-install/src/main/java/org/apache/openmeetings/backup/BackupImport.java b/openmeetings-install/src/main/java/org/apache/openmeetings/backup/BackupImport.java
+index b3c9cceda1..7c9b3b98d5 100644
+--- a/openmeetings-install/src/main/java/org/apache/openmeetings/backup/BackupImport.java
++++ b/openmeetings-install/src/main/java/org/apache/openmeetings/backup/BackupImport.java
+@@ -175,11 +175,47 @@ private enum Maps {
+ 		USERS, ORGANISATIONS, APPOINTMENTS, ROOMS, MESSAGEFOLDERS, USERCONTACTS
+ 	};
+ 
+-	public void performImport(InputStream is) throws Exception {
+-		File working_dir = OmFileHelper.getUploadImportDir();
+-		if (!working_dir.exists()) {
+-			working_dir.mkdir();
++	private File validate(String zipname, File intended) throws IOException {
++		final String intendedPath = intended.getCanonicalPath();
++		if (File.pathSeparatorChar != '\\' && zipname.indexOf('\\') > -1) {
++			zipname = zipname.replace('\\', '/');
++		}
++		// for each entry to be extracted
++		File fentry = new File(intended, zipname);
++		final String canonicalPath = fentry.getCanonicalPath();
++
++		if (canonicalPath.startsWith(intendedPath)) {
++			return fentry;
++		} else {
++			throw new IllegalStateException("File is outside extraction target directory.");
++		}
++	}
++
++	private File unzip(InputStream is) throws IOException  {
++		File f = OmFileHelper.getNewDir(OmFileHelper.getUploadImportDir(), "import_" + CalendarPatterns.getTimeForStreamId(new Date()));
++		log.debug("##### EXTRACTING BACKUP TO: " + f);
++		
++		try (ZipInputStream zis = new ZipInputStream(is)) {
++			ZipEntry zipentry = null;
++			while ((zipentry = zis.getNextEntry()) != null) {
++				// for each entry to be extracted
++				File fentry = validate(zipentry.getName(), f);
++				File dir = zipentry.isDirectory() ? fentry : fentry.getParentFile();
++				if (!dir.exists()) {
++					if (!dir.mkdirs()) {
++						log.warn("Failed to create folders: " + dir);
++					}
++				}
++				if (!fentry.isDirectory()) {
++					FileHelper.copy(zis, fentry);
++					zis.closeEntry();
++				}
++			}
+ 		}
++		return f;
++	}
++	
++	public void performImport(InputStream is) throws Exception {
+ 		usersMap.clear();
+ 		groupMap.clear();
+ 		appointmentsMap.clear();
+@@ -190,34 +226,8 @@ public void performImport(InputStream is) throws Exception {
+ 		messageFoldersMap.put(INBOX_FOLDER_ID, INBOX_FOLDER_ID);
+ 		messageFoldersMap.put(SENT_FOLDER_ID, SENT_FOLDER_ID);
+ 		messageFoldersMap.put(TRASH_FOLDER_ID, TRASH_FOLDER_ID);
+-		File f = OmFileHelper.getNewDir(working_dir, "import_" + CalendarPatterns.getTimeForStreamId(new Date()));
+ 
+-		log.debug("##### WRITE FILE TO: " + f);
+-		
+-		ZipInputStream zipinputstream = new ZipInputStream(is);
+-		ZipEntry zipentry = zipinputstream.getNextEntry();
+-		while (zipentry != null) {
+-			String fName = zipentry.getName();
+-			if (File.pathSeparatorChar != '\\' && fName.indexOf('\\') > -1) {
+-				fName = fName.replace('\\', '/');
+-			}
+-			// for each entry to be extracted
+-			File fentry = new File(f, fName);
+-			File dir = zipentry.isDirectory() ? fentry : fentry.getParentFile();
+-			if (!dir.exists()) {
+-				dir.mkdirs();
+-			}
+-			if (fentry.isDirectory()) {
+-				zipentry = zipinputstream.getNextEntry();
+-				continue;
+-			}
+-
+-			FileHelper.copy(zipinputstream, fentry);
+-			zipinputstream.closeEntry();
+-			zipentry = zipinputstream.getNextEntry();
+-
+-		}
+-		zipinputstream.close();
++		File f = unzip(is);
+ 
+ 		/*
+ 		 * ##################### Import Configs
+diff --git a/openmeetings-web/src/test/java/org/apache/openmeetings/test/backup/TestOldBackups.java b/openmeetings-web/src/test/java/org/apache/openmeetings/test/backup/TestOldBackups.java
+index 1846478e37..9deb3efa1d 100644
+--- a/openmeetings-web/src/test/java/org/apache/openmeetings/test/backup/TestOldBackups.java
++++ b/openmeetings-web/src/test/java/org/apache/openmeetings/test/backup/TestOldBackups.java
+@@ -24,7 +24,6 @@
+ 
+ import java.io.File;
+ import java.io.FileInputStream;
+-import java.io.IOException;
+ import java.io.InputStream;
+ 
+ import org.apache.openmeetings.backup.BackupImport;
+@@ -75,9 +74,7 @@ public void importOldVersions() {
+ 		for (File backup : backupsHome.listFiles()) {
+ 			String name = backup.getName();
+ 			log.debug("Import of backup file : '" + name + "' is started ...");
+-			InputStream is = null;
+-			try {
+-				is = new FileInputStream(backup);
++			try (InputStream is = new FileInputStream(backup)) {
+ 				backupController.performImport(is);
+ 				long newGroupCount = groupDao.count();
+ 				long newUserCount = userDao.count();
+@@ -100,14 +97,6 @@ public void importOldVersions() {
+ 				meetingMembersCount = newMeetingMembersCount;
+ 			} catch (Exception e) {
+ 				throw new RuntimeException("Unexpected exception while importing backup: " + name, e);
+-			} finally {
+-				if (is != null) {
+-					try {
+-						is.close();
+-					} catch (IOException e) {
+-						throw new RuntimeException("Error while closing ldap config file", e);
+-					}
+-				}
+ 			}
+ 			log.debug("... Done.");
+ 		}

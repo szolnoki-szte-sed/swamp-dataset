@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:livehelperchat:livehelperchat:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/livehelperchat/livehelperchat/commit/9f5bc33c943349bd765b991db0b7f6b6ef05cfdb",
+        "version_end_excluding": {
+            "livehelperchat:livehelperchat": "3.93v"
+        },
+        "path": {
+            "file_path": "lhc_web/design/defaulttheme/tpl/lhkernel/validation_error.tpl.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0370"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

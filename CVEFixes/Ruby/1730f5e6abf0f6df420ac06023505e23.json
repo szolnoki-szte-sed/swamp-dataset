@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:discourse:discourse:2.9.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:2.9.0:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:2.9.0:beta3:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:discourse:discourse:2.9.0:beta4:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/discourse/discourse/commit/7c4e2d33fa4b922354c177ffc880a2f2701a91f9",
+        "version_end_excluding": {
+            "discourse:discourse": "unknown"
+        },
+        "path": {
+            "file_path": "app/models/reviewable_user.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-31025"
+        ],
+        "CWE": [
+            "CWE-863"
+        ]
+    }
+}

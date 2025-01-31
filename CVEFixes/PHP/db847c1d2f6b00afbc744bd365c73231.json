@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:glpi-project:glpi:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/glpi-project/glpi/commit/ac9f1f03c5d2545b7e290197dbfebc3f752f810e",
+        "version_end_excluding": {
+            "glpi-project:glpi": "unknown"
+        },
+        "path": {
+            "file_path": "src/Toolbox.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24869"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

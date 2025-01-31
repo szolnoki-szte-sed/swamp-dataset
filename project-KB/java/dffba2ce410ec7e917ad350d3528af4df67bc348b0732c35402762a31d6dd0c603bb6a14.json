@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:wicket:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/wicket/commit/dffba2ce410ec7e917ad350d3528af4df67bc348",
+        "version_end_excluding": {
+            "apache:wicket": "1.5.15"
+        },
+        "path": {
+            "file_path": "wicket-extensions/src/main/java/org/apache/wicket/extensions/ajax/markup/html/modal/ModalWindow.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5347"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

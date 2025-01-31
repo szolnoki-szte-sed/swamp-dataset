@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:zulip:zulip_server:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/zulip/zulip/commit/0c2cc41d2e40807baa5ee2c72987ebfb64ea2eb6",
+        "version_end_excluding": {
+            "zulip:zulip_server": "2.0.7"
+        },
+        "path": {
+            "file_path": "zerver/views/users.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-18933"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

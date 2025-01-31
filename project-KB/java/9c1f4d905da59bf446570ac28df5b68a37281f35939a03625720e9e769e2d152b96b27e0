@@ -1,0 +1,745 @@
+diff --git a/WHATSNEW b/WHATSNEW
+index 55ef28963e..4f7841a97a 100644
+--- a/WHATSNEW
++++ b/WHATSNEW
+@@ -10,6 +10,9 @@ Other changes:
+  * rmic has been removed from Java 15. The task will now throw an
+    exception if you try to use it while running Java 15 or newer.
+ 
++ * a new property ant.tmpdir provides improved control over the
++   location Ant uses to create temporary files
++
+ Changes from Ant 1.9.13 TO Ant 1.9.14
+ =====================================
+ 
+diff --git a/manual/Tasks/cab.html b/manual/Tasks/cab.html
+index e981827a54..42312f53e0 100644
+--- a/manual/Tasks/cab.html
++++ b/manual/Tasks/cab.html
+@@ -41,6 +41,10 @@ <h3>Description</h3>
+ (<code>dir</code> becomes <code>basedir</code>) as well as the nested
+ <code>&lt;include&gt;</code>, <code>&lt;exclude&gt;</code> and
+ <code>&lt;patternset&gt;</code> elements.</p>
++
++<p>On non-Unix platforms this task writes the list of files to archive
++  to the <a href="../running.html#tmpdir">temporary directory</a>.</p>
++
+ <h3>Parameters</h3>
+ <table border="1" cellpadding="2" cellspacing="0">
+   <tr>
+diff --git a/manual/Tasks/cvstagdiff.html b/manual/Tasks/cvstagdiff.html
+index 5350d8efcd..f4083a97c4 100644
+--- a/manual/Tasks/cvstagdiff.html
++++ b/manual/Tasks/cvstagdiff.html
+@@ -33,6 +33,8 @@ <h3>Description</h3>
+ for certain other cvs clients - like CVSNT for example - and some
+ operation may fail when using such an incompatible client.
+ </p>
++<p>This task captures the output of the CVS command in a file inside of
++  the <a href="../running.html#tmpdir">temporary directory</a>.</p>
+ <h3>Parameters</h3>
+ <table border="1" cellpadding="2" cellspacing="0">
+   <tr>
+diff --git a/manual/Tasks/ejb.html b/manual/Tasks/ejb.html
+index 8c18f2767b..37a34a9c0f 100644
+--- a/manual/Tasks/ejb.html
++++ b/manual/Tasks/ejb.html
+@@ -1613,6 +1613,9 @@ <h3><a name="ejbjar_jonas">JOnAS (Java Open Application Server) element</a></h3>
+ as well as the iplanet element (for example, suffix). Refer to the appropriate
+ documentation for more details.</p>
+ 
++<p>This task creates a directory for scratch data inside of
++  the <a href="../running.html#tmpdir">temporary directory</a>.</p>
++
+ <h3> Parameters:</h3>
+ 
+ <table border="1" cellspacing="0" cellpadding="2">
+diff --git a/manual/Tasks/exec.html b/manual/Tasks/exec.html
+index 8dfc6bc2ac..88e0fedef3 100644
+--- a/manual/Tasks/exec.html
++++ b/manual/Tasks/exec.html
+@@ -97,6 +97,8 @@ <h4>OpenVMS Users</h4>
+ <code>&lt;arg&gt;</code> elements is executed exactly as specified
+ inside a temporary DCL script.  This has some implications:
+ <ul>
++  <li>the DCL script will be created inside
++  the <a href="../running.html#tmpdir">temporary directory</a>.</li>
+ <li>paths have to be written in VMS style</li>
+ <li>if your <code>executable</code> points to a DCL script remember to
+ prefix it with an <code>@</code>-sign
+diff --git a/manual/Tasks/fixcrlf.html b/manual/Tasks/fixcrlf.html
+index 2637401b7d..a616ae7d85 100644
+--- a/manual/Tasks/fixcrlf.html
++++ b/manual/Tasks/fixcrlf.html
+@@ -58,7 +58,9 @@ <h3>Description</h3>
+     The output file is only written if it is a new file, or if it
+     differs from the existing file.  This prevents spurious
+     rebuilds based on unchanged files which have been regenerated
+-    by this task.
++    by this task. In order to assess whether a file has changed, this
++    task will create a pre-processed version of the source file inside of
++    the <a href="../running.html#tmpdir">temporary directory</a>.
+   </p>
+ 
+   <p>
+diff --git a/manual/Tasks/ftp.html b/manual/Tasks/ftp.html
+index 05cb3e3f94..6ad53afc29 100644
+--- a/manual/Tasks/ftp.html
++++ b/manual/Tasks/ftp.html
+@@ -150,7 +150,12 @@ <h3>Parameters</h3>
+     <td valign="top">set to <code>"true"</code>
+     to make ant calculate the time difference between client and server.<br>
+     <em>requires write access in the remote directory</em><br>
+-    Since ant 1.6</td>
++    Since ant 1.6<br/>
++    If this is set to <code>true</code> then Ant will create an empty
++    file inside of the <a href="../running.html#tmpdir">temporary
++    directory</a> and transfer it to the remote server - deleting it on
++    both sides once the difference has been determined.
++    </td>
+     <td valign="top" align="center">No</td>
+   </tr>
+   <a name="timestampGranularity"/>
+diff --git a/manual/Tasks/javadoc.html b/manual/Tasks/javadoc.html
+index 768b44243c..fe9d8ef0d5 100644
+--- a/manual/Tasks/javadoc.html
++++ b/manual/Tasks/javadoc.html
+@@ -451,7 +451,11 @@ <h3>Parameters</h3>
+       the package names specified via the packagenames attribute or
+       nested package elements.  <em>Since Ant 1.7.0</em>, also applies
+       to all the other command line options.
+-      (<code>yes</code> | <code>no</code>). Default is no.</td>
++      (<code>yes</code> | <code>no</code>). Default is no.<br/>
++      If enabled, the file will be written to
++      the <a href="../running.html#tmpdir">temporary
++      directory</a>.</p>
++    </td>
+     <td align="center" valign="top">all</td>
+     <td valign="top" align="center">No</td>
+   </tr>
+diff --git a/manual/Tasks/replaceregexp.html b/manual/Tasks/replaceregexp.html
+index eed4c84c45..7a091de7c0 100644
+--- a/manual/Tasks/replaceregexp.html
++++ b/manual/Tasks/replaceregexp.html
+@@ -31,7 +31,10 @@ <h3>Description</h3>
+ 
+ <p>The output file is only written if it differs from the existing
+ file.  This prevents spurious rebuilds based on unchanged files which
+-have been regenerated by this task.</p> 
++have been regenerated by this task. In order to assess whether a file
++has changed, this task will create a pre-processed version of the
++source file inside of the <a href="../running.html#tmpdir">temporary
++directory</a>.</p>
+ 
+ <p>Similar to <a href="../Types/mapper.html#regexp-mapper">regexp
+ type mappers</a> this task needs a supporting regular expression
+diff --git a/manual/Types/selectors.html b/manual/Types/selectors.html
+index c260efda4e..f622e7212a 100644
+--- a/manual/Types/selectors.html
++++ b/manual/Types/selectors.html
+@@ -728,6 +728,10 @@ <h4><a name="modified">Modified Selector</a></h4>
+     to (<b>attention!</b>) copy the content into a local file for computing the
+     hashvalue.</p>
+ 
++    <p>If the source resource is not a filesystem resource the
++    modified selector will download it to
++    the <a href="../running.html#tmpdir">temporary directory</a>.</p>
++
+     <table border="1" cellpadding="2" cellspacing="0">
+       <tr>
+         <td valign="top"><b>Attribute</b></td>
+diff --git a/manual/running.html b/manual/running.html
+index 3bfb500c8e..b3815a7f93 100644
+--- a/manual/running.html
++++ b/manual/running.html
+@@ -490,6 +490,22 @@ <h3><a name="sysprops">Java System Properties</a></h3>
+   <td>number, seconds since the epoch (midnight 1970-01-01)</td>
+   <td>The value to use as current time and date for &lt;tstamp&gt;</td>
+ </tr>
++<tr>
++  <td><code>java.io.tmpdir</code></td>
++  <td>Some tasks need to create temporary files and will write them to
++  the directory specified by this property. This property is set by
++  the Java VM but can be overridden when Ant is started.<br/>
++  See also <a href="#tmpdir">Temporary Directories</a>.</td>
++</table>
++<tr>
++  <td><code>ant.tmpdir</code></td>
++  <td><em>Since Ant 1.9.15</em><br/>
++  Some tasks need to create temporary files and will write them to
++  the directory specified by this property. This property takes
++  precedence over <code>java.io.tmpdir</code> if it has been
++  set. Unlike <code>java.io.tmpdir</code> this property can be set
++  from within the build file.<br/>
++  See also <a href="#tmpdir">Temporary Directories</a>.</td>
+ </table>
+ 
+ <p>
+@@ -505,6 +521,36 @@ <h3>return code</h3>
+ failed builds return other values.
+ </p>
+ 
++<h2><a name="tmpdir">Temporary Directories</a></h2>
++
++Some Ant tasks and types need to create temporary files. By default
++they use the default temporary directory of the Java VM they are
++running in - which can be set by setting the system
++property <code>java.io.tmpdir</code>. The default value of it depends
++on the platform and the JVM implementation.</p>
++
++<p>Setting a system property when invoking Ant is not straight forward
++  as the corresponding command line arguments must be sent to the Java
++  executable rather than Ant's main class. When using
++  the <code>ant(.cmd)</code> wrapper scripts you can do so with the
++  help of the <code>ANT_OPTS</code> environment variable.</p>
++
++<p>Starting with Ant 1.9.15 we've introduced a new Ant
++  property <code>ant.tmpdir</code> that takes precedence
++  over <code>java.io.tmpdir</code> when set. As this is a normal Ant
++  property it can be set via the command line or even from within a
++  build file.</p>
++
++<p>Tasks and types using the temporary directory will state the fact
++  inside of their respective manual page. In addition every execution
++  of an external command on OpenVMS will create a temporary file
++  holding a DCL script that invokes the actual command.</p>
++
++<p>Tasks not provided with the Ant distribution will ignore
++  the <code>ant.tmpdir</code> property and
++  use <code>java.io.tmpdir</code> unless they have been adapted to the
++  changed API of Ant 1.9.15.</p>
++
+ <h2><a name="cygwin">Cygwin Users</a></h2>
+ <p>The Unix launch script that come with Ant works correctly with Cygwin. You
+ should not have any problems launching Ant from the Cygwin shell. It is
+diff --git a/src/main/org/apache/tools/ant/MagicNames.java b/src/main/org/apache/tools/ant/MagicNames.java
+index 7c17c05c5f..d189654c56 100644
+--- a/src/main/org/apache/tools/ant/MagicNames.java
++++ b/src/main/org/apache/tools/ant/MagicNames.java
+@@ -302,5 +302,14 @@ private MagicNames() {
+      * @since Ant 1.9.10
+      */
+     public static final String TSTAMP_NOW = "ant.tstamp.now";
++
++    /**
++     * Magic property that can be set to override the java.io.tmpdir
++     * system property as the location for Ant's default temporary
++     * directory.
++     * Value: {@value}
++     * @since Ant 1.9.15
++     */
++    public static final String TMPDIR = "ant.tmpdir";
+ }
+ 
+diff --git a/src/main/org/apache/tools/ant/taskdefs/FixCRLF.java b/src/main/org/apache/tools/ant/taskdefs/FixCRLF.java
+index 01a71289ae..290fe66a35 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/FixCRLF.java
++++ b/src/main/org/apache/tools/ant/taskdefs/FixCRLF.java
+@@ -352,7 +352,7 @@ private void processFile(String file) throws BuildException {
+             fcv = new Vector<FilterChain>(1);
+             fcv.add(fc);
+         }
+-        File tmpFile = FILE_UTILS.createTempFile("fixcrlf", "", null, true, true);
++        File tmpFile = FILE_UTILS.createTempFile(getProject(), "fixcrlf", "", null, true, true);
+         try {
+             FILE_UTILS.copyFile(srcFile, tmpFile, null, fcv, true, false,
+                 encoding, outputEncoding == null ? encoding : outputEncoding,
+diff --git a/src/main/org/apache/tools/ant/taskdefs/Javadoc.java b/src/main/org/apache/tools/ant/taskdefs/Javadoc.java
+index 43bb9a9c82..ce79c27ab4 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/Javadoc.java
++++ b/src/main/org/apache/tools/ant/taskdefs/Javadoc.java
+@@ -1880,7 +1880,7 @@ public void execute() throws BuildException {
+              */
+             BufferedWriter srcListWriter = null;
+             if (useExternalFile) {
+-                tmpList = FILE_UTILS.createTempFile("javadoc", "", null, true, true);
++                tmpList = FILE_UTILS.createTempFile(getProject(), "javadoc", "", null, true, true);
+                 toExecute.createArgument()
+                     .setValue("@" + tmpList.getAbsolutePath());
+                 wr = new FileWriter(tmpList.getAbsolutePath(), true);
+@@ -2065,7 +2065,7 @@ private void writeExternalArgs(final Commandline toExecute) {
+         BufferedWriter optionsListWriter = null;
+         try {
+             optionsTmpFile = FILE_UTILS.createTempFile(
+-                "javadocOptions", "", null, true, true);
++                getProject(), "javadocOptions", "", null, true, true);
+             final String[] listOpt = toExecute.getArguments();
+             toExecute.clearArgs();
+             toExecute.createArgument().setValue(
+diff --git a/src/main/org/apache/tools/ant/taskdefs/Jikes.java b/src/main/org/apache/tools/ant/taskdefs/Jikes.java
+index 3896001a43..7c1d62d427 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/Jikes.java
++++ b/src/main/org/apache/tools/ant/taskdefs/Jikes.java
+@@ -87,7 +87,7 @@ protected void compile(String[] args) {
+                 && args.length > MAX_FILES_ON_COMMAND_LINE) {
+                 BufferedWriter out = null;
+                 try {
+-                    tmpFile = FileUtils.getFileUtils().createTempFile("jikes",
++                    tmpFile = FileUtils.getFileUtils().createTempFile(project, "jikes",
+                             "tmp", null, false, true);
+                     out = new BufferedWriter(new FileWriter(tmpFile));
+                     for (String arg : args) {
+diff --git a/src/main/org/apache/tools/ant/taskdefs/Replace.java b/src/main/org/apache/tools/ant/taskdefs/Replace.java
+index 5932fd5630..128933f16a 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/Replace.java
++++ b/src/main/org/apache/tools/ant/taskdefs/Replace.java
+@@ -665,7 +665,7 @@ private void processFile(File src) throws BuildException {
+         logFilterChain(src.getPath());
+ 
+         try {
+-            File temp = FILE_UTILS.createTempFile("rep", ".tmp",
++            File temp = FILE_UTILS.createTempFile(getProject(), "rep", ".tmp",
+                     src.getParentFile(), false, true);
+             try {
+                 FileInput in = new FileInput(src);
+diff --git a/src/main/org/apache/tools/ant/taskdefs/TempFile.java b/src/main/org/apache/tools/ant/taskdefs/TempFile.java
+index 9756fbc663..6c369912de 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/TempFile.java
++++ b/src/main/org/apache/tools/ant/taskdefs/TempFile.java
+@@ -156,7 +156,7 @@ public void execute() throws BuildException {
+         if (destDir == null) {
+             destDir = getProject().resolveFile(".");
+         }
+-        File tfile = FILE_UTILS.createTempFile(prefix, suffix, destDir,
++        File tfile = FILE_UTILS.createTempFile(getProject(), prefix, suffix, destDir,
+                     deleteOnExit, createFile);
+         getProject().setNewProperty(property, tfile.toString());
+     }
+diff --git a/src/main/org/apache/tools/ant/taskdefs/Zip.java b/src/main/org/apache/tools/ant/taskdefs/Zip.java
+index 5bcbe73f2d..f9e7b11f8f 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/Zip.java
++++ b/src/main/org/apache/tools/ant/taskdefs/Zip.java
+@@ -819,7 +819,7 @@ public void executeMain() throws BuildException {
+     /** rename the zip file. */
+     private File renameFile() {
+         final File renamedFile = FILE_UTILS.createTempFile(
+-            "zip", ".tmp", zipFile.getParentFile(), true, false);
++            getProject(), "zip", ".tmp", zipFile.getParentFile(), true, false);
+         try {
+             FILE_UTILS.rename(zipFile, renamedFile);
+         } catch (final SecurityException e) {
+diff --git a/src/main/org/apache/tools/ant/taskdefs/compilers/DefaultCompilerAdapter.java b/src/main/org/apache/tools/ant/taskdefs/compilers/DefaultCompilerAdapter.java
+index 9577632bf7..c028304b17 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/compilers/DefaultCompilerAdapter.java
++++ b/src/main/org/apache/tools/ant/taskdefs/compilers/DefaultCompilerAdapter.java
+@@ -556,7 +556,7 @@ protected int executeExternalCompile(final String[] args, final int firstFileNam
+                 BufferedWriter out = null;
+                 try {
+                     tmpFile = FILE_UTILS.createTempFile(
+-                        "files", "", getJavac().getTempdir(), true, true);
++                        getProject(), "files", "", getJavac().getTempdir(), true, true);
+                     out = new BufferedWriter(new FileWriter(tmpFile));
+                     for (int i = firstFileName; i < args.length; i++) {
+                         if (quoteFiles && args[i].contains(" ")) {
+diff --git a/src/main/org/apache/tools/ant/taskdefs/cvslib/CvsTagDiff.java b/src/main/org/apache/tools/ant/taskdefs/cvslib/CvsTagDiff.java
+index 4782e0f2ac..394130429a 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/cvslib/CvsTagDiff.java
++++ b/src/main/org/apache/tools/ant/taskdefs/cvslib/CvsTagDiff.java
+@@ -263,7 +263,7 @@ public void execute() throws BuildException {
+         try {
+             handlePackageNames();
+ 
+-            tmpFile = FILE_UTILS.createTempFile("cvstagdiff", ".log", null,
++            tmpFile = FILE_UTILS.createTempFile(getProject(), "cvstagdiff", ".log", null,
+                                                 true, true);
+             setOutput(tmpFile);
+ 
+diff --git a/src/main/org/apache/tools/ant/taskdefs/launcher/VmsCommandLauncher.java b/src/main/org/apache/tools/ant/taskdefs/launcher/VmsCommandLauncher.java
+index 1085f3a0ac..97f27c65bb 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/launcher/VmsCommandLauncher.java
++++ b/src/main/org/apache/tools/ant/taskdefs/launcher/VmsCommandLauncher.java
+@@ -52,7 +52,7 @@ public VmsCommandLauncher() {
+     @Override
+     public Process exec(Project project, String[] cmd, String[] env)
+         throws IOException {
+-        File cmdFile = createCommandFile(cmd, env);
++        File cmdFile = createCommandFile(project, cmd, env);
+         Process p = super.exec(project, new String[] {cmdFile.getPath()}, env);
+         deleteAfter(cmdFile, p);
+         return p;
+@@ -79,7 +79,7 @@ public Process exec(Project project, String[] cmd, String[] env)
+     @Override
+     public Process exec(Project project, String[] cmd, String[] env,
+                         File workingDir) throws IOException {
+-        File cmdFile = createCommandFile(cmd, env);
++        File cmdFile = createCommandFile(project, cmd, env);
+         Process p = super.exec(project, new String[] {cmdFile.getPath()}, env, workingDir);
+         deleteAfter(cmdFile, p);
+         return p;
+@@ -93,9 +93,9 @@ public Process exec(Project project, String[] cmd, String[] env,
+      * @return the command File.
+      * @throws IOException if errors are encountered creating the file.
+      */
+-    private File createCommandFile(String[] cmd, String[] env)
++    private File createCommandFile(final Project project, String[] cmd, String[] env)
+         throws IOException {
+-        File script = FILE_UTILS.createTempFile("ANT", ".COM", null, true, true);
++        File script = FILE_UTILS.createTempFile(project, "ANT", ".COM", null, true, true);
+         BufferedWriter out = null;
+         try {
+             out = new BufferedWriter(new FileWriter(script));
+@@ -140,4 +140,4 @@ public void run() {
+             }
+         }.start();
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/src/main/org/apache/tools/ant/taskdefs/optional/Cab.java b/src/main/org/apache/tools/ant/taskdefs/optional/Cab.java
+index 7e71aedbca..270b5d4c2c 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/optional/Cab.java
++++ b/src/main/org/apache/tools/ant/taskdefs/optional/Cab.java
+@@ -179,7 +179,7 @@ protected boolean isUpToDate(Vector files) {
+      */
+     protected File createListFile(Vector files)
+         throws IOException {
+-        File listFile = FILE_UTILS.createTempFile("ant", "", null, true, true);
++        File listFile = FILE_UTILS.createTempFile(getProject(), "ant", "", null, true, true);
+ 
+         BufferedWriter writer = null;
+         try {
+@@ -319,7 +319,7 @@ public void execute() throws BuildException {
+                 exec.setDir(baseDir);
+ 
+                 if (!doVerbose) {
+-                    outFile = FILE_UTILS.createTempFile("ant", "", null, true, true);
++                    outFile = FILE_UTILS.createTempFile(getProject(), "ant", "", null, true, true);
+                     exec.setOutput(outFile);
+                 }
+ 
+diff --git a/src/main/org/apache/tools/ant/taskdefs/optional/ReplaceRegExp.java b/src/main/org/apache/tools/ant/taskdefs/optional/ReplaceRegExp.java
+index cf07885d7c..5ec9cd2ff1 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/optional/ReplaceRegExp.java
++++ b/src/main/org/apache/tools/ant/taskdefs/optional/ReplaceRegExp.java
+@@ -360,7 +360,7 @@ protected String doReplace(RegularExpression r,
+      */
+     protected void doReplace(File f, int options)
+          throws IOException {
+-        File temp = FILE_UTILS.createTempFile("replace", ".txt", null, true, true);
++        File temp = FILE_UTILS.createTempFile(getProject(), "replace", ".txt", null, true, true);
+         try {
+             boolean changes = false;
+ 
+diff --git a/src/main/org/apache/tools/ant/taskdefs/optional/junit/JUnitTask.java b/src/main/org/apache/tools/ant/taskdefs/optional/junit/JUnitTask.java
+index a4f856344c..0bdc6e116c 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/optional/junit/JUnitTask.java
++++ b/src/main/org/apache/tools/ant/taskdefs/optional/junit/JUnitTask.java
+@@ -1453,7 +1453,7 @@ private static String maybeStripJarAndClass(final URL u) {
+      */
+     private File createTempPropertiesFile(final String prefix) {
+         final File propsFile =
+-            FILE_UTILS.createTempFile(prefix, ".properties",
++            FILE_UTILS.createTempFile(getProject(), prefix, ".properties",
+                 tmpDir != null ? tmpDir : getProject().getBaseDir(), true, true);
+         return propsFile;
+     }
+diff --git a/src/main/org/apache/tools/ant/taskdefs/optional/net/FTP.java b/src/main/org/apache/tools/ant/taskdefs/optional/net/FTP.java
+index 35c4065694..8e3aee4437 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/optional/net/FTP.java
++++ b/src/main/org/apache/tools/ant/taskdefs/optional/net/FTP.java
+@@ -1977,7 +1977,7 @@ private File findFileName(FTPClient ftp) {
+         FTPFile[] files = null;
+         final int maxIterations = 1000;
+         for (int counter = 1; counter < maxIterations; counter++) {
+-            File localFile = FILE_UTILS.createTempFile(
++            File localFile = FILE_UTILS.createTempFile(getProject(),
+                                                        "ant" + Integer.toString(counter), ".tmp",
+                                                        null, false, false);
+             String fileName = localFile.getName();
+diff --git a/src/main/org/apache/tools/ant/taskdefs/optional/net/FTPTaskMirrorImpl.java b/src/main/org/apache/tools/ant/taskdefs/optional/net/FTPTaskMirrorImpl.java
+index 85d028980d..ec4e28fd37 100644
+--- a/src/main/org/apache/tools/ant/taskdefs/optional/net/FTPTaskMirrorImpl.java
++++ b/src/main/org/apache/tools/ant/taskdefs/optional/net/FTPTaskMirrorImpl.java
+@@ -1366,7 +1366,7 @@ private File findFileName(FTPClient ftp) {
+         FTPFile[] files = null;
+         final int maxIterations = 1000;
+         for (int counter = 1; counter < maxIterations; counter++) {
+-            File localFile = FILE_UTILS.createTempFile(
++            File localFile = FILE_UTILS.createTempFile(task.getProject(),
+                                                        "ant" + Integer.toString(counter), ".tmp",
+                                                        null, false, false);
+             String fileName = localFile.getName();
+diff --git a/src/main/org/apache/tools/ant/types/selectors/modifiedselector/ModifiedSelector.java b/src/main/org/apache/tools/ant/types/selectors/modifiedselector/ModifiedSelector.java
+index bec12108ad..306099ca60 100644
+--- a/src/main/org/apache/tools/ant/types/selectors/modifiedselector/ModifiedSelector.java
++++ b/src/main/org/apache/tools/ant/types/selectors/modifiedselector/ModifiedSelector.java
+@@ -449,7 +449,7 @@ public boolean isSelected(Resource resource) {
+                 // How to handle non-file-Resources? I copy temporarily the
+                 // resource to a file and use the file-implementation.
+                 FileUtils fu = FileUtils.getFileUtils();
+-                File tmpFile = fu.createTempFile("modified-", ".tmp", null, true, false);
++                File tmpFile = fu.createTempFile(getProject(), "modified-", ".tmp", null, true, false);
+                 Resource tmpResource = new FileResource(tmpFile);
+                 ResourceUtils.copyResource(resource, tmpResource);
+                 boolean isSelected = isSelected(tmpFile.getParentFile(),
+diff --git a/src/main/org/apache/tools/ant/util/FileUtils.java b/src/main/org/apache/tools/ant/util/FileUtils.java
+index 03b8d81b94..0c932e9243 100644
+--- a/src/main/org/apache/tools/ant/util/FileUtils.java
++++ b/src/main/org/apache/tools/ant/util/FileUtils.java
+@@ -43,6 +43,7 @@
+ import java.util.jar.JarFile;
+ 
+ import org.apache.tools.ant.BuildException;
++import org.apache.tools.ant.MagicNames;
+ import org.apache.tools.ant.PathTokenizer;
+ import org.apache.tools.ant.Project;
+ import org.apache.tools.ant.launch.Locator;
+@@ -882,19 +883,15 @@ public String toVMSPath(File f) {
+      * this method was invoked, any subsequent invocation of this method will
+      * yield a different file name.
+      * </p>
+-     * <p>
+-     * The filename is prefixNNNNNsuffix where NNNN is a random number.
+-     * </p>
+      *
+-     * @param prefix
+-     *            prefix before the random number.
++     * @param prefix file name prefix.
+      * @param suffix
+      *            file extension; include the '.'.
+      * @param parentDir
+      *            Directory to create the temporary file in; java.io.tmpdir used
+      *            if not specified.
+      *
+-     * @deprecated since ant 1.7.1 use createTempFile(String, String, File,
++     * @deprecated since ant 1.7.1 use createTempFile(Project, String, String, File,
+      * boolean, boolean) instead.
+      * @return a File reference to the new, nonexistent temporary file.
+      */
+@@ -902,8 +899,6 @@ public File createTempFile(String prefix, String suffix, File parentDir) {
+         return createTempFile(prefix, suffix, parentDir, false, false);
+     }
+ 
+-    private static final String NULL_PLACEHOLDER = "null";
+-
+     /**
+      * Create a temporary file in a given directory.
+      *
+@@ -911,7 +906,7 @@ public File createTempFile(String prefix, String suffix, File parentDir) {
+      * exist before this method was invoked, any subsequent invocation
+      * of this method will yield a different file name.</p>
+      *
+-     * @param prefix prefix before the random number.
++     * @param prefix file name prefix.
+      * @param suffix file extension; include the '.'.
+      * @param parentDir Directory to create the temporary file in;
+      * java.io.tmpdir used if not specified.
+@@ -924,13 +919,51 @@ public File createTempFile(String prefix, String suffix, File parentDir) {
+      *
+      * @return a File reference to the new temporary file.
+      * @since Ant 1.7.1
++     * @deprecated since Ant 1.9.15 use createTempFile(Project, String, String, File,
++     * boolean, boolean) instead.
+      */
+     public File createTempFile(String prefix, String suffix, File parentDir,
+             boolean deleteOnExit, boolean createFile) {
++        return createTempFile(null, prefix, suffix, parentDir, deleteOnExit, createFile);
++    }
++
++    private static final String NULL_PLACEHOLDER = "null";
++
++    /**
++     * Create a temporary file in a given directory.
++     *
++     * <p>The file denoted by the returned abstract pathname did not
++     * exist before this method was invoked, any subsequent invocation
++     * of this method will yield a different file name.</p>
++     *
++     * @param project reference to the current Ant project.
++     * @param prefix file name prefix.
++     * @param suffix file extension; include the '.'.
++     * @param parentDir Directory to create the temporary file in;
++     *        if not specified and {@code project} is not null then the value
++     *        of the property {@code ant.tmpdir} is used if set;
++     *        otherwise {@code java.io.tmpdir} is used.
++     * @param deleteOnExit whether to set the tempfile for deletion on
++     *        normal VM exit.
++     * @param createFile true if the file must actually be created. If false
++     * chances exist that a file with the same name is created in the time
++     * between invoking this method and the moment the file is actually created.
++     * If possible set to true.
++     *
++     * @return a File reference to the new temporary file.
++     * @since Ant 1.9.15
++     */
++    public File createTempFile(final Project project, String prefix, String suffix,
++            final File parentDir, final boolean deleteOnExit, final boolean createFile) {
+         File result = null;
+-        String parent = (parentDir == null)
+-                ? System.getProperty("java.io.tmpdir")
+-                : parentDir.getPath();
++        final String parent;
++        if (parentDir != null) {
++            parent = parentDir.getPath();
++        } else if (project != null && project.getProperty(MagicNames.TMPDIR) != null) {
++            parent = project.getProperty(MagicNames.TMPDIR);
++        } else {
++            parent = System.getProperty("java.io.tmpdir");
++        }
+         if (prefix == null) {
+             prefix = NULL_PLACEHOLDER;
+         }
+@@ -970,12 +1003,8 @@ public File createTempFile(String prefix, String suffix, File parentDir,
+      * this method was invoked, any subsequent invocation of this method will
+      * yield a different file name.
+      * </p>
+-     * <p>
+-     * The filename is prefixNNNNNsuffix where NNNN is a random number.
+-     * </p>
+      *
+-     * @param prefix
+-     *            prefix before the random number.
++     * @param prefix file name prefix.
+      * @param suffix
+      *            file extension; include the '.'.
+      * @param parentDir
+@@ -984,7 +1013,7 @@ public File createTempFile(String prefix, String suffix, File parentDir,
+      * @param deleteOnExit
+      *            whether to set the tempfile for deletion on normal VM exit.
+      *
+-     * @deprecated since ant 1.7.1 use createTempFile(String, String, File,
++     * @deprecated since ant 1.7.1 use createTempFile(Project, String, String, File,
+      * boolean, boolean) instead.
+      * @return a File reference to the new, nonexistent temporary file.
+      */
+diff --git a/src/main/org/apache/tools/ant/util/JavaEnvUtils.java b/src/main/org/apache/tools/ant/util/JavaEnvUtils.java
+index d8a7bd8733..060bb04a93 100644
+--- a/src/main/org/apache/tools/ant/util/JavaEnvUtils.java
++++ b/src/main/org/apache/tools/ant/util/JavaEnvUtils.java
+@@ -577,7 +577,7 @@ public static Vector<String> getJrePackages() {
+      */
+     public static File createVmsJavaOptionFile(String[] cmds)
+             throws IOException {
+-        File script = FILE_UTILS.createTempFile("ANT", ".JAVA_OPTS", null, false, true);
++        File script = FILE_UTILS.createTempFile(null, "ANT", ".JAVA_OPTS", null, false, true);
+         BufferedWriter out = null;
+         try {
+             out = new BufferedWriter(new FileWriter(script));
+diff --git a/src/main/org/apache/tools/ant/util/SymbolicLinkUtils.java b/src/main/org/apache/tools/ant/util/SymbolicLinkUtils.java
+index 20975dde75..26d25e6518 100644
+--- a/src/main/org/apache/tools/ant/util/SymbolicLinkUtils.java
++++ b/src/main/org/apache/tools/ant/util/SymbolicLinkUtils.java
+@@ -23,6 +23,7 @@
+ import java.io.IOException;
+ 
+ import org.apache.tools.ant.BuildException;
++import org.apache.tools.ant.Project;
+ import org.apache.tools.ant.Task;
+ import org.apache.tools.ant.taskdefs.Execute;
+ 
+@@ -242,9 +243,9 @@ public void deleteSymbolicLink(File link, final Task task)
+         if (task == null || target.getParentFile().canWrite()) {
+ 
+             // rename the resource, thus breaking the link:
+-            final File temp = FILE_UTILS.createTempFile("symlink", ".tmp",
+-                                                  target.getParentFile(), false,
+-                                                  false);
++            final Project project = task == null ? null : task.getProject();
++            final File temp = FILE_UTILS.createTempFile(project, "symlink", ".tmp",
++                target.getParentFile(), false, false);
+ 
+             if (FILE_UTILS.isLeadingPath(target, link)) {
+                 // link points to a parent directory, renaming the parent
+diff --git a/src/tests/junit/org/apache/tools/ant/util/FileUtilsTest.java b/src/tests/junit/org/apache/tools/ant/util/FileUtilsTest.java
+index d82b7b694f..9877e71aba 100644
+--- a/src/tests/junit/org/apache/tools/ant/util/FileUtilsTest.java
++++ b/src/tests/junit/org/apache/tools/ant/util/FileUtilsTest.java
+@@ -23,6 +23,7 @@
+ import java.io.IOException;
+ 
+ import org.apache.tools.ant.BuildException;
++import org.apache.tools.ant.Project;
+ import org.apache.tools.ant.taskdefs.condition.Os;
+ import org.junit.After;
+ import org.junit.Before;
+@@ -342,9 +343,16 @@ public void testNullArgs() {
+      */
+     @Test
+     public void testCreateTempFile() {
+-        // null parent dir
+-        File tmp1 = FILE_UTILS.createTempFile("pre", ".suf", null, false, true);
+-        String tmploc = System.getProperty("java.io.tmpdir");
++        final String tmploc = System.getProperty("java.io.tmpdir");
++        final Project projectWithoutTempDir = new Project();
++        final Project projectWithTempDir = new Project();
++        final File projectTmpDir = new File(tmploc, "subdir");
++        projectTmpDir.mkdir();
++        removeThis = projectTmpDir;
++        projectWithTempDir.setProperty("ant.tmpdir", projectTmpDir.getAbsolutePath());
++
++        // null parent dir, null project
++        File tmp1 = FILE_UTILS.createTempFile(null, "pre", ".suf", null, false, true);
+         String name = tmp1.getName();
+         assertTrue("starts with pre", name.startsWith("pre"));
+         assertTrue("ends with .suf", name.endsWith(".suf"));
+@@ -353,11 +361,30 @@ public void testCreateTempFile() {
+                 .getAbsolutePath());
+         tmp1.delete();
+ 
++        // null parent dir, project without magic property
++        tmp1 = FILE_UTILS.createTempFile(projectWithoutTempDir, "pre", ".suf", null, false, true);
++        name = tmp1.getName();
++        assertTrue("starts with pre", name.startsWith("pre"));
++        assertTrue("ends with .suf", name.endsWith(".suf"));
++        assertTrue("File was created", tmp1.exists());
++        assertEquals((new File(tmploc, tmp1.getName())).getAbsolutePath(), tmp1
++                .getAbsolutePath());
++        tmp1.delete();
++
++        // null parent dir, project with magic property
++        tmp1 = FILE_UTILS.createTempFile(projectWithTempDir, "pre", ".suf", null, false, true);
++        name = tmp1.getName();
++        assertTrue("starts with pre", name.startsWith("pre"));
++        assertTrue("ends with .suf", name.endsWith(".suf"));
++        assertTrue("File was created", tmp1.exists());
++        assertEquals((new File(projectTmpDir, tmp1.getName())).getAbsolutePath(), tmp1
++                .getAbsolutePath());
++        tmp1.delete();
++
+         File dir2 = new File(tmploc + "/ant-test");
+         dir2.mkdir();
+-        removeThis = dir2;
+ 
+-        File tmp2 = FILE_UTILS.createTempFile("pre", ".suf", dir2, true, true);
++        File tmp2 = FILE_UTILS.createTempFile(null, "pre", ".suf", dir2, true, true);
+         String name2 = tmp2.getName();
+         assertTrue("starts with pre", name2.startsWith("pre"));
+         assertTrue("ends with .suf", name2.endsWith(".suf"));
+@@ -365,6 +392,24 @@ public void testCreateTempFile() {
+         assertEquals((new File(dir2, tmp2.getName())).getAbsolutePath(), tmp2
+                 .getAbsolutePath());
+         tmp2.delete();
++
++        tmp2 = FILE_UTILS.createTempFile(projectWithoutTempDir, "pre", ".suf", dir2, true, true);
++        name2 = tmp2.getName();
++        assertTrue("starts with pre", name2.startsWith("pre"));
++        assertTrue("ends with .suf", name2.endsWith(".suf"));
++        assertTrue("File was created", tmp2.exists());
++        assertEquals((new File(dir2, tmp2.getName())).getAbsolutePath(), tmp2
++                .getAbsolutePath());
++        tmp2.delete();
++
++        tmp2 = FILE_UTILS.createTempFile(projectWithTempDir, "pre", ".suf", dir2, true, true);
++        name2 = tmp2.getName();
++        assertTrue("starts with pre", name2.startsWith("pre"));
++        assertTrue("ends with .suf", name2.endsWith(".suf"));
++        assertTrue("File was created", tmp2.exists());
++        assertEquals((new File(dir2, tmp2.getName())).getAbsolutePath(), tmp2
++                .getAbsolutePath());
++        tmp2.delete();
+         dir2.delete();
+ 
+         File parent = new File((new File("/tmp")).getAbsolutePath());
+@@ -380,12 +425,6 @@ public void testCreateTempFile() {
+         tmp2 = FILE_UTILS.createTempFile("pre", ".suf", parent, false);
+         assertTrue("files are different", !tmp1.getAbsolutePath().equals(
+                 tmp2.getAbsolutePath()));
+-
+-        // null parent dir
+-        File tmp3 = FILE_UTILS.createTempFile("pre", ".suf", null, false);
+-        tmploc = System.getProperty("java.io.tmpdir");
+-        assertEquals((new File(tmploc, tmp3.getName())).getAbsolutePath(), tmp3
+-                .getAbsolutePath());
+     }
+ 
+     /**

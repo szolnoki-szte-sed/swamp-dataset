@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:19.10:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/59c4bd853abcea95eccc167a7d7fd5f1a5f47b98",
+        "version_end_excluding": {
+            "linux:linux_kernel": "5.4.2",
+            "canonical:ubuntu_linux": "unknown"
+        },
+        "path": {
+            "file_path": "arch/x86/include/asm/fpu/internal.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-19602"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:misp:misp:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/MISP/MISP/commit/107e271d78c255d658ce998285fe6f6c4f291b41",
+        "version_end_excluding": {
+            "misp:misp": "2.4.158"
+        },
+        "path": {
+            "file_path": "app/View/GalaxyClusters/view.ctp"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-29530"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

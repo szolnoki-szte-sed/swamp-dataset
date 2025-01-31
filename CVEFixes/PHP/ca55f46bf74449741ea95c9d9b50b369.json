@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pimcore:data-hub:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pimcore/data-hub/commit/15d5b57af2466eebd3bbc531ead5dafa35d0a36e",
+        "version_end_excluding": {
+            "pimcore:data-hub": "1.2.4"
+        },
+        "path": {
+            "file_path": "src/Controller/ConfigController.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0955"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

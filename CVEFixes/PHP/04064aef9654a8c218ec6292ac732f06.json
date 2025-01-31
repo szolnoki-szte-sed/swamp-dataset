@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:misp-project:misp:2.4.82:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/MISP/MISP/commit/a659664447a7b2a383cb9e0f6b43dcb43ec69194",
+        "version_end_excluding": {
+            "misp-project:misp": "unknown"
+        },
+        "path": {
+            "file_path": "app/Controller/AppController.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-16802"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

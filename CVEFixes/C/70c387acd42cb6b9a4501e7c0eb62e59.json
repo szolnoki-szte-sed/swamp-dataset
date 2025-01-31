@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/7b09c2d052db4b4ad0b27b97918b46a7746966fa",
+        "version_end_excluding": {
+            "linux:linux_kernel": "5.3.4"
+        },
+        "path": {
+            "file_path": "net/ipv6/ip6_fib.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-20422"
+        ],
+        "CWE": [
+            "CWE-755"
+        ]
+    }
+}

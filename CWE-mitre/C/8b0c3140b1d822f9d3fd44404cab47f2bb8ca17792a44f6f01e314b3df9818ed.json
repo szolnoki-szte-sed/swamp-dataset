@@ -1,0 +1,43 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:armagetronad:armagetron:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fetchmail:fetchmail:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:washington:pine:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:winpcap:winpcap:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "armagetronad:armagetron": "0.2.6.0",
+            "fetchmail:fetchmail": "5.8.14",
+            "washington:pine": "unknown",
+            "mit:kerberos_5": "1.3.5",
+            "winpcap:winpcap": "unknown",
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2005-0369",
+            "CVE-2001-1009",
+            "CVE-2003-0721",
+            "CVE-2004-1189",
+            "CVE-2007-5756",
+            "CVE-2005-2456"
+        ],
+        "CWE": [
+            "CWE-129"
+        ]
+    }
+}

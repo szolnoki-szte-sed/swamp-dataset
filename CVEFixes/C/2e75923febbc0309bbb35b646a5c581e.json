@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ffmpeg:ffmpeg:4.0.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FFmpeg/FFmpeg/commit/d08d4a8c7387e758d439b0592782e4cfa2b4d6a4",
+        "version_end_excluding": {
+            "ffmpeg:ffmpeg": "unknown"
+        },
+        "path": {
+            "file_path": "libavcodec/vc1_block.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-13305"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

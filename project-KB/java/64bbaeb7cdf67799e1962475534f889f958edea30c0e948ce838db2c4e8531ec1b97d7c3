@@ -1,0 +1,173 @@
+diff --git a/core/src/main/java/io/undertow/server/handlers/HttpContinueReadHandler.java b/core/src/main/java/io/undertow/server/handlers/HttpContinueReadHandler.java
+index 33c5c25b03..2c482d7979 100644
+--- a/core/src/main/java/io/undertow/server/handlers/HttpContinueReadHandler.java
++++ b/core/src/main/java/io/undertow/server/handlers/HttpContinueReadHandler.java
+@@ -24,6 +24,7 @@
+ import java.util.concurrent.TimeUnit;
+ 
+ import io.undertow.server.ConduitWrapper;
++import io.undertow.server.Connectors;
+ import io.undertow.server.protocol.http.HttpContinue;
+ import io.undertow.server.HttpHandler;
+ import io.undertow.server.HttpServerExchange;
+@@ -81,6 +82,7 @@ protected ContinueConduit(final StreamSourceConduit next, final HttpServerExchan
+         public long transferTo(final long position, final long count, final FileChannel target) throws IOException {
+             if (exchange.getStatusCode() == StatusCodes.EXPECTATION_FAILED) {
+                 //rejected
++                Connectors.terminateRequest(exchange);
+                 return -1;
+             }
+             if (!sent) {
+@@ -100,6 +102,7 @@ public long transferTo(final long position, final long count, final FileChannel
+         public long transferTo(final long count, final ByteBuffer throughBuffer, final StreamSinkChannel target) throws IOException {
+             if (exchange.getStatusCode() == StatusCodes.EXPECTATION_FAILED) {
+                 //rejected
++                Connectors.terminateRequest(exchange);
+                 return -1;
+             }
+             if (!sent) {
+@@ -119,6 +122,7 @@ public long transferTo(final long count, final ByteBuffer throughBuffer, final S
+         public int read(final ByteBuffer dst) throws IOException {
+             if (exchange.getStatusCode() == StatusCodes.EXPECTATION_FAILED) {
+                 //rejected
++                Connectors.terminateRequest(exchange);
+                 return -1;
+             }
+             if (!sent) {
+@@ -138,6 +142,7 @@ public int read(final ByteBuffer dst) throws IOException {
+         public long read(final ByteBuffer[] dsts, final int offs, final int len) throws IOException {
+             if (exchange.getStatusCode() == StatusCodes.EXPECTATION_FAILED) {
+                 //rejected
++                Connectors.terminateRequest(exchange);
+                 return -1;
+             }
+             if (!sent) {
+diff --git a/core/src/main/java/io/undertow/server/protocol/http/HttpReadListener.java b/core/src/main/java/io/undertow/server/protocol/http/HttpReadListener.java
+index c070361a29..ed04da9a56 100644
+--- a/core/src/main/java/io/undertow/server/protocol/http/HttpReadListener.java
++++ b/core/src/main/java/io/undertow/server/protocol/http/HttpReadListener.java
+@@ -365,6 +365,10 @@ public void exchangeComplete(final HttpServerExchange exchange) {
+                 }
+             }
+         } else if (!exchange.isPersistent()) {
++            if (connection.getExtraBytes() != null) {
++                connection.getExtraBytes().close();
++                connection.setExtraBytes(null);
++            }
+             ConnectionUtils.cleanClose(connection.getChannel(), connection);
+         } else {
+             //upgrade or connect handling
+diff --git a/core/src/main/java/io/undertow/server/protocol/http/HttpTransferEncoding.java b/core/src/main/java/io/undertow/server/protocol/http/HttpTransferEncoding.java
+index fe18b5f919..3eb4f1a73d 100644
+--- a/core/src/main/java/io/undertow/server/protocol/http/HttpTransferEncoding.java
++++ b/core/src/main/java/io/undertow/server/protocol/http/HttpTransferEncoding.java
+@@ -34,6 +34,8 @@
+ import io.undertow.util.Headers;
+ import io.undertow.util.HttpString;
+ import io.undertow.util.Methods;
++import io.undertow.util.StatusCodes;
++
+ import org.jboss.logging.Logger;
+ import org.xnio.conduits.ConduitStreamSourceChannel;
+ import org.xnio.conduits.StreamSinkConduit;
+@@ -224,6 +226,11 @@ static StreamSinkConduit createSinkConduit(final HttpServerExchange exchange) {
+         final HeaderMap responseHeaders = exchange.getResponseHeaders();
+         // test to see if we're still persistent
+         String connection = responseHeaders.getFirst(Headers.CONNECTION);
++        if(exchange.getStatusCode() == StatusCodes.EXPECTATION_FAILED) {
++            //417 responses are never persistent, as we have no idea if there is a response body
++            //still coming on the wire.
++            exchange.setPersistent(false);
++        }
+         if (!exchange.isPersistent()) {
+             responseHeaders.put(Headers.CONNECTION, Headers.CLOSE.toString());
+         } else if (exchange.isPersistent() && connection != null) {
+diff --git a/core/src/test/java/io/undertow/server/handlers/HttpContinueConduitWrappingHandlerBufferLeakTestCase.java b/core/src/test/java/io/undertow/server/handlers/HttpContinueConduitWrappingHandlerBufferLeakTestCase.java
+new file mode 100644
+index 0000000000..840848ff94
+--- /dev/null
++++ b/core/src/test/java/io/undertow/server/handlers/HttpContinueConduitWrappingHandlerBufferLeakTestCase.java
+@@ -0,0 +1,83 @@
++/*
++ * JBoss, Home of Professional Open Source.
++ * Copyright 2020 Red Hat, Inc., and individual contributors
++ * as indicated by the @author tags.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ *  Unless required by applicable law or agreed to in writing, software
++ *  distributed under the License is distributed on an "AS IS" BASIS,
++ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ *  See the License for the specific language governing permissions and
++ *  limitations under the License.
++ */
++
++package io.undertow.server.handlers;
++
++import java.io.IOException;
++import java.net.Socket;
++import java.nio.charset.StandardCharsets;
++
++import org.junit.Assume;
++import org.junit.Before;
++import org.junit.BeforeClass;
++import org.junit.Test;
++import org.junit.runner.RunWith;
++
++import io.undertow.server.HttpHandler;
++import io.undertow.server.HttpServerExchange;
++import io.undertow.testutils.DefaultServer;
++import io.undertow.util.StatusCodes;
++
++/**
++ * @author Stuart Douglas
++ */
++@RunWith(DefaultServer.class)
++public class HttpContinueConduitWrappingHandlerBufferLeakTestCase {
++
++    static Socket persistentSocket;
++
++    @BeforeClass
++    public static void setup() {
++        final BlockingHandler blockingHandler = new BlockingHandler();
++        final HttpContinueReadHandler handler = new HttpContinueReadHandler(blockingHandler);
++        DefaultServer.setRootHandler(handler);
++        blockingHandler.setRootHandler(new HttpHandler() {
++            @Override
++            public void handleRequest(final HttpServerExchange exchange) {
++                try {
++                    exchange.getRequestChannel();
++                    exchange.setStatusCode(StatusCodes.EXPECTATION_FAILED);
++                    exchange.getOutputStream().close();
++                } catch (IOException e) {
++                    throw new RuntimeException(e);
++                }
++            }
++        });
++    }
++
++    @Before
++    public void before() {
++        Assume.assumeFalse(DefaultServer.isAjp());
++    }
++
++    @Test
++    public void testHttpContinueRejectedBodySentAnywayNoBufferLeak() throws IOException {
++        persistentSocket = new Socket(DefaultServer.getHostAddress(), DefaultServer.getHostPort());
++
++        String message = "POST /path HTTP/1.1\r\n" +
++                "Expect: 100-continue\r\n" +
++                "Content-Length: 16\r\n" +
++                "Content-Type: text/plain; charset=ISO-8859-1\r\n" +
++                "Host: localhost:7777\r\n" +
++                "Connection: Keep-Alive\r\n\r\nMy HTTP Request!";
++        persistentSocket.getOutputStream().write(message.getBytes(StandardCharsets.UTF_8));
++        persistentSocket.getOutputStream().flush();
++        persistentSocket.getInputStream().read();
++    }
++
++}

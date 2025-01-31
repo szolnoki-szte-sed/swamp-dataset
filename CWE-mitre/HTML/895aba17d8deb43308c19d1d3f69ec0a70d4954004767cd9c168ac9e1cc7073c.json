@@ -1,0 +1,43 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mozilla:thunderbird:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ilias:ilias:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:bouncycastle:legion-of-the-bouncy-castle-java-crytography-api:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oauth2_proxy_project:oauth2_proxy:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:auieosoftware:candidats:3.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:macromedia:coldfusion:6.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "mozilla:thunderbird": "unknown",
+            "ilias:ilias": "unknown",
+            "bouncycastle:legion-of-the-bouncy-castle-java-crytography-api": "unknown",
+            "oauth2_proxy_project:oauth2_proxy": "unknown",
+            "auieosoftware:candidats": "unknown",
+            "macromedia:coldfusion": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-3032",
+            "CVE-2022-45918",
+            "CVE-2018-1000613",
+            "CVE-2020-11053",
+            "CVE-2022-42745",
+            "CVE-2004-2331"
+        ],
+        "CWE": [
+            "CWE-610"
+        ]
+    }
+}

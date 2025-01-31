@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:lars_hjemli:cgit:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mozilla:firefox:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "lars_hjemli:cgit": "0.8.3.4",
+            "mozilla:firefox": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-1027",
+            "CVE-2006-6499"
+        ],
+        "CWE": [
+            "CWE-834"
+        ]
+    }
+}

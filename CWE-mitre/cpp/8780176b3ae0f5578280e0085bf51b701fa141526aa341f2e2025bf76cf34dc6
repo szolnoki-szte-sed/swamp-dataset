@@ -1,0 +1,6 @@
+-
+-					  for (ii = 0; ii < W + 1; ii++)
+-					  
+-					    array[ii].element[0]++;
+-					  
+-					

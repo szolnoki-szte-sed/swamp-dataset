@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:tiny_file_manager_project:tiny_file_manager:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/prasathmani/tinyfilemanager/commit/2046bbde72ed76af0cfdcae082de629bcc4b44c7",
+        "version_end_excluding": {
+            "tiny_file_manager_project:tiny_file_manager": "unknown"
+        },
+        "path": {
+            "file_path": "tinyfilemanager.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-45010"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

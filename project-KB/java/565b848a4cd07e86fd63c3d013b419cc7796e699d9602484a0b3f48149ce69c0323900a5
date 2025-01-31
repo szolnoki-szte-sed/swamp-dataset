@@ -1,0 +1,979 @@
+diff --git a/server/src/main/java/org/cloudfoundry/identity/uaa/invitations/InvitationsController.java b/server/src/main/java/org/cloudfoundry/identity/uaa/invitations/InvitationsController.java
+index 60bd2bda4c2..cb09a859252 100644
+--- a/server/src/main/java/org/cloudfoundry/identity/uaa/invitations/InvitationsController.java
++++ b/server/src/main/java/org/cloudfoundry/identity/uaa/invitations/InvitationsController.java
+@@ -12,6 +12,7 @@
+ import org.cloudfoundry.identity.uaa.provider.IdentityProviderProvisioning;
+ import org.cloudfoundry.identity.uaa.provider.SamlIdentityProviderDefinition;
+ import org.cloudfoundry.identity.uaa.provider.ldap.ExtendedLdapUserDetails;
++import org.cloudfoundry.identity.uaa.provider.oauth.XOAuthProviderConfigurator;
+ import org.cloudfoundry.identity.uaa.provider.saml.SamlRedirectUtils;
+ import org.cloudfoundry.identity.uaa.scim.ScimUser;
+ import org.cloudfoundry.identity.uaa.scim.ScimUserProvisioning;
+@@ -52,10 +53,18 @@
+ import javax.servlet.http.HttpServletResponse;
+ import java.net.URLEncoder;
+ import java.sql.Timestamp;
+-import java.util.*;
++import java.util.Arrays;
++import java.util.Collections;
++import java.util.Enumeration;
++import java.util.HashMap;
++import java.util.Map;
+ 
+ import static org.cloudfoundry.identity.uaa.codestore.ExpiringCodeType.INVITATION;
+-import static org.cloudfoundry.identity.uaa.constants.OriginKeys.*;
++import static org.cloudfoundry.identity.uaa.constants.OriginKeys.OAUTH20;
++import static org.cloudfoundry.identity.uaa.constants.OriginKeys.OIDC10;
++import static org.cloudfoundry.identity.uaa.constants.OriginKeys.ORIGIN;
++import static org.cloudfoundry.identity.uaa.constants.OriginKeys.SAML;
++import static org.cloudfoundry.identity.uaa.constants.OriginKeys.UAA;
+ import static org.cloudfoundry.identity.uaa.web.UaaSavedRequestAwareAuthenticationSuccessHandler.FORM_REDIRECT_PARAMETER;
+ import static org.cloudfoundry.identity.uaa.web.UaaSavedRequestAwareAuthenticationSuccessHandler.SAVED_REQUEST_SESSION_ATTRIBUTE;
+ import static org.springframework.util.StringUtils.hasText;
+@@ -76,6 +85,7 @@ public class InvitationsController {
+     private final UaaUserDatabase userDatabase;
+     private final String spEntityID;
+     private final ScimUserProvisioning userProvisioning;
++    private final XOAuthProviderConfigurator xoAuthProviderConfigurator;
+ 
+     public InvitationsController(
+             final InvitationsService invitationsService,
+@@ -85,7 +95,8 @@ public InvitationsController(
+             final DynamicZoneAwareAuthenticationManager zoneAwareAuthenticationManager,
+             final UaaUserDatabase userDatabase,
+             final @Qualifier("samlEntityID") String spEntityID,
+-            final ScimUserProvisioning userProvisioning) {
++            final ScimUserProvisioning userProvisioning,
++            final @Qualifier("xoauthProviderConfigurator") XOAuthProviderConfigurator xoAuthProviderConfigurator) {
+         this.invitationsService = invitationsService;
+         this.expiringCodeStore = expiringCodeStore;
+         this.passwordValidator = passwordValidator;
+@@ -94,6 +105,7 @@ public InvitationsController(
+         this.userDatabase = userDatabase;
+         this.spEntityID = spEntityID;
+         this.userProvisioning = userProvisioning;
++        this.xoAuthProviderConfigurator = xoAuthProviderConfigurator;
+     }
+ 
+     @RequestMapping(value = {"/sent", "/new", "/new.do"})
+@@ -141,12 +153,7 @@ public String acceptInvitePage(@RequestParam String code, Model model, HttpServl
+ 
+                 AbstractXOAuthIdentityProviderDefinition definition = ObjectUtils.castInstance(provider.getConfig(), AbstractXOAuthIdentityProviderDefinition.class);
+ 
+-                String scheme = request.getScheme();
+-                String host = request.getHeader("Host");
+-                String contextPath = request.getContextPath();
+-                String resultPath = scheme + "://" + host + contextPath;
+-                String redirect = "redirect:" + definition.getAuthUrl() + "?client_id=" + definition.getRelyingPartyId() + "&response_type=code" + "&redirect_uri=" + resultPath + "/login/callback/" + provider.getOriginKey();
+-
++                String redirect = "redirect:" + xoAuthProviderConfigurator.getIdpAuthenticationUrl(definition, provider.getOriginKey(), request);
+                 logger.debug(String.format("Redirecting invitation for email:%s, id:%s OIDC IDP URL:%s", codeData.get("email"), codeData.get("user_id"), redirect));
+                 return redirect;
+             } else {
+diff --git a/server/src/main/java/org/cloudfoundry/identity/uaa/login/LoginInfoEndpoint.java b/server/src/main/java/org/cloudfoundry/identity/uaa/login/LoginInfoEndpoint.java
+index 721b19e501d..f322a149a0e 100755
+--- a/server/src/main/java/org/cloudfoundry/identity/uaa/login/LoginInfoEndpoint.java
++++ b/server/src/main/java/org/cloudfoundry/identity/uaa/login/LoginInfoEndpoint.java
+@@ -10,15 +10,29 @@
+ import org.cloudfoundry.identity.uaa.constants.OriginKeys;
+ import org.cloudfoundry.identity.uaa.mfa.MfaChecker;
+ import org.cloudfoundry.identity.uaa.oauth.client.ClientConstants;
+-import org.cloudfoundry.identity.uaa.provider.*;
++import org.cloudfoundry.identity.uaa.provider.AbstractIdentityProviderDefinition;
++import org.cloudfoundry.identity.uaa.provider.AbstractXOAuthIdentityProviderDefinition;
++import org.cloudfoundry.identity.uaa.provider.IdentityProvider;
++import org.cloudfoundry.identity.uaa.provider.IdentityProviderProvisioning;
++import org.cloudfoundry.identity.uaa.provider.OIDCIdentityProviderDefinition;
++import org.cloudfoundry.identity.uaa.provider.SamlIdentityProviderDefinition;
++import org.cloudfoundry.identity.uaa.provider.UaaIdentityProviderDefinition;
+ import org.cloudfoundry.identity.uaa.provider.oauth.XOAuthProviderConfigurator;
+ import org.cloudfoundry.identity.uaa.provider.saml.LoginSamlAuthenticationToken;
+ import org.cloudfoundry.identity.uaa.provider.saml.SamlIdentityProviderConfigurator;
+ import org.cloudfoundry.identity.uaa.provider.saml.SamlRedirectUtils;
+-import org.cloudfoundry.identity.uaa.util.*;
++import org.cloudfoundry.identity.uaa.util.ColorHash;
++import org.cloudfoundry.identity.uaa.util.DomainFilter;
++import org.cloudfoundry.identity.uaa.util.JsonUtils;
+ import org.cloudfoundry.identity.uaa.util.JsonUtils.JsonUtilException;
++import org.cloudfoundry.identity.uaa.util.MapCollector;
++import org.cloudfoundry.identity.uaa.util.UaaStringUtils;
+ import org.cloudfoundry.identity.uaa.web.UaaSavedRequestAwareAuthenticationSuccessHandler;
+-import org.cloudfoundry.identity.uaa.zone.*;
++import org.cloudfoundry.identity.uaa.zone.IdentityZone;
++import org.cloudfoundry.identity.uaa.zone.IdentityZoneConfiguration;
++import org.cloudfoundry.identity.uaa.zone.IdentityZoneHolder;
++import org.cloudfoundry.identity.uaa.zone.Links;
++import org.cloudfoundry.identity.uaa.zone.MultitenantClientServices;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ import org.springframework.beans.factory.annotation.Qualifier;
+@@ -39,7 +53,13 @@
+ import org.springframework.ui.Model;
+ import org.springframework.util.StringUtils;
+ import org.springframework.web.HttpMediaTypeNotAcceptableException;
+-import org.springframework.web.bind.annotation.*;
++import org.springframework.web.bind.annotation.RequestBody;
++import org.springframework.web.bind.annotation.RequestHeader;
++import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RequestMethod;
++import org.springframework.web.bind.annotation.RequestParam;
++import org.springframework.web.bind.annotation.ResponseBody;
++import org.springframework.web.bind.annotation.ResponseStatus;
+ 
+ import javax.servlet.http.Cookie;
+ import javax.servlet.http.HttpServletRequest;
+@@ -47,15 +67,21 @@
+ import javax.servlet.http.HttpSession;
+ import java.awt.*;
+ import java.io.IOException;
+-import java.net.URI;
+-import java.net.URISyntaxException;
+ import java.net.URLDecoder;
+ import java.security.Principal;
+ import java.sql.Timestamp;
+ import java.text.SimpleDateFormat;
+ import java.time.Duration;
++import java.util.Arrays;
++import java.util.Collections;
++import java.util.Date;
++import java.util.HashMap;
++import java.util.LinkedHashMap;
++import java.util.LinkedList;
+ import java.util.List;
+-import java.util.*;
++import java.util.Map;
++import java.util.Objects;
++import java.util.Properties;
+ import java.util.regex.Matcher;
+ import java.util.regex.Pattern;
+ import java.util.stream.Collectors;
+@@ -393,10 +419,10 @@ private void updateLoginPageModel(
+                 .filter(e -> e.getValue().isShowLinkText())
+                 .forEach(e ->
+                         oauthLinks.put(
+-                                xoAuthProviderConfigurator.getCompleteAuthorizationURI(
++                                xoAuthProviderConfigurator.getIdpAuthenticationUrl(
++                                        e.getValue(),
+                                         e.getKey(),
+-                                        UaaUrlUtils.getBaseURL(request),
+-                                        e.getValue()),
++                                        request),
+                                 e.getValue().getLinkText()
+                         )
+                 );
+@@ -535,21 +561,21 @@ public String deleteSavedAccount(HttpServletRequest request, HttpServletResponse
+     }
+ 
+ 
+-    private String redirectToExternalProvider(AbstractIdentityProviderDefinition idpForRedirect, String alias, HttpServletRequest request) {
++    private String redirectToExternalProvider(AbstractIdentityProviderDefinition idpForRedirect, String idpOriginKey, HttpServletRequest request) {
+         if (idpForRedirect != null) {
+             if (idpForRedirect instanceof SamlIdentityProviderDefinition) {
+                 String url = SamlRedirectUtils.getIdpRedirectUrl((SamlIdentityProviderDefinition) idpForRedirect, entityID, IdentityZoneHolder.get());
+                 return "redirect:/" + url;
+             } else if (idpForRedirect instanceof AbstractXOAuthIdentityProviderDefinition) {
+-                String redirectUrl = getRedirectUrlForXOAuthIDP(request, alias, (AbstractXOAuthIdentityProviderDefinition) idpForRedirect);
++                String redirectUrl = getRedirectUrlForXOAuthIDP(request, idpOriginKey, (AbstractXOAuthIdentityProviderDefinition) idpForRedirect);
+                 return "redirect:" + redirectUrl;
+             }
+         }
+         return null;
+     }
+ 
+-    private String getRedirectUrlForXOAuthIDP(HttpServletRequest request, String alias, AbstractXOAuthIdentityProviderDefinition definition) {
+-        return xoAuthProviderConfigurator.getCompleteAuthorizationURI(alias, UaaUrlUtils.getBaseURL(request), definition);
++    private String getRedirectUrlForXOAuthIDP(HttpServletRequest request, String idpOriginKey, AbstractXOAuthIdentityProviderDefinition definition) {
++        return xoAuthProviderConfigurator.getIdpAuthenticationUrl(definition, idpOriginKey, request);
+     }
+ 
+     private Map<String, SamlIdentityProviderDefinition> getSamlIdentityProviderDefinitions(List<String> allowedIdps) {
+diff --git a/server/src/main/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthAuthenticationFilter.java b/server/src/main/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthAuthenticationFilter.java
+index 302401d28a3..32c3305a6d0 100644
+--- a/server/src/main/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthAuthenticationFilter.java
++++ b/server/src/main/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthAuthenticationFilter.java
+@@ -1,12 +1,16 @@
+ package org.cloudfoundry.identity.uaa.provider.oauth;
+ 
+ import org.apache.commons.httpclient.util.URIUtil;
++import org.apache.commons.lang3.StringUtils;
+ import org.cloudfoundry.identity.uaa.authentication.UaaAuthenticationDetails;
+ import org.cloudfoundry.identity.uaa.login.AccountSavingAuthenticationSuccessHandler;
++import org.cloudfoundry.identity.uaa.util.UaaUrlUtils;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ import org.springframework.security.core.Authentication;
+ import org.springframework.security.core.context.SecurityContextHolder;
++import org.springframework.security.web.csrf.CsrfException;
++import org.springframework.web.HttpSessionRequiredException;
+ 
+ import javax.servlet.Filter;
+ import javax.servlet.FilterChain;
+@@ -16,6 +20,7 @@
+ import javax.servlet.ServletResponse;
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
++import javax.servlet.http.HttpSession;
+ import java.io.IOException;
+ import java.net.URLEncoder;
+ import java.nio.charset.StandardCharsets;
+@@ -49,6 +54,8 @@ public void doFilter(
+         final HttpServletRequest request = (HttpServletRequest) servletRequest;
+         final HttpServletResponse response = (HttpServletResponse) servletResponse;
+ 
++        checkRequestStateParameter(request);
++
+         if (containsCredentials(request)) {
+             if (authenticationWasSuccessful(request, response)) {
+                 chain.doFilter(request, response);
+@@ -58,6 +65,19 @@ public void doFilter(
+         }
+     }
+ 
++    private void checkRequestStateParameter(final HttpServletRequest request) throws HttpSessionRequiredException {
++        final String originKey = UaaUrlUtils.extractPathVariableFromUrl(2, request.getServletPath());
++        final HttpSession session = request.getSession();
++        if (session == null) {
++            throw new HttpSessionRequiredException("An HTTP Session is required to process request.");
++        }
++        final Object stateInSession = request.getSession().getAttribute("xoauth-state-" + originKey);
++        final String stateFromParameters = request.getParameter("state");
++        if (StringUtils.isEmpty(stateFromParameters) || !stateFromParameters.equals(stateInSession)) {
++            throw new CsrfException("Invalid State Param in request.");
++        }
++    }
++
+     public boolean containsCredentials(final HttpServletRequest request) {
+         final String code = request.getParameter("code");
+         final String idToken = request.getParameter("id_token");
+@@ -89,6 +109,9 @@ private boolean authenticationWasSuccessful(
+             ofNullable(successHandler).ifPresent(handler ->
+                     handler.setSavedAccountOptionCookie(request, response, authentication)
+             );
++        // TODO: :eyes_narrowed:
++        // should be an instance of AuthenticationException
++        // but can we trust it?
+         } catch (Exception ex) {
+             logger.error("XOauth Authentication exception", ex);
+             String message = ex.getMessage();
+diff --git a/server/src/main/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthProviderConfigurator.java b/server/src/main/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthProviderConfigurator.java
+index 399f69d261d..f39781085c6 100644
+--- a/server/src/main/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthProviderConfigurator.java
++++ b/server/src/main/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthProviderConfigurator.java
+@@ -5,11 +5,15 @@
+ import org.cloudfoundry.identity.uaa.provider.IdentityProviderProvisioning;
+ import org.cloudfoundry.identity.uaa.provider.OIDCIdentityProviderDefinition;
+ import org.cloudfoundry.identity.uaa.util.UaaRandomStringUtil;
++import org.cloudfoundry.identity.uaa.util.UaaUrlUtils;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ import org.springframework.dao.IncorrectResultSizeDataAccessException;
+ import org.springframework.security.oauth2.common.util.RandomValueStringGenerator;
++import org.springframework.util.CollectionUtils;
++import org.springframework.web.util.UriComponentsBuilder;
+ 
++import javax.servlet.http.HttpServletRequest;
+ import java.net.URLEncoder;
+ import java.nio.charset.StandardCharsets;
+ import java.util.ArrayList;
+@@ -48,31 +52,54 @@ protected OIDCIdentityProviderDefinition overlay(OIDCIdentityProviderDefinition
+         }
+     }
+ 
+-    public String getCompleteAuthorizationURI(
+-            final String alias,
+-            final String baseURL,
+-            final AbstractXOAuthIdentityProviderDefinition definition) {
+-        String authUrlBase;
+-        if (definition instanceof OIDCIdentityProviderDefinition) {
+-            authUrlBase = overlay((OIDCIdentityProviderDefinition) definition).getAuthUrl().toString();
+-        } else {
+-            authUrlBase = definition.getAuthUrl().toString();
+-        }
+-        String queryAppendDelimiter = authUrlBase.contains("?") ? "&" : "?";
+-        List<String> query = new ArrayList<>();
+-        query.add("client_id=" + definition.getRelyingPartyId());
+-        query.add("response_type=" + URLEncoder.encode(definition.getResponseType(), StandardCharsets.UTF_8));
+-        query.add("redirect_uri=" + URLEncoder.encode(baseURL + "/login/callback/" + alias, StandardCharsets.UTF_8));
+-        query.add("state=" + uaaRandomStringUtil.getSecureRandom(10));
+-        if (definition.getScopes() != null && !definition.getScopes().isEmpty()) {
+-            query.add("scope=" + URLEncoder.encode(String.join(" ", definition.getScopes()), StandardCharsets.UTF_8));
++    public String getIdpAuthenticationUrl(
++            final AbstractXOAuthIdentityProviderDefinition definition,
++            final String idpOriginKey,
++            final HttpServletRequest request) {
++        var idpUrlBase = getIdpUrlBase(definition);
++        var callbackUrl = getCallbackUrlForIdp(idpOriginKey, UaaUrlUtils.getBaseURL(request));
++        var responseType = URLEncoder.encode(definition.getResponseType(), StandardCharsets.UTF_8);
++        var relyingPartyId = definition.getRelyingPartyId();
++
++        var state = generateStateParam();
++        saveStateParamForIdpToRequestSession(state, idpOriginKey, request);
++
++        UriComponentsBuilder uriBuilder = UriComponentsBuilder
++                .fromUriString(idpUrlBase)
++                .queryParam("client_id", relyingPartyId)
++                .queryParam("response_type", responseType)
++                .queryParam("redirect_uri", callbackUrl)
++                .queryParam("state", state);
++
++        if (!CollectionUtils.isEmpty(definition.getScopes())) {
++            uriBuilder.queryParam("scope", URLEncoder.encode(String.join(" ", definition.getScopes()), StandardCharsets.UTF_8));
+         }
++
+         if (OIDCIdentityProviderDefinition.class.equals(definition.getParameterizedClass())) {
+-            final RandomValueStringGenerator nonceGenerator = new RandomValueStringGenerator(12);
+-            query.add("nonce=" + nonceGenerator.generate());
++            var nonceGenerator = new RandomValueStringGenerator(12);
++            uriBuilder.queryParam("nonce", nonceGenerator.generate());
++        }
++
++        return uriBuilder.build().toUriString();
++    }
++
++    private void saveStateParamForIdpToRequestSession(String state, String idpOriginKey, HttpServletRequest request) {
++        request.getSession().setAttribute("xoauth-state-" + idpOriginKey, state);
++    }
++
++    private String generateStateParam() {
++        return uaaRandomStringUtil.getSecureRandom(10);
++    }
++
++    private String getCallbackUrlForIdp(String idpOriginKey, String uaaBaseUrl) {
++        return URLEncoder.encode(uaaBaseUrl + "/login/callback/" + idpOriginKey, StandardCharsets.UTF_8);
++    }
++
++    private String getIdpUrlBase(final AbstractXOAuthIdentityProviderDefinition definition) {
++        if (definition instanceof OIDCIdentityProviderDefinition) {
++            return overlay((OIDCIdentityProviderDefinition) definition).getAuthUrl().toString();
+         }
+-        String queryString = String.join("&", query);
+-        return authUrlBase + queryAppendDelimiter + queryString;
++        return definition.getAuthUrl().toString();
+     }
+ 
+     @Override
+diff --git a/server/src/test/java/org/cloudfoundry/identity/uaa/invitations/InvitationsControllerTest.java b/server/src/test/java/org/cloudfoundry/identity/uaa/invitations/InvitationsControllerTest.java
+index a0fb69ab4af..febdfd98bc5 100644
+--- a/server/src/test/java/org/cloudfoundry/identity/uaa/invitations/InvitationsControllerTest.java
++++ b/server/src/test/java/org/cloudfoundry/identity/uaa/invitations/InvitationsControllerTest.java
+@@ -13,6 +13,7 @@
+ import org.cloudfoundry.identity.uaa.provider.OIDCIdentityProviderDefinition;
+ import org.cloudfoundry.identity.uaa.provider.SamlIdentityProviderDefinition;
+ import org.cloudfoundry.identity.uaa.provider.ldap.ExtendedLdapUserDetails;
++import org.cloudfoundry.identity.uaa.provider.oauth.XOAuthProviderConfigurator;
+ import org.cloudfoundry.identity.uaa.scim.ScimUser;
+ import org.cloudfoundry.identity.uaa.scim.ScimUserProvisioning;
+ import org.cloudfoundry.identity.uaa.scim.exception.InvalidPasswordException;
+@@ -55,7 +56,6 @@
+ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+ 
+ import java.net.URL;
+ import java.sql.Timestamp;
+@@ -128,6 +128,9 @@ public class InvitationsControllerTest {
+     @Autowired
+     ScimUserProvisioning scimUserProvisioning;
+ 
++    @Autowired
++    XOAuthProviderConfigurator xoAuthProviderConfigurator;
++
+     @Before
+     public void setUp() {
+         SecurityContextHolder.clearContext();
+@@ -227,12 +230,14 @@ public void acceptInvitePage_for_unverifiedOIDCUser() throws Exception {
+         provider.setConfig(definition);
+         provider.setType(OriginKeys.OIDC10);
+         when(providerProvisioning.retrieveByOrigin(eq("test-oidc"), anyString())).thenReturn(provider);
++        when(xoAuthProviderConfigurator.getIdpAuthenticationUrl(any(), any(), any())).thenReturn("http://example.com");
++
+ 
+         MockHttpServletRequestBuilder get = get("/invitations/accept")
+                 .param("code", "the_secret_code");
+ 
+         MvcResult result = mockMvc.perform(get)
+-                .andExpect(redirectedUrl("https://oidc10.auth.url?client_id=" + definition.getRelyingPartyId() + "&response_type=code&redirect_uri=http://null/login/callback/" + provider.getOriginKey()))
++                .andExpect(redirectedUrl("http://example.com"))
+                 .andReturn();
+ 
+         assertEquals(true, result.getRequest().getSession().getAttribute("IS_INVITE_ACCEPTANCE"));
+@@ -807,7 +812,8 @@ InvitationsController invitationsController(final InvitationsService invitations
+                                                     final IdentityProviderProvisioning providerProvisioning,
+                                                     final UaaUserDatabase userDatabase,
+                                                     final ScimUserProvisioning provisioning,
+-                                                    final DynamicZoneAwareAuthenticationManager zoneAwareAuthenticationManager) {
++                                                    final DynamicZoneAwareAuthenticationManager zoneAwareAuthenticationManager,
++                                                    final XOAuthProviderConfigurator xoAuthProviderConfigurator) {
+             return new InvitationsController(
+                     invitationsService,
+                     codeStore,
+@@ -816,7 +822,8 @@ InvitationsController invitationsController(final InvitationsService invitations
+                     zoneAwareAuthenticationManager,
+                     userDatabase,
+                     "sp-entity-id",
+-                    provisioning);
++                    provisioning,
++                    xoAuthProviderConfigurator);
+         }
+ 
+         @Bean
+@@ -847,5 +854,10 @@ DynamicZoneAwareAuthenticationManager zoneAwareAuthenticationManager() {
+         CookieBasedCsrfTokenRepository loginCookieCsrfRepository() {
+             return mock(CookieBasedCsrfTokenRepository.class);
+         }
++
++        @Bean
++        XOAuthProviderConfigurator xoAuthProviderConfigurator() {
++            return mock(XOAuthProviderConfigurator.class);
++        }
+     }
+ }
+diff --git a/server/src/test/java/org/cloudfoundry/identity/uaa/login/LoginInfoEndpointTests.java b/server/src/test/java/org/cloudfoundry/identity/uaa/login/LoginInfoEndpointTests.java
+index 8e02789315e..702004e11ee 100755
+--- a/server/src/test/java/org/cloudfoundry/identity/uaa/login/LoginInfoEndpointTests.java
++++ b/server/src/test/java/org/cloudfoundry/identity/uaa/login/LoginInfoEndpointTests.java
+@@ -5,18 +5,30 @@
+ import org.cloudfoundry.identity.uaa.authentication.UaaPrincipal;
+ import org.cloudfoundry.identity.uaa.codestore.InMemoryExpiringCodeStore;
+ import org.cloudfoundry.identity.uaa.constants.OriginKeys;
++import org.cloudfoundry.identity.uaa.extensions.PollutionPreventionExtension;
+ import org.cloudfoundry.identity.uaa.mfa.MfaChecker;
+ import org.cloudfoundry.identity.uaa.oauth.client.ClientConstants;
+-import org.cloudfoundry.identity.uaa.provider.*;
++import org.cloudfoundry.identity.uaa.provider.AbstractXOAuthIdentityProviderDefinition;
++import org.cloudfoundry.identity.uaa.provider.IdentityProvider;
++import org.cloudfoundry.identity.uaa.provider.IdentityProviderProvisioning;
++import org.cloudfoundry.identity.uaa.provider.OIDCIdentityProviderDefinition;
++import org.cloudfoundry.identity.uaa.provider.RawXOAuthIdentityProviderDefinition;
++import org.cloudfoundry.identity.uaa.provider.SamlIdentityProviderDefinition;
++import org.cloudfoundry.identity.uaa.provider.UaaIdentityProviderDefinition;
+ import org.cloudfoundry.identity.uaa.provider.oauth.OidcMetadataFetcher;
+ import org.cloudfoundry.identity.uaa.provider.oauth.XOAuthProviderConfigurator;
+ import org.cloudfoundry.identity.uaa.provider.saml.LoginSamlAuthenticationToken;
+ import org.cloudfoundry.identity.uaa.provider.saml.SamlIdentityProviderConfigurator;
+-import org.cloudfoundry.identity.uaa.extensions.PollutionPreventionExtension;
+ import org.cloudfoundry.identity.uaa.util.JsonUtils;
+ import org.cloudfoundry.identity.uaa.util.PredicateMatcher;
+ import org.cloudfoundry.identity.uaa.util.UaaRandomStringUtil;
+-import org.cloudfoundry.identity.uaa.zone.*;
++import org.cloudfoundry.identity.uaa.zone.IdentityZone;
++import org.cloudfoundry.identity.uaa.zone.IdentityZoneConfiguration;
++import org.cloudfoundry.identity.uaa.zone.IdentityZoneHolder;
++import org.cloudfoundry.identity.uaa.zone.IdentityZoneProvisioning;
++import org.cloudfoundry.identity.uaa.zone.Links;
++import org.cloudfoundry.identity.uaa.zone.MultitenancyFixture;
++import org.cloudfoundry.identity.uaa.zone.MultitenantClientServices;
+ import org.junit.jupiter.api.AfterEach;
+ import org.junit.jupiter.api.BeforeEach;
+ import org.junit.jupiter.api.Test;
+@@ -42,21 +54,50 @@
+ import java.net.MalformedURLException;
+ import java.net.URL;
+ import java.net.URLEncoder;
+-import java.util.*;
++import java.util.ArrayList;
++import java.util.Arrays;
++import java.util.Collection;
++import java.util.HashMap;
++import java.util.Iterator;
++import java.util.LinkedList;
++import java.util.List;
++import java.util.Map;
+ import java.util.function.Function;
+ 
+ import static java.nio.charset.StandardCharsets.UTF_8;
+-import static java.util.Collections.*;
++import static java.util.Collections.emptyList;
++import static java.util.Collections.emptySet;
++import static java.util.Collections.singletonList;
+ import static org.cloudfoundry.identity.uaa.util.AssertThrowsWithMessage.assertThrowsWithMessageThat;
+ import static org.cloudfoundry.identity.uaa.util.UaaUrlUtils.addSubdomainToUrl;
+ import static org.cloudfoundry.identity.uaa.web.UaaSavedRequestAwareAuthenticationSuccessHandler.SAVED_REQUEST_SESSION_ATTRIBUTE;
++import static org.hamcrest.Matchers.containsString;
++import static org.hamcrest.Matchers.equalTo;
++import static org.hamcrest.Matchers.hasKey;
++import static org.hamcrest.Matchers.hasSize;
++import static org.hamcrest.Matchers.instanceOf;
++import static org.hamcrest.Matchers.is;
++import static org.hamcrest.Matchers.not;
++import static org.hamcrest.Matchers.notNullValue;
+ import static org.hamcrest.Matchers.startsWith;
+-import static org.hamcrest.Matchers.*;
+-import static org.junit.Assert.*;
++import static org.junit.Assert.assertEquals;
++import static org.junit.Assert.assertFalse;
++import static org.junit.Assert.assertNotNull;
++import static org.junit.Assert.assertNull;
++import static org.junit.Assert.assertThat;
++import static org.junit.Assert.assertTrue;
+ import static org.junit.jupiter.api.Assertions.assertThrows;
+ import static org.mockito.ArgumentMatchers.any;
+-import static org.mockito.ArgumentMatchers.*;
+-import static org.mockito.Mockito.*;
++import static org.mockito.ArgumentMatchers.anyBoolean;
++import static org.mockito.ArgumentMatchers.anyList;
++import static org.mockito.ArgumentMatchers.anyString;
++import static org.mockito.ArgumentMatchers.eq;
++import static org.mockito.ArgumentMatchers.isNull;
++import static org.mockito.Mockito.doReturn;
++import static org.mockito.Mockito.mock;
++import static org.mockito.Mockito.spy;
++import static org.mockito.Mockito.verify;
++import static org.mockito.Mockito.when;
+ 
+ @ExtendWith(PollutionPreventionExtension.class)
+ class LoginInfoEndpointTests {
+diff --git a/server/src/test/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthAuthenticationFilterTest.java b/server/src/test/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthAuthenticationFilterTest.java
+index 4289a5f2d4c..953d47de964 100644
+--- a/server/src/test/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthAuthenticationFilterTest.java
++++ b/server/src/test/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthAuthenticationFilterTest.java
+@@ -1,147 +1,224 @@
+ package org.cloudfoundry.identity.uaa.provider.oauth;
+ 
+-import org.cloudfoundry.identity.uaa.authentication.UaaAuthentication;
+-import org.cloudfoundry.identity.uaa.authentication.UaaAuthenticationDetails;
+-import org.cloudfoundry.identity.uaa.authentication.UaaPrincipal;
+-import org.cloudfoundry.identity.uaa.constants.OriginKeys;
+ import org.cloudfoundry.identity.uaa.extensions.PollutionPreventionExtension;
+ import org.cloudfoundry.identity.uaa.login.AccountSavingAuthenticationSuccessHandler;
+-import org.cloudfoundry.identity.uaa.zone.IdentityZoneHolder;
+-import org.hamcrest.Matchers;
+-import org.junit.jupiter.api.AfterEach;
+ import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Nested;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.api.extension.ExtendWith;
+-import org.mockito.ArgumentCaptor;
+-import org.mockito.InjectMocks;
+-import org.mockito.Mock;
+-import org.mockito.Mockito;
+-import org.mockito.junit.jupiter.MockitoExtension;
+-import org.springframework.http.HttpStatus;
+-import org.springframework.mock.web.MockHttpServletRequest;
+-import org.springframework.mock.web.MockHttpServletResponse;
+-import org.springframework.security.core.context.SecurityContextHolder;
+-import org.springframework.web.client.HttpClientErrorException;
++import org.springframework.security.authentication.BadCredentialsException;
++import org.springframework.security.core.Authentication;
++import org.springframework.security.web.csrf.CsrfException;
++import org.springframework.web.HttpSessionRequiredException;
+ 
+ import javax.servlet.FilterChain;
++import javax.servlet.RequestDispatcher;
++import javax.servlet.ServletException;
+ import javax.servlet.http.HttpServletRequest;
++import javax.servlet.http.HttpServletResponse;
++import javax.servlet.http.HttpSession;
++import java.io.IOException;
++import java.util.function.Consumer;
+ 
+-import static java.util.Collections.emptyList;
+-import static org.hamcrest.MatcherAssert.assertThat;
+-import static org.junit.jupiter.api.Assertions.assertEquals;
+-import static org.junit.jupiter.api.Assertions.assertFalse;
+-import static org.junit.jupiter.api.Assertions.assertNull;
+-import static org.junit.jupiter.api.Assertions.assertTrue;
++import static org.junit.jupiter.api.Assertions.assertThrows;
+ import static org.mockito.ArgumentMatchers.any;
+-import static org.mockito.ArgumentMatchers.anyString;
+ import static org.mockito.Mockito.mock;
++import static org.mockito.Mockito.never;
+ import static org.mockito.Mockito.verify;
+ import static org.mockito.Mockito.when;
+ 
+-@ExtendWith(MockitoExtension.class)
+-@ExtendWith(PollutionPreventionExtension.class)
+ class XOAuthAuthenticationFilterTest {
+-
+-    @Mock
+-    private AccountSavingAuthenticationSuccessHandler mockAccountSavingAuthenticationSuccessHandler;
+-    @Mock
+-    private XOAuthAuthenticationManager mockXOAuthAuthenticationManager;
+-    @InjectMocks
+-    private XOAuthAuthenticationFilter filter;
++    private static final String ORIGIN_KEY = "the_origin";
++    private static final String OAUTH_STATE = "the_state";
++    private XOAuthAuthenticationFilter xoAuthAuthenticationFilter;
++    private XOAuthAuthenticationManager xOAuthAuthenticationManager;
++    private FilterChain mockFilterChain;
+ 
+     @BeforeEach
+-    @AfterEach
+-    void clearContext() {
+-        SecurityContextHolder.clearContext();
++    void setUp() {
++        xOAuthAuthenticationManager = mock(XOAuthAuthenticationManager.class);
++        mockFilterChain = mock(FilterChain.class);
++    }
++
++    @Nested
++    @ExtendWith(PollutionPreventionExtension.class)
++    class WhenAuthenticationSucceeds {
++
++        @Test
++        void itShouldCallTheNextFilter() throws IOException, ServletException {
++            xoAuthAuthenticationFilter = new XOAuthAuthenticationFilter(xOAuthAuthenticationManager, null);
++            HttpServletRequest mockRequest = mockRedirectRequest(ORIGIN_KEY, (request) -> {
++                mockAuthenticationInRequest(request);
++                mockStateParamInRequest(request, OAUTH_STATE);
++                mockStateParamInSession(request.getSession(), ORIGIN_KEY, OAUTH_STATE);
++            });
++            HttpServletResponse mockResponse = mock(HttpServletResponse.class);
++
++            xoAuthAuthenticationFilter.doFilter(mockRequest, mockResponse, mockFilterChain);
++            verify(mockFilterChain).doFilter(mockRequest, mockResponse);
++        }
++
++        @Test
++        void itCallsTheSuccessHandler() throws IOException, ServletException {
++            AccountSavingAuthenticationSuccessHandler successHandler = mock(AccountSavingAuthenticationSuccessHandler.class);
++            Authentication mockAuthentication = mock(Authentication.class);
++            when(xOAuthAuthenticationManager.authenticate(any())).thenReturn(mockAuthentication);
++
++            xoAuthAuthenticationFilter = new XOAuthAuthenticationFilter(xOAuthAuthenticationManager, successHandler);
++            HttpServletRequest mockRequest = mockRedirectRequest(ORIGIN_KEY, (request) -> {
++                mockAuthenticationInRequest(request);
++                mockStateParamInRequest(request, OAUTH_STATE);
++                mockStateParamInSession(request.getSession(), ORIGIN_KEY, OAUTH_STATE);
++            });
++            HttpServletResponse mockResponse = mock(HttpServletResponse.class);
++
++            xoAuthAuthenticationFilter.doFilter(mockRequest, mockResponse, mockFilterChain);
++            verify(mockFilterChain).doFilter(mockRequest, mockResponse);
++            verify(successHandler).setSavedAccountOptionCookie(mockRequest, mockResponse, mockAuthentication);
++        }
+     }
+ 
+-    @Test
+-    void shouldAuthenticate() {
+-        MockHttpServletRequest request = new MockHttpServletRequest();
+-        shouldAuthenticate(filter, request, "code");
+-        shouldAuthenticate(filter, request, "id_token");
+-        shouldAuthenticate(filter, request, "access_token");
++    @Nested
++    @ExtendWith(PollutionPreventionExtension.class)
++    class WhenAuthenticationFails {
++        @BeforeEach
++        void setUp() {
++            xoAuthAuthenticationFilter = new XOAuthAuthenticationFilter(xOAuthAuthenticationManager, null);
++            when(xOAuthAuthenticationManager.authenticate(any())).thenThrow(new BadCredentialsException("your credentials are bad yo"));
++        }
++
++        @Test
++        void itShouldNotCallTheNextFilter() throws IOException, ServletException {
++            HttpServletRequest mockRequest = mockRedirectRequest(ORIGIN_KEY, (request) -> {
++                mockAuthenticationInRequest(request);
++                mockStateParamInRequest(request, OAUTH_STATE);
++                mockStateParamInSession(request.getSession(), ORIGIN_KEY, OAUTH_STATE);
++            });
++            HttpServletResponse mockResponse = mock(HttpServletResponse.class);
++
++            xoAuthAuthenticationFilter.doFilter(mockRequest, mockResponse, mockFilterChain);
++            verify(mockFilterChain, never()).doFilter(mockRequest, mockResponse);
++        }
+     }
+ 
+-    private static void shouldAuthenticate(
+-            final XOAuthAuthenticationFilter filter,
+-            final MockHttpServletRequest request,
+-            final String pname) {
+-        assertFalse(filter.containsCredentials(request));
+-        request.setParameter(pname, "value");
+-        assertTrue(filter.containsCredentials(request));
+-        request.removeParameter(pname);
+-        assertFalse(filter.containsCredentials(request));
++    @Nested
++    @ExtendWith(PollutionPreventionExtension.class)
++    class WhenValidatingStateParameter {
++        @BeforeEach
++        void setUp() {
++            xoAuthAuthenticationFilter = new XOAuthAuthenticationFilter(xOAuthAuthenticationManager, null);
++        }
++
++        @Test
++        void itThrowsIfNoSession() throws IOException, ServletException {
++            HttpServletRequest mockRequest = mockRedirectRequest(false, ORIGIN_KEY, (request) -> {
++                mockAuthenticationInRequest(request);
++                mockStateParamInRequest(request, OAUTH_STATE);
++            });
++            HttpServletResponse mockResponse = mock(HttpServletResponse.class);
++
++            assertThrows(HttpSessionRequiredException.class, () -> {
++                xoAuthAuthenticationFilter.doFilter(mockRequest, mockResponse, mockFilterChain);
++            });
++            verify(mockFilterChain, never()).doFilter(mockRequest, mockResponse);
++        }
++
++        @Test
++        void itThrowsIfNoStateInSession() throws IOException, ServletException {
++            HttpServletRequest mockRequest = mockRedirectRequest(ORIGIN_KEY, (request) -> {
++                mockAuthenticationInRequest(request);
++                mockStateParamInRequest(request, OAUTH_STATE);
++            });
++            HttpServletResponse mockResponse = mock(HttpServletResponse.class);
++
++            assertThrows(CsrfException.class, () -> {
++                xoAuthAuthenticationFilter.doFilter(mockRequest, mockResponse, mockFilterChain);
++            });
++            verify(mockFilterChain, never()).doFilter(mockRequest, mockResponse);
++        }
++
++        @Test
++        void itThrowsIfNoStateInRequest() throws IOException, ServletException {
++            HttpServletRequest mockRequest = mockRedirectRequest(ORIGIN_KEY, (request) -> {
++                mockAuthenticationInRequest(request);
++                mockStateParamInSession(request.getSession(), ORIGIN_KEY, OAUTH_STATE);
++            });
++            HttpServletResponse mockResponse = mock(HttpServletResponse.class);
++
++            assertThrows(CsrfException.class, () -> {
++                xoAuthAuthenticationFilter.doFilter(mockRequest, mockResponse, mockFilterChain);
++            });
++            verify(mockFilterChain, never()).doFilter(mockRequest, mockResponse);
++        }
++
++        @Test
++        void itThrowsIfStateIsMismatched() throws IOException, ServletException {
++            HttpServletRequest mockRequest = mockRedirectRequest(ORIGIN_KEY, (request) -> {
++                mockAuthenticationInRequest(request);
++                mockStateParamInRequest(request, "surprise");
++                mockStateParamInSession(request.getSession(), ORIGIN_KEY, OAUTH_STATE);
++            });
++            HttpServletResponse mockResponse = mock(HttpServletResponse.class);
++
++            assertThrows(CsrfException.class, () -> {
++                xoAuthAuthenticationFilter.doFilter(mockRequest, mockResponse, mockFilterChain);
++            });
++            verify(mockFilterChain, never()).doFilter(mockRequest, mockResponse);
++        }
+     }
+ 
+-    @Test
+-    void getIdTokenInResponse() throws Exception {
+-        HttpServletRequest request = mock(HttpServletRequest.class);
+-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost/uaa/login/callback/the_origin"));
+-        when(request.getParameter(anyString())).thenReturn(null);
+-        when(request.getParameter("id_token")).thenReturn("the_id_token");
+-        when(request.getParameter("access_token")).thenReturn("the_access_token");
+-        when(request.getParameter("code")).thenReturn("the_code");
+-
+-        UaaAuthentication authentication = new UaaAuthentication(new UaaPrincipal("id", "username", "email@email.com", OriginKeys.UAA, null, IdentityZoneHolder.get().getId()), emptyList(), new UaaAuthenticationDetails(request));
+-        Mockito.when(mockXOAuthAuthenticationManager.authenticate(any())).thenReturn(authentication);
+-
+-        FilterChain chain = mock(FilterChain.class);
+-        MockHttpServletResponse response = new MockHttpServletResponse();
+-        filter.doFilter(request, response, chain);
+-
+-        ArgumentCaptor<XOAuthCodeToken> captor = ArgumentCaptor.forClass(XOAuthCodeToken.class);
+-        verify(mockXOAuthAuthenticationManager).authenticate(captor.capture());
+-        verify(chain).doFilter(request, response);
+-
+-        XOAuthCodeToken xoAuthCodeToken = captor.getValue();
+-        assertEquals("the_access_token", xoAuthCodeToken.getAccessToken());
+-        assertEquals("the_id_token", xoAuthCodeToken.getIdToken());
+-        assertEquals("the_code", xoAuthCodeToken.getCode());
+-        assertEquals("the_origin", xoAuthCodeToken.getOrigin());
+-        assertEquals("http://localhost/uaa/login/callback/the_origin", xoAuthCodeToken.getRedirectUrl());
+-        assertEquals(authentication, SecurityContextHolder.getContext().getAuthentication());
++    @Nested
++    @ExtendWith(PollutionPreventionExtension.class)
++    class WhenNoCredentialsPresent {
++        @BeforeEach
++        void setUp() {
++            xoAuthAuthenticationFilter = new XOAuthAuthenticationFilter(xOAuthAuthenticationManager, null);
++        }
++
++        @Test
++        void itRedirects() throws IOException, ServletException {
++            RequestDispatcher mockRequestDispatcher = mock(RequestDispatcher.class);
++
++            HttpServletRequest mockRequest = mockRedirectRequest(ORIGIN_KEY, (request) -> {
++                mockStateParamInRequest(request, OAUTH_STATE);
++                mockStateParamInSession(request.getSession(), ORIGIN_KEY, OAUTH_STATE);
++                when(request.getRequestDispatcher("/login_implicit")).thenReturn(mockRequestDispatcher);
++            });
++            HttpServletResponse mockResponse = mock(HttpServletResponse.class);
++
++            xoAuthAuthenticationFilter.doFilter(mockRequest, mockResponse, mockFilterChain);
++            verify(mockFilterChain, never()).doFilter(mockRequest, mockResponse);
++            verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
++        }
+     }
+ 
+-    @Test
+-    void getXOAuthCodeTokenFromRequest() throws Exception {
+-        HttpServletRequest request = mock(HttpServletRequest.class);
+-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost/uaa/login/callback/the_origin"));
+-        when(request.getParameter(anyString())).thenReturn(null);
+-        when(request.getParameter("code")).thenReturn("the_code");
+-
+-        UaaAuthentication authentication = new UaaAuthentication(new UaaPrincipal("id", "username", "email@email.com", OriginKeys.UAA, null, IdentityZoneHolder.get().getId()), emptyList(), new UaaAuthenticationDetails(request));
+-        Mockito.when(mockXOAuthAuthenticationManager.authenticate(any())).thenReturn(authentication);
+-
+-        FilterChain chain = mock(FilterChain.class);
+-        MockHttpServletResponse response = new MockHttpServletResponse();
+-        filter.doFilter(request, response, chain);
+-
+-        ArgumentCaptor<XOAuthCodeToken> captor = ArgumentCaptor.forClass(XOAuthCodeToken.class);
+-        verify(mockXOAuthAuthenticationManager).authenticate(captor.capture());
+-        verify(chain).doFilter(request, response);
+-
+-        XOAuthCodeToken xoAuthCodeToken = captor.getValue();
+-        assertEquals("the_code", xoAuthCodeToken.getCode());
+-        assertEquals("the_origin", xoAuthCodeToken.getOrigin());
+-        assertEquals("http://localhost/uaa/login/callback/the_origin", xoAuthCodeToken.getRedirectUrl());
+-        assertEquals(authentication, SecurityContextHolder.getContext().getAuthentication());
+-        assertNull(xoAuthCodeToken.getIdToken());
+-        assertNull(xoAuthCodeToken.getAccessToken());
++    private HttpServletRequest mockRedirectRequest(String origin, Consumer<HttpServletRequest> config) {
++        return mockRedirectRequest(true, origin, config);
+     }
+ 
+-    @Test
+-    void redirectsToErrorPageInCaseOfException() throws Exception {
+-        HttpServletRequest request = mock(HttpServletRequest.class);
+-        FilterChain chain = mock(FilterChain.class);
+-        MockHttpServletResponse response = new MockHttpServletResponse();
++    private HttpServletRequest mockRedirectRequest(boolean includeSession, String origin, Consumer<HttpServletRequest> config) {
++        HttpServletRequest mockRequest = mock(HttpServletRequest.class);
++        when(mockRequest.getServletPath()).thenReturn("login/callback/" + origin);
++        when(mockRequest.getRequestURL()).thenReturn(new StringBuffer("http://localhost/uaa/login/callback/" + origin));
+ 
+-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost/uaa/login/callback/the_origin"));
+-        when(request.getParameter(anyString())).thenReturn(null);
+-        when(request.getParameter("code")).thenReturn("the_code");
++        if (includeSession) {
++            HttpSession mockHttpSession = mock(HttpSession.class);
++            when(mockRequest.getSession()).thenReturn(mockHttpSession);
++        }
++
++        config.accept(mockRequest);
++        return mockRequest;
++    }
++
++    private void mockAuthenticationInRequest(HttpServletRequest request) {
++        when(request.getParameter("code")).thenReturn("some-code");
++    }
++
++    private void mockStateParamInRequest(HttpServletRequest request, String state) {
++        when(request.getParameter("state")).thenReturn(state);
++    }
+ 
+-        Mockito.doThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST, "error from oauth server")).when(mockXOAuthAuthenticationManager).authenticate(any());
+-        filter.doFilter(request, response, chain);
+-        assertThat(response.getHeader("Location"), Matchers.containsString(request.getContextPath() + "/oauth_error?error=There+was+an+error+when+authenticating+against+the+external+identity+provider%3A"));
++    private void mockStateParamInSession(HttpSession session, String origin, String state) {
++        when(session.getAttribute("xoauth-state-" + origin)).thenReturn(state);
+     }
+ }
+diff --git a/server/src/test/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthProviderConfiguratorTests.java b/server/src/test/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthProviderConfiguratorTests.java
+index 70fc08a10eb..8533d02c9f8 100644
+--- a/server/src/test/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthProviderConfiguratorTests.java
++++ b/server/src/test/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthProviderConfiguratorTests.java
+@@ -15,6 +15,7 @@
+ import org.mockito.Mock;
+ import org.mockito.junit.jupiter.MockitoExtension;
+ import org.springframework.dao.IncorrectResultSizeDataAccessException;
++import org.springframework.mock.web.MockHttpServletRequest;
+ import org.springframework.web.util.UriComponentsBuilder;
+ 
+ import java.net.MalformedURLException;
+@@ -30,7 +31,6 @@
+ import static org.cloudfoundry.identity.uaa.util.AssertThrowsWithMessage.assertThrowsWithMessageThat;
+ import static org.hamcrest.MatcherAssert.assertThat;
+ import static org.hamcrest.Matchers.containsString;
+-import static org.hamcrest.Matchers.emptyOrNullString;
+ import static org.hamcrest.Matchers.equalTo;
+ import static org.hamcrest.Matchers.hasEntry;
+ import static org.hamcrest.Matchers.hasKey;
+@@ -72,6 +72,8 @@ class XOAuthProviderConfiguratorTests {
+     private IdentityProvider<OIDCIdentityProviderDefinition> oidcProvider;
+     private IdentityProvider<RawXOAuthIdentityProviderDefinition> oauthProvider;
+ 
++    private MockHttpServletRequest mockHttpServletRequest;
++
+     @BeforeEach
+     void setup() throws MalformedURLException {
+         oidc = new OIDCIdentityProviderDefinition();
+@@ -111,6 +113,9 @@ void setup() throws MalformedURLException {
+         oauthProvider = new IdentityProvider<>();
+         oauthProvider.setType(OAUTH20);
+         oauthProvider.setConfig(new RawXOAuthIdentityProviderDefinition());
++
++        mockHttpServletRequest = new MockHttpServletRequest();
++        mockHttpServletRequest.setRequestURI(UAA_BASE_URL);
+     }
+ 
+     @Test
+@@ -213,8 +218,8 @@ void getParameterizedClass() {
+     }
+ 
+     @Test
+-    void getCompleteAuthorizationURI_includesNonceOnOIDC() {
+-        String authzUri = configurator.getCompleteAuthorizationURI("alias", UAA_BASE_URL, oidc);
++    void getIdpAuthenticationUrl_includesNonceOnOIDC() {
++        String authzUri = configurator.getIdpAuthenticationUrl(oidc, "alias", mockHttpServletRequest);
+ 
+         Map<String, String> queryParams =
+                 UriComponentsBuilder.fromUriString(authzUri).build().getQueryParams().toSingleValueMap();
+@@ -222,8 +227,8 @@ void getCompleteAuthorizationURI_includesNonceOnOIDC() {
+     }
+ 
+     @Test
+-    void getCompleteAuthorizationURI_doesNotIncludeNonceOnOAuth() {
+-        String authzUri = configurator.getCompleteAuthorizationURI("alias", UAA_BASE_URL, oauth);
++    void getIdpAuthenticationUrl_doesNotIncludeNonceOnOAuth() {
++        String authzUri = configurator.getIdpAuthenticationUrl(oauth, "alias", mockHttpServletRequest);
+ 
+         Map<String, String> queryParams =
+                 UriComponentsBuilder.fromUriString(authzUri).build().getQueryParams().toSingleValueMap();
+@@ -231,7 +236,7 @@ void getCompleteAuthorizationURI_doesNotIncludeNonceOnOAuth() {
+     }
+ 
+     @Test
+-    void getCompleteAuthorizationURI_withOnlyDiscoveryUrlForOIDCProvider() throws MalformedURLException, OidcMetadataFetchingException {
++    void getIdpAuthenticationUrl_withOnlyDiscoveryUrlForOIDCProvider() throws MalformedURLException, OidcMetadataFetchingException {
+         String discoveryUrl = "https://accounts.google.com/.well-known/openid-configuration";
+         oidc.setDiscoveryUrl(new URL(discoveryUrl));
+         oidc.setAuthUrl(null);
+@@ -242,17 +247,17 @@ void getCompleteAuthorizationURI_withOnlyDiscoveryUrlForOIDCProvider() throws Ma
+         }).when(mockOidcMetadataFetcher)
+                 .fetchMetadataAndUpdateDefinition(any(OIDCIdentityProviderDefinition.class));
+ 
+-        String authorizationURI = configurator.getCompleteAuthorizationURI("alias", UAA_BASE_URL, oidc);
++        String authorizationURI = configurator.getIdpAuthenticationUrl(oidc, "alias", mockHttpServletRequest);
+ 
+         assertThat(authorizationURI, Matchers.startsWith("https://accounts.google.com/o/oauth2/v2/auth"));
+         verify(configurator).overlay(oidc);
+     }
+ 
+     @Test
+-    void getCompleteAuthorizationUri_hasAllRequiredQueryParametersForOidc() {
++    void getIdpAuthenticationUrl_hasAllRequiredQueryParametersForOidc() {
+         when(mockUaaRandomStringUtil.getSecureRandom(10)).thenReturn("random-939b8307");
+ 
+-        String authzUri = configurator.getCompleteAuthorizationURI("alias", UAA_BASE_URL, oidc);
++        String authzUri = configurator.getIdpAuthenticationUrl(oidc, "alias", mockHttpServletRequest);
+ 
+         Map<String, String> queryParams =
+                 UriComponentsBuilder.fromUriString(authzUri).build().getQueryParams().toSingleValueMap();
+@@ -267,13 +272,13 @@ void getCompleteAuthorizationUri_hasAllRequiredQueryParametersForOidc() {
+     }
+ 
+     @Test
+-    void getCompleteAuthorizationUri_hasAllRequiredQueryParametersForOauth() {
++    void getIdpAuthenticationUrl_hasAllRequiredQueryParametersForOauth() {
+         when(mockUaaRandomStringUtil.getSecureRandom(10)).thenReturn("random-451614ce");
+ 
+-        String authzUri = configurator.getCompleteAuthorizationURI(
++        String authzUri = configurator.getIdpAuthenticationUrl(
++                oauth,
+                 "alias",
+-                UAA_BASE_URL,
+-                oauth
++                mockHttpServletRequest
+         );
+ 
+         Map<String, String> queryParams =

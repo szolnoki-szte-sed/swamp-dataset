@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apereo:phpcas:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apereo:java_cas_client:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apereo:.net_cas_client:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:20:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apereo/java-cas-client/commit/ab6cbdc3daa451b4fef89c0bd0f4e6568f3aa9ef",
+        "version_end_excluding": {
+            "apereo:.net_cas_client": "1.0.2"
+        },
+        "path": {
+            "file_path": "cas-client-core/src/main/java/org/jasig/cas/client/validation/Cas20ServiceTicketValidator.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-4172"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

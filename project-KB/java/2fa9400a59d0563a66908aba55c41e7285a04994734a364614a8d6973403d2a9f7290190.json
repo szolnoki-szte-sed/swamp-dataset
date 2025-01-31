@@ -1,0 +1,42 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:netty:netty:3.9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.8.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.9.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/netty/netty/commit/2fa9400a59d0563a66908aba55c41e7285a04994",
+        "version_end_excluding": {
+            "netty:netty": "unknown"
+        },
+        "path": {
+            "file_path": "src/main/java/org/jboss/netty/handler/ssl/SslHandler.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-3488"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

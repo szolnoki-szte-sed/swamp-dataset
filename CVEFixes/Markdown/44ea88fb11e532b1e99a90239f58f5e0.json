@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/ethereum/solidity/commit/c39a5e2b7a3fabbf687f53a2823fc087be6c1a7e",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "docs/ir/ir-breaking-changes.rst"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-36402"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

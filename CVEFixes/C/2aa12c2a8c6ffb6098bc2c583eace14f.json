@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:brew:mruby:*:*:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/mruby/mruby/commit/ff3a5ebed6ffbe3e70481531cfb969b497aa73ad",
+        "version_end_excluding": {
+            "brew:mruby": "3.2"
+        },
+        "path": {
+            "file_path": "src/vm.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0614"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

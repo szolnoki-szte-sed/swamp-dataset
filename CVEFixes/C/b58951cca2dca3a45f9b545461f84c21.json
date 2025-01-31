@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mutt:mutt:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:neomutt:neomutt:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.04:*:*:*:lts:*:*:*"
+        ],
+        "fix_commit": "https://gitlab.com/muttmua/mutt/commit/9347b5c01dc52682cb6be11539d9b7ebceae4416",
+        "version_end_excluding": {
+            "debian:debian_linux": "unknown",
+            "mutt:mutt": "1.10.1",
+            "neomutt:neomutt": "20180716",
+            "canonical:ubuntu_linux": "unknown"
+        },
+        "path": {
+            "file_path": "imap/command.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-14349"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

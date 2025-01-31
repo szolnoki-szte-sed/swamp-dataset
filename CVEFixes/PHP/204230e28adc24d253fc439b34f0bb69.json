@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:vanillaforums:vanilla_forums:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/vanilla/vanilla/commit/4535a059e4e24ca11a2ef0b4d754f262398bcece",
+        "version_end_excluding": {
+            "vanillaforums:vanilla_forums": "2.0.10"
+        },
+        "path": {
+            "file_path": "applications/dashboard/controllers/class.entrycontroller.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2010-4264"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,43 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_mrg:2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_server:11:sp1:*:*:*:vmware:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_desktop:11:sp1:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_desktop:11:sp2:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_server:11:sp2:*:*:*:vmware:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_high_availability_extension:11:sp1:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_server:11:sp2:*:*:-:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_high_availability_extension:11:sp2:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_server:11:sp1:*:*:-:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/c8e252586f8d5de906385d8cf6385fee289a825e",
+        "version_end_excluding": {
+            "linux:linux_kernel": "3.2.10",
+            "redhat:enterprise_linux": "unknown",
+            "redhat:enterprise_mrg": "unknown",
+            "suse:linux_enterprise_server": "unknown",
+            "suse:linux_enterprise_desktop": "unknown",
+            "suse:linux_enterprise_high_availability_extension": "unknown"
+        },
+        "path": {
+            "file_path": "fs/binfmt_elf.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-1097"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

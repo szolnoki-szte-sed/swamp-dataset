@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/WordPress/WordPress/commit/b224c251adfa16a5f84074a3c0886270c9df38de",
+        "version_end_excluding": {
+            "wordpress:wordpress": "5.2.4",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "wp-includes/version.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-17673"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

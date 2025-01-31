@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cisco:secure_access_control_server:3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rudi_benkovic:jawmail:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:chi_kien_uong:chi_kien_uong_guestbook:1.51:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cherokee:cherokee_httpd:0.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "cisco:secure_access_control_server": "unknown",
+            "rudi_benkovic:jawmail": "unknown",
+            "chi_kien_uong:chi_kien_uong_guestbook": "unknown",
+            "cherokee:cherokee_httpd": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "jsp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2002-0938",
+            "CVE-2002-1495",
+            "CVE-2003-1136",
+            "CVE-2004-2171"
+        ],
+        "CWE": [
+            "CWE-80"
+        ]
+    }
+}

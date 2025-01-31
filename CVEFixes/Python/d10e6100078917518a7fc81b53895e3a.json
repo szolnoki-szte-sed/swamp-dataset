@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:keycloak-httpd-client-install_project:keycloak-httpd-client-install:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jdennis/keycloak-httpd-client-install/commit/07f26e213196936fb328ea0c1d5a66a09d8b5440",
+        "version_end_excluding": {
+            "keycloak-httpd-client-install_project:keycloak-httpd-client-install": "0.8"
+        },
+        "path": {
+            "file_path": "keycloak_httpd_client/keycloak_cli.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-15111"
+        ],
+        "CWE": [
+            "CWE-59"
+        ]
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mit:kerberos_5:1.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.8.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.8.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.8.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.8.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.8.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.8.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.9.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.9.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.9.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.10.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/krb5/krb5/commit/c5be6209311d4a8f10fda37d0d3f876c1b33b77b",
+        "version_end_excluding": {
+            "mit:kerberos_5": "unknown"
+        },
+        "path": {
+            "file_path": "src/lib/kadm5/srv/svr_principal.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-1013"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

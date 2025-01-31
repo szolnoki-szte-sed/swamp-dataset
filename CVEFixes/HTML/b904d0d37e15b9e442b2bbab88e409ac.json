@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:redhat:enterprise_linux_desktop:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_workstation:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_hpc_node:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jqueryui:jquery_ui:1.10.0:rc1:*:*:*:jquery:*:*"
+        ],
+        "fix_commit": "https://github.com/jquery/jquery-ui/commit/f2854408cce7e4b7fc6bf8676761904af9c96bde",
+        "version_end_excluding": {
+            "redhat:enterprise_linux_desktop": "unknown",
+            "redhat:enterprise_linux_workstation": "unknown",
+            "redhat:enterprise_linux_server": "unknown",
+            "redhat:enterprise_linux_hpc_node": "unknown",
+            "jqueryui:jquery_ui": "unknown"
+        },
+        "path": {
+            "file_path": "demos/autocomplete/combobox.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-6662"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

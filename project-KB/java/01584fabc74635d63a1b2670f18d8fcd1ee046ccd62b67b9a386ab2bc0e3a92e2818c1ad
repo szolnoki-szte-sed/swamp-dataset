@@ -1,0 +1,42 @@
+diff --git a/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ActionNamesAction.java b/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ActionNamesAction.java
+index a2b847c16f..fe2ab8663f 100644
+--- a/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ActionNamesAction.java
++++ b/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ActionNamesAction.java
+@@ -24,6 +24,7 @@
+ import com.opensymphony.xwork2.ActionSupport;
+ import com.opensymphony.xwork2.config.entities.ActionConfig;
+ import com.opensymphony.xwork2.inject.Inject;
++import org.apache.commons.lang3.StringEscapeUtils;
+ import org.apache.struts2.StrutsConstants;
+ 
+ import java.util.Set;
+@@ -57,7 +58,7 @@ public String getNamespace() {
+     }
+ 
+     public void setNamespace(String namespace) {
+-        this.namespace = namespace;
++        this.namespace = StringEscapeUtils.escapeEcmaScript(namespace);
+     }
+ 
+     @Inject(StrutsConstants.STRUTS_ACTION_EXTENSION)
+diff --git a/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ShowConfigAction.java b/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ShowConfigAction.java
+index ee8e9932bc..1c84215170 100644
+--- a/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ShowConfigAction.java
++++ b/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ShowConfigAction.java
+@@ -27,6 +27,7 @@
+ import com.opensymphony.xwork2.util.logging.Logger;
+ import com.opensymphony.xwork2.util.logging.LoggerFactory;
+ import com.opensymphony.xwork2.util.reflection.ReflectionProvider;
++import org.apache.commons.lang3.StringEscapeUtils;
+ 
+ import java.beans.PropertyDescriptor;
+ import java.util.Set;
+@@ -81,7 +82,7 @@ public String stripPackage(Class clazz) {
+     }
+ 
+     public void setNamespace(String namespace) {
+-        this.namespace = namespace;
++        this.namespace = StringEscapeUtils.escapeEcmaScript(namespace);
+     }
+ 
+     public String getActionName() {

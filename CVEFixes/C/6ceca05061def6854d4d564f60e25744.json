@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:kamailio:kamailio:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:kamailio:kamailio:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:kamailio:kamailio:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/kamailio/kamailio/commit/e1d8008a09d9390ebaf698abe8909e10dfec4097",
+        "version_end_excluding": {
+            "kamailio:kamailio": "5.1.2",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "src/modules/tmx/tmx_pretran.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-8828"
+        ],
+        "CWE": [
+            "CWE-193"
+        ]
+    }
+}

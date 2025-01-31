@@ -1,0 +1,1 @@
+-SELECT * FROM items WHERE owner = 'wiley' AND itemname = 'name';DELETE FROM items;SELECT * FROM items WHERE 'a'='a';

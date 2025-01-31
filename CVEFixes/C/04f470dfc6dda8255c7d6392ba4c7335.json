@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/ab79efab0a0ba01a74df782eb7fa44b044dae8b5",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "fs/overlayfs/copy_up.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-8953"
+        ],
+        "CWE": [
+            "CWE-399"
+        ]
+    }
+}

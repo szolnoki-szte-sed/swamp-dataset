@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:single_sign-on:7.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:keycloak:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/keycloak/keycloak/commit/75457496325c4ae8963199a318d834d6a5eaad16",
+        "version_end_excluding": {
+            "redhat:keycloak": "9.0.0"
+        },
+        "path": {
+            "file_path": "testsuite/integration-arquillian/tests/base/src/test/java/org/keycloak/testsuite/client/ClientRegistrationTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1697"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:karaf:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/karaf/commit/fe3bc4108e5a8b3c804e5da91ec0d5695588eb25",
+        "version_end_excluding": {
+            "apache:karaf": "4.2.5"
+        },
+        "path": {
+            "file_path": "config/src/main/java/org/apache/karaf/config/core/impl/ConfigMBeanImpl.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-0226"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

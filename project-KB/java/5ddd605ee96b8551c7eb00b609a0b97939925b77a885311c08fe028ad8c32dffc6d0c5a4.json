@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:keycloak:9.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:keycloak:8.0.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/keycloak/keycloak/commit/5ddd605ee96b8551c7eb00b609a0b97939925b77",
+        "version_end_excluding": {
+            "redhat:keycloak": "unknown"
+        },
+        "path": {
+            "file_path": "testsuite/integration-arquillian/tests/base/src/test/java/org/keycloak/testsuite/account/AccountFormServiceTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-10686"
+        ],
+        "CWE": [
+            "NVD-CWE-Other",
+            "CWE-285"
+        ]
+    }
+}

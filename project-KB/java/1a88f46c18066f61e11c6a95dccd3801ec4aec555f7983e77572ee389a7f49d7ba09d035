@@ -1,0 +1,101 @@
+diff --git a/airsonic-main/src/main/java/org/airsonic/player/ajax/LyricsService.java b/airsonic-main/src/main/java/org/airsonic/player/ajax/LyricsService.java
+index 823e5af6c..6b65e2341 100644
+--- a/airsonic-main/src/main/java/org/airsonic/player/ajax/LyricsService.java
++++ b/airsonic-main/src/main/java/org/airsonic/player/ajax/LyricsService.java
+@@ -39,6 +39,8 @@
+ import java.io.StringReader;
+ import java.net.SocketException;
+ 
++import static org.airsonic.player.util.XMLUtil.createSAXBuilder;
++
+ /**
+  * Provides AJAX-enabled services for retrieving song lyrics from chartlyrics.com.
+  * <p/>
+@@ -80,7 +82,7 @@ public LyricsInfo getLyrics(String artist, String song) {
+     }
+ 
+     private LyricsInfo parseSearchResult(String xml) throws Exception {
+-        SAXBuilder builder = new SAXBuilder();
++        SAXBuilder builder = createSAXBuilder();
+         Document document = builder.build(new StringReader(xml));
+ 
+         Element root = document.getRootElement();
+diff --git a/airsonic-main/src/main/java/org/airsonic/player/controller/JAXBWriter.java b/airsonic-main/src/main/java/org/airsonic/player/controller/JAXBWriter.java
+index cf7c32fb3..ca15bb800 100644
+--- a/airsonic-main/src/main/java/org/airsonic/player/controller/JAXBWriter.java
++++ b/airsonic-main/src/main/java/org/airsonic/player/controller/JAXBWriter.java
+@@ -25,7 +25,6 @@
+ import org.eclipse.persistence.jaxb.MarshallerProperties;
+ import org.jdom.Attribute;
+ import org.jdom.Document;
+-import org.jdom.input.SAXBuilder;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ import org.subsonic.restapi.Error;
+@@ -46,6 +45,7 @@
+ import java.util.Date;
+ import java.util.GregorianCalendar;
+ 
++import static org.airsonic.player.util.XMLUtil.createSAXBuilder;
+ import static org.springframework.web.bind.ServletRequestUtils.getStringParameter;
+ 
+ /**
+@@ -100,7 +100,7 @@ private String getRESTProtocolVersion() throws Exception {
+         InputStream in = null;
+         try {
+             in = StringUtil.class.getResourceAsStream("/subsonic-rest-api.xsd");
+-            Document document = new SAXBuilder().build(in);
++            Document document = createSAXBuilder().build(in);
+             Attribute version = document.getRootElement().getAttribute("version");
+             return version.getValue();
+         } finally {
+diff --git a/airsonic-main/src/main/java/org/airsonic/player/service/PodcastService.java b/airsonic-main/src/main/java/org/airsonic/player/service/PodcastService.java
+index d5fad1d60..1142c093f 100644
+--- a/airsonic-main/src/main/java/org/airsonic/player/service/PodcastService.java
++++ b/airsonic-main/src/main/java/org/airsonic/player/service/PodcastService.java
+@@ -45,7 +45,6 @@
+ import org.jdom.Document;
+ import org.jdom.Element;
+ import org.jdom.Namespace;
+-import org.jdom.input.SAXBuilder;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ import org.springframework.beans.factory.annotation.Autowired;
+@@ -62,6 +61,8 @@
+ import java.util.*;
+ import java.util.concurrent.*;
+ 
++import static org.airsonic.player.util.XMLUtil.createSAXBuilder;
++
+ /**
+  * Provides services for Podcast reception.
+  *
+@@ -317,7 +318,7 @@ private void doRefreshChannel(PodcastChannel channel, boolean downloadEpisodes)
+             try (CloseableHttpResponse response = client.execute(method)) {
+                 in = response.getEntity().getContent();
+ 
+-                Document document = new SAXBuilder().build(in);
++                Document document = createSAXBuilder().build(in);
+                 Element channelElement = document.getRootElement().getChild("channel");
+ 
+                 channel.setTitle(StringUtil.removeMarkup(channelElement.getChildTextTrim("title")));
+diff --git a/airsonic-main/src/main/java/org/airsonic/player/util/XMLUtil.java b/airsonic-main/src/main/java/org/airsonic/player/util/XMLUtil.java
+new file mode 100644
+index 000000000..cf04ad8ba
+--- /dev/null
++++ b/airsonic-main/src/main/java/org/airsonic/player/util/XMLUtil.java
+@@ -0,0 +1,14 @@
++package org.airsonic.player.util;
++
++import org.jdom.input.SAXBuilder;
++
++public class XMLUtil {
++
++    public static SAXBuilder createSAXBuilder() {
++        SAXBuilder builder = new SAXBuilder();
++        builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl",true);
++        builder.setFeature("http://xml.org/sax/features/external-general-entities", false);
++        builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        return builder;
++    }
++}

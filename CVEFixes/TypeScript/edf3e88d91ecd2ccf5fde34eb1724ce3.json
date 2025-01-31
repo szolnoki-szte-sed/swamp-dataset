@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sensiolabs:symfony:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/symfony/symfony/commit/3084764ad82f29dbb025df19978b9cbc3ab34728",
+        "version_end_excluding": {
+            "sensiolabs:symfony": "5.3.2"
+        },
+        "path": {
+            "file_path": "src/Symfony/Bundle/SecurityBundle/composer.json"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32693"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:microweber:microweber:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/microweber/microweber/commit/1f6a4de416a85e626dc643bb5ceb916e4802223e",
+        "version_end_excluding": {
+            "microweber:microweber": "1.2.15"
+        },
+        "path": {
+            "file_path": "src/MicroweberPackages/App/Http/Controllers/FrontendController.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-1504"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

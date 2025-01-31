@@ -1,0 +1,75 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mozilla:firefox:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pypa:pipenv:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:blender:blender:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:ipados:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apple:macos:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:libgit2:libgit2:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gnome:evince:3.26.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mozilla:firefox:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:qmail_project:qmail:-:*:*:*:*:*:*:*",
+            "cpe:2.3:o:freebsd:freebsd:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openbsd:openssh:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:optical_character_recognition_project:optical_character_recognition:0.40:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gnome:evolution:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:webkitgtk:webkitgtk\\+:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:enterprise_virtualization:3.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "mozilla:firefox": "unknown",
+            "pypa:pipenv": "unknown",
+            "blender:blender": "unknown",
+            "apple:ipados": "unknown",
+            "apple:macos": "unknown",
+            "libgit2:libgit2": "unknown",
+            "gnome:evince": "unknown",
+            "php:php": "5.3.2",
+            "qmail_project:qmail": "unknown",
+            "freebsd:freebsd": "4.6.1",
+            "openbsd:openssh": "3.3",
+            "optical_character_recognition_project:optical_character_recognition": "unknown",
+            "gnome:evolution": "2.0.2",
+            "linux:linux_kernel": "2.4.25",
+            "webkitgtk:webkitgtk\\+": "unknown",
+            "redhat:enterprise_virtualization": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-43537",
+            "CVE-2022-21668",
+            "CVE-2022-0545",
+            "CVE-2021-30860",
+            "CVE-2021-30663",
+            "CVE-2018-10887",
+            "CVE-2019-1010006",
+            "CVE-2010-1866",
+            "CVE-2010-2753",
+            "CVE-2005-1513",
+            "CVE-2002-0391",
+            "CVE-2002-0639",
+            "CVE-2005-1141",
+            "CVE-2005-0102",
+            "CVE-2004-2013",
+            "CVE-2017-1000121",
+            "CVE-2013-1591"
+        ],
+        "CWE": [
+            "CWE-190"
+        ]
+    }
+}

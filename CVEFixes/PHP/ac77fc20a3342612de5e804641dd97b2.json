@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:codeigniter:codeigniter:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bcit-ci/CodeIgniter/commit/0dde92def6b9f276f05ff77abb07ead318f9ec23",
+        "version_end_excluding": {
+            "codeigniter:codeigniter": "2.2.4"
+        },
+        "path": {
+            "file_path": "system/database/DB_active_rec.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5725"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

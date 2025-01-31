@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:iotdb:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/incubator-iotdb/commit/75410799e57e97ad2b6af0b9a0073830611bb610",
+        "version_end_excluding": {
+            "apache:iotdb": "unknown"
+        },
+        "path": {
+            "file_path": "server/src/main/java/org/apache/iotdb/db/service/JMXService.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1952"
+        ],
+        "CWE": [
+            "CWE-295"
+        ]
+    }
+}

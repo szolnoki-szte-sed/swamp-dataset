@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:airsonic_project:airsonic:10.2.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/airsonic/airsonic/commit/61c842923a6d60d4aedd126445a8437b53b752c8",
+        "version_end_excluding": {
+            "airsonic_project:airsonic": "unknown"
+        },
+        "path": {
+            "file_path": "airsonic-main/src/main/java/org/airsonic/player/controller/RecoverController.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10908"
+        ],
+        "CWE": [
+            "CWE-335"
+        ]
+    }
+}

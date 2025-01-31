@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:misp:misp:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/MISP/MISP/commit/61d4d3670593b78e4dab7a11eb620b7a372f30e6",
+        "version_end_excluding": {
+            "misp:misp": "2.4.156"
+        },
+        "path": {
+            "file_path": "app/View/Users/admin_add.ctp"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-27244"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

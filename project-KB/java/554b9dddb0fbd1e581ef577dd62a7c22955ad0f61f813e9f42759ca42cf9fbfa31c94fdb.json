@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:struts:2.5.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:struts:2.5.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:struts:2.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:struts:2.5.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:struts:2.5.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:struts:2.5.5:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/struts/commit/554b9dddb0fbd1e581ef577dd62a7c22955ad0f6",
+        "version_end_excluding": {
+            "apache:struts": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/main/java/com/opensymphony/xwork2/validator/validators/URLValidator.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-8738"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

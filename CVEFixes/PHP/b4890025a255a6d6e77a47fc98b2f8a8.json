@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:factorfx:open_computer_software_inventory_next_generation:2.7:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/OCSInventory-NG/OCSInventory-ocsreports/commit/da72e0fddaeceee44fbbd7241e07e5d53d1eee64",
+        "version_end_excluding": {
+            "factorfx:open_computer_software_inventory_next_generation": "unknown"
+        },
+        "path": {
+            "file_path": "require/commandLine/CommandLine.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-14947"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/8d0207652cbe27d1f962050737848e5ad4671958",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "fs/block_dev.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-7822"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

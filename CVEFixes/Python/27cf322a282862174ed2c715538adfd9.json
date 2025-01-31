@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:confire_project:confire:0.2.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bbengfort/confire/commit/8cc86a5ec2327e070f1d576d61bbaadf861597ea",
+        "version_end_excluding": {
+            "confire_project:confire": "unknown"
+        },
+        "path": {
+            "file_path": "confire/config.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-16763"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

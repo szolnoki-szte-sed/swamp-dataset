@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:golang:crypto:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/golang/crypto/commit/e4e2799dd7aab89f583e1d898300d96367750991",
+        "version_end_excluding": {
+            "golang:crypto": "unknown"
+        },
+        "path": {
+            "file_path": "ssh/certs.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-3204"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:leptonica:leptonica:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:32:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:33:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/DanBloomberg/leptonica/commit/5ba34b1fe741d69d43a6c8cf767756997eadd87c",
+        "version_end_excluding": {
+            "leptonica:leptonica": "1.80.0",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "src/tiffio.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-36280"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

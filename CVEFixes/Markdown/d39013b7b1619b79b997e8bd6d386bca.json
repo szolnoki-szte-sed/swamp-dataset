@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phpmailer_project:phpmailer:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:33:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/PHPMailer/PHPMailer/commit/45f3c18dc6a2de1cb1bf49b9b249a9ee36a5f7f3",
+        "version_end_excluding": {
+            "phpmailer_project:phpmailer": "unknown",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "SECURITY.md"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v2.1"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3603"
+        ],
+        "CWE": [
+            "CWE-829"
+        ]
+    }
+}

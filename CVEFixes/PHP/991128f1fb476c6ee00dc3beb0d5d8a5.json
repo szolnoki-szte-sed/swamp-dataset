@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phpmyfaq:phpmyfaq:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/thorsten/phpMyFAQ/commit/30b0025e19bd95ba28f4eff4d259671e7bb6bb86",
+        "version_end_excluding": {
+            "phpmyfaq:phpmyfaq": "unknown"
+        },
+        "path": {
+            "file_path": "phpmyfaq/inc/PMF/Faq.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Mozilla Public License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-14619"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

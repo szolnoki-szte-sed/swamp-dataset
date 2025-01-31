@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ftp-srv_project:ftp-srv:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:ftp-srv_project:ftp-srv:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:ftp-srv_project:ftp-srv:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/autovance/ftp-srv/commit/e449e75219d918c400dec65b4b0759f60476abca",
+        "version_end_excluding": {
+            "ftp-srv_project:ftp-srv": "2.19.6"
+        },
+        "path": {
+            "file_path": "src/commands/registration/port.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15152"
+        ],
+        "CWE": [
+            "CWE-918"
+        ]
+    }
+}

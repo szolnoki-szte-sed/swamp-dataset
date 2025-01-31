@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:misp:misp:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/MISP/MISP/commit/01521d614cb578de75a406394b4f0426f6036ba7",
+        "version_end_excluding": {
+            "misp:misp": "2.4.146"
+        },
+        "path": {
+            "file_path": "app/View/SharingGroups/view.ctp"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-36212"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

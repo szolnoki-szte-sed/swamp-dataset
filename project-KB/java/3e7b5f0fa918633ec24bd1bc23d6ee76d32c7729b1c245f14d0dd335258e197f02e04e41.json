@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:eclipse:jetty:9.2.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.0:m0:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:22:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.0:m1:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.2.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.2.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.2.4:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/eclipse/jetty.project/commit/3e7b5f0fa918633ec24bd1bc23d6ee76d32c7729",
+        "version_end_excluding": {
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "jetty-http/src/main/java/org/eclipse/jetty/http/HttpParser.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-2080"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

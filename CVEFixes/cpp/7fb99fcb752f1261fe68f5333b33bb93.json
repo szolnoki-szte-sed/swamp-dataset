@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:yast:yast2:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/yast/yast-core/commit/7fe2e3df308b8b6a901cb2cfd60f398df53219de",
+        "version_end_excluding": {
+            "yast:yast2": "unknown"
+        },
+        "path": {
+            "file_path": "agent-ini/src/IniAgent.cc"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-3177"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

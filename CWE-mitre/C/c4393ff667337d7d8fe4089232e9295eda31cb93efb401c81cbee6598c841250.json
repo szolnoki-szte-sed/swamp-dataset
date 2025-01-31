@@ -1,0 +1,46 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:x86:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gnupg:gnupg:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:zlib:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:putty:putty:0.45:*:*:*:*:*:*:*",
+            "cpe:2.3:o:micode:xiaomi_perseus-p-oss:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown",
+            "gnupg:gnupg": "unknown",
+            "gnu:zlib": "unknown",
+            "putty:putty": "unknown",
+            "micode:xiaomi_perseus-p-oss": "2018-11-26"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2009-4307",
+            "CVE-2012-2100",
+            "CVE-2020-8835",
+            "CVE-2015-1607",
+            "CVE-2016-9842",
+            "CVE-2018-18445",
+            "CVE-2013-4206",
+            "CVE-2018-20788"
+        ],
+        "CWE": [
+            "CWE-1335"
+        ]
+    }
+}

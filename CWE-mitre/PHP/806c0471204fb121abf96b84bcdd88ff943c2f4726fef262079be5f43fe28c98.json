@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:google:chrome:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:adobe:flash_player:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:excel:2002:sp3:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "google:chrome": "unknown",
+            "adobe:flash_player": "unknown",
+            "microsoft:excel": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2010-4577",
+            "CVE-2011-0611",
+            "CVE-2010-0258"
+        ],
+        "CWE": [
+            "CWE-843"
+        ]
+    }
+}

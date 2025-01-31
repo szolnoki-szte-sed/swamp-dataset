@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mindwerks:wildmidi:0.4.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Mindwerks/wildmidi/commit/ad6d7cf88d6673167ca1f517248af9409a9f1be1",
+        "version_end_excluding": {
+            "mindwerks:wildmidi": "unknown"
+        },
+        "path": {
+            "file_path": "include/internal_midi.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-11664"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

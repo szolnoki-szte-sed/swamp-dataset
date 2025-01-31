@@ -1,0 +1,55 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:rack_project:rack:1.5.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.4.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.4.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.4.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.3.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.3.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.3.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.3.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.3.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.3.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.3.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.2.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.2.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.1.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rack_project:rack:1.1.6:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/rack/rack/commit/0cd7e9aa397f8ebb3b8481d67dbac8b4863a7f07",
+        "version_end_excluding": {
+            "rack_project:rack": "unknown"
+        },
+        "path": {
+            "file_path": "lib/rack/session/cookie.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-0263"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

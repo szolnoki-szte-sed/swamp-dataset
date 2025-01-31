@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bro:bro:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bro/bro/commit/6cedd67c381ff22fde653adf02ee31caf66c81a0",
+        "version_end_excluding": {
+            "bro:bro": "unknown"
+        },
+        "path": {
+            "file_path": "VERSION"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-1521"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

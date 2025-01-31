@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:cxf_fediz:1.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf_fediz:1.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf_fediz:1.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf_fediz:1.3.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/cxf-fediz/commit/0006581e9cacbeef46381a223e5671e524d416b6",
+        "version_end_excluding": {
+            "apache:cxf_fediz": "unknown"
+        },
+        "path": {
+            "file_path": "plugins/core/src/test/java/org/apache/cxf/fediz/core/federation/AudienceRestrictionTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-4464"
+        ],
+        "CWE": [
+            "CWE-284"
+        ]
+    }
+}

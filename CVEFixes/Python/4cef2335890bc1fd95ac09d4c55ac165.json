@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:satellite:5.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:spacewalk-java:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spacewalkproject/spacewalk/commit/dd418384171473c3e31386a1b4792f8c555dc744",
+        "version_end_excluding": {
+            "redhat:satellite": "unknown",
+            "redhat:spacewalk-java": "unknown"
+        },
+        "path": {
+            "file_path": "backend/server/rhnPackage.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-0284"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

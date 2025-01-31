@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:craftcms:craft_cms:3.1.31:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/craftcms/cms/commit/76a2168b6a5e30144f5c06da4ff264f4eca577ff",
+        "version_end_excluding": {
+            "craftcms:craft_cms": "unknown"
+        },
+        "path": {
+            "file_path": "src/templates/settings/sections/_edit.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-19626"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:thedaylightstudio:fuel_cms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/daylightstudio/FUEL-CMS/commit/8a0d88ad6869623c90e24b3b2ea33352049d39a7",
+        "version_end_excluding": {
+            "thedaylightstudio:fuel_cms": "unknown"
+        },
+        "path": {
+            "file_path": "fuel/modules/fuel/config/fuel_constants.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-38290"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

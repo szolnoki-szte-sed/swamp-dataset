@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:autojump_project:autojump:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/wting/autojump/commit/ad09ee27d402be797b3456abff6edeb4291edfec",
+        "version_end_excluding": {
+            "autojump_project:autojump": "21.5.8",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "install.sh"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-2012"
+        ],
+        "CWE": [
+            "CWE-269"
+        ]
+    }
+}

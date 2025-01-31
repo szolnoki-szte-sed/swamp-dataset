@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:redhat:enterprise_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FreeRADIUS/freeradius-server/commit/3ea2a5a026e73d81cd9a3e9bbd4300c433004bfa",
+        "version_end_excluding": {
+            "redhat:enterprise_linux": "unknown",
+            "opensuse:leap": "unknown"
+        },
+        "path": {
+            "file_path": "src/modules/rlm_eap/types/rlm_eap_pwd/eap_pwd.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-13456"
+        ],
+        "CWE": [
+            "CWE-203"
+        ]
+    }
+}

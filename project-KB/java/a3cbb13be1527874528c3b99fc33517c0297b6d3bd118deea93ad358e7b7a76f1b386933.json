@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ratpack:ratpack:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ratpack/ratpack/commit/a3cbb13be1527874528c3b99fc33517c0297b6d3",
+        "version_end_excluding": {
+            "ratpack:ratpack": "1.7.6"
+        },
+        "path": {
+            "file_path": "ratpack-core/src/main/java/ratpack/error/internal/ErrorPageRenderer.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10770"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

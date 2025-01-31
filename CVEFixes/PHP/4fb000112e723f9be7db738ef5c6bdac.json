@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phpredisadmin_project:phpredisadmin:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/erikdubbelboer/phpRedisAdmin/commit/eddaa674536d2e76e6d0b4efeb00604e992eab8f",
+        "version_end_excluding": {
+            "phpredisadmin_project:phpredisadmin": "1.13.12"
+        },
+        "path": {
+            "file_path": "login.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-27163"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

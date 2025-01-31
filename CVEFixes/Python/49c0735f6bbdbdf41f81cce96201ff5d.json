@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:boxug:trape:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/boxug/trape/commit/628149159ba25adbfc29a3ae1d4b10c7eb936dd3",
+        "version_end_excluding": {
+            "boxug:trape": "2017-11-05"
+        },
+        "path": {
+            "file_path": "core/victim.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-17713"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

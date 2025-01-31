@@ -1,0 +1,43 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mozilla:firefox:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:mac_os_x:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:imagemagick:imagemagick:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:microsoft:windows_2000:-:sp4:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:openoffice:2.4.1:*:*:*:*:*:x64:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown",
+            "mozilla:firefox": "unknown",
+            "apple:mac_os_x": "10.4.10",
+            "imagemagick:imagemagick": "unknown",
+            "microsoft:windows_2000": "unknown",
+            "apache:openoffice": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2639",
+            "CVE-2021-43537",
+            "CVE-2007-4268",
+            "CVE-2007-4988",
+            "CVE-2009-0231",
+            "CVE-2008-3282"
+        ],
+        "CWE": [
+            "CWE-681"
+        ]
+    }
+}

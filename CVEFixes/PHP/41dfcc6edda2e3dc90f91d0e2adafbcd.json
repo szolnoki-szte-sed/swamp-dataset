@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:buddypress:buddypress:*:*:*:*:*:wordpress:*:*"
+        ],
+        "fix_commit": "https://github.com/buddypress/BuddyPress/commit/39294680369a0c992290577a9d740f4a2f2c2ca3",
+        "version_end_excluding": {
+            "buddypress:buddypress": "5.1.2"
+        },
+        "path": {
+            "file_path": "src/bp-core/admin/bp-core-admin-slugs.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-5244"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

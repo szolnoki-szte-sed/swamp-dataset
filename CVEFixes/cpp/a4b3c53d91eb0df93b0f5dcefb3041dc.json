@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:juce:juce:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/juce-framework/JUCE/commit/2e874e80cba0152201aff6a4d0dc407997d10a7f",
+        "version_end_excluding": {
+            "juce:juce": "6.1.5"
+        },
+        "path": {
+            "file_path": "modules/juce_core/files/juce_TemporaryFile.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23520"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

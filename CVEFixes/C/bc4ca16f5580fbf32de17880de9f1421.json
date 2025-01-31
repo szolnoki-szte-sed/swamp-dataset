@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:imagemagick:imagemagick:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ImageMagick/ImageMagick/commit/eedd0c35bb2d8af7aa05f215689fdebd11633fa1",
+        "version_end_excluding": {
+            "imagemagick:imagemagick": "unknown"
+        },
+        "path": {
+            "file_path": "coders/tiff.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-10054"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

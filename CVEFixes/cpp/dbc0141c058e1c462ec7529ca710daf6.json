@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:qpdf_project:qpdf:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:qpdf_project:qpdf:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/qpdf/qpdf/commit/dc92574c10f3e2516ec6445b88c5d584f40df4e5",
+        "version_end_excluding": {
+            "qpdf_project:qpdf": "unknown"
+        },
+        "path": {
+            "file_path": "libqpdf/Pl_AES_PDF.cc"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-36978"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

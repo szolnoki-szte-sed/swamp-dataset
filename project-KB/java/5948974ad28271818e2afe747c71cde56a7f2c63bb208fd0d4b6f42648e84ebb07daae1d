@@ -1,0 +1,74 @@
+diff --git a/lib/server-core-ext/src/main/java/org/apache/olingo/server/core/MetadataParser.java b/lib/server-core-ext/src/main/java/org/apache/olingo/server/core/MetadataParser.java
+index 150c49ca7e..3eeaef307f 100644
+--- a/lib/server-core-ext/src/main/java/org/apache/olingo/server/core/MetadataParser.java
++++ b/lib/server-core-ext/src/main/java/org/apache/olingo/server/core/MetadataParser.java
+@@ -162,7 +162,7 @@ public ServiceMetadata buildServiceMetadata(Reader csdl) throws XMLStreamExcepti
+   }
+ 
+   public SchemaBasedEdmProvider buildEdmProvider(Reader csdl) throws XMLStreamException {
+-    XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
++    XMLInputFactory xmlInputFactory = createXmlInputFactory();
+     XMLEventReader reader = xmlInputFactory.createXMLEventReader(csdl);    
+     return buildEdmProvider(reader, this.referenceResolver, this.implicitlyLoadCoreVocabularies,
+             this.useLocalCoreVocabularies, true, null);
+@@ -170,17 +170,17 @@ public SchemaBasedEdmProvider buildEdmProvider(Reader csdl) throws XMLStreamExce
+   
+   public SchemaBasedEdmProvider addToEdmProvider(SchemaBasedEdmProvider existing, Reader csdl)
+       throws XMLStreamException {
+-    XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
++    XMLInputFactory xmlInputFactory = createXmlInputFactory();
+     XMLEventReader reader = xmlInputFactory.createXMLEventReader(csdl);
+     return addToEdmProvider(existing, reader, this.referenceResolver, this.implicitlyLoadCoreVocabularies,
+         this.useLocalCoreVocabularies, true, null);
+   }
+-  
++
+   protected SchemaBasedEdmProvider buildEdmProvider(Reader csdl, ReferenceResolver resolver,
+                                                     boolean loadCore, boolean useLocal,
+                                                     boolean loadReferenceSchemas, String namespace)
+           throws XMLStreamException {
+-    XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
++    XMLInputFactory xmlInputFactory = createXmlInputFactory();
+     XMLEventReader reader = xmlInputFactory.createXMLEventReader(csdl);
+     return buildEdmProvider(reader, resolver, loadCore, useLocal, loadReferenceSchemas, namespace);
+   }
+@@ -189,7 +189,7 @@ protected SchemaBasedEdmProvider buildEdmProvider(InputStream csdl, ReferenceRes
+                                                     boolean loadCore, boolean useLocal,
+                                                     boolean loadReferenceSchemas, String namespace)
+           throws XMLStreamException {
+-    XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
++    XMLInputFactory xmlInputFactory = createXmlInputFactory();
+     XMLEventReader reader = xmlInputFactory.createXMLEventReader(csdl);
+     return buildEdmProvider(reader, resolver, loadCore, useLocal, loadReferenceSchemas, namespace);
+   } 
+@@ -249,8 +249,15 @@ void build(XMLEventReader reader, StartElement element, SchemaBasedEdmProvider p
+           : fixXmlBase(xmlBase.toString()), resolver, loadCore, useLocal);
+     }
+     return provider;
+-  }  
+-  
++  }
++
++  private XMLInputFactory createXmlInputFactory() {
++    XMLInputFactory factory = XMLInputFactory.newInstance();
++    factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++    factory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
++    return factory;
++  }
++
+   private void loadReferencesSchemas(SchemaBasedEdmProvider provider,
+       String xmlBase, ReferenceResolver resolver, boolean loadCore,
+       boolean useLocal) {    
+diff --git a/lib/server-core/src/main/java/org/apache/olingo/server/core/deserializer/xml/ODataXmlDeserializer.java b/lib/server-core/src/main/java/org/apache/olingo/server/core/deserializer/xml/ODataXmlDeserializer.java
+index c8a1fcb24a..8356cba619 100644
+--- a/lib/server-core/src/main/java/org/apache/olingo/server/core/deserializer/xml/ODataXmlDeserializer.java
++++ b/lib/server-core/src/main/java/org/apache/olingo/server/core/deserializer/xml/ODataXmlDeserializer.java
+@@ -94,6 +94,8 @@ public void setMetadata(ServiceMetadata metadata) {
+   }
+   
+   protected XMLEventReader getReader(final InputStream input) throws XMLStreamException {
++    FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++    FACTORY.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
+     return FACTORY.createXMLEventReader(input);
+   }
+ 

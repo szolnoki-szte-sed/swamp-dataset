@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sleuthkit:the_sleuth_kit:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/sleuthkit/sleuthkit/commit/459ae818fc8dae717549810150de4d191ce158f1",
+        "version_end_excluding": {
+            "sleuthkit:the_sleuth_kit": "unknown"
+        },
+        "path": {
+            "file_path": "tsk/fs/yaffs.cpp"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-10232"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

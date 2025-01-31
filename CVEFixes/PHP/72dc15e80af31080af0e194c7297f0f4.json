@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:combodo:itop:*:*:*:*:-:*:*:*",
+            "cpe:2.3:a:combodo:itop:*:*:*:*:-:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Combodo/iTop/commit/4f5c987d8b1bd12814dc606ea69b6cfb88490704",
+        "version_end_excluding": {
+            "combodo:itop": "2.6.5"
+        },
+        "path": {
+            "file_path": "pages/run_query.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32664"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

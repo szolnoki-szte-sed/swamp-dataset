@@ -1,0 +1,52 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:openssl:openssl:1.0.1j:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0n:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0c:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0i:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.1h:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0m:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.1c:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.1g:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0h:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0f:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0g:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0o:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.1b:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0b:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0j:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0k:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.1f:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0d:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0e:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0l:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.1e:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.1d:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.0a:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.1i:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:1.0.1a:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/openssl/openssl/commit/1421e0c584ae9120ca1b88098f13d6d2e90b83a3",
+        "version_end_excluding": {
+            "openssl:openssl": "unknown"
+        },
+        "path": {
+            "file_path": "ssl/s3_srvr.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-0205"
+        ],
+        "CWE": [
+            "CWE-310"
+        ]
+    }
+}

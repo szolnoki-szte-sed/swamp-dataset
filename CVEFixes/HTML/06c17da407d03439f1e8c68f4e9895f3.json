@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:openmicroscopy:omero-figure:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openmicroscopy:omero-web:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ome/omero-web/commit/0168067accde5e635341b3c714b1d53ae92ba424",
+        "version_end_excluding": {
+            "openmicroscopy:omero-figure": "4.4.1",
+            "openmicroscopy:omero-web": "5.11.0"
+        },
+        "path": {
+            "file_path": "omeroweb/webclient/templates/webclient/scripts/upload_script.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41132"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

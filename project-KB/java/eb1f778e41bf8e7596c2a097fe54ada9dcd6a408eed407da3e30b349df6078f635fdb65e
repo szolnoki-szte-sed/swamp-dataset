@@ -1,0 +1,33 @@
+diff --git a/kura/org.eclipse.kura.web2/src/main/java/org/eclipse/kura/web/server/servlet/SkinServlet.java b/kura/org.eclipse.kura.web2/src/main/java/org/eclipse/kura/web/server/servlet/SkinServlet.java
+index 9ca79e47f2c..9c330722dec 100644
+--- a/kura/org.eclipse.kura.web2/src/main/java/org/eclipse/kura/web/server/servlet/SkinServlet.java
++++ b/kura/org.eclipse.kura.web2/src/main/java/org/eclipse/kura/web/server/servlet/SkinServlet.java
+@@ -17,6 +17,8 @@
+ import java.io.IOException;
+ import java.io.OutputStream;
+ import java.io.PrintWriter;
++import java.util.regex.Matcher;
++import java.util.regex.Pattern;
+ 
+ import javax.servlet.ServletException;
+ import javax.servlet.http.HttpServlet;
+@@ -34,6 +36,8 @@ public class SkinServlet extends HttpServlet {
+ 
+     private static Logger logger = LoggerFactory.getLogger(SkinServlet.class);
+ 
++    private static final Pattern filenamePattern = Pattern.compile("^[\\w,\\s-]+\\.[A-Za-z]+$");
++
+     @Override
+     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+ 
+@@ -141,7 +145,9 @@ private File checkDir(String resourceDir) {
+     }
+ 
+     private File checkFile(File resourceDir, String resourceName) {
+-        if (resourceName == null || resourceName.trim().length() == 0) {
++        Matcher fileMatcher = filenamePattern.matcher(resourceName);
++
++        if (!fileMatcher.matches()) {
+             return null;
+         }
+ 

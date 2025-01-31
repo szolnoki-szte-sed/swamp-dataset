@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ajaxpro.2_project:ajaxpro.2:*:*:*:*:*:.net:*:*"
+        ],
+        "fix_commit": "https://github.com/michaelschwarz/Ajax.NET-Professional/commit/b0e63be5f0bb20dfce507cb8a1a9568f6e73de57",
+        "version_end_excluding": {
+            "ajaxpro.2_project:ajaxpro.2": "21.10.30.1"
+        },
+        "path": {
+            "file_path": "AjaxPro/core.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23758"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

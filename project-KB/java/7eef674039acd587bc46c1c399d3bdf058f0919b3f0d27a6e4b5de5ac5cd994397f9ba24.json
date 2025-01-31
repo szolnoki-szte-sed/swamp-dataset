@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:openmeetings:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/openmeetings/commit/7eef674039acd587bc46c1c399d3bdf058f0919b",
+        "version_end_excluding": {
+            "apache:openmeetings": "unknown"
+        },
+        "path": {
+            "file_path": "openmeetings-web/src/main/java/org/apache/openmeetings/web/pages/auth/ForgetPasswordDialog.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-0783"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

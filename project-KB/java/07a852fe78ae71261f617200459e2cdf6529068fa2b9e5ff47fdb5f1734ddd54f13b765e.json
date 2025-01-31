@@ -1,0 +1,22 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/swagger-api/swagger-codegen/commit/07a852fe78ae71261f617200459e2cdf6529068f",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/RubyClientCodegen.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-5641"
+        ],
+        "CWE": []
+    }
+}

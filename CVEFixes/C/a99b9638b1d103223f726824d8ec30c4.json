@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:google:android:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/a4780adeefd042482f624f5e0d577bf9cdcbb760",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown",
+            "google:android": "unknown"
+        },
+        "path": {
+            "file_path": "arch/arm/include/asm/thread_info.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-9870"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

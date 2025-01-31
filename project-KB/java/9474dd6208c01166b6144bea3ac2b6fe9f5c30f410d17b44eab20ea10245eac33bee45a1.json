@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:keycloak:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/keycloak/keycloak/commit/9474dd6208c01166b6144bea3ac2b6fe9f5c30f4",
+        "version_end_excluding": {
+            "redhat:keycloak": "9.0.1"
+        },
+        "path": {
+            "file_path": "services/src/main/java/org/keycloak/services/managers/AuthenticationManager.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1744"
+        ],
+        "CWE": [
+            "CWE-755"
+        ]
+    }
+}

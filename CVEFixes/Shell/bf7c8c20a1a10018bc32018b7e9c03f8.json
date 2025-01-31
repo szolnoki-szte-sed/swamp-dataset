@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:fedoraproject:fedora:30:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:31:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:32:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:opensuse:backports_sle:15.0:sp1:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/adrienverge/openfortivpn/commit/cd9368c6a1b4ef91d77bb3fdbe2e5bc34aa6f4c4",
+        "version_end_excluding": {
+            "fedoraproject:fedora": "unknown",
+            "opensuse:leap": "unknown",
+            "opensuse:backports_sle": "unknown"
+        },
+        "path": {
+            "file_path": "configure.ac"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-7041"
+        ],
+        "CWE": [
+            "CWE-295"
+        ]
+    }
+}

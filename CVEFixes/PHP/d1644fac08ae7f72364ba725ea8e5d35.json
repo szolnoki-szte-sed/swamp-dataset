@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phpipam:phpipam:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/phpipam/phpipam/commit/552fbb0fc7ecb84bda4a131b4f290a3de9980040",
+        "version_end_excluding": {
+            "phpipam:phpipam": "unknown"
+        },
+        "path": {
+            "file_path": "app/admin/users/print-user.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-1000870"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:neos:form:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:neos:form:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:neos:form:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/neos/form/commit/049d415295be8d4a0478ccba97dba1bb81649567",
+        "version_end_excluding": {
+            "neos:form": "4.3.3"
+        },
+        "path": {
+            "file_path": "Classes/TYPO3/Form/Core/Runtime/FormRuntime.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32697"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

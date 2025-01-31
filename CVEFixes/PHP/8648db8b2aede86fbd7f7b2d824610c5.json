@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:firefly-iii:firefly_iii:4.7.17.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/firefly-iii/firefly-iii/commit/692b256f3f6d9eab992a72eb042844220b314054",
+        "version_end_excluding": {
+            "firefly-iii:firefly_iii": "unknown"
+        },
+        "path": {
+            "file_path": "app/Http/Controllers/Rule/CreateController.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-14670"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

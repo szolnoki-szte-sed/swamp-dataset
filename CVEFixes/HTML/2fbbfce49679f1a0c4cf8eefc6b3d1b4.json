@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:askbot:askbot:0.7.44:*:*:*:*:*:*:*",
+            "cpe:2.3:a:askbot:askbot:0.7.42:*:*:*:*:*:*:*",
+            "cpe:2.3:a:askbot:askbot:0.7.46:*:*:*:*:*:*:*",
+            "cpe:2.3:a:askbot:askbot:0.7.47:*:*:*:*:*:*:*",
+            "cpe:2.3:a:askbot:askbot:0.7.41:*:*:*:*:*:*:*",
+            "cpe:2.3:a:askbot:askbot:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:askbot:askbot:0.7.43:*:*:*:*:*:*:*",
+            "cpe:2.3:a:askbot:askbot:0.7.40:*:*:*:*:*:*:*",
+            "cpe:2.3:a:askbot:askbot:0.7.45:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ASKBOT/askbot-devel/commit/a676a86b6b7a5737d4da4f59f71e037406f88d29",
+        "version_end_excluding": {
+            "askbot:askbot": "unknown"
+        },
+        "path": {
+            "file_path": "askbot/templates/users.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-2236"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

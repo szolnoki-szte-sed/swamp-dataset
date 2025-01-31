@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:libming:libming:0.4.8:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/libming/libming/commit/a009a38dce1d9316cad1ab522b813b1d5ba4c62a",
+        "version_end_excluding": {
+            "libming:libming": "unknown"
+        },
+        "path": {
+            "file_path": "src/blocks/input.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v2.1"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-12980"
+        ],
+        "CWE": [
+            "CWE-190"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:f5:njs:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/nginx/njs/commit/6a40a85ff239497c6458c7dbef18f6a2736fe992",
+        "version_end_excluding": {
+            "f5:njs": "unknown"
+        },
+        "path": {
+            "file_path": "src/njs_vmcode.c"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 2-Clause \"Simplified\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-46463"
+        ],
+        "CWE": [
+            "CWE-843"
+        ]
+    }
+}

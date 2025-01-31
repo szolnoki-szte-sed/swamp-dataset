@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fava_project:fava:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/beancount/fava/commit/dccfb6a2f4567f35ce2e9a78e24f92ebf946bc9b",
+        "version_end_excluding": {
+            "fava_project:fava": "1.22.2"
+        },
+        "path": {
+            "file_path": "frontend/src/query/Query.svelte"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2523"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

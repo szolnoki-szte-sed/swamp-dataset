@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:nginx:njs:0.7.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/nginx/njs/commit/8b39afdad9a0761e0a5d4af1a762bd9a6daef572",
+        "version_end_excluding": {
+            "nginx:njs": "unknown"
+        },
+        "path": {
+            "file_path": "src/njs_array.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 2-Clause \"Simplified\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-29780"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

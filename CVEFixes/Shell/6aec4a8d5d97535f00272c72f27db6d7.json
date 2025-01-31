@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:eternal_terminal_project:eternal_terminal:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/MisterTea/EternalTerminal/commit/900348bb8bc96e1c7ba4888ac8480f643c43d3c3",
+        "version_end_excluding": {
+            "eternal_terminal_project:eternal_terminal": "6.2.0"
+        },
+        "path": {
+            "file_path": "CMakeLists.txt"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24949"
+        ],
+        "CWE": [
+            "CWE-120"
+        ]
+    }
+}

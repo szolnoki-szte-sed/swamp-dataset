@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jenkins:jenkins:*:*:*:*:lts:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jenkinsci/jenkins/commit/a0b00508eeb74d7033dc4100eb382df4e8fa72e7",
+        "version_end_excluding": {
+            "jenkins:jenkins": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/main/java/hudson/model/View.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-2065"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

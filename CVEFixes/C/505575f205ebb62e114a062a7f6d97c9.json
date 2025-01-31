@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:19.04:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:30:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:19.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:31:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/1399c59fa92984836db90538cf92397fe7caaa57",
+        "version_end_excluding": {
+            "canonical:ubuntu_linux": "unknown",
+            "fedoraproject:fedora": "unknown",
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "net/wireless/nl80211.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-19055"
+        ],
+        "CWE": [
+            "CWE-401"
+        ]
+    }
+}

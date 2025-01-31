@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fastecdsa_project:fastecdsa:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/AntonKueltz/fastecdsa/commit/7b64e3efaa806b4daaf73bb5172af3581812f8de",
+        "version_end_excluding": {
+            "fastecdsa_project:fastecdsa": "2.1.2"
+        },
+        "path": {
+            "file_path": "docs/conf.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "The Unlicense"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-12607"
+        ],
+        "CWE": [
+            "CWE-347"
+        ]
+    }
+}

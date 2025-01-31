@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:node-fetch_project:node-fetch:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:node-fetch_project:node-fetch:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/node-fetch/node-fetch/commit/36e47e8a6406185921e4985dcbeff140d73eaa10",
+        "version_end_excluding": {
+            "node-fetch_project:node-fetch": "3.1.1"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0235"
+        ],
+        "CWE": [
+            "CWE-601"
+        ]
+    }
+}

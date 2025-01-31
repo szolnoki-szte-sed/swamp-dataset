@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:misp:misp:2.4.135:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/MISP/MISP/commit/0bfc0bf38a7758b27c5c446fec5e3b905e5a54ab",
+        "version_end_excluding": {
+            "misp:misp": "unknown"
+        },
+        "path": {
+            "file_path": "app/View/Elements/genericElements/SingleViews/Fields/genericField.ctp"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-29572"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:vim:vim:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/vim/vim/commit/85b6747abc15a7a81086db31289cf1b8b17e6cb1",
+        "version_end_excluding": {
+            "vim:vim": "8.2.4214",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "src/ex_getln.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Vim License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0359"
+        ],
+        "CWE": [
+            "CWE-122"
+        ]
+    }
+}

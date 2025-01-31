@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/ee8413b01045c74340aa13ad5bdf905de32be736",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "sound/core/timer.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-2545"
+        ],
+        "CWE": [
+            "CWE-362"
+        ]
+    }
+}

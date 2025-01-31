@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:3.13.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:3.13:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:3.13.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:3.13.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/338f977f4eb441e69bb9a46eaa0ac715c931a67f",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "net/mac80211/tx.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-8709"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

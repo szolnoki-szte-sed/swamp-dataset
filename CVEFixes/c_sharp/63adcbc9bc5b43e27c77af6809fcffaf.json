@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:blogifier:blogifier:2.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/blogifierdotnet/Blogifier/commit/3e2ae11f6be8aab82128f223c2916fab5a408be5",
+        "version_end_excluding": {
+            "blogifier:blogifier": "unknown"
+        },
+        "path": {
+            "file_path": "src/Core/CoreAPI.xml"
+        }
+    },
+    "programming_language": "c_sharp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-12277"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

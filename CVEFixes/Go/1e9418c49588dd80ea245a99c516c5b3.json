@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:getgophish:gophish:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/gophish/gophish/commit/6df62e85fd60f0931d3c8bfdb13b436a961bc9b6",
+        "version_end_excluding": {
+            "getgophish:gophish": "0.11.0"
+        },
+        "path": {
+            "file_path": "controllers/route.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-24711"
+        ],
+        "CWE": [
+            "CWE-1021"
+        ]
+    }
+}

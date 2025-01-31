@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:hawt:hawtio:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/hawtio/hawtio/commit/e653dd5733859daf8061bd0cddca2c4c5dcba56e",
+        "version_end_excluding": {
+            "hawt:hawtio": "unknown"
+        },
+        "path": {
+            "file_path": "hawtio-system/src/main/java/io/hawt/system/ConfigManager.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-9827"
+        ],
+        "CWE": [
+            "CWE-918"
+        ]
+    }
+}

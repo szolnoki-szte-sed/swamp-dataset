@@ -1,0 +1,711 @@
+diff --git a/elide-core/src/main/java/com/yahoo/elide/core/EntityBinding.java b/elide-core/src/main/java/com/yahoo/elide/core/EntityBinding.java
+index c2c904602c..12cb07b290 100644
+--- a/elide-core/src/main/java/com/yahoo/elide/core/EntityBinding.java
++++ b/elide-core/src/main/java/com/yahoo/elide/core/EntityBinding.java
+@@ -566,14 +566,9 @@ public Class<? extends Annotation> annotationType() {
+      * @return the annotation
+      */
+     public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
+-        Annotation annotation = annotations.get(annotationClass);
+-        if (annotation == null) {
+-            annotation = EntityDictionary.getFirstAnnotation(entityClass, Collections.singletonList(annotationClass));
+-            if (annotation == null) {
+-                annotation = NO_ANNOTATION;
+-            }
+-            annotations.putIfAbsent(annotationClass, annotation);
+-        }
++        Annotation annotation = annotations.computeIfAbsent(annotationClass, cls -> Optional.ofNullable(
++                EntityDictionary.getFirstAnnotation(entityClass, Collections.singletonList(annotationClass)))
++                .orElse(NO_ANNOTATION));
+         return annotation == NO_ANNOTATION ? null : annotationClass.cast(annotation);
+     }
+ 
+diff --git a/elide-core/src/main/java/com/yahoo/elide/core/PersistentResource.java b/elide-core/src/main/java/com/yahoo/elide/core/PersistentResource.java
+index e93727a57d..a007e66e6b 100644
+--- a/elide-core/src/main/java/com/yahoo/elide/core/PersistentResource.java
++++ b/elide-core/src/main/java/com/yahoo/elide/core/PersistentResource.java
+@@ -95,7 +95,7 @@ public String toString() {
+         return String.format("PersistentResource{type=%s, id=%s}", type, uuid.orElse(getId()));
+     }
+ 
+-   /**
++    /**
+      * Create a resource in the database.
+      * @param parent - The immediate ancestor in the lineage or null if this is a root.
+      * @param entityClass the entity class
+@@ -234,7 +234,7 @@ public boolean matchesId(String checkId) {
+      * @return a FilterExpression defined by FilterExpressionCheck.
+      */
+     private static <T> Optional<FilterExpression> getPermissionFilterExpression(Class<T> loadClass,
+-                                                                      RequestScope requestScope) {
++            RequestScope requestScope) {
+         try {
+             return requestScope.getPermissionExecutor().getReadPermissionFilter(loadClass);
+         } catch (ForbiddenAccessException e) {
+@@ -305,7 +305,7 @@ public static Set<PersistentResource> loadRecords(
+             }
+         }
+ 
+-        Set<PersistentResource> existingResources = filter(ReadPermission.class,
++        Set<PersistentResource> existingResources = filter(ReadPermission.class, filter,
+                 new PersistentResourceSet(tx.loadObjects(loadClass, Optional.ofNullable(filterExpression), sorting,
+                 pagination.map(p -> p.evaluate(loadClass)), requestScope), requestScope));
+ 
+@@ -369,7 +369,7 @@ public boolean updateAttribute(String fieldName, Object newVal) {
+      */
+     public boolean updateRelation(String fieldName, Set<PersistentResource> resourceIdentifiers) {
+         RelationshipType type = getRelationshipType(fieldName);
+-        Set<PersistentResource> resources = filter(ReadPermission.class,
++        Set<PersistentResource> resources = filter(ReadPermission.class, Optional.empty(),
+                 getRelationUncheckedUnfiltered(fieldName));
+         boolean isUpdated;
+         if (type.isToMany()) {
+@@ -402,8 +402,8 @@ public boolean updateRelation(String fieldName, Set<PersistentResource> resource
+      * @return true if updated. false otherwise
+      */
+     protected boolean updateToManyRelation(String fieldName,
+-                                           Set<PersistentResource> resourceIdentifiers,
+-                                           Set<PersistentResource> mine) {
++            Set<PersistentResource> resourceIdentifiers,
++            Set<PersistentResource> mine) {
+ 
+         Set<PersistentResource> requested;
+         Set<PersistentResource> updated;
+@@ -479,8 +479,8 @@ protected boolean updateToManyRelation(String fieldName,
+      * @return true if updated. false otherwise
+      */
+     protected boolean updateToOneRelation(String fieldName,
+-                                          Set<PersistentResource> resourceIdentifiers,
+-                                          Set<PersistentResource> mine) {
++            Set<PersistentResource> resourceIdentifiers,
++            Set<PersistentResource> mine) {
+         Object newValue = null;
+         PersistentResource newResource = null;
+         if (CollectionUtils.isNotEmpty(resourceIdentifiers)) {
+@@ -527,7 +527,8 @@ protected boolean updateToOneRelation(String fieldName,
+      * @return True if object updated, false otherwise
+      */
+     public boolean clearRelation(String relationName) {
+-        Set<PersistentResource> mine = filter(ReadPermission.class, getRelationUncheckedUnfiltered(relationName));
++        Set<PersistentResource> mine = filter(ReadPermission.class, Optional.empty(),
++                getRelationUncheckedUnfiltered(relationName));
+         checkFieldAwareDeferPermissions(UpdatePermission.class, relationName, Collections.emptySet(),
+                 mine.stream().map(PersistentResource::getObject).collect(Collectors.toSet()));
+ 
+@@ -816,10 +817,10 @@ public PersistentResource getRelation(String relation, String id) {
+      * @return PersistentResource relation
+      */
+     public Set<PersistentResource> getRelation(String relation,
+-                                          List<String> ids,
+-                                          Optional<FilterExpression> filter,
+-                                          Optional<Sorting> sorting,
+-                                          Optional<Pagination> pagination) {
++            List<String> ids,
++            Optional<FilterExpression> filter,
++            Optional<Sorting> sorting,
++            Optional<Pagination> pagination) {
+ 
+         FilterExpression filterExpression;
+ 
+@@ -851,8 +852,8 @@ public Set<PersistentResource> getRelation(String relation,
+         // TODO: Filter on new resources?
+         // TODO: Update pagination to subtract the number of new resources created?
+ 
+-        Set<PersistentResource> existingResources = filter(ReadPermission.class,
+-            getRelation(relation, Optional.ofNullable(filterExpression), sorting, pagination, true));
++        Set<PersistentResource> existingResources = filter(ReadPermission.class, filter,
++                getRelation(relation, Optional.ofNullable(filterExpression), sorting, pagination, true));
+ 
+         // TODO: Sort again in memory now that two sets are glommed together?
+ 
+@@ -877,9 +878,9 @@ public Set<PersistentResource> getRelation(String relation,
+      * @return Filter expression for given ids and type.
+      */
+     private static FilterExpression buildIdFilterExpression(List<String> ids,
+-                                                            Class<?> entityType,
+-                                                            EntityDictionary dictionary,
+-                                                            RequestScope scope) {
++            Class<?> entityType,
++            EntityDictionary dictionary,
++            RequestScope scope) {
+         Class<?> idType = dictionary.getIdType(entityType);
+         String idField = dictionary.getIdFieldName(entityType);
+         String typeAlias = dictionary.getJsonAliasFor(entityType);
+@@ -907,11 +908,11 @@ private static FilterExpression buildIdFilterExpression(List<String> ids,
+      * @return collection relation
+      */
+     public Set<PersistentResource> getRelationCheckedFiltered(String relationName,
+-                                                              Optional<FilterExpression> filterExpression,
+-                                                              Optional<Sorting> sorting,
+-                                                              Optional<Pagination> pagination) {
++            Optional<FilterExpression> filterExpression,
++            Optional<Sorting> sorting,
++            Optional<Pagination> pagination) {
+ 
+-        return filter(ReadPermission.class,
++        return filter(ReadPermission.class, filterExpression,
+                 getRelation(relationName, filterExpression, sorting, pagination, true));
+     }
+ 
+@@ -924,10 +925,10 @@ private Set<PersistentResource> getRelationCheckedUnfiltered(String relationName
+     }
+ 
+     private Set<PersistentResource> getRelation(String relationName,
+-                                                Optional<FilterExpression> filterExpression,
+-                                                Optional<Sorting> sorting,
+-                                                Optional<Pagination> pagination,
+-                                                boolean checked) {
++            Optional<FilterExpression> filterExpression,
++            Optional<Sorting> sorting,
++            Optional<Pagination> pagination,
++            boolean checked) {
+ 
+         if (checked && !checkRelation(relationName)) {
+             return Collections.emptySet();
+@@ -974,9 +975,9 @@ protected boolean checkRelation(String relationName) {
+      * @return collection relation
+      */
+     protected Set<PersistentResource> getRelationChecked(String relationName,
+-                                                         Optional<FilterExpression> filterExpression,
+-                                                         Optional<Sorting> sorting,
+-                                                         Optional<Pagination> pagination) {
++            Optional<FilterExpression> filterExpression,
++            Optional<Sorting> sorting,
++            Optional<Pagination> pagination) {
+         if (!checkRelation(relationName)) {
+             return Collections.emptySet();
+         }
+@@ -994,9 +995,9 @@ protected Set<PersistentResource> getRelationChecked(String relationName,
+      * @return the resources in the relationship
+      */
+     private Set<PersistentResource> getRelationUnchecked(String relationName,
+-                                                         Optional<FilterExpression> filterExpression,
+-                                                         Optional<Sorting> sorting,
+-                                                         Optional<Pagination> pagination) {
++            Optional<FilterExpression> filterExpression,
++            Optional<Sorting> sorting,
++            Optional<Pagination> pagination) {
+         RelationshipType type = getRelationshipType(relationName);
+         final Class<?> relationClass = dictionary.getParameterizedType(obj, relationName);
+         if (relationClass == null) {
+@@ -1047,7 +1048,7 @@ private Set<PersistentResource> getRelationUnchecked(String relationName,
+      * @return True if collection should be skipped (i.e. denied access), false otherwise
+      */
+     private static boolean shouldSkipCollection(Class<?> resourceClass, Class<? extends Annotation> annotationClass,
+-                                                RequestScope requestScope) {
++            RequestScope requestScope) {
+         try {
+             requestScope.getPermissionExecutor().checkUserPermissions(resourceClass, annotationClass);
+         } catch (ForbiddenAccessException e) {
+@@ -1551,13 +1552,15 @@ protected void addInverseRelation(String relationName, Object inverseObj) {
+ 
+     /**
+      * Filter a set of PersistentResources.
++     * Verify fields have ReadPermission on filter join.
+      *
+      * @param permission the permission
+      * @param resources  the resources
+      * @return Filtered set of resources
+      */
+     protected static Set<PersistentResource> filter(Class<? extends Annotation> permission,
+-                                                    Set<PersistentResource> resources) {
++            Optional<FilterExpression> filter,
++            Set<PersistentResource> resources) {
+         Set<PersistentResource> filteredSet = new LinkedHashSet<>();
+         for (PersistentResource resource : resources) {
+             try {
+@@ -1569,6 +1572,11 @@ protected static Set<PersistentResource> filter(Class<? extends Annotation> perm
+                 // object will behave as expected.
+                 if (!resource.getRequestScope().getNewResources().contains(resource)) {
+                     resource.checkFieldAwarePermissions(permission);
++                    // Verify fields have ReadPermission on filter join
++                    if (filter.isPresent()
++                            && !filter.get().accept(new VerifyFieldAccessFilterExpressionVisitor(resource))) {
++                        continue;
++                    }
+                 }
+                 filteredSet.add(resource);
+             } catch (ForbiddenAccessException e) {
+@@ -1632,9 +1640,9 @@ private <A extends Annotation> ExpressionResult checkFieldAwareReadPermissions(S
+     }
+ 
+     private <A extends Annotation> ExpressionResult checkFieldAwareDeferPermissions(Class<A> annotationClass,
+-                                                                        String fieldName,
+-                                                                        Object modified,
+-                                                                        Object original) {
++            String fieldName,
++            Object modified,
++            Object original) {
+         ChangeSpec changeSpec = (UpdatePermission.class.isAssignableFrom(annotationClass))
+                 ? new ChangeSpec(this, fieldName, original, modified)
+                 : null;
+@@ -1645,7 +1653,7 @@ private <A extends Annotation> ExpressionResult checkFieldAwareDeferPermissions(
+     }
+ 
+     protected static boolean checkIncludeSparseField(Map<String, Set<String>> sparseFields, String type,
+-                                                     String fieldName) {
++            String fieldName) {
+         if (!sparseFields.isEmpty()) {
+             if (!sparseFields.containsKey(type)) {
+                 return false;
+diff --git a/elide-core/src/main/java/com/yahoo/elide/core/PersistentResourceSet.java b/elide-core/src/main/java/com/yahoo/elide/core/PersistentResourceSet.java
+index d8fc84becb..8fc323a496 100644
+--- a/elide-core/src/main/java/com/yahoo/elide/core/PersistentResourceSet.java
++++ b/elide-core/src/main/java/com/yahoo/elide/core/PersistentResourceSet.java
+@@ -9,6 +9,8 @@
+ 
+ import java.util.AbstractSet;
+ import java.util.Iterator;
++import java.util.Spliterator;
++import java.util.Spliterators;
+ 
+ /**
+  * Stream iterable list as a set of PersistentResource.
+@@ -51,4 +53,9 @@ public PersistentResource<T> next() {
+     public int size() {
+         throw new UnsupportedOperationException();
+     }
++
++    @Override
++    public Spliterator<PersistentResource<T>> spliterator() {
++        return Spliterators.spliteratorUnknownSize(iterator(), 0);
++    }
+ }
+diff --git a/elide-core/src/main/java/com/yahoo/elide/core/RequestScope.java b/elide-core/src/main/java/com/yahoo/elide/core/RequestScope.java
+index 08fe19b20f..1354e77b6c 100644
+--- a/elide-core/src/main/java/com/yahoo/elide/core/RequestScope.java
++++ b/elide-core/src/main/java/com/yahoo/elide/core/RequestScope.java
+@@ -24,7 +24,6 @@
+ import com.yahoo.elide.core.exceptions.InvalidPredicateException;
+ import com.yahoo.elide.core.filter.dialect.MultipleFilterDialect;
+ import com.yahoo.elide.core.filter.dialect.ParseException;
+-import com.yahoo.elide.core.filter.expression.AndFilterExpression;
+ import com.yahoo.elide.core.filter.expression.FilterExpression;
+ import com.yahoo.elide.core.pagination.Pagination;
+ import com.yahoo.elide.core.sort.Sorting;
+@@ -270,27 +269,14 @@ public Optional<FilterExpression> getFilterExpressionByType(String type) {
+      * @return The global filter expression evaluated at the first load
+      */
+     public Optional<FilterExpression> getLoadFilterExpression(Class<?> loadClass) {
+-        Optional<FilterExpression> permissionFilter;
+-        permissionFilter = getPermissionExecutor().getReadPermissionFilter(loadClass);
+-        Optional<FilterExpression> globalFilterExpressionOptional;
++        Optional<FilterExpression> filterExpression;
+         if (globalFilterExpression == null) {
+             String typeName = dictionary.getJsonAliasFor(loadClass);
+-            globalFilterExpressionOptional =  getFilterExpressionByType(typeName);
++            filterExpression =  getFilterExpressionByType(typeName);
+         } else {
+-            globalFilterExpressionOptional = Optional.of(globalFilterExpression);
++            filterExpression = Optional.of(globalFilterExpression);
+         }
+-
+-        if (globalFilterExpressionOptional.isPresent() && permissionFilter.isPresent()) {
+-            return Optional.of(new AndFilterExpression(globalFilterExpressionOptional.get(),
+-                    permissionFilter.get()));
+-        }
+-        if (globalFilterExpressionOptional.isPresent()) {
+-            return globalFilterExpressionOptional;
+-        }
+-        if (permissionFilter.isPresent()) {
+-            return permissionFilter;
+-        }
+-        return Optional.empty();
++        return filterExpression;
+     }
+ 
+     /**
+diff --git a/elide-core/src/main/java/com/yahoo/elide/core/VerifyFieldAccessFilterExpressionVisitor.java b/elide-core/src/main/java/com/yahoo/elide/core/VerifyFieldAccessFilterExpressionVisitor.java
+new file mode 100644
+index 0000000000..87806e5fbc
+--- /dev/null
++++ b/elide-core/src/main/java/com/yahoo/elide/core/VerifyFieldAccessFilterExpressionVisitor.java
+@@ -0,0 +1,103 @@
++/*
++ * Copyright 2020, Yahoo Inc.
++ * Licensed under the Apache License, Version 2.0
++ * See LICENSE file in project root for terms.
++ */
++package com.yahoo.elide.core;
++
++import com.yahoo.elide.annotation.ReadPermission;
++import com.yahoo.elide.core.exceptions.ForbiddenAccessException;
++import com.yahoo.elide.core.filter.FilterPredicate;
++import com.yahoo.elide.core.filter.expression.AndFilterExpression;
++import com.yahoo.elide.core.filter.expression.FilterExpression;
++import com.yahoo.elide.core.filter.expression.FilterExpressionVisitor;
++import com.yahoo.elide.core.filter.expression.NotFilterExpression;
++import com.yahoo.elide.core.filter.expression.OrFilterExpression;
++
++import java.util.Collections;
++import java.util.Objects;
++import java.util.Set;
++import java.util.stream.Collectors;
++import java.util.stream.Stream;
++
++/**
++ * Enforce read permission on filter join.
++ */
++public class VerifyFieldAccessFilterExpressionVisitor implements FilterExpressionVisitor<Boolean> {
++    private PersistentResource<?> resource;
++
++    public VerifyFieldAccessFilterExpressionVisitor(PersistentResource<?> resource) {
++        this.resource = resource;
++    }
++
++    /**
++     * Enforce ReadPermission on provided query filter.
++     *
++     * @return true if allowed, false if rejected
++     */
++    @Override
++    public Boolean visitPredicate(FilterPredicate filterPredicate) {
++        RequestScope requestScope = resource.getRequestScope();
++        Set<PersistentResource> val = Collections.singleton(resource);
++        for (Path.PathElement pathElement : filterPredicate.getPath().getPathElements()) {
++            String fieldName = pathElement.getFieldName();
++
++            if ("this".equals(fieldName)) {
++                continue;
++            }
++
++            try {
++                val = val.stream()
++                        .filter(Objects::nonNull)
++                        .flatMap(x -> getValueChecked(x, fieldName, requestScope))
++                        .filter(Objects::nonNull)
++                        .collect(Collectors.toSet());
++            } catch (IllegalArgumentException e) {
++                // Not a persistent resource
++            } catch (ForbiddenAccessException e) {
++                return false;
++            }
++        }
++        return true;
++    }
++
++    private Stream<PersistentResource> getValueChecked(PersistentResource<?> resource, String fieldName,
++            RequestScope requestScope) {
++        // checkFieldAwareReadPermissions
++        requestScope.getPermissionExecutor().checkSpecificFieldPermissions(resource, null, ReadPermission.class,
++                fieldName);
++        Object obj = PersistentResource.getValue(resource.getObject(), fieldName, requestScope);
++        PersistentResourceSet persistentResourceSet;
++        if (obj instanceof Iterable) {
++            persistentResourceSet = new PersistentResourceSet(resource, (Iterable) obj, requestScope);
++        } else if (obj != null) {
++            persistentResourceSet = new PersistentResourceSet(resource, Collections.singleton(obj), requestScope);
++        } else {
++            return Stream.empty();
++        }
++
++        return persistentResourceSet.stream();
++    }
++
++    @Override
++    public Boolean visitAndExpression(AndFilterExpression expression) {
++        FilterExpression left = expression.getLeft();
++        FilterExpression right = expression.getRight();
++        // are both allowed
++        return left.accept(this) && right.accept(this);
++    }
++
++    @Override
++    public Boolean visitOrExpression(OrFilterExpression expression) {
++        FilterExpression left = expression.getLeft();
++        FilterExpression right = expression.getRight();
++        // are both allowed
++        return left.accept(this) && right.accept(this);
++    }
++
++    @Override
++    public Boolean visitNotExpression(NotFilterExpression expression) {
++        // is negated expression allowed
++        return expression.getNegated().accept(this);
++    }
++}
+diff --git a/elide-core/src/test/java/com/yahoo/elide/core/PersistentResourceTest.java b/elide-core/src/test/java/com/yahoo/elide/core/PersistentResourceTest.java
+index 2d90dbcaf8..06744d79a7 100644
+--- a/elide-core/src/test/java/com/yahoo/elide/core/PersistentResourceTest.java
++++ b/elide-core/src/test/java/com/yahoo/elide/core/PersistentResourceTest.java
+@@ -385,7 +385,7 @@ public void testFilter() {
+             Set<PersistentResource> resources =
+                     Sets.newHashSet(child1Resource, child2Resource, child3Resource, child4Resource);
+ 
+-            Set<PersistentResource> results = PersistentResource.filter(ReadPermission.class, resources);
++            Set<PersistentResource> results = PersistentResource.filter(ReadPermission.class, Optional.empty(), resources);
+             assertEquals(2, results.size(), "Only a subset of the children are readable");
+             assertTrue(results.contains(child1Resource), "Readable children includes children with positive IDs");
+             assertTrue(results.contains(child3Resource), "Readable children includes children with positive IDs");
+@@ -400,7 +400,7 @@ public void testFilter() {
+             Set<PersistentResource> resources =
+                     Sets.newHashSet(child1Resource, child2Resource, child3Resource, child4Resource);
+ 
+-            Set<PersistentResource> results = PersistentResource.filter(ReadPermission.class, resources);
++            Set<PersistentResource> results = PersistentResource.filter(ReadPermission.class, Optional.empty(), resources);
+             assertEquals(0, results.size(), "No children are readable by an invalid user");
+         }
+     }
+diff --git a/elide-core/src/test/java/com/yahoo/elide/core/VerifyFieldAccessFilterExpressionVisitorTest.java b/elide-core/src/test/java/com/yahoo/elide/core/VerifyFieldAccessFilterExpressionVisitorTest.java
+new file mode 100644
+index 0000000000..acec604c52
+--- /dev/null
++++ b/elide-core/src/test/java/com/yahoo/elide/core/VerifyFieldAccessFilterExpressionVisitorTest.java
+@@ -0,0 +1,161 @@
++/*
++ * Copyright 2020, Yahoo Inc.
++ * Licensed under the Apache License, Version 2.0
++ * See LICENSE file in project root for terms.
++ */
++package com.yahoo.elide.core;
++
++import static org.junit.jupiter.api.Assertions.assertFalse;
++import static org.junit.jupiter.api.Assertions.assertTrue;
++import static org.mockito.Mockito.mock;
++import static org.mockito.Mockito.times;
++import static org.mockito.Mockito.verify;
++import static org.mockito.Mockito.when;
++
++import com.yahoo.elide.annotation.ReadPermission;
++import com.yahoo.elide.core.exceptions.ForbiddenAccessException;
++import com.yahoo.elide.core.filter.FilterPredicate;
++import com.yahoo.elide.core.filter.InPredicate;
++import com.yahoo.elide.core.filter.expression.AndFilterExpression;
++import com.yahoo.elide.core.filter.expression.NotFilterExpression;
++import com.yahoo.elide.core.filter.expression.OrFilterExpression;
++import com.yahoo.elide.security.PermissionExecutor;
++
++import com.google.common.collect.Sets;
++
++import example.Author;
++import example.Book;
++
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++
++import java.util.Arrays;
++
++public class VerifyFieldAccessFilterExpressionVisitorTest {
++
++    private static final String ENTITY = "entity";
++    private static final String GENRE = "genre";
++    private static final String HOME = "homeAddress";
++    private static final String NAME = "name";
++    private static final String SCIFI = "scifi";
++    private RequestScope scope;
++
++    @BeforeEach
++    public void setupMocks() {
++        // this will test with the default interface implementation
++        scope = mock(RequestScope.class);
++        EntityDictionary dictionary = mock(EntityDictionary.class);
++        PermissionExecutor permissionExecutor = mock(PermissionExecutor.class);
++
++        when(scope.getDictionary()).thenReturn(dictionary);
++        when(dictionary.getIdType(String.class)).thenReturn((Class) Long.class);
++        when(dictionary.getValue(ENTITY, NAME, scope)).thenReturn(3L);
++        when(scope.getPermissionExecutor()).thenReturn(permissionExecutor);
++    }
++
++    @Test
++    public void testAccept() throws Exception {
++        Path p1Path = new Path(Arrays.asList(
++                new Path.PathElement(Book.class, Author.class, "authors"),
++                new Path.PathElement(Author.class, String.class, NAME)
++        ));
++        FilterPredicate p1 = new InPredicate(p1Path, "foo", "bar");
++
++        Path p2Path = new Path(Arrays.asList(
++                new Path.PathElement(Book.class, String.class, NAME)
++        ));
++        FilterPredicate p2 = new InPredicate(p2Path, "blah");
++
++        Path p3Path = new Path(Arrays.asList(
++                new Path.PathElement(Book.class, String.class, GENRE)
++        ));
++        FilterPredicate p3 = new InPredicate(p3Path, SCIFI);
++
++        //P4 is a duplicate of P3
++        Path p4Path = new Path(Arrays.asList(
++                new Path.PathElement(Book.class, String.class, GENRE)
++        ));
++        FilterPredicate p4 = new InPredicate(p4Path, SCIFI);
++
++        OrFilterExpression or = new OrFilterExpression(p2, p3);
++        AndFilterExpression and1 = new AndFilterExpression(or, p1);
++        AndFilterExpression and2 = new AndFilterExpression(and1, p4);
++        NotFilterExpression not = new NotFilterExpression(and2);
++
++        Book book = new Book();
++        Author author = new Author();
++        book.setAuthors(Sets.newHashSet(author));
++        author.setBooks(Sets.newHashSet(book));
++
++        PersistentResource<Book> resource = new PersistentResource<>(book, null, "", scope);
++
++        VerifyFieldAccessFilterExpressionVisitor visitor = new VerifyFieldAccessFilterExpressionVisitor(resource);
++        // unrestricted fields
++        assertTrue(not.accept(visitor));
++        assertTrue(and1.accept(visitor));
++        assertTrue(and2.accept(visitor));
++        assertTrue(or.accept(visitor));
++        assertTrue(p1.accept(visitor));
++        assertTrue(p2.accept(visitor));
++        assertTrue(p3.accept(visitor));
++        assertTrue(p4.accept(visitor));
++
++        PermissionExecutor permissionExecutor = scope.getPermissionExecutor();
++        verify(permissionExecutor, times(5)).checkSpecificFieldPermissions(resource, null, ReadPermission.class, NAME);
++    }
++
++    @Test
++    public void testReject() throws Exception {
++        Path p1Path = new Path(Arrays.asList(
++                new Path.PathElement(Book.class, Author.class, "authors"),
++                new Path.PathElement(Author.class, String.class, NAME)
++        ));
++        FilterPredicate p1 = new InPredicate(p1Path, "foo", "bar");
++
++        Path p2Path = new Path(Arrays.asList(
++                new Path.PathElement(Book.class, String.class, HOME)
++        ));
++        FilterPredicate p2 = new InPredicate(p2Path, "blah");
++
++        Path p3Path = new Path(Arrays.asList(
++                new Path.PathElement(Book.class, String.class, GENRE)
++        ));
++        FilterPredicate p3 = new InPredicate(p3Path, SCIFI);
++
++        //P4 is a duplicate of P3
++        Path p4Path = new Path(Arrays.asList(
++                new Path.PathElement(Book.class, String.class, GENRE)
++        ));
++        FilterPredicate p4 = new InPredicate(p4Path, SCIFI);
++
++        OrFilterExpression or = new OrFilterExpression(p2, p3);
++        AndFilterExpression and1 = new AndFilterExpression(or, p1);
++        AndFilterExpression and2 = new AndFilterExpression(and1, p4);
++        NotFilterExpression not = new NotFilterExpression(and2);
++
++        Book book = new Book();
++        Author author = new Author();
++        book.setAuthors(Sets.newHashSet(author));
++        author.setBooks(Sets.newHashSet(book));
++        PersistentResource<Book> resource = new PersistentResource<>(book, null, "", scope);
++
++        PermissionExecutor permissionExecutor = scope.getPermissionExecutor();
++        when(permissionExecutor.checkSpecificFieldPermissions(resource, null, ReadPermission.class, HOME))
++            .thenThrow(ForbiddenAccessException.class);
++
++        VerifyFieldAccessFilterExpressionVisitor visitor = new VerifyFieldAccessFilterExpressionVisitor(resource);
++        // restricted HOME field
++        assertFalse(not.accept(visitor));
++        assertFalse(and1.accept(visitor));
++        assertFalse(and2.accept(visitor));
++        assertFalse(or.accept(visitor));
++        assertFalse(p2.accept(visitor));
++
++        // unrestricted fields
++        assertTrue(p1.accept(visitor));
++        assertTrue(p3.accept(visitor));
++        assertTrue(p4.accept(visitor));
++
++        verify(permissionExecutor, times(5)).checkSpecificFieldPermissions(resource, null, ReadPermission.class, HOME);
++    }
++}
+diff --git a/elide-integration-tests/src/test/java/com/yahoo/elide/tests/FilterIT.java b/elide-integration-tests/src/test/java/com/yahoo/elide/tests/FilterIT.java
+index ec07cc8a3d..8fa1503516 100644
+--- a/elide-integration-tests/src/test/java/com/yahoo/elide/tests/FilterIT.java
++++ b/elide-integration-tests/src/test/java/com/yahoo/elide/tests/FilterIT.java
+@@ -1362,6 +1362,20 @@ void testFailFilterAuthorBookByChapter() throws IOException {
+         assertNotNull(result.get("errors"));
+     }
+ 
++    @Test
++    void testFailFilterBookByAuthorAddress() throws IOException {
++        /* Test default */
++        JsonNode result = getAsNode("book?filter[book.authors.homeAddress]=main&include=authors");
++        JsonNode data = result.get("data");
++        assertEquals(0, data.size(), result.toString());
++
++        /* Test RSQL */
++        result = getAsNode("book?filter=authors.homeAddress=='main'");
++        data = result.get("data");
++        assertEquals(0, data.size(), result.toString());
++    }
++
++
+     @Test
+     void testGetBadRelationshipRoot() throws IOException {
+         /* Test Default */
+diff --git a/elide-integration-tests/src/test/java/example/Author.java b/elide-integration-tests/src/test/java/example/Author.java
+index c9e43a24f3..ddc3b5ed15 100644
+--- a/elide-integration-tests/src/test/java/example/Author.java
++++ b/elide-integration-tests/src/test/java/example/Author.java
+@@ -9,6 +9,7 @@
+ import com.yahoo.elide.annotation.Exclude;
+ import com.yahoo.elide.annotation.Include;
+ import com.yahoo.elide.annotation.Paginate;
++import com.yahoo.elide.annotation.ReadPermission;
+ import com.yahoo.elide.annotation.SharePermission;
+ 
+ import lombok.Builder;
+@@ -52,6 +53,17 @@ public class Author {
+     @Exclude
+     private String naturalKey = UUID.randomUUID().toString();
+ 
++    @Getter @Setter
++    private String name;
++
++    @ManyToMany(mappedBy = "authors")
++    @Getter @Setter
++    private Collection<Book> books = new ArrayList<>();
++
++    @Getter @Setter
++    @ReadPermission(expression = "deny all")
++    private String homeAddress;
++
+     @Override
+     public int hashCode() {
+         return naturalKey.hashCode();
+@@ -66,12 +78,6 @@ public boolean equals(Object obj) {
+         return ((Author) obj).naturalKey.equals(naturalKey);
+     }
+ 
+-    @Getter @Setter
+-    private String name;
+-
+-    @ManyToMany(mappedBy = "authors")
+-    @Getter @Setter
+-    private Collection<Book> books = new ArrayList<>();
+     @Override
+     public String toString() {
+         return "Author: " + id;
+diff --git a/elide-integration-tests/src/test/resources/FilterIT/book_author_publisher_patch1.json b/elide-integration-tests/src/test/resources/FilterIT/book_author_publisher_patch1.json
+index 6d67e9758c..958b3c8bf3 100644
+--- a/elide-integration-tests/src/test/resources/FilterIT/book_author_publisher_patch1.json
++++ b/elide-integration-tests/src/test/resources/FilterIT/book_author_publisher_patch1.json
+@@ -6,7 +6,8 @@
+       "id": "12345678-1234-1234-1234-1234567890ab",
+       "type": "author",
+       "attributes": {
+-        "name": "Ernest Hemingway"
++        "name": "Ernest Hemingway",
++        "homeAddress": "main"
+       },
+       "relationships": {
+         "books": {
+diff --git a/elide-integration-tests/src/test/resources/SortingIT/addAuthorBookPublisher1.json b/elide-integration-tests/src/test/resources/SortingIT/addAuthorBookPublisher1.json
+index 2632b85957..e5b682a682 100644
+--- a/elide-integration-tests/src/test/resources/SortingIT/addAuthorBookPublisher1.json
++++ b/elide-integration-tests/src/test/resources/SortingIT/addAuthorBookPublisher1.json
+@@ -7,7 +7,8 @@
+       "id": "12345678-1234-1234-1234-1234567890ab",
+       "type": "author",
+       "attributes": {
+-        "name": "Ernest Hemingway"
++        "name": "Ernest Hemingway",
++        "homeAddress": "main"
+       },
+       "relationships": {
+         "books": {

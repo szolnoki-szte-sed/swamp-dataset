@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/23adbe12ef7d3d4195e80800ab36b37bee28cd03",
+        "version_end_excluding": {
+            "linux:linux_kernel": "3.14.8"
+        },
+        "path": {
+            "file_path": "fs/xfs/xfs_ioctl.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-4014"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

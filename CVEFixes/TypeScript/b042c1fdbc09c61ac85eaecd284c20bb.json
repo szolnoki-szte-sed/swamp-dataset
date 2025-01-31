@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:tiny:plupload:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/moxiecode/plupload/commit/d12175d4b5fa799b994ee1bb17bfbeec55b386fb",
+        "version_end_excluding": {
+            "tiny:plupload": "2.3.9"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23562"
+        ],
+        "CWE": [
+            "CWE-434"
+        ]
+    }
+}

@@ -1,0 +1,57 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:arm:mbed_tls:1.3.16:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:1.3.15:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.4.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:1.3.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.1.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.5.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:1.3.18:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:1.3.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:1.3.13:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:1.3.21:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:1.3.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.1.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.6.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.1.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.1.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:1.3.14:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.1.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:1.3.20:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.1.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:1.3.19:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:1.3.17:*:*:*:*:*:*:*",
+            "cpe:2.3:a:arm:mbed_tls:2.4.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ARMmbed/mbedtls/commit/31458a18788b0cf0b722acda9bb2f2fe13a3fb32",
+        "version_end_excluding": {
+            "arm:mbed_tls": "unknown"
+        },
+        "path": {
+            "file_path": "include/mbedtls/error.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-14032"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

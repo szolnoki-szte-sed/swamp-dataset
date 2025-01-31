@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:tika:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/tika/commit/81c21ab0aac6b3e4102a1a8906c8c7eab6f96dae",
+        "version_end_excluding": {
+            "apache:tika": "unknown"
+        },
+        "path": {
+            "file_path": "tika-parsers/src/test/java/org/apache/tika/parser/microsoft/xml/XML2003ParserTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10093"
+        ],
+        "CWE": [
+            "CWE-770"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:orc:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/orc/commit/d5018d309a8adc6b8e0567cb692a17371d16e108",
+        "version_end_excluding": {
+            "apache:orc": "unknown"
+        },
+        "path": {
+            "file_path": "java/core/src/java/org/apache/orc/OrcUtils.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-8015"
+        ],
+        "CWE": [
+            "CWE-674"
+        ]
+    }
+}

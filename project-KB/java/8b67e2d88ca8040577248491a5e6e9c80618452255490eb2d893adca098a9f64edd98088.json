@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mushroom_content_management_system_project:mushroom_content_management_system:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/wuweiit/mushroom/commit/8b67e2d88ca8040577248491a5e6e9c806184522",
+        "version_end_excluding": {
+            "mushroom_content_management_system_project:mushroom_content_management_system": "unknown"
+        },
+        "path": {
+            "file_path": "src/main/java/org/marker/mushroom/service/impl/ChannelService.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-17796"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

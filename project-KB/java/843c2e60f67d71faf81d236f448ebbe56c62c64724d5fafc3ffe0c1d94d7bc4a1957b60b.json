@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:netapp:7-mode_transition_tool:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:satellite_capsule:6.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:bouncycastle:legion-of-the-bouncy-castle-java-crytography-api:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:satellite:6.4:-:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.04:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bcgit/bc-java/commit/843c2e60f67d71faf81d236f448ebbe56c62c647",
+        "version_end_excluding": {
+            "bouncycastle:legion-of-the-bouncy-castle-java-crytography-api": "1.56"
+        },
+        "path": {
+            "file_path": "core/src/main/java/org/bouncycastle/asn1/ASN1Enumerated.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-1000338"
+        ],
+        "CWE": [
+            "CWE-347"
+        ]
+    }
+}

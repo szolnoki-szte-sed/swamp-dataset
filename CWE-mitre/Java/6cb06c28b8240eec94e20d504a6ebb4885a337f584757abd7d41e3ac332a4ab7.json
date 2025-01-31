@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:libvips:libvips:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:freebsd:freebsd:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "libvips:libvips": "unknown",
+            "freebsd:freebsd": "5.4"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-20739",
+            "CVE-2005-1036"
+        ],
+        "CWE": [
+            "CWE-909"
+        ]
+    }
+}

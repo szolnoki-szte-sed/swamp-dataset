@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mediawiki:mediawiki:*:rc1:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/wikimedia/mediawiki/commit/dc2966bd05b69321300c63fd0bd78e7c78ecea6e",
+        "version_end_excluding": {
+            "mediawiki:mediawiki": "unknown"
+        },
+        "path": {
+            "file_path": "includes/specials/SpecialContributions.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-7444"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

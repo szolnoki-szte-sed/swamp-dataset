@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:web2project:web2project:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/web2project/web2project/commit/eead99b36f62a8222d9f3a913f1a2268200687ef",
+        "version_end_excluding": {
+            "web2project:web2project": "unknown"
+        },
+        "path": {
+            "file_path": "includes/main_functions.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-3119"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

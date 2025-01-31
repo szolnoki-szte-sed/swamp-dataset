@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cmu:opendiamond:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cmusatyalab/opendiamond/commit/398049c187ee644beabab44d6fece82251c1ea56",
+        "version_end_excluding": {
+            "cmu:opendiamond": "unknown"
+        },
+        "path": {
+            "file_path": "opendiamond/dataretriever/augment_store.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Eclipse Public License 1.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-31506"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

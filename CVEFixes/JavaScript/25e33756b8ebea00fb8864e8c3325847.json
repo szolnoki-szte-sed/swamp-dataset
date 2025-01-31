@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:uaparser:user_agent_parser-core:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ua-parser/uap-core/commit/010ccdc7303546cd22b9da687c29f4a996990014",
+        "version_end_excluding": {
+            "uaparser:user_agent_parser-core": "0.6.0"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20164"
+        ],
+        "CWE": [
+            "CWE-185"
+        ]
+    }
+}

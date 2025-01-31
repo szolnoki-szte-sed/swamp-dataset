@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:backblaze:b2_command_line_tool:*:*:*:*:*:mac:*:*",
+            "cpe:2.3:a:backblaze:b2_command_line_tool:*:*:*:*:*:linux:*:*"
+        ],
+        "fix_commit": "https://github.com/Backblaze/B2_Command_Line_Tool/commit/c74029f9f75065e8f7e3c3ec8e0a23fb8204feeb",
+        "version_end_excluding": {
+            "backblaze:b2_command_line_tool": "unknown"
+        },
+        "path": {
+            "file_path": "requirements.txt"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-23653"
+        ],
+        "CWE": [
+            "CWE-367"
+        ]
+    }
+}

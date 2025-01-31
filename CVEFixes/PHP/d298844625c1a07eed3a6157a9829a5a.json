@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:openmage:openmage_long_term_support:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openmage:openmage_long_term_support:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:magento:magento:*:*:*:*:open_source:*:*:*",
+            "cpe:2.3:a:magento:magento:*:*:*:*:commerce:*:*:*"
+        ],
+        "fix_commit": "https://github.com/OpenMage/magento-lts/commit/7c526bc6a6a51b57a1bab4c60f104dc36cde347a",
+        "version_end_excluding": {
+            "openmage:openmage_long_term_support": "19.4.6",
+            "magento:magento": "unknown"
+        },
+        "path": {
+            "file_path": "app/code/core/Mage/Adminhtml/Controller/Action.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Open Software License 3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15151"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

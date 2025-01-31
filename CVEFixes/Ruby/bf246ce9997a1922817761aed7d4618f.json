@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.11.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.9.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.9.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.9.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.10.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.11.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.9.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.11.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.9.9:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/fatfreecrm/fat_free_crm/commit/cf26a04b356ad2161c4c6160260eb870a3de5328",
+        "version_end_excluding": {
+            "fatfreecrm:fat_free_crm": "unknown"
+        },
+        "path": {
+            "file_path": "config/routes.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-7224"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

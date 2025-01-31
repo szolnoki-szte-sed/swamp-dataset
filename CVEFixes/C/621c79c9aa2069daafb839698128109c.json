@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:imagemagick:imagemagick:7.0.8-50:q16:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ImageMagick/ImageMagick/commit/d4fc44b58a14f76b1ac997517d742ee12c9dc5d3",
+        "version_end_excluding": {
+            "imagemagick:imagemagick": "unknown"
+        },
+        "path": {
+            "file_path": "MagickCore/pixel-accessor.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-13298"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

@@ -1,0 +1,105 @@
+diff --git a/web/play-filters-helpers/src/main/java/play/filters/csrf/RequireCSRFCheckAction.java b/web/play-filters-helpers/src/main/java/play/filters/csrf/RequireCSRFCheckAction.java
+index 3989ba8f4ac..264f8a18499 100644
+--- a/web/play-filters-helpers/src/main/java/play/filters/csrf/RequireCSRFCheckAction.java
++++ b/web/play-filters-helpers/src/main/java/play/filters/csrf/RequireCSRFCheckAction.java
+@@ -77,7 +77,9 @@ public CompletionStage<Result> call(Http.Request req) {
+ 
+     RequestHeader taggedRequest = csrfActionHelper.tagRequestFromHeader(req.asScala());
+     // Check for bypass
+-    if (!csrfActionHelper.requiresCsrfCheck(taggedRequest)) {
++    if (!csrfActionHelper.requiresCsrfCheck(taggedRequest)
++        || (config.checkContentType().apply(req.asScala().contentType()) != Boolean.TRUE
++            && !csrfActionHelper.hasInvalidContentType(req.asScala()))) {
+       return delegate.call(req);
+     } else {
+       // Get token from cookie/session
+diff --git a/web/play-filters-helpers/src/main/scala/play/filters/csrf/CSRFActions.scala b/web/play-filters-helpers/src/main/scala/play/filters/csrf/CSRFActions.scala
+index f500e1d4f8c..a79b0898a1e 100644
+--- a/web/play-filters-helpers/src/main/scala/play/filters/csrf/CSRFActions.scala
++++ b/web/play-filters-helpers/src/main/scala/play/filters/csrf/CSRFActions.scala
+@@ -63,7 +63,8 @@ class CSRFAction(
+     def continue = next(request)
+ 
+     // Only filter unsafe methods and content types
+-    if (config.checkMethod(request.method) && config.checkContentType(request.contentType)) {
++    if (config.checkMethod(request.method) &&
++        (config.checkContentType(request.contentType) || csrfActionHelper.hasInvalidContentType(request))) {
+       if (!csrfActionHelper.requiresCsrfCheck(request)) {
+         continue
+       } else {
+@@ -569,6 +570,15 @@ class CSRFActionHelper(
+         )(_ => result)
+     }
+   }
++
++  def hasInvalidContentType(request: RequestHeader): Boolean = {
++    // If the content type is none, but there's a content type header, that means
++    // the content type failed to be parsed, therefore treat it like a blacklisted
++    // content type just to be safe. Also, note we cannot use headers.hasHeader,
++    // because this is intercepted by the Akka HTTP wrapper and will only turn true
++    // if the content type was validly parsed.
++    request.contentType.isEmpty && request.headers.toMap.contains(CONTENT_TYPE)
++  }
+ }
+ 
+ /**
+@@ -593,7 +603,8 @@ case class CSRFCheck @Inject() (
+       val request = csrfActionHelper.tagRequestFromHeader(untaggedRequest)
+ 
+       // Maybe bypass
+-      if (!csrfActionHelper.requiresCsrfCheck(request) || !config.checkContentType(request.contentType)) {
++      if (!csrfActionHelper.requiresCsrfCheck(request) ||
++          !(config.checkContentType(request.contentType) || csrfActionHelper.hasInvalidContentType(request))) {
+         wrapped(request)
+       } else {
+         // Get token from header
+diff --git a/web/play-filters-helpers/src/test/scala/play/filters/csrf/CSRFCommonSpecs.scala b/web/play-filters-helpers/src/test/scala/play/filters/csrf/CSRFCommonSpecs.scala
+index b93ead4432f..421e1b7386d 100644
+--- a/web/play-filters-helpers/src/test/scala/play/filters/csrf/CSRFCommonSpecs.scala
++++ b/web/play-filters-helpers/src/test/scala/play/filters/csrf/CSRFCommonSpecs.scala
+@@ -13,6 +13,7 @@ import play.api.http.SecretConfiguration
+ import play.api.http.SessionConfiguration
+ import play.api.inject.guice.GuiceApplicationBuilder
+ import play.api.libs.crypto._
++import play.api.libs.json.Json
+ import play.api.libs.ws._
+ import play.api.mvc.DefaultSessionCookieBaker
+ import play.api.mvc.Handler
+@@ -326,6 +327,37 @@ trait CSRFCommonSpecs extends Specification with PlaySpecification {
+         )(_.status must_== OK)
+       }
+     }
++
++    "allow configuring a content type blacklist" in {
++      def csrfCheckRequest = buildCsrfCheckRequest(
++        false,
++        "play.filters.csrf.contentType.blackList.0" -> "text/plain",
++        "play.filters.csrf.contentType.blackList.1" -> "multipart/form-data",
++        "play.filters.csrf.contentType.blackList.2" -> "application/x-www-form-urlencoded"
++      )
++
++      "accept requests with a non blacklisted content type" in {
++        csrfCheckRequest(
++          _.withSession("foo" -> "bar")
++            .post(Json.obj("some" -> "field"))
++        )(_.status must_== OK)
++      }
++
++      "reject requests with a content type" in {
++        csrfCheckRequest(
++          _.withSession("foo" -> "bar")
++            .post(Map("some" -> "field"))
++        )(_.status must_== FORBIDDEN)
++      }
++
++      "reject requests with a malformed content type header" in {
++        csrfCheckRequest(
++          _.withSession("foo" -> "bar")
++            .addHttpHeaders("Content-Type" -> "multipart/form-data; boundary=123;456")
++            .post("")
++        )(_.status must_== FORBIDDEN)
++      }
++    }
+   }
+ 
+   trait CsrfTester {

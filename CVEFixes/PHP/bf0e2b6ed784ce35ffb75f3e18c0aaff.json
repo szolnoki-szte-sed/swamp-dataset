@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:misp:misp:2.4.147:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/MISP/MISP/commit/f318f7c0ddac7dfd2b1f246fd8f488d9dfc3a4bf",
+        "version_end_excluding": {
+            "misp:misp": "unknown"
+        },
+        "path": {
+            "file_path": "app/View/GalaxyElements/ajax/index.ctp"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-37743"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:codeready_studio:12.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:process_automation:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:descision_manager:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:wildfly_elytron:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:oncommand_insight:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_fuse:7.0.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/wildfly-security/wildfly-elytron/commit/34e897b69b2dca907bba3357af5c20a29a9c4f9e",
+        "version_end_excluding": {
+            "redhat:wildfly_elytron": "1.11.3"
+        },
+        "path": {
+            "file_path": "src/main/java/org/wildfly/security/http/impl/FormAuthenticationMechanism.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-10714"
+        ],
+        "CWE": [
+            "CWE-384"
+        ]
+    }
+}

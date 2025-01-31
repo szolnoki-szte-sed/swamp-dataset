@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/5c25f65fd1e42685f7ccd80e0621829c105785d9",
+        "version_end_excluding": {
+            "linux:linux_kernel": "4.13.14"
+        },
+        "path": {
+            "file_path": "drivers/net/tun.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-7191"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

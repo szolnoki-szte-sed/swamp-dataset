@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:zope:zope:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:zope:zope:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/zopefoundation/Zope/commit/1d897910139e2c0b11984fc9b78c1da1365bec21",
+        "version_end_excluding": {
+            "zope:zope": "4.6.1"
+        },
+        "path": {
+            "file_path": "src/OFS/zpt/main.zpt"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32674"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

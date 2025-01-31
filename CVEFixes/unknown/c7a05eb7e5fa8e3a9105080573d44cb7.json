@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:tooljet:tooljet:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ToolJet/ToolJet/commit/eacbfc4c9da089ff9cda9edf8a1156390ae8a101",
+        "version_end_excluding": {
+            "tooljet:tooljet": "unknown"
+        },
+        "path": {
+            "file_path": "frontend/src/InvitationPage/index.js"
+        }
+    },
+    "programming_language": "unknown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-23067"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

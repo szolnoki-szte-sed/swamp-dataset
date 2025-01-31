@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:kafka:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/kafka/commit/59a0cbb98cef10ddf62d294670aa2e4eb9f8cf8c",
+        "version_end_excluding": {
+            "apache:kafka": "unknown"
+        },
+        "path": {
+            "file_path": "clients/src/test/java/org/apache/kafka/common/requests/ProduceRequestTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-17196"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

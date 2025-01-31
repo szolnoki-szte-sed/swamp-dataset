@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:databasir:databasir:1.0.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/vran-dev/databasir/commit/ca22a8fef7a31c0235b0b2951260a7819b89993b",
+        "version_end_excluding": {
+            "databasir:databasir": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/main/java/com/databasir/core/domain/DomainErrors.java"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24861"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

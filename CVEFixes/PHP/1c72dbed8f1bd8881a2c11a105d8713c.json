@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:dolibarr:dolibarr:3.2.0:alpha:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Dolibarr/dolibarr/commit/8f9b9987ffb42cfbe907fe31ded3001bfc1b3417",
+        "version_end_excluding": {
+            "dolibarr:dolibarr": "unknown"
+        },
+        "path": {
+            "file_path": "htdocs/comm/action/document.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-1226"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/6a3eb3360667170988f8a6477f6686242061488a",
+        "version_end_excluding": {
+            "linux:linux_kernel": "5.0.10",
+            "opensuse:leap": "unknown"
+        },
+        "path": {
+            "file_path": "fs/cifs/smb2pdu.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-15919"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

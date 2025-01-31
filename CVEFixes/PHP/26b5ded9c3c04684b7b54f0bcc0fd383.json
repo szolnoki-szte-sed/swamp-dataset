@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:enalean:tuleap:*:*:*:*:enterprise:*:*:*",
+            "cpe:2.3:a:enalean:tuleap:*:*:*:*:enterprise:*:*:*",
+            "cpe:2.3:a:enalean:tuleap:*:*:*:*:community:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Enalean/tuleap/commit/ab12b686ced4cf233d3b15b08da008e0553eb6a6",
+        "version_end_excluding": {
+            "enalean:tuleap": "11.17.99.144"
+        },
+        "path": {
+            "file_path": "src/common/Widget/Widget_ProjectLatestSvnCommits.class.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41154"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

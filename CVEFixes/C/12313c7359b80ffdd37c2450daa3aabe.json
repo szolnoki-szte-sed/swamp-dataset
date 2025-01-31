@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:opensc_project:opensc:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:31:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/OpenSC/OpenSC/commit/a3fc7693f3a035a8a7921cffb98432944bb42740",
+        "version_end_excluding": {
+            "opensc_project:opensc": "unknown",
+            "debian:debian_linux": "unknown",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "src/libopensc/asn1.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v2.1"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-15946"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

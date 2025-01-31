@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:kimai:kimai_2:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/kevinpapst/kimai2/commit/95796ab2560ad93f44068a88f0fad758c2053514",
+        "version_end_excluding": {
+            "kimai:kimai_2": "1.16.2"
+        },
+        "path": {
+            "file_path": "templates/customer/details.html.twig"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3963"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

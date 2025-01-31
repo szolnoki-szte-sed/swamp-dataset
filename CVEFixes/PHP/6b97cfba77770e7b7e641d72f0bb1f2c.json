@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:froxlor:froxlor:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Froxlor/Froxlor/commit/62ce21c9ec393f9962515c88f0c489ace42bf656",
+        "version_end_excluding": {
+            "froxlor:froxlor": "0.10.14"
+        },
+        "path": {
+            "file_path": "install/lib/class.FroxlorInstall.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-10235"
+        ],
+        "CWE": [
+            "CWE-116"
+        ]
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:vmware:spring_cloud_config:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-cloud/spring-cloud-config/commit/4c7b8dfc7edaacb76a77e0c6ef9a5cfc200e3d02",
+        "version_end_excluding": {
+            "vmware:spring_cloud_config": "2.1.7"
+        },
+        "path": {
+            "file_path": "spring-cloud-config-server/src/test/java/org/springframework/cloud/config/server/environment/CredhubEnvironmentRepositoryTests.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-5405"
+        ],
+        "CWE": [
+            "CWE-22",
+            "CWE-23"
+        ]
+    }
+}

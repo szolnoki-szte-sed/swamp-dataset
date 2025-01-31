@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:docsifyjs:docsify:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/docsifyjs/docsify/commit/ff2a66f12752471277fe81a64ad6c4b2c08111fe",
+        "version_end_excluding": {
+            "docsifyjs:docsify": "4.12.0"
+        },
+        "path": {
+            "file_path": "src/core/fetch/index.js"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23342"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

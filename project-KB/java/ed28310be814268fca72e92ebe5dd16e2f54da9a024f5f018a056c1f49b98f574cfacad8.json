@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:geode:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/geode/commit/ed28310be814268fca72e92ebe5dd16e2f54da9a",
+        "version_end_excluding": {
+            "apache:geode": "unknown"
+        },
+        "path": {
+            "file_path": "geode-core/src/main/java/org/apache/geode/management/cli/GfshCommand.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-15694"
+        ],
+        "CWE": [
+            "CWE-88"
+        ]
+    }
+}

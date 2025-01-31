@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:zulip:zulip_server:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/zulip/zulip/commit/e090027adcbf62737d5b1f83a9618a9500a49321",
+        "version_end_excluding": {
+            "zulip:zulip_server": "2022-03-01"
+        },
+        "path": {
+            "file_path": "static/js/ui_init.js"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-23656"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

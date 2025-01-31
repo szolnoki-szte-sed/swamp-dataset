@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:openshift:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/openshift/origin-server/commit/f1abe972794e35a4bfba597694ce829990f14d39",
+        "version_end_excluding": {
+            "redhat:openshift": "unknown"
+        },
+        "path": {
+            "file_path": "plugins/msg-node/mcollective/facts/openshift-facts"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-4561"
+        ],
+        "CWE": [
+            "CWE-668"
+        ]
+    }
+}

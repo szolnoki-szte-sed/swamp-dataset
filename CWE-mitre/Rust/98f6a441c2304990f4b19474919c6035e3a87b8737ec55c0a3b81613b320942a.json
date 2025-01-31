@@ -1,0 +1,40 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:google:chrome:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:imagemagick:imagemagick:7.0.4-9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mozilla:firefox:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "google:chrome": "unknown",
+            "imagemagick:imagemagick": "unknown",
+            "google:tensorflow": "unknown",
+            "php:php": "unknown",
+            "mozilla:firefox": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "rust",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-16069",
+            "CVE-2017-7619",
+            "CVE-2021-29529",
+            "CVE-2008-2108",
+            "CVE-2006-6499"
+        ],
+        "CWE": [
+            "CWE-1339"
+        ]
+    }
+}

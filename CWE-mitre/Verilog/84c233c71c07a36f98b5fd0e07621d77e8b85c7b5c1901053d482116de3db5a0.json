@@ -1,0 +1,46 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:honeywell:saia_pg5_controls_suite:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:google:chrome:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:thekelleys:dnsmasq:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gnupg:gnupg:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:nq:contacts_backup_\\&_restore:1.1:*:*:*:*:android:*:*",
+            "cpe:2.3:a:pswd.js:pswd.js:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "honeywell:saia_pg5_controls_suite": "unknown",
+            "google:chrome": "47.0.2526.111",
+            "thekelleys:dnsmasq": "unknown",
+            "wordpress:wordpress": "4.8.2",
+            "gnupg:gnupg": "unknown",
+            "nq:contacts_backup_\\&_restore": "unknown",
+            "pswd.js:pswd.js": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "verilog",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-30320",
+            "CVE-2005-4900",
+            "CVE-2020-25685",
+            "CVE-2012-6707",
+            "CVE-2019-14855",
+            "CVE-2017-15999",
+            "CVE-2006-4068"
+        ],
+        "CWE": [
+            "CWE-328"
+        ]
+    }
+}

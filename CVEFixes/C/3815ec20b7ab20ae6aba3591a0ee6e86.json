@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ffmpeg:ffmpeg:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FFmpeg/FFmpeg/commit/3e5959b3457f7f1856d997261e6ac672bba49e8b",
+        "version_end_excluding": {
+            "ffmpeg:ffmpeg": "4.4",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "libavcodec/exr.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-35965"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

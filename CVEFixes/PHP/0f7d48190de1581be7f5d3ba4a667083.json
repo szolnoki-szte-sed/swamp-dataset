@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:typo3:typo3:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:typo3:typo3:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/TYPO3/TYPO3.CMS/commit/85d3e70dff35a99ef53f4b561114acfa9e5c47e1",
+        "version_end_excluding": {
+            "typo3:typo3": "9.5.20"
+        },
+        "path": {
+            "file_path": "typo3/sysext/backend/Classes/Form/FieldControl/EditPopup.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15098"
+        ],
+        "CWE": [
+            "CWE-327"
+        ]
+    }
+}

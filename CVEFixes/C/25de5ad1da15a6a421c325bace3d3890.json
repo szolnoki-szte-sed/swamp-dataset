@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mruby:mruby:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mruby/mruby/commit/f5e10c5a79a17939af763b1dcf5232ce47e24a34",
+        "version_end_excluding": {
+            "mruby:mruby": "3.1"
+        },
+        "path": {
+            "file_path": "include/mruby/proc.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-4110"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:xmlseclibs_project:xmlseclibs:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:xmlseclibs_project:xmlseclibs:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:xmlseclibs_project:xmlseclibs:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:simplesamlphp:simplesamlphp:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/robrichards/xmlseclibs/commit/0a53d3c3aa87564910cae4ed01416441d3ae0db5",
+        "version_end_excluding": {
+            "xmlseclibs_project:xmlseclibs": "unknown",
+            "debian:debian_linux": "unknown",
+            "simplesamlphp:simplesamlphp": "unknown"
+        },
+        "path": {
+            "file_path": "xmlseclibs.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-3465"
+        ],
+        "CWE": [
+            "CWE-347"
+        ]
+    }
+}

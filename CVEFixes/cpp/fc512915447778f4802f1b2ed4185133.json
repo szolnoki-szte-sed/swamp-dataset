@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:facebook:hhvm:4.58.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:4.58.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:4.59.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:4.60.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:4.61.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:4.62.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:4.57.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/facebook/hhvm/commit/1107228a5128d3ca1c4add8ac1635d933cbbe2e9",
+        "version_end_excluding": {
+            "facebook:hhvm": "4.32.3"
+        },
+        "path": {
+            "file_path": "hphp/runtime/base/variable-unserializer.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1899"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

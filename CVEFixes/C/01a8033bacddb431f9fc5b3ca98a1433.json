@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:selinux_project:selinux:3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:35:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/SELinuxProject/selinux/commit/2d35fcc7e9e976a2346b1de20e54f8663e8a6cba",
+        "version_end_excluding": {
+            "selinux_project:selinux": "unknown",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "libsepol/cil/src/cil_reset_ast.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-36085"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:webpack-subresource-integrity_project:webpack-subresource-integrity:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/waysact/webpack-subresource-integrity/commit/3d7090c08c333fcfb10ad9e2d6cf72e2acb7d87f",
+        "version_end_excluding": {
+            "webpack-subresource-integrity_project:webpack-subresource-integrity": "1.5.1"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "jupyternotebook",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15262"
+        ],
+        "CWE": [
+            "CWE-345"
+        ]
+    }
+}

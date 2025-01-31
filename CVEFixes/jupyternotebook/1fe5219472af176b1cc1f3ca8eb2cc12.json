@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:diagrams:draw.io:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jgraph/drawio/commit/4deecee18191f67e242422abf3ca304e19e49687",
+        "version_end_excluding": {
+            "diagrams:draw.io": "unknown"
+        },
+        "path": {
+            "file_path": "src/main/webapp/service-worker.js.map"
+        }
+    },
+    "programming_language": "jupyternotebook",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-1727"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

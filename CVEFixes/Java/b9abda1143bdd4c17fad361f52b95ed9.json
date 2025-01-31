@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:linuxfoundation:besu:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/hyperledger/besu/commit/06e35a58c07a30c0fbdc0aae45a3e8b06b53c022",
+        "version_end_excluding": {
+            "linuxfoundation:besu": "1.5.1"
+        },
+        "path": {
+            "file_path": "ethereum/api/src/test/java/org/hyperledger/besu/ethereum/api/jsonrpc/internal/methods/NetListeningTest.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21369"
+        ],
+        "CWE": [
+            "CWE-400"
+        ]
+    }
+}

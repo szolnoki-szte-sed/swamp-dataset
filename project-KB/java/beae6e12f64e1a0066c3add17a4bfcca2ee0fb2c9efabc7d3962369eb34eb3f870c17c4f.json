@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:deltaspike:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/deltaspike/commit/beae6e12f64e1a0066c3add17a4bfcca2ee0fb2c",
+        "version_end_excluding": {
+            "apache:deltaspike": "unknown"
+        },
+        "path": {
+            "file_path": "deltaspike/core/api/src/test/java/org/apache/deltaspike/test/api/util/StringUtilsTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-12416"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

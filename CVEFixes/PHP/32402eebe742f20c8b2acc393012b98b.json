@@ -1,0 +1,41 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:php:php:7.0.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.10:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/php/php-src/commit/6045de69c7dedcba3eadf7c4bba424b19c81d00d",
+        "version_end_excluding": {
+            "php:php": "unknown"
+        },
+        "path": {
+            "file_path": "ext/wddx/tests/bug72790.phpt"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-9934"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

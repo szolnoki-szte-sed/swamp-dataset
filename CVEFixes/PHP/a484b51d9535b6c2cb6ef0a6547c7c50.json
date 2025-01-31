@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.6.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.6.0:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.6.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.6.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.6.0:alpha1:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/phpmyadmin/phpmyadmin/commit/72213573182896bd6a6e5af5ba1881dd87c4a20b",
+        "version_end_excluding": {
+            "phpmyadmin:phpmyadmin": "unknown"
+        },
+        "path": {
+            "file_path": "templates/table/structure/display_table_stats.phtml"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-5704"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

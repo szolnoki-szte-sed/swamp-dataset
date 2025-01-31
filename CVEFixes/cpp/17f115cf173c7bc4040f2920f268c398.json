@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:webcc_project:webcc:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/sprinfall/webcc/commit/55a45fd5039061d5cc62e9f1b9d1f7e97a15143f",
+        "version_end_excluding": {
+            "webcc_project:webcc": "0.3.0"
+        },
+        "path": {
+            "file_path": "webcc/body.cc"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-25298"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

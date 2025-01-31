@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:vim:vim:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:35:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/vim/vim/commit/a062006b9de0b2947ab5fb376c6e67ef92a8cd69",
+        "version_end_excluding": {
+            "vim:vim": "8.2.3610",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "src/normal.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Vim License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3968"
+        ],
+        "CWE": [
+            "CWE-122"
+        ]
+    }
+}

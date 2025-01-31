@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:flask-restx_project:flask-restx:*:*:*:*:*:python:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:33:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/python-restx/flask-restx/commit/bab31e085f355dd73858fd3715f7ed71849656da",
+        "version_end_excluding": {
+            "flask-restx_project:flask-restx": "0.5.1",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "flask_restx/inputs.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32838"
+        ],
+        "CWE": [
+            "CWE-400"
+        ]
+    }
+}

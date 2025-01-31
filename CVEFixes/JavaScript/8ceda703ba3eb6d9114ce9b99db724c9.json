@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:framasoft:peertube:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/chocobozzz/peertube/commit/f33e515991a32885622b217bf2ed1d1b0d9d6832",
+        "version_end_excluding": {
+            "framasoft:peertube": "2021-12-13"
+        },
+        "path": {
+            "file_path": "client/src/app/+videos/+video-edit/video-add-components/video-upload.component.ts"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0508"
+        ],
+        "CWE": [
+            "CWE-918"
+        ]
+    }
+}

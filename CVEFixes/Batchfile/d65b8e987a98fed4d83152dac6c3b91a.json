@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:stunnel:stunnel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mtrojnar/stunnel/commit/ebad9ddc4efb2635f37174c9d800d06206f1edf9",
+        "version_end_excluding": {
+            "stunnel:stunnel": "5.57"
+        },
+        "path": {
+            "file_path": "src/vc.mak"
+        }
+    },
+    "programming_language": "batchfile",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-20230"
+        ],
+        "CWE": [
+            "CWE-295"
+        ]
+    }
+}

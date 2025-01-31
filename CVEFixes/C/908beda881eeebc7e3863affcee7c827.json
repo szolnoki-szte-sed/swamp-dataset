@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:quagga:quagga:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Quagga/quagga/commit/cfb1fae25f8c092e0d17073eaf7bd428ce1cd546",
+        "version_end_excluding": {
+            "quagga:quagga": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "zebra/rtadv.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-1245"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

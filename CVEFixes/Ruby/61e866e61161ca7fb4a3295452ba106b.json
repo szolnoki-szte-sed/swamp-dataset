@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:clusterlabs:pcs:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:22:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:23:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ClusterLabs/pcs/commit/bc6ad9086857559db57f4e3e6de66762291c0774",
+        "version_end_excluding": {
+            "clusterlabs:pcs": "unknown",
+            "redhat:enterprise_linux": "unknown",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "pcsd/cluster_entity.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-0721"
+        ],
+        "CWE": [
+            "CWE-384"
+        ]
+    }
+}

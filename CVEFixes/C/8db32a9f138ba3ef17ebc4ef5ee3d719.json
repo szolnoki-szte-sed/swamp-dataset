@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:exim:exim:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Exim/exim/commit/51be321b27825c01829dffd90f11bfff256f7e42",
+        "version_end_excluding": {
+            "exim:exim": "4.96"
+        },
+        "path": {
+            "file_path": "src/src/auths/call_pam.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-37451"
+        ],
+        "CWE": [
+            "CWE-763"
+        ]
+    }
+}

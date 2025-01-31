@@ -1,0 +1,40 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:fedoraproject:fedora:19:*:*:*:*:*:*:*",
+            "cpe:2.3:a:carnegie_mellon_university:cyrus_imap_server:2.1.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mozilla:firefox:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:mysql:3.22.26:*:*:*:*:*:*:*",
+            "cpe:2.3:o:microsoft:windows_95:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "fedoraproject:fedora": "unknown",
+            "carnegie_mellon_university:cyrus_imap_server": "unknown",
+            "mozilla:firefox": "0.9",
+            "oracle:mysql": "unknown",
+            "microsoft:windows_95": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-6394",
+            "CVE-2004-1012",
+            "CVE-2004-0765",
+            "CVE-2002-1374",
+            "CVE-2000-0979"
+        ],
+        "CWE": [
+            "CWE-187"
+        ]
+    }
+}

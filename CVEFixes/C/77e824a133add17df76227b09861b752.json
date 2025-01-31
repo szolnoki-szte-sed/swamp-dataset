@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:canonical:ubuntu_linux:12.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:15.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:opensuse:leap:42.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:13.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:dosfstools_project:dosfstools:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/dosfstools/dosfstools/commit/07908124838afcc99c577d1d3e84cef2dbd39cb7",
+        "version_end_excluding": {
+            "canonical:ubuntu_linux": "unknown",
+            "opensuse:leap": "unknown",
+            "opensuse:opensuse": "unknown",
+            "dosfstools_project:dosfstools": "unknown"
+        },
+        "path": {
+            "file_path": "src/fat.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-8872"
+        ],
+        "CWE": [
+            "CWE-189"
+        ]
+    }
+}

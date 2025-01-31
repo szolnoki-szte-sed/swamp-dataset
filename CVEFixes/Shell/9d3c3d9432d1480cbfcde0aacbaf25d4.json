@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:w3m_project:w3m:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:12.04:*:*:*:esm:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:17.10:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/tats/w3m/commit/18dcbadf2771cdb0c18509b14e4e73505b242753",
+        "version_end_excluding": {
+            "w3m_project:w3m": "unknown",
+            "canonical:ubuntu_linux": "unknown"
+        },
+        "path": {
+            "file_path": "configure"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-6198"
+        ],
+        "CWE": [
+            "CWE-59"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mongo-express_project:mongo-express:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/mongo-express/mongo-express/commit/3a26b079e7821e0e209c3ee0cc2ae15ad467b91a",
+        "version_end_excluding": {
+            "mongo-express_project:mongo-express": "unknown"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-24391"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

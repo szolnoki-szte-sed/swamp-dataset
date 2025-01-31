@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:openmptcprouter:openmptcprouter:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Ysurac/openmptcprouter-vps-admin/commit/a01cbc8c3d3b8bb7720bf3ff234671b4c0e1859c",
+        "version_end_excluding": {
+            "openmptcprouter:openmptcprouter": "unknown"
+        },
+        "path": {
+            "file_path": "omr-admin.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-31245"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

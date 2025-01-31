@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:nimble-project:common:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/nimble-platform/common/commit/a59ad46733912a5580530e39cac0e6ebc83cc563",
+        "version_end_excluding": {
+            "nimble-project:common": "unknown"
+        },
+        "path": {
+            "file_path": "utility/src/main/java/eu/nimble/utility/validation/ValidationUtil.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32631"
+        ],
+        "CWE": [
+            "CWE-290"
+        ]
+    }
+}

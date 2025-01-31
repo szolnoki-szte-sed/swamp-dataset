@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pfsense:pfsense-pkg-freeradius3:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pfsense/FreeBSD-ports/commit/30b22b6b0db7b73732a5da346afca66dc244e02a",
+        "version_end_excluding": {
+            "pfsense:pfsense-pkg-freeradius3": "0.15.7_3"
+        },
+        "path": {
+            "file_path": "net/pfSense-pkg-freeradius3/files/usr/local/www/freeradius_view_config.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-18667"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

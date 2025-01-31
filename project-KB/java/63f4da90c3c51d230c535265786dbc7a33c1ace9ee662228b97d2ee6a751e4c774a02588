@@ -1,0 +1,27 @@
+diff --git a/CHANGES.txt b/CHANGES.txt
+index 367504ba179f..04cbfa3fa251 100644
+--- a/CHANGES.txt
++++ b/CHANGES.txt
+@@ -1,4 +1,5 @@
+ 2.1.22
++ * Only allow strings to be passed to JMX authentication (CASSANDRA-16077)
+  * Disable JMX rebinding (CASSANDRA-15653, CASSANDRA-16075)
+ 
+ 2.1.21
+diff --git a/src/java/org/apache/cassandra/service/CassandraDaemon.java b/src/java/org/apache/cassandra/service/CassandraDaemon.java
+index afd376e80086..313cc9db2e81 100644
+--- a/src/java/org/apache/cassandra/service/CassandraDaemon.java
++++ b/src/java/org/apache/cassandra/service/CassandraDaemon.java
+@@ -104,8 +104,10 @@ private static void maybeInitJmx()
+                 try
+                 {
+                     RMIServerSocketFactory serverFactory = new RMIServerSocketFactoryImpl();
+-                    Map<String, ?> env = Collections.singletonMap(RMIConnectorServer.RMI_SERVER_SOCKET_FACTORY_ATTRIBUTE, serverFactory);
+-
++                    Map<String, Object> env = new HashMap<>();
++                    env.put(RMIConnectorServer.RMI_SERVER_SOCKET_FACTORY_ATTRIBUTE, serverFactory);
++                    env.put("jmx.remote.rmi.server.credential.types",
++                        new String[] { String[].class.getName(), String.class.getName() });
+                     Registry registry = new JmxRegistry(Integer.valueOf(jmxPort), null, serverFactory, "jmxrmi");
+                     JMXServiceURL url = new JMXServiceURL(String.format("service:jmx:rmi://localhost/jndi/rmi://localhost:%s/jmxrmi", jmxPort));
+                     @SuppressWarnings("resource")

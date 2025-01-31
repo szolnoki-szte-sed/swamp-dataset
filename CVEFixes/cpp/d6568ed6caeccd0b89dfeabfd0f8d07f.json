@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:facebook:fizz:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/facebookincubator/fizz/commit/6bf67137ef1ee5cd70c842b014c322b7deaf994b",
+        "version_end_excluding": {
+            "facebook:fizz": "unknown"
+        },
+        "path": {
+            "file_path": "fizz/record/EncryptedRecordLayer.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-11924"
+        ],
+        "CWE": [
+            "CWE-770"
+        ]
+    }
+}

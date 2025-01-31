@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:prometheus:prometheus:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:openshift_container_platform:3.11:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/prometheus/prometheus/commit/62e591f928ddf6b3468308b7ac1de1c63aa7fcf3",
+        "version_end_excluding": {
+            "prometheus:prometheus": "2.7.1",
+            "redhat:openshift_container_platform": "unknown"
+        },
+        "path": {
+            "file_path": "VERSION"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-3826"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

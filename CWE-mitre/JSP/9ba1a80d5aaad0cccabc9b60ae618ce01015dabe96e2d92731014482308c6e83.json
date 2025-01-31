@@ -1,0 +1,63 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jupyter:notebook:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:twistedmatrix:treq:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:baalsystems:baal_smart_forms:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:flatnuke:flatnuke:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyfaq:phpmyfaq:1.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postnuke:postnuke:0.750:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postnuke:postnuke:0.750:*:*:*:*:*:*:*",
+            "cpe:2.3:a:episodex:episodex_guestbook:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:dlink:dsl-504t_firmware:1.00b01t16.eu.20040217:*:*:*:*:*:*:*",
+            "cpe:2.3:a:hostingcontroller:hosting_controller:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:yusasp:web_asset_manager:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:midicart:midicart_php:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "jupyter:notebook": "unknown",
+            "twistedmatrix:treq": "unknown",
+            "baalsystems:baal_smart_forms": "unknown",
+            "flatnuke:flatnuke": "2.5.3",
+            "phpmyfaq:phpmyfaq": "unknown",
+            "wordpress:wordpress": "1.5",
+            "postnuke:postnuke": "unknown",
+            "episodex:episodex_guestbook": "unknown",
+            "dlink:dsl-504t_firmware": "unknown",
+            "hostingcontroller:hosting_controller": "unknown",
+            "yusasp:web_asset_manager": "unknown",
+            "midicart:midicart_php": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "jsp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-29238",
+            "CVE-2022-23607",
+            "CVE-2004-2144",
+            "CVE-2005-1892",
+            "CVE-2004-2257",
+            "CVE-2005-1688",
+            "CVE-2005-1697",
+            "CVE-2005-1698",
+            "CVE-2005-1685",
+            "CVE-2005-1827",
+            "CVE-2005-1654",
+            "CVE-2005-1668",
+            "CVE-2002-1798"
+        ],
+        "CWE": [
+            "CWE-425"
+        ]
+    }
+}

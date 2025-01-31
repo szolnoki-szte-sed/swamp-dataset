@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:o:redhat:enterprise_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:6.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-security-oauth/commit/21d14d9ec490f341fea34f6acafbbb9c6c784c24",
+        "version_end_excluding": {
+            "redhat:jboss_enterprise_application_platform": "unknown"
+        },
+        "path": {
+            "file_path": "spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/BaseClientDetails.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10202"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

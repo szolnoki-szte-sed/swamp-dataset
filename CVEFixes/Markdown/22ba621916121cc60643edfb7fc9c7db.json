@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jsuites:jsuites:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jsuites/jsuites/commit/d47a6f4e143188dde2742f4cffd313e1068ad3b3",
+        "version_end_excluding": {
+            "jsuites:jsuites": "4.9.11"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41086"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

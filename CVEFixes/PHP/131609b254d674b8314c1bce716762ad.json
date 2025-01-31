@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:admidio:admidio:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Admidio/admidio/commit/fcb0609abc1d2f65bc1377866bd678e5d891404b",
+        "version_end_excluding": {
+            "admidio:admidio": "4.0.12"
+        },
+        "path": {
+            "file_path": "adm_program/system/redirect.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-43810"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

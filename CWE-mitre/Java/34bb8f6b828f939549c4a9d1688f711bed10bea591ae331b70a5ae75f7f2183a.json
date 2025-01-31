@@ -1,0 +1,43 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:videolabs:libmicrodns:0.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:libvips:libvips:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netpbm:netpbm:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wordpress:wordpress:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:punbb:punbb:1.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "videolabs:libmicrodns": "unknown",
+            "linux:linux_kernel": "unknown",
+            "libvips:libvips": "unknown",
+            "netpbm:netpbm": "unknown",
+            "wordpress:wordpress": "unknown",
+            "punbb:punbb": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-6078",
+            "CVE-2009-2692",
+            "CVE-2020-20739",
+            "CVE-2005-2978",
+            "CVE-2005-2109",
+            "CVE-2005-2193"
+        ],
+        "CWE": [
+            "CWE-456"
+        ]
+    }
+}

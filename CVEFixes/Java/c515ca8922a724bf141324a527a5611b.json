@@ -1,0 +1,48 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:eclipse:mojarra:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:solaris_cluster:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_platform:2.6.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_platform:2.7.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_platform:2.9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_network_integrity:7.3.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_pricing_design_center:12.0.0.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_platform:2.12.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_enterprise_default_management:2.12.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_enterprise_default_management:2.10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:hyperion_calculation_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:retail_merchandising_system:19.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:time_and_labor:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/eclipse-ee4j/mojarra/commit/cefbb9447e7be560e59da2da6bd7cb93776f7741",
+        "version_end_excluding": {
+            "eclipse:mojarra": "2.3.14",
+            "oracle:solaris_cluster": "unknown",
+            "oracle:banking_platform": "unknown",
+            "oracle:communications_network_integrity": "unknown",
+            "oracle:communications_pricing_design_center": "unknown",
+            "oracle:banking_enterprise_default_management": "unknown",
+            "oracle:hyperion_calculation_manager": "11.2.8.0",
+            "oracle:retail_merchandising_system": "unknown",
+            "oracle:time_and_labor": "unknown"
+        },
+        "path": {
+            "file_path": "impl/src/main/java/com/sun/faces/application/resource/ClasspathResourceHelper.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-6950"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

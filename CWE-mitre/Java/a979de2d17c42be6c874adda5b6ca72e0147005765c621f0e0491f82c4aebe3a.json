@@ -1,0 +1,90 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:apple:ipados:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:freebsd:freebsd:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:oracle:opensolaris:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:http_server:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.18:-:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:http_server:2.0.39:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:http_server:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.18:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:microsoft:windows_2000:-:sp4:*:*:*:*:*:*",
+            "cpe:2.3:a:lksctp:stream_control_transmission_protocol:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:checkpoint:zonealarm_pro:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:dump_project:dump:0.4:beta10:*:*:*:*:*:*",
+            "cpe:2.3:o:freebsd:freebsd:3.5:*:*:*:*:*:*:*",
+            "cpe:2.3:o:microsoft:windows_2000:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:concurrent_versions_software_project:concurrent_versions_software:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:qualcomm:qpopper:2.53:*:*:*:*:*:*:*",
+            "cpe:2.3:a:heysoft:eventsave:5.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "apple:ipados": "unknown",
+            "linux:linux_kernel": "unknown",
+            "freebsd:freebsd": "unknown",
+            "oracle:opensolaris": "unknown",
+            "apache:http_server": "2.0.49",
+            "redhat:enterprise_linux": "unknown",
+            "microsoft:windows_2000": "unknown",
+            "lksctp:stream_control_transmission_protocol": "unknown",
+            "checkpoint:zonealarm_pro": "unknown",
+            "dump_project:dump": "unknown",
+            "concurrent_versions_software_project:concurrent_versions_software": "unknown",
+            "qualcomm:qpopper": "unknown",
+            "heysoft:eventsave": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-1782",
+            "CVE-2009-0935",
+            "CVE-2010-4210",
+            "CVE-2008-4302",
+            "CVE-2009-1243",
+            "CVE-2009-2857",
+            "CVE-2009-1961",
+            "CVE-2009-2699",
+            "CVE-2009-4272",
+            "CVE-2002-1850",
+            "CVE-2004-0174",
+            "CVE-2009-1388",
+            "CVE-2006-5158",
+            "CVE-2006-4342",
+            "CVE-2006-2374",
+            "CVE-2006-2275",
+            "CVE-2005-3847",
+            "CVE-2005-3106",
+            "CVE-2005-2456",
+            "CVE-2001-0682",
+            "CVE-2002-1914",
+            "CVE-2002-1915",
+            "CVE-2002-0051",
+            "CVE-2000-0338",
+            "CVE-2000-1198",
+            "CVE-2002-1869"
+        ],
+        "CWE": [
+            "CWE-667"
+        ]
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:frrouting:frrouting:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:frrouting:frrouting:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:frrouting:frrouting:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:frrouting:frrouting:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:frrouting:frrouting:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FRRouting/frr/commit/943d595a018e69b550db08cccba1d0778a86705a",
+        "version_end_excluding": {
+            "frrouting:frrouting": "unknown"
+        },
+        "path": {
+            "file_path": "bgpd/bgpd.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-5892"
+        ],
+        "CWE": [
+            "CWE-436"
+        ]
+    }
+}

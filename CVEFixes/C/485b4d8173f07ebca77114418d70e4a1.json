@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:squashfs_project:squashfs:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:22:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:21:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/plougher/squashfs-tools/commit/f95864afe8833fe3ad782d714b41378e860977b1",
+        "version_end_excluding": {
+            "squashfs_project:squashfs": "unknown",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "squashfs-tools/unsquashfs.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-4645"
+        ],
+        "CWE": [
+            "CWE-190"
+        ]
+    }
+}

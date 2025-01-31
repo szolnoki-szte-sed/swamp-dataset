@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:hive:1.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hive:1.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hive:1.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hive:1.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hive:1.2.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/hive/commit/98f933f269e6b528ef84912b3d701ca3272ec04b",
+        "version_end_excluding": {
+            "apache:hive": "unknown"
+        },
+        "path": {
+            "file_path": "ql/src/java/org/apache/hadoop/hive/ql/Driver.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-7521"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

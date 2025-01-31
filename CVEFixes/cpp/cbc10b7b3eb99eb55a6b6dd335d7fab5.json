@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/keepkey/keepkey-firmware/commit/e49d45594002d4d3fbc1f03488e6dfc0a0a65836",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "lib/firmware/ethereum_contracts/zxliquidtx.c"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-31616"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

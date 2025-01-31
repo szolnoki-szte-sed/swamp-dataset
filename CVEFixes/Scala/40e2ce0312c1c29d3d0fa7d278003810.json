@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:radarcovid:radar-covid-backend-dp3t-server:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:radarcovid:radarcovid:*:*:exponential_distribution:*:*:iphone_os:*:*",
+            "cpe:2.3:a:radarcovid:radarcovid:*:*:exponential_distribution:*:*:android:*:*",
+            "cpe:2.3:a:radarcovid:radarcovid:*:*:uniform_distribution:*:*:android:*:*",
+            "cpe:2.3:a:radarcovid:radarcovid:*:*:uniform_distribution:*:*:iphone_os:*:*"
+        ],
+        "fix_commit": "https://github.com/RadarCOVID/radar-covid-android/commit/09d00e5ede801ca400d45c7feda5a99c34e4176c",
+        "version_end_excluding": {
+            "radarcovid:radar-covid-backend-dp3t-server": "1.1.2",
+            "radarcovid:radarcovid": "1.0.8"
+        },
+        "path": {
+            "file_path": "app/src/main/java/es/gob/radarcovid/features/worker/FakeInfectionReportWorker.kt"
+        }
+    },
+    "programming_language": "scala",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Mozilla Public License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-26230"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

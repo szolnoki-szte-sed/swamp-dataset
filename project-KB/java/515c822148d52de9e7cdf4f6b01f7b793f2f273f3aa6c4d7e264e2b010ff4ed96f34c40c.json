@@ -1,0 +1,85 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:camel:2.8.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.11.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.8.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.15.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.8.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.14.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.7.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.9.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.8.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.15.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.16.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.10.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.13.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.12.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.13.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.7.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.13.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.8.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.9.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.10.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.10.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.12.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.10.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.14.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.7.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.7.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.13.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.9.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.14.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.9.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.7.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.15.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.14.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.11.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.10.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.11.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.12.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.12.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.9.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.9.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.9.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.8.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.12.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.9.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.11.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.10.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.14.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.10.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.13.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.12.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.11.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.15.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:2.15.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/camel/commit/515c822148d52de9e7cdf4f6b01f7b793f2f273f",
+        "version_end_excluding": {
+            "apache:camel": "unknown"
+        },
+        "path": {
+            "file_path": "components/camel-http-common/src/main/java/org/apache/camel/http/common/HttpCommonComponent.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5348"
+        ],
+        "CWE": [
+            "CWE-19"
+        ]
+    }
+}

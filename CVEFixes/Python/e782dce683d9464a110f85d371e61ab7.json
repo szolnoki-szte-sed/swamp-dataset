@@ -1,0 +1,43 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:mageia_project:mageia:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:requests:2.4.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:requests:2.4.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:requests:2.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:requests:2.5.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:requests:2.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:requests:2.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:requests:2.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:requests:2.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:requests:2.5.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:requests:2.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:requests:2.5.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.04:*:*:*:lts:*:*:*"
+        ],
+        "fix_commit": "https://github.com/kennethreitz/requests/commit/3bd8afbff29e50b38f889b2f688785a669b9aafc",
+        "version_end_excluding": {
+            "mageia_project:mageia": "unknown",
+            "python:requests": "unknown",
+            "canonical:ubuntu_linux": "unknown"
+        },
+        "path": {
+            "file_path": "requests/sessions.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-2296"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:galette:galette:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/galette/galette/commit/a5602bca2566f1be370631c3ab2d40feedd4b3ad",
+        "version_end_excluding": {
+            "galette:galette": "0.9.6"
+        },
+        "path": {
+            "file_path": "galette/templates/default/mailing_adherents.tpl"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41260"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

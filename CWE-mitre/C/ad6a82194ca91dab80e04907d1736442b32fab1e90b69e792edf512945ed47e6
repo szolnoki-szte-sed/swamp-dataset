@@ -1,0 +1,6 @@
+-
+-		    // Note space at the end of the string - assume all strings have preamble with space
+-		    int pre_len = sizeof("preamble: ");
+-		    char buf[pre_len - msg_len];
+-		    ... Do processing here if we get this far
+-		  

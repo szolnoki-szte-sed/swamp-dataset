@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:facebook:hhvm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:4.19.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/facebook/hhvm/commit/f1cd34e63c2a0d9702be3d41462db7bfd0ae7da3",
+        "version_end_excluding": {
+            "facebook:hhvm": "unknown"
+        },
+        "path": {
+            "file_path": "hphp/runtime/ext/gd/ext_gd.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-11925"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:firefly-iii:firefly_iii:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/firefly-iii/firefly-iii/commit/47fa9e39561a9ec9e210e4023d090a7b33381684",
+        "version_end_excluding": {
+            "firefly-iii:firefly_iii": "5.6.3"
+        },
+        "path": {
+            "file_path": "routes/web.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3921"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

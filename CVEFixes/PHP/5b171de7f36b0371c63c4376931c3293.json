@@ -1,0 +1,41 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cotonti:cotonti_siena:0.9.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cotonti:cotonti_siena:0.9.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cotonti:cotonti_siena:0.9.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cotonti:cotonti_siena:0.9.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cotonti:cotonti_siena:0.9.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cotonti:cotonti_siena:0.9.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cotonti:cotonti_siena:0.9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cotonti:cotonti_siena:0.9.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cotonti:cotonti_siena:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cotonti:cotonti_siena:0.9.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cotonti:cotonti_siena:0.9.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cotonti:cotonti_siena:0.9.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cotonti:cotonti_siena:0.9.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cotonti:cotonti_siena:0.9.4:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Cotonti/Cotonti/commit/45eec046391afabb676b62b9201da0cd530360b4",
+        "version_end_excluding": {
+            "cotonti:cotonti_siena": "unknown"
+        },
+        "path": {
+            "file_path": "modules/rss/rss.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-4789"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

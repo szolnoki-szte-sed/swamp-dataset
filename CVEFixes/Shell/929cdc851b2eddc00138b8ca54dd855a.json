@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cesanta:mongoose:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cesanta/mongoose/commit/c65c8fdaaa257e0487ab0aaae9e8f6b439335945",
+        "version_end_excluding": {
+            "cesanta:mongoose": "7.6"
+        },
+        "path": {
+            "file_path": "Makefile"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-25299"
+        ],
+        "CWE": [
+            "CWE-552"
+        ]
+    }
+}

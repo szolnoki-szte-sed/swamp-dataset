@@ -1,0 +1,1 @@
+-echo '($i === $s1) is TRUE'. "\n";

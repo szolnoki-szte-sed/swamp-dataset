@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ffmpeg:ffmpeg:4.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FFmpeg/FFmpeg/commit/b3332a182f8ba33a34542e4a0370f38b914ccf7d",
+        "version_end_excluding": {
+            "ffmpeg:ffmpeg": "unknown"
+        },
+        "path": {
+            "file_path": "libavcodec/idctdsp.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-12460"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

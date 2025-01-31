@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:patrowl:patrowlmanager:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Patrowl/PatrowlManager/commit/2287c9715d2e7ef11b44bb0ad4a57727654f2203",
+        "version_end_excluding": {
+            "patrowl:patrowlmanager": "1.7.7"
+        },
+        "path": {
+            "file_path": "app/urls.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-43829"
+        ],
+        "CWE": [
+            "CWE-434"
+        ]
+    }
+}

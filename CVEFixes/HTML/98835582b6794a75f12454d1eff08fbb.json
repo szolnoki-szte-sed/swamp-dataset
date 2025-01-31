@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:systeminformation:systeminformation:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/sebhildebrandt/systeminformation/commit/931fecaec2c1a7dcc10457bb8cd552d08089da61",
+        "version_end_excluding": {
+            "systeminformation:systeminformation": "4.27.11"
+        },
+        "path": {
+            "file_path": "docs/index.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-7752"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

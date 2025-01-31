@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:enalean:tuleap:*:*:*:*:enterprise:*:*:*",
+            "cpe:2.3:a:enalean:tuleap:*:*:*:*:enterprise:*:*:*",
+            "cpe:2.3:a:enalean:tuleap:*:*:*:*:community:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Enalean/tuleap/commit/bd47f29847fcd6a68d359bc8aefb8749bb8a1b7c",
+        "version_end_excluding": {
+            "enalean:tuleap": "13.2.99.31"
+        },
+        "path": {
+            "file_path": "plugins/ldap/include/LDAP_DirectorySynchronization.class.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41276"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

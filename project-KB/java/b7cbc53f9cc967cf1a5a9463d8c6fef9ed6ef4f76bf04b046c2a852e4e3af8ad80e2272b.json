@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:owasp:enterprise_security_api:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ESAPI/esapi-java-legacy/commit/b7cbc53f9cc967cf1a5a9463d8c6fef9ed6ef4f7",
+        "version_end_excluding": {
+            "owasp:enterprise_security_api": "2.1.0.1"
+        },
+        "path": {
+            "file_path": "src/test/java/org/owasp/esapi/codecs/CodecImmunityTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-5960"
+        ],
+        "CWE": [
+            "CWE-310"
+        ]
+    }
+}

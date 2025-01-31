@@ -1,0 +1,7 @@
+-record_t *bar; //Global varvoid foo(){
+-                        bar = (record_t*)malloc(MAX_SIZE*sizeof(record_t));
+-                           
+-                           /* do something interesting with bar */
+-                           
+-                           ...free(bar);
+-                     }

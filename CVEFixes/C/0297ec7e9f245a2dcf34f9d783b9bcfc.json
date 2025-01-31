@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cisco:thor_video_codec:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cisco/thor/commit/18de8f9f0762c3a542b1122589edb8af859d9813",
+        "version_end_excluding": {
+            "cisco:thor_video_codec": "2018-8-8"
+        },
+        "path": {
+            "file_path": "dec/decode_block.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 2-Clause \"Simplified\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-0429"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

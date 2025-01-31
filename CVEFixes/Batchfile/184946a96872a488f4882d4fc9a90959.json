@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gjson_project:gjson:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/tidwall/gjson/commit/590010fdac311cc8990ef5c97448d4fec8f29944",
+        "version_end_excluding": {
+            "gjson_project:gjson": "1.9.3"
+        },
+        "path": {
+            "file_path": "go.mod"
+        }
+    },
+    "programming_language": "batchfile",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-42836"
+        ],
+        "CWE": [
+            "CWE-400"
+        ]
+    }
+}

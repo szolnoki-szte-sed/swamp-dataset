@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:makedp:mprweb:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/makedeb/mprweb/commit/d13e3f2f5a9c0b0f6782f35d837090732026ad77",
+        "version_end_excluding": {
+            "makedp:mprweb": "unknown"
+        },
+        "path": {
+            "file_path": "templates/partials/account_form.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-31185"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

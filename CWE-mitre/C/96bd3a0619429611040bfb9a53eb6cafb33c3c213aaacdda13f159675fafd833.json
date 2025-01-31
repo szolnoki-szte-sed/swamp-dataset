@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mozilla:firefox:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:google:chrome:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:microsoft:windows_2000:*:sp4:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "mozilla:firefox": "2.0.0.17",
+            "google:chrome": "unknown",
+            "mit:kerberos_5": "1.6.3",
+            "microsoft:windows_2000": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2008-5013",
+            "CVE-2010-3257",
+            "CVE-2008-0062",
+            "CVE-2007-1211"
+        ],
+        "CWE": [
+            "CWE-825"
+        ]
+    }
+}

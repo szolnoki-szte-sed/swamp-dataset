@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:skytable:skytable:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/skytable/skytable/commit/38b011273bb92b83c61053ae2fcd80aa9320315c",
+        "version_end_excluding": {
+            "skytable:skytable": "0.5.1"
+        },
+        "path": {
+            "file_path": "server/src/dbnet.rs"
+        }
+    },
+    "programming_language": "rust",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32814"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

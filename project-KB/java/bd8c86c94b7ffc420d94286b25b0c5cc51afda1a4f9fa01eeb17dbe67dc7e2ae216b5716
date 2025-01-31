@@ -1,0 +1,1148 @@
+diff --git a/sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/CustomerEntity.java b/sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/CustomerEntity.java
+index de02948e23..b8f1c0f794 100755
+--- a/sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/CustomerEntity.java
++++ b/sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/CustomerEntity.java
+@@ -9,7 +9,7 @@
+ 
+ import com.salesmanager.shop.model.customer.address.Address;
+ import io.swagger.annotations.ApiModelProperty;
+-
++import org.apache.commons.lang3.StringEscapeUtils;
+ public class CustomerEntity extends Customer implements Serializable {
+ 
+ 	/**
+@@ -32,22 +32,22 @@ public class CustomerEntity extends Customer implements Serializable {
+ 	private String language;
+ 	private String firstName;
+ 	private String lastName;
+-	
++
+ 	private String provider;//online, facebook ...
+ 
+-	
++
+ 	private String storeCode;
+-	
++
+ 	//@ApiModelProperty(notes = "Username (use email address)")
+ 	//@NotEmpty(message="{NotEmpty.customer.userName}")
+ 	//can be email or anything else
+ 	private String userName;
+-	
++
+ 	private Double rating = 0D;
+ 	private int ratingCount;
+-	
++
+ 	public void setUserName(final String userName) {
+-		this.userName = userName;
++		this.userName = StringEscapeUtils.escapeHtml4(userName);
+ 	}
+ 
+ 	public String getUserName() {
+@@ -56,7 +56,7 @@ public String getUserName() {
+ 
+ 
+ 	public void setStoreCode(final String storeCode) {
+-		this.storeCode = storeCode;
++		this.storeCode = StringEscapeUtils.escapeHtml4(storeCode);
+ 	}
+ 
+ 
+@@ -66,9 +66,9 @@ public String getStoreCode() {
+ 
+ 
+ 	public void setEmailAddress(final String emailAddress) {
+-		this.emailAddress = emailAddress;
++		this.emailAddress = StringEscapeUtils.escapeHtml4(emailAddress);
+ 	}
+-	
++
+ 
+ 	public String getEmailAddress() {
+ 		return emailAddress;
+@@ -76,12 +76,12 @@ public String getEmailAddress() {
+ 
+ 
+ 	public void setLanguage(final String language) {
+-		this.language = language;
++		this.language = StringEscapeUtils.escapeHtml4(language);
+ 	}
+ 	public String getLanguage() {
+ 		return language;
+ 	}
+-	
++
+ 
+ 	public Address getBilling() {
+ 		return billing;
+@@ -96,7 +96,7 @@ public void setDelivery(final Address delivery) {
+ 		this.delivery = delivery;
+ 	}
+ 	public void setGender(final String gender) {
+-		this.gender = gender;
++		this.gender = StringEscapeUtils.escapeHtml4(gender);
+ 	}
+ 	public String getGender() {
+ 		return gender;
+@@ -109,7 +109,7 @@ public String getFirstName() {
+ 
+ 
+ 	public void setFirstName(String firstName) {
+-		this.firstName = firstName;
++		this.firstName = StringEscapeUtils.escapeHtml4(firstName);
+ 	}
+ 
+ 
+@@ -119,7 +119,7 @@ public String getLastName() {
+ 
+ 
+ 	public void setLastName(String lastName) {
+-		this.lastName = lastName;
++		this.lastName = StringEscapeUtils.escapeHtml4(lastName);
+ 	}
+ 
+ 
+@@ -144,11 +144,11 @@ public String getProvider() {
+ 	}
+ 
+ 	public void setProvider(String provider) {
+-		this.provider = provider;
++		this.provider = StringEscapeUtils.escapeHtml4(provider);
+ 	}
+ 
+ 
+ 
+-    
++
+ 
+ }
+diff --git a/sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/address/Address.java b/sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/address/Address.java
+index 1a54ff2457..fa5fe1a117 100755
+--- a/sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/address/Address.java
++++ b/sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/address/Address.java
+@@ -4,6 +4,7 @@
+ 
+ import javax.validation.constraints.NotEmpty;
+ import io.swagger.annotations.ApiModelProperty;
++import org.apache.commons.lang3.StringEscapeUtils;
+ 
+ /**
+  * Customer or someone address
+@@ -11,20 +12,20 @@
+  *
+  */
+ public class Address extends AddressLocation implements Serializable {
+-	
++
+ 	/**
+-	 * 
++	 *
+ 	 */
+ 	private static final long serialVersionUID = 1L;
+ 
+ 	@ApiModelProperty(notes = "Customer billing first name")
+ 	@NotEmpty(message="{NotEmpty.customer.firstName}")
+ 	private String firstName;
+-	
++
+ 	@ApiModelProperty(notes = "Customer billing last name")
+ 	@NotEmpty(message="{NotEmpty.customer.lastName}")
+ 	private String lastName;
+-	
++
+ 	private String bilstateOther;
+ 
+ 	private String company;
+@@ -34,31 +35,31 @@ public class Address extends AddressLocation implements Serializable {
+ 	private String address;
+ 	@ApiModelProperty(notes = "Customer billing city")
+ 	private String city;
+-	
+ 
+-	
++
++
+ 	@ApiModelProperty(notes = "Customer billing state / province (if no 2 letter codes, example: North estate)")
+ 	private String stateProvince;
+ 	private boolean billingAddress;
+-	
++
+ 	private String latitude;
+ 	private String longitude;
+-	
++
+ 	@ApiModelProperty(notes = "Customer billing state / province (2 letter code CA, ON...)")
+ 	private String zone;//code
+-	
++
+ 	@ApiModelProperty(notes = "Customer billing country code (2 letter code US, CA, UK, IT, IN, CN...)")
+ 	@NotEmpty(message="{NotEmpty.customer.billing.country}")
+ 	private String country;//code
+-	
++
+ 
+ 
+ 	public void setStateProvince(String stateProvince) {
+-		this.stateProvince = stateProvince;
++		this.stateProvince = StringEscapeUtils.escapeHtml4(stateProvince);
+ 	}
+ 
+ 	public void setCountry(String country) {
+-		this.country = country;
++		this.country = StringEscapeUtils.escapeHtml4(country);
+ 	}
+ 
+ 
+@@ -68,7 +69,7 @@ public String getCompany() {
+ 	}
+ 
+ 	public void setCompany(String company) {
+-		this.company = company;
++		this.company = StringEscapeUtils.escapeHtml4(company);
+ 	}
+ 
+ 	public String getAddress() {
+@@ -76,7 +77,7 @@ public String getAddress() {
+ 	}
+ 
+ 	public void setAddress(String address) {
+-		this.address = address;
++		this.address = StringEscapeUtils.escapeHtml4(address);
+ 	}
+ 
+ 	public String getCity() {
+@@ -84,7 +85,7 @@ public String getCity() {
+ 	}
+ 
+ 	public void setCity(String city) {
+-		this.city = city;
++		this.city = StringEscapeUtils.escapeHtml4(city);
+ 	}
+ 
+ 
+@@ -98,7 +99,7 @@ public String getCountry() {
+ 	}
+ 
+ 	public void setZone(String zone) {
+-		this.zone = zone;
++		this.zone = StringEscapeUtils.escapeHtml4(zone);
+ 	}
+ 
+ 	public String getZone() {
+@@ -106,7 +107,7 @@ public String getZone() {
+ 	}
+ 
+ 	public void setPhone(String phone) {
+-		this.phone = phone;
++		this.phone = StringEscapeUtils.escapeHtml4(phone);
+ 	}
+ 
+ 	public String getPhone() {
+@@ -118,7 +119,7 @@ public String getFirstName() {
+ 	}
+ 
+ 	public void setFirstName(String firstName) {
+-		this.firstName = firstName;
++		this.firstName = StringEscapeUtils.escapeHtml4(firstName);
+ 	}
+ 
+ 	public String getLastName() {
+@@ -126,7 +127,7 @@ public String getLastName() {
+ 	}
+ 
+ 	public void setLastName(String lastName) {
+-		this.lastName = lastName;
++		this.lastName = StringEscapeUtils.escapeHtml4(lastName);
+ 	}
+ 
+     public boolean isBillingAddress()
+@@ -146,7 +147,7 @@ public String getBilstateOther()
+ 
+     public void setBilstateOther( String bilstateOther )
+     {
+-        this.bilstateOther = bilstateOther;
++        this.bilstateOther = StringEscapeUtils.escapeHtml4(bilstateOther);
+     }
+ 
+ 	public String getLatitude() {
+@@ -154,7 +155,7 @@ public String getLatitude() {
+ 	}
+ 
+ 	public void setLatitude(String latitude) {
+-		this.latitude = latitude;
++		this.latitude = StringEscapeUtils.escapeHtml4(latitude);
+ 	}
+ 
+ 	public String getLongitude() {
+@@ -162,7 +163,7 @@ public String getLongitude() {
+ 	}
+ 
+ 	public void setLongitude(String longitude) {
+-		this.longitude = longitude;
++		this.longitude = StringEscapeUtils.escapeHtml4(longitude);
+ 	}
+ 
+ }
+diff --git a/sm-shop/src/main/java/com/salesmanager/shop/controller/ReferenceController.java b/sm-shop/src/main/java/com/salesmanager/shop/controller/ReferenceController.java
+index 55aabdd144..13913137f2 100755
+--- a/sm-shop/src/main/java/com/salesmanager/shop/controller/ReferenceController.java
++++ b/sm-shop/src/main/java/com/salesmanager/shop/controller/ReferenceController.java
+@@ -25,6 +25,7 @@
+ import org.springframework.web.bind.annotation.RequestMethod;
+ import org.springframework.web.bind.annotation.RequestParam;
+ import org.springframework.web.bind.annotation.ResponseBody;
++import org.apache.commons.lang3.StringEscapeUtils;
+ 
+ import javax.inject.Inject;
+ import javax.servlet.http.HttpServletRequest;
+@@ -39,92 +40,92 @@
+  */
+ @Controller
+ public class ReferenceController {
+-	
++
+ 	private static final Logger LOGGER = LoggerFactory.getLogger(ReferenceController.class);
+-	
++
+ 	@Inject
+ 	private ZoneService zoneService;
+-	
++
+ 	@Inject
+ 	private CountryService countryService;
+-	
++
+ 	@Inject
+ 	private LanguageService languageService;
+-	
++
+ 	@Inject
+ 	private CacheUtils cache;
+-	
++
+ 	@Inject
+ 	private LanguageUtils languageUtils;
+ 
+ 
+-	
+-	
++
++
+ 	@SuppressWarnings("unchecked")
+ 	@RequestMapping(value={"/admin/reference/provinces.html","/shop/reference/provinces.html"}, method=RequestMethod.POST)
+ 	public @ResponseBody ResponseEntity<String> getProvinces(HttpServletRequest request, HttpServletResponse response) {
+-		
++
+ 		String countryCode = request.getParameter("countryCode");
+ 		String lang = request.getParameter("lang");
+ 		LOGGER.debug("Province Country Code " + countryCode);
+ 		AjaxResponse resp = new AjaxResponse();
+-		
++
+ 		try {
+-			
++
+ 			Language language = null;
+-			
++
+ 			if(!StringUtils.isBlank(lang)) {
+ 				language = languageService.getByCode(lang);
+ 			}
+-			
++
+ 			if(language==null) {
+ 				language = (Language)request.getAttribute("LANGUAGE");
+ 			}
+-			
++
+ 			if(language==null) {
+ 				language = languageService.getByCode(Constants.DEFAULT_LANGUAGE);
+ 			}
+-			
+-			
++
++
+ 			Map<String,Country> countriesMap = countryService.getCountriesMap(language);
+ 			Country country = countriesMap.get(countryCode);
+ 			List<Zone> zones = zoneService.getZones(country, language);
+ 			if(zones!=null && zones.size()>0) {
+-				
+-				
+-				
++
++
++
+ 				for(Zone zone : zones) {
+-				
++
+ 					@SuppressWarnings("rawtypes")
+ 					Map entry = new HashMap();
+ 					entry.put("name", zone.getName());
+ 					entry.put("code", zone.getCode());
+ 					entry.put("id", zone.getId());
+-		
++
+ 					resp.addDataEntry(entry);
+-				
++
+ 				}
+-				
+-				
++
++
+ 			}
+-			
++
+ 			resp.setStatus(AjaxResponse.RESPONSE_STATUS_SUCCESS);
+-		
++
+ 		} catch (Exception e) {
+ 			LOGGER.error("GetProvinces()", e);
+ 			resp.setStatus(AjaxResponse.RESPONSE_STATUS_FAIURE);
+ 		}
+-		
++
+ 		final HttpHeaders httpHeaders= new HttpHeaders();
+ 	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+ 		String returnString = resp.toJSONString();
+ 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
+-		
++
+ 	}
+-	
++
+ 	@RequestMapping(value="/shop/reference/countryName")
+ 	public @ResponseBody String countryName(@RequestParam String countryCode, HttpServletRequest request, HttpServletResponse response) {
+-		
++
+ 		try {
+ 			Language language = languageUtils.getRequestLanguage(request, response);
+ 			if(language==null) {
+@@ -137,16 +138,16 @@ public class ReferenceController {
+ 					return c.getName();
+ 				}
+ 			}
+-		
++
+ 		} catch (ServiceException e) {
+ 			LOGGER.error("Error while looking up country " + countryCode);
+ 		}
+-		return countryCode;
++		return StringEscapeUtils.escapeHtml4(countryCode);
+ 	}
+-	
++
+ 	@RequestMapping(value="/shop/reference/zoneName")
+ 	public @ResponseBody String zoneName(@RequestParam String zoneCode, HttpServletRequest request, HttpServletResponse response) {
+-		
++
+ 		try {
+ 			Language language = languageUtils.getRequestLanguage(request, response);
+ 			if(language==null) {
+@@ -159,30 +160,30 @@ public class ReferenceController {
+ 					return z.getName();
+ 				}
+ 			}
+-		
++
+ 		} catch (ServiceException e) {
+ 			LOGGER.error("Error while looking up zone " + zoneCode);
+ 		}
+-		return zoneCode;
++		return StringEscapeUtils.escapeHtml4(zoneCode);
+ 	}
+-	
++
+ 	@SuppressWarnings("unchecked")
+ 	@RequestMapping(value={"/shop/reference/creditCardDates.html"}, method=RequestMethod.GET)
+ 	public @ResponseBody ResponseEntity<String> getCreditCardDates(HttpServletRequest request, HttpServletResponse response) {
+-		
++
+ 
+ 		List<String> years = null;
+ 		String serialized = null;
+ 		try {
+-			
+-	
++
++
+ 			years = (List<String>)cache.getFromCache(Constants.CREDIT_CARD_YEARS_CACHE_KEY);
+-			
++
+ 			if(years==null) {
+-			
++
+ 				years = new ArrayList<String>();
+ 				//current year
+-				
++
+ 				for(int i = 0 ; i < 10 ; i++) {
+ 					Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
+ 					localCalendar.add(Calendar.YEAR, i);
+@@ -190,36 +191,36 @@ public class ReferenceController {
+ 					years.add(dt);
+ 				}
+ 				//up to year + 10
+-				
++
+ 				cache.putInCache(years, Constants.CREDIT_CARD_YEARS_CACHE_KEY);
+-			
++
+ 			}
+-		
+ 
+-		
++
++
+ 			final ObjectMapper mapper = new ObjectMapper();
+ 			serialized = mapper.writeValueAsString(years);
+-		
++
+ 		} catch(Exception e) {
+ 			LOGGER.error("ReferenceControler ",e);
+ 		}
+-		
++
+ 		final HttpHeaders httpHeaders= new HttpHeaders();
+ 	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+ 		return new ResponseEntity<String>(serialized,httpHeaders,HttpStatus.OK);
+-	
++
+ 	}
+-	
+-	
++
++
+ 	@SuppressWarnings("unchecked")
+ 	@RequestMapping(value={"/shop/reference/monthsOfYear.html"}, method=RequestMethod.GET)
+ 	public @ResponseBody ResponseEntity<String> getMonthsOfYear(HttpServletRequest request, HttpServletResponse response) {
+-		
++
+ 
+ 		List<String> days = null;
+ 		String serialized = null;
+-		
+-		try {	
++
++		try {
+ 			days = (List<String>)cache.getFromCache(Constants.MONTHS_OF_YEAR_CACHE_KEY);
+ 			if(days==null) {
+ 
+@@ -229,28 +230,28 @@ public class ReferenceController {
+ 				}
+ 
+ 				cache.putInCache(days, Constants.MONTHS_OF_YEAR_CACHE_KEY);
+-			
++
+ 			}
+-		
+ 
+-		
++
++
+ 			final ObjectMapper mapper = new ObjectMapper();
+ 			serialized = mapper.writeValueAsString(days);
+-		
++
+ 		} catch(Exception e) {
+ 			LOGGER.error("ReferenceControler ",e);
+ 		}
+-		
++
+ 		final HttpHeaders httpHeaders= new HttpHeaders();
+ 	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+ 		return new ResponseEntity<String>(serialized,httpHeaders,HttpStatus.OK);
+-	
++
+ 	}
+-	
+-	
+ 
+-	
+-	
++
++
++
++
+ 
+ 
+ }
+diff --git a/sm-shop/src/main/java/com/salesmanager/shop/store/controller/customer/CustomerProductReviewController.java b/sm-shop/src/main/java/com/salesmanager/shop/store/controller/customer/CustomerProductReviewController.java
+index aaec17d3c0..58379f06cd 100755
+--- a/sm-shop/src/main/java/com/salesmanager/shop/store/controller/customer/CustomerProductReviewController.java
++++ b/sm-shop/src/main/java/com/salesmanager/shop/store/controller/customer/CustomerProductReviewController.java
+@@ -34,6 +34,7 @@
+ import org.springframework.web.bind.annotation.RequestMapping;
+ import org.springframework.web.bind.annotation.RequestMethod;
+ import org.springframework.web.bind.annotation.RequestParam;
++import org.apache.commons.lang3.StringEscapeUtils;
+ 
+ import javax.inject.Inject;
+ import javax.servlet.http.HttpServletRequest;
+@@ -50,28 +51,28 @@
+ @Controller
+ @RequestMapping(Constants.SHOP_URI + "/customer")
+ public class CustomerProductReviewController extends AbstractController {
+-	
++
+ 	@Inject
+ 	private ProductService productService;
+-	
++
+ 	@Inject
+ 	private LanguageService languageService;
+-	
++
+ 	@Inject
+ 	private PricingService pricingService;
+-	
++
+ 	@Inject
+ 	private ProductReviewService productReviewService;
+-	
++
+ 	@Inject
+ 	private CustomerService customerService;
+-	
++
+ 	@Inject
+ 	private CustomerFacade customerFacade;
+-	
++
+ 	@Inject
+ 	private LabelUtils messages;
+-	
++
+ 	@Inject
+ 	@Qualifier("img")
+ 	private ImageFilePath imageUtils;
+@@ -79,24 +80,24 @@ public class CustomerProductReviewController extends AbstractController {
+ 	@PreAuthorize("hasRole('AUTH_CUSTOMER')")
+ 	@RequestMapping(value="/review.html", method=RequestMethod.GET)
+ 	public String displayProductReview(@RequestParam Long productId, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+-		
++
+ 
+ 	    MerchantStore store = getSessionAttribute(Constants.MERCHANT_STORE, request);
+ 	    Language language = super.getLanguage(request);
+ 
+-        
+-        
++
++
+         //get product
+         Product product = productService.getById(productId);
+         if(product==null) {
+         	return "redirect:" + Constants.SHOP_URI;
+         }
+-        
++
+         if(product.getMerchantStore().getId().intValue()!=store.getId().intValue()) {
+         	return "redirect:" + Constants.SHOP_URI;
+         }
+-        
+-        
++
++
+         //create readable product
+         ReadableProduct readableProduct = new ReadableProduct();
+         ReadableProductPopulator readableProductPopulator = new ReadableProductPopulator();
+@@ -104,83 +105,84 @@ public String displayProductReview(@RequestParam Long productId, Model model, Ht
+         readableProductPopulator.setimageUtils(imageUtils);
+         readableProductPopulator.populate(product, readableProduct,  store, language);
+         model.addAttribute("product", readableProduct);
+-        
++
+ 
+         Customer customer =  customerFacade.getCustomerByUserName(request.getRemoteUser(), store);
+-        
++
+         List<ProductReview> reviews = productReviewService.getByProduct(product, language);
+ 	    for(ProductReview r : reviews) {
+ 	    	if(r.getCustomer().getId().longValue()==customer.getId().longValue()) {
+-	    		
++
+ 				ReadableProductReviewPopulator reviewPopulator = new ReadableProductReviewPopulator();
+ 				ReadableProductReview rev = new ReadableProductReview();
+ 				reviewPopulator.populate(r, rev, store, language);
+-	    		
++
+ 	    		model.addAttribute("customerReview", rev);
+ 	    		break;
+ 	    	}
+ 	    }
+-        
+-        
++
++
+         ProductReview review = new ProductReview();
+         review.setCustomer(customer);
+         review.setProduct(product);
+-        
++
+         ReadableProductReview productReview = new ReadableProductReview();
+         ReadableProductReviewPopulator reviewPopulator = new ReadableProductReviewPopulator();
+         reviewPopulator.populate(review,  productReview, store, language);
+-        
++
+         model.addAttribute("review", productReview);
+         model.addAttribute("reviews", reviews);
+-		
+-		
++
++
+ 		/** template **/
+ 		StringBuilder template = new StringBuilder().append(ControllerConstants.Tiles.Customer.review).append(".").append(store.getStoreTemplate());
+ 
+ 		return template.toString();
+-		
++
+ 	}
+-	
+-	
++
++
+ 	@PreAuthorize("hasRole('AUTH_CUSTOMER')")
+ 	@RequestMapping(value="/review/submit.html", method=RequestMethod.POST)
+ 	public String submitProductReview(@ModelAttribute("review") PersistableProductReview review, BindingResult bindingResult, Model model, HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
+-		
++
+ 
+ 	    MerchantStore store = getSessionAttribute(Constants.MERCHANT_STORE, request);
+ 	    Language language = getLanguage(request);
+-	    
++
+         Customer customer =  customerFacade.getCustomerByUserName(request.getRemoteUser(), store);
+-        
++
+         if(customer==null) {
+         	return "redirect:" + Constants.SHOP_URI;
+         }
+ 
+-	    
++
+ 	    Product product = productService.getById(review.getProductId());
+ 	    if(product==null) {
+ 	    	return "redirect:" + Constants.SHOP_URI;
+ 	    }
+-	    
++			review.setDescription(StringEscapeUtils.escapeHtml4(review.getDescription()));
++			
+ 	    if(StringUtils.isBlank(review.getDescription())) {
+ 	    	FieldError error = new FieldError("description","description",messages.getMessage("NotEmpty.review.description", locale));
+ 			bindingResult.addError(error);
+ 	    }
+-	    
++
+ 	    if(review.getRating()==null) {
+ 	    	FieldError error = new FieldError("rating","rating",messages.getMessage("NotEmpty.review.rating", locale, "Product rating is required"));
+ 			bindingResult.addError(error);
+ 	    }
+-	    
+ 
+-	    
++
++
+         ReadableProduct readableProduct = new ReadableProduct();
+         ReadableProductPopulator readableProductPopulator = new ReadableProductPopulator();
+         readableProductPopulator.setPricingService(pricingService);
+         readableProductPopulator.setimageUtils(imageUtils);
+         readableProductPopulator.populate(product, readableProduct,  store, language);
+         model.addAttribute("product", readableProduct);
+-	    
++
+ 
+ 		/** template **/
+ 		StringBuilder template = new StringBuilder().append(ControllerConstants.Tiles.Customer.review).append(".").append(store.getStoreTemplate());
+@@ -191,47 +193,47 @@ public String submitProductReview(@ModelAttribute("review") PersistableProductRe
+             return template.toString();
+ 
+         }
+-		
+-        
++
++
+         //check if customer has already evaluated the product
+ 	    List<ProductReview> reviews = productReviewService.getByProduct(product);
+-	    
++
+ 	    for(ProductReview r : reviews) {
+ 	    	if(r.getCustomer().getId().longValue()==customer.getId().longValue()) {
+ 				ReadableProductReviewPopulator reviewPopulator = new ReadableProductReviewPopulator();
+ 				ReadableProductReview rev = new ReadableProductReview();
+ 				reviewPopulator.populate(r, rev, store, language);
+-	    		
++
+ 	    		model.addAttribute("customerReview", rev);
+ 	    		return template.toString();
+ 	    	}
+ 	    }
+ 
+-	    
++
+ 	    PersistableProductReviewPopulator populator = new PersistableProductReviewPopulator();
+ 	    populator.setCustomerService(customerService);
+ 	    populator.setLanguageService(languageService);
+ 	    populator.setProductService(productService);
+-	    
++
+ 	    review.setDate(DateUtil.formatDate(new Date()));
+ 	    review.setCustomerId(customer.getId());
+-	    
++
+ 	    ProductReview productReview = populator.populate(review, store, language);
+ 	    productReviewService.create(productReview);
+-        
++
+         model.addAttribute("review", review);
+         model.addAttribute("success", "success");
+-        
++
+ 		ReadableProductReviewPopulator reviewPopulator = new ReadableProductReviewPopulator();
+ 		ReadableProductReview rev = new ReadableProductReview();
+ 		reviewPopulator.populate(productReview, rev, store, language);
+-		
++
+         model.addAttribute("customerReview", rev);
+ 
+ 		return template.toString();
+-		
++
+ 	}
+-	
+-	
+-	
++
++
++
+ }
+diff --git a/sm-shop/src/main/resources/spring/shopizer-security.xml b/sm-shop/src/main/resources/spring/shopizer-security.xml
+index 9220201b5e..4761b13ed8 100755
+--- a/sm-shop/src/main/resources/spring/shopizer-security.xml
++++ b/sm-shop/src/main/resources/spring/shopizer-security.xml
+@@ -6,7 +6,7 @@
+ 	http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+ 	http://www.springframework.org/schema/security
+ 	http://www.springframework.org/schema/security/spring-security.xsd">
+-	
++
+ 	<!--
+ 	https://github.com/sunilpulugula/SpringSecuritySocialLoginExample
+ 	-->
+@@ -17,23 +17,23 @@
+     <!-- OK -->
+ 	<beans:bean id="customerFacade" class="com.salesmanager.shop.store.controller.customer.facade.CustomerFacadeImpl">
+ 	</beans:bean>
+-	
++
+ 	<!-- OK -->
+ 	<!-- JDBC Customer details -->
+ 	<beans:bean id="customerDetailsService"
+ 		class="com.salesmanager.shop.store.security.CustomerServicesImpl">
+ 	</beans:bean>
+-	
++
+ 	<!-- OK -->
+ 	<beans:bean id="jwtCustomerDetailsService"
+ 		class="com.salesmanager.shop.store.security.JWTCustomerServicesImpl">
+ 	</beans:bean>
+-	
++
+ 	<!-- OK -->
+ 	 <beans:bean id="jwtUserDetailsService"
+ 		class="com.salesmanager.shop.store.security.admin.JWTAdminServicesImpl">
+ 	</beans:bean>
+-	
++
+     <!-- OK -->
+ 	<!-- JDBC User details -->
+ 	<beans:bean id="userDetailsService"
+@@ -45,32 +45,32 @@
+ 	    <!-- strength 4 to 31 -->
+ 		<beans:constructor-arg value="11"/>
+ 	</beans:bean>
+-	
++
+ 	<!--OK -->
+ 	<beans:bean id="adminAccessDenied"
+ 		class="com.salesmanager.shop.utils.AdminAccessDeniedHandler">
+ 		<beans:property name="accessDeniedUrl" value="/admin/denied.html" />
+ 	</beans:bean>
+ 
+-	
++
+ 	<!-- updates last user logon timestamp -->
+ 	<!-- OK -->
+ 	<beans:bean id="userAuthenticationSuccessHandler" class="com.salesmanager.shop.admin.security.UserAuthenticationSuccessHandler">
+ 	</beans:bean>
+-	
++
+ 	<!-- OK -->
+ 	<beans:bean id="servicesAuthenticationSuccessHandler" class="com.salesmanager.shop.store.security.ServicesAuthenticationSuccessHandler">
+ 	</beans:bean>
+-	
+ 
+-	
++
++
+ 	<!-- spring security 4 -->
+ 	<http pattern="/resources/**" security="none" /><!-- remove css and other static resources -->
+ 	<http pattern="/layout/**" security="none" /><!-- remove css and other static resources -->
+-	
++
+ 	<!-- OK -->
+-	<http pattern="/admin/**" 
+-		auto-config="true" 
++	<http pattern="/admin/**"
++		auto-config="true"
+ 		use-expressions="true"
+ 		authentication-manager-ref="adminAuthenticationManager">
+ 		<!-- Shopizer logon page -->
+@@ -79,45 +79,45 @@
+ 		<intercept-url pattern="/admin/denied.html" access="permitAll" />
+ 		<intercept-url pattern="/admin/unauthorized.html" access="permitAll" />
+ 		<intercept-url pattern="/admin/users/resetPassword.html*" access="permitAll" />
+-		<intercept-url pattern="/admin/users/resetPasswordSecurityQtn.html*" access="permitAll" /> 
+- 		
+- 		
+- 		
++		<intercept-url pattern="/admin/users/resetPasswordSecurityQtn.html*" access="permitAll" />
++
++
++
+  		<intercept-url pattern="/admin" access="hasRole('AUTH')" />
+ 		<intercept-url pattern="/admin/" access="hasRole('AUTH')" />
+ 		<intercept-url pattern="/admin/*.html*" access="hasRole('AUTH')" />
+ 		<intercept-url pattern="/admin/*/*.html*" access="hasRole('AUTH')" />
+ 		<intercept-url pattern="/admin/*/*/*.html*" access="hasRole('AUTH')" />
+-		
+-		
+ 
+-			
++
++
++
+ 		<form-login login-page="/admin/logon.html"
+-					username-parameter="username" 
+-					password-parameter="password" 
+-					login-processing-url="/login" 
++					username-parameter="username"
++					password-parameter="password"
++					login-processing-url="/login"
+ 					authentication-success-handler-ref="userAuthenticationSuccessHandler"
+-					authentication-failure-url="/admin/logon.html?login_error=true" 
++					authentication-failure-url="/admin/logon.html?login_error=true"
+ 		/>
+-			
+-			
+-		<logout invalidate-session="true" 
+-			logout-success-url="/admin/home.html" 
++
++
++		<logout invalidate-session="true"
++			logout-success-url="/admin/home.html"
+ 			logout-url="/admin/logout" />
+-			
++
+ 		<csrf disabled="true"/><!-- Spring security 4 -->
+-			
++
+ 		<access-denied-handler ref="adminAccessDenied"/>
+ 	</http>
+-	
++
+ 
+ 	<!-- OK -->
+-	<http pattern="/shop/**" 
+-		auto-config="true" 
++	<http pattern="/shop/**"
++		auto-config="true"
+ 		use-expressions="true"
+-		entry-point-ref="shopAuthenticationEntryPoint"  
++		entry-point-ref="shopAuthenticationEntryPoint"
+ 		authentication-manager-ref="customerAuthenticationManager">
+-		
++
+ 		<intercept-url pattern="/shop" access="permitAll" />
+ 		<intercept-url pattern="/shop/" access="permitAll" />
+ 		<intercept-url pattern="/shop/**" access="permitAll" />
+@@ -133,21 +133,23 @@
+ 		<intercept-url pattern="/shop/customer/*/*.html*" access="hasRole('AUTH_CUSTOMER')" />
+ 		<intercept-url pattern="/shop/customer/*/*/*.html*" access="hasRole('AUTH_CUSTOMER')" />
+ 
+-			
+-		<logout invalidate-session="false" 
+-			logout-success-url="/shop/" 
++
++		<logout invalidate-session="false"
++			logout-success-url="/shop/"
+ 			logout-url="/shop/customer/logout" />
+ 		<access-denied-handler error-page="/shop/"/>
+-		
+-		<csrf disabled="true"/><!-- Spring security 4 -->
++		<headers>
++					<header name="X-Content-Security-Policy" value="default-src 'self'"/>
++		</headers>
++
+ 	</http>
+-	
++
+ 	<!-- OK-->
+ 	<!-- REST services v0-->
+-	<http pattern="/services/**" 
+-		create-session="stateless" 
+-		use-expressions="true" 
+-		authentication-manager-ref="adminAuthenticationManager" 
++	<http pattern="/services/**"
++		create-session="stateless"
++		use-expressions="true"
++		authentication-manager-ref="adminAuthenticationManager"
+ 		entry-point-ref="servicesAuthenticationEntryPoint">
+ 	      <intercept-url pattern="/services/private/**" access="hasRole('AUTH')"/>
+ 	      <intercept-url pattern="/services/public/**" access="permitAll"/>
+@@ -155,26 +157,26 @@
+ 	      <http-basic />
+ 	      <csrf disabled="true"/><!-- Spring security 4 -->
+     </http>
+-    
++
+     <!-- OK-->
+     <!-- service user-->
+-	<http pattern="/api/v1/services/**" 
+-		create-session="stateless" 
+-		use-expressions="true" 
+-		authentication-manager-ref="adminAuthenticationManager" 
++	<http pattern="/api/v1/services/**"
++		create-session="stateless"
++		use-expressions="true"
++		authentication-manager-ref="adminAuthenticationManager"
+ 		entry-point-ref="servicesAuthenticationEntryPoint">
+ 	      <intercept-url pattern="/api/v1/services/private/**" access="hasRole('AUTH')"/>
+ 	      <form-login authentication-success-handler-ref="servicesAuthenticationSuccessHandler" />
+ 	      <http-basic />
+ 	      <csrf disabled="true"/><!-- Spring security 4 -->
+     </http>
+-    
++
+     <!-- OK-->
+     <!-- REST services v1 for Admin REALM -->
+-    <http pattern="/api/v1/private/**" 
+-		create-session="stateless" 
++    <http pattern="/api/v1/private/**"
++		create-session="stateless"
+ 		use-expressions="true"
+-		authentication-manager-ref="jwtAdminAuthenticationManager" 
++		authentication-manager-ref="jwtAdminAuthenticationManager"
+ 		entry-point-ref="servicesAuthenticationEntryPoint">
+ 		  <form-login authentication-success-handler-ref="userAuthenticationSuccessHandler" />
+ 		  <intercept-url pattern="/api/v1/private/login" access="permitAll" />
+@@ -184,40 +186,40 @@
+ 	      <custom-filter ref="authenticationTokenFilter" before="FORM_LOGIN_FILTER"/>
+ 	      <csrf disabled="true"/>
+     </http>
+-   
++
+    <!-- OK -->
+-   <!-- 
++   <!--
+    https://stackoverflow.com/questions/40286549/spring-boot-security-cors
+     -->
+     <!-- REST services v1 for Customer REALM -->
+     <!-- http://www.gauravbytes.com/2017/03/spring-security-digest-authentication.html
+-    
++
+     https://www.toptal.com/java/rest-security-with-jwt-spring-security-and-java
+     https://github.com/szerhusenBC/jwt-spring-security-demo
+-    
++
+     FB
+     https://github.com/ozgengunay/FBSpringSocialRESTAuth
+-    
++
+     App access token
+     https://developers.facebook.com/tools/access_token/
+-    
++
+ 
+     FB user access token
+     EAABZBKVBQN2QBALvVE6RfhdzNVw3JkZCN6HDzGqeFXJJ5kOupH8EZA5PQrgO4sAOy7MfOS8pfilGtWeYlhT6eA7v5Obj02uPBq9oW9mdZC52GuTWnO18kTUKpqAx45CjZCqoKDGsPzTk0DWLkdcBDo3aDuUKW3wiFLGeRyuVmBKTmOLprOVtI7nISmb4tTsYZD
+-    
++
+     Customer authentication api
+      -->
+-     
+-	<http pattern="/api/v1/auth/**" 
+-			create-session="stateless" 
+-			use-expressions="true" 
++
++	<http pattern="/api/v1/auth/**"
++			create-session="stateless"
++			use-expressions="true"
+ 			authentication-manager-ref="jwtCustomerAuthenticationManager"
+ 			entry-point-ref="restAuthenticationEntryPoint">
+-		  
++
+ 		  <intercept-url pattern="/api/v1/auth/register" access="permitAll" />
+ 		  <intercept-url pattern="/api/v1/auth/login" access="permitAll" />
+ 		  <intercept-url pattern="/api/v1/auth/refresh" access="permitAll" />
+-		  <intercept-url pattern="/api/v1/auth/**" method="OPTIONS" access="permitAll"/>		
++		  <intercept-url pattern="/api/v1/auth/**" method="OPTIONS" access="permitAll"/>
+ 	      <intercept-url pattern="/api/v1/auth/**" access="hasRole('AUTH_CUSTOMER')"/>
+ 
+ 	      <custom-filter ref="authenticationTokenFilter" before="FORM_LOGIN_FILTER"/>
+@@ -236,7 +238,7 @@
+ 			<password-encoder ref="passwordEncoder" hash="bcrypt"/>
+ 		</authentication-provider>
+ 	</authentication-manager>
+-	
++
+ 	<!-- OK -->
+ 	<authentication-manager id="customerAuthenticationManager">
+ 		<authentication-provider user-service-ref="customerDetailsService">
+@@ -251,7 +253,7 @@
+ 			<password-encoder ref="passwordEncoder" hash="bcrypt"/>
+ 		</authentication-provider>
+ 	</authentication-manager>
+-	
++
+ 	<!-- OK -->
+ 	<!-- Authenticates admin API -->
+  	<authentication-manager id="jwtAdminAuthenticationManager">
+@@ -260,28 +262,28 @@
+ 		</authentication-provider>
+ 	</authentication-manager>
+ 
+-	
+-	
++
++
+ 	<!-- OK -->
+ 	<beans:bean id="adminAuthenticationEntryPoint"
+   		class="org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint">
+      	<beans:property name="realmName" value="admin-realm" />
+ 	</beans:bean>
+-	
++
+ 	<!-- OK -->
+ 	<beans:bean id="shopAuthenticationEntryPoint"
+   		class="org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint">
+      	<beans:property name="realmName" value="shop-realm" />
+ 	</beans:bean>
+-	
++
+ 	<!-- OK -->
+ 	<beans:bean id="servicesAuthenticationEntryPoint" class="com.salesmanager.shop.store.security.ServicesAuthenticationEntryPoint">
+ 	</beans:bean>
+ 
+-	<!-- This bean encrypts the authorization details of the connection. In 
+-		our example, the authorization details are stored as plain text. DO NOT USE 
++	<!-- This bean encrypts the authorization details of the connection. In
++		our example, the authorization details are stored as plain text. DO NOT USE
+ 		THIS IN PRODUCTION. -->
+ 	<beans:bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors"
+ 		factory-method="noOpText" />
+ 
+-</beans:beans>
+\ No newline at end of file
++</beans:beans>

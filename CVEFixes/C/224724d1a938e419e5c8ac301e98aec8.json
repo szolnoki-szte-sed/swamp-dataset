@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:imagemagick:imagemagick:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ImageMagick/ImageMagick/commit/930ff0d1a9bc42925a7856e9ea53f5fc9f318bf3",
+        "version_end_excluding": {
+            "imagemagick:imagemagick": "7.0.11-14",
+            "fedoraproject:fedora": "unknown",
+            "redhat:enterprise_linux": "unknown"
+        },
+        "path": {
+            "file_path": "coders/tiff.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3610"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

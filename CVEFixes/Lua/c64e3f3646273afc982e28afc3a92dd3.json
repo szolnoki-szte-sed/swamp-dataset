@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:grafana:agent:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:grafana:agent:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/grafana/agent/commit/af7fb01e31fe2d389e5f1c36b399ddc46b412b21",
+        "version_end_excluding": {
+            "grafana:agent": "0.20.1"
+        },
+        "path": {
+            "file_path": "production/tanka/grafana-agent/v2/internal/syncer.libsonnet"
+        }
+    },
+    "programming_language": "lua",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41090"
+        ],
+        "CWE": [
+            "CWE-312"
+        ]
+    }
+}

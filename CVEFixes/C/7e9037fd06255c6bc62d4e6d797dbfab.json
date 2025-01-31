@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/php/php-src/commit/35ceea928b12373a3b1e3eecdc32ed323223a40d",
+        "version_end_excluding": {
+            "php:php": "5.3.28"
+        },
+        "path": {
+            "file_path": "sapi/fpm/fpm/fpm_unix.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-0185"
+        ],
+        "CWE": [
+            "CWE-269"
+        ]
+    }
+}

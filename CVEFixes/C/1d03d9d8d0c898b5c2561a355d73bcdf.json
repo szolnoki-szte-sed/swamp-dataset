@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:trustwave:modsecurity:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:7.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/SpiderLabs/ModSecurity/commit/f8d441cd25172fdfe5b613442fedfc0da3cc333d",
+        "version_end_excluding": {
+            "trustwave:modsecurity": "2.7.6",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "apache2/modsecurity.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-5705"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

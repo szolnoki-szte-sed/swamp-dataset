@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:geysermc:geyser:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/GeyserMC/Geyser/commit/b9541505af68ac7b7c093206ac7b1ba88957a5a6",
+        "version_end_excluding": {
+            "geysermc:geyser": "1.4.2"
+        },
+        "path": {
+            "file_path": "connector/src/main/java/org/geysermc/connector/network/translators/bedrock/world/BedrockLevelSoundEventTranslator.java"
+        }
+    },
+    "programming_language": "scala",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-39177"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

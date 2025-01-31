@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:geode:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/geode/commit/6df14c8b1e3c644f9f810149e80bba0c2f073dab",
+        "version_end_excluding": {
+            "apache:geode": "unknown"
+        },
+        "path": {
+            "file_path": "geode-connectors/src/test/java/org/apache/geode/connectors/jdbc/internal/cli/JDBCConnectorFunctionsSecurityTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-15695"
+        ],
+        "CWE": [
+            "CWE-863"
+        ]
+    }
+}

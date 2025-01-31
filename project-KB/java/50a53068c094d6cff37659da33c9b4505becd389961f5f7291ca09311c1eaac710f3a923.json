@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bouncycastle:legion-of-the-bouncy-castle-java-crytography-api:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bcgit/bc-java/commit/50a53068c094d6cff37659da33c9b4505becd389",
+        "version_end_excluding": {
+            "bouncycastle:legion-of-the-bouncy-castle-java-crytography-api": "unknown"
+        },
+        "path": {
+            "file_path": "prov/src/test/java/org/bouncycastle/jce/provider/test/DSATest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-1000343"
+        ],
+        "CWE": [
+            "CWE-310"
+        ]
+    }
+}

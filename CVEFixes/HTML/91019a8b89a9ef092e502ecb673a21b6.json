@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:webrecorder:pywb:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/webrecorder/pywb/commit/f7bd84cdacdd665ff73ae8d09a202f60be2ebae9",
+        "version_end_excluding": {
+            "webrecorder:pywb": "2.6.0"
+        },
+        "path": {
+            "file_path": "pywb/templates/base.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-39286"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:poi:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/poi/commit/a07ed9e86474da98f204efadfd5b9327009a0d21",
+        "version_end_excluding": {
+            "apache:poi": "3.17"
+        },
+        "path": {
+            "file_path": "src/scratchpad/testcases/org/apache/poi/hwmf/TestHwmfParsing.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-12626"
+        ],
+        "CWE": [
+            "CWE-835"
+        ]
+    }
+}

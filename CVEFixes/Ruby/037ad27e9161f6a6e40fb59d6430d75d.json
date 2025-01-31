@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:safemode_project:safemode:*:*:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/theforeman/foreman/commit/82f9b93c54f72c5814df6bab7fad057eab65b2f2",
+        "version_end_excluding": {
+            "safemode_project:safemode": "unknown"
+        },
+        "path": {
+            "file_path": "Gemfile"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-3693"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

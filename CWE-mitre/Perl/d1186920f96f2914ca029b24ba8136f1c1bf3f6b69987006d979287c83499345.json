@@ -1,0 +1,93 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:python-poetry:poetry:*:*:*:*:*:python:*:*",
+            "cpe:2.3:o:ibm:aix:3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:internet_explorer:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:internet_explorer:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:microsoft:windows_server_2003:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:office:xp:sp2:*:*:*:*:*:*",
+            "cpe:2.3:a:opera:opera_browser:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ibm:lotus_notes:6.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:mac_os_x:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:kde:konqueror:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:kimihia:tellme:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:beagle_project:beagle:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:internet_explorer:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mozilla:firefox:1.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:avantbrowser:avant_browser:10.1:build_17:*:*:*:*:*:*",
+            "cpe:2.3:a:skype:skype:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:winscp:winscp:3.8.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:microsoft:windows_server_2003:-:-:*:*:*:*:*:*",
+            "cpe:2.3:a:hilgraeve:hyperaccess:8.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:oracle:solaris:10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mobatek:mobaxterm:11.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmailer_project:phpmailer:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "python-poetry:poetry": "unknown",
+            "ibm:aix": "unknown",
+            "microsoft:internet_explorer": "unknown",
+            "php:php": "4.1.0",
+            "microsoft:windows_server_2003": "unknown",
+            "microsoft:office": "unknown",
+            "opera:opera_browser": "unknown",
+            "ibm:lotus_notes": "unknown",
+            "apple:mac_os_x": "10.3.3",
+            "kde:konqueror": "3.2.2",
+            "kimihia:tellme": "1.2",
+            "beagle_project:beagle": "unknown",
+            "mozilla:firefox": "unknown",
+            "avantbrowser:avant_browser": "unknown",
+            "skype:skype": "unknown",
+            "winscp:winscp": "unknown",
+            "hilgraeve:hyperaccess": "unknown",
+            "oracle:solaris": "unknown",
+            "mobatek:mobaxterm": "unknown",
+            "phpmailer_project:phpmailer": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "perl",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-36069",
+            "CVE-1999-0113",
+            "CVE-2001-0150",
+            "CVE-2001-0667",
+            "CVE-2002-0985",
+            "CVE-2003-0907",
+            "CVE-2004-0121",
+            "CVE-2004-0473",
+            "CVE-2004-0480",
+            "CVE-2004-0489",
+            "CVE-2004-0411",
+            "CVE-2005-4699",
+            "CVE-2006-1865",
+            "CVE-2006-2056",
+            "CVE-2006-2057",
+            "CVE-2006-2058",
+            "CVE-2006-2312",
+            "CVE-2006-3015",
+            "CVE-2006-4692",
+            "CVE-2006-6597",
+            "CVE-2007-0882",
+            "CVE-2001-1246",
+            "CVE-2019-13475",
+            "CVE-2016-10033"
+        ],
+        "CWE": [
+            "CWE-88"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gpac:gpac:1.0.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/gpac/gpac/commit/ad18ece95fa064efc0995c4ab2c985f77fb166ec",
+        "version_end_excluding": {
+            "gpac:gpac": "unknown"
+        },
+        "path": {
+            "file_path": "src/isomedia/hint_track.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v2.1"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-40576"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

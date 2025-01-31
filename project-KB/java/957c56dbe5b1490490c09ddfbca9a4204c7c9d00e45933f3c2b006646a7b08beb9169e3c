@@ -1,0 +1,89 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/DataNode.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/DataNode.java
+index fe5e797633538..7bb10c35bcd12 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/DataNode.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/DataNode.java
+@@ -398,6 +398,10 @@ void refreshNamenodes(Configuration conf)
+   private Configuration conf;
+ 
+   private final String userWithLocalPathAccess;
++  private String supergroup;
++  private boolean isPermissionEnabled;
++  private String dnUserName = null;
++
+ 
+   /**
+    * Create the DataNode given a configuration and an array of dataDirs.
+@@ -419,6 +423,11 @@ void refreshNamenodes(Configuration conf)
+ 
+     this.userWithLocalPathAccess = conf
+         .get(DFSConfigKeys.DFS_BLOCK_LOCAL_PATH_ACCESS_USER_KEY);
++    this.supergroup = conf.get(DFSConfigKeys.DFS_PERMISSIONS_SUPERUSERGROUP_KEY,
++        DFSConfigKeys.DFS_PERMISSIONS_SUPERUSERGROUP_DEFAULT);
++    this.isPermissionEnabled = conf.getBoolean(
++        DFSConfigKeys.DFS_PERMISSIONS_ENABLED_KEY,
++        DFSConfigKeys.DFS_PERMISSIONS_ENABLED_DEFAULT);
+     try {
+       confHostName = getHostName(conf);
+       hostName = confHostName;
+@@ -525,6 +534,33 @@ private void initIpcServer(Configuration conf) throws IOException {
+       ipcServer.refreshServiceAcl(conf, new HDFSPolicyProvider());
+     }
+   }
++
++  /** Check whether the current user is in the superuser group. */
++  private void checkSuperuserPrivilege() throws IOException, AccessControlException {
++    if (!isPermissionEnabled) {
++      return;
++    }
++    // Try to get the ugi in the RPC call.
++    UserGroupInformation callerUgi = ipcServer.getRemoteUser();
++    if (callerUgi == null) {
++      // This is not from RPC.
++      callerUgi = UserGroupInformation.getCurrentUser();
++    }
++
++    // Is this by the DN user itself?
++    assert dnUserName != null;
++    if (callerUgi.getShortUserName().equals(dnUserName)) {
++      return;
++    }
++
++    // Is the user a member of the super group?
++    List<String> groups = Arrays.asList(callerUgi.getGroupNames());
++    if (groups.contains(supergroup)) {
++      return;
++    }
++    // Not a superuser.
++    throw new AccessControlException();
++  }
+   
+ /**
+  * Initialize the datanode's periodic scanners:
+@@ -704,6 +740,11 @@ void startDataNode(Configuration conf,
+   
+     // BlockPoolTokenSecretManager is required to create ipc server.
+     this.blockPoolTokenSecretManager = new BlockPoolTokenSecretManager();
++    // Login is done by now. Set the DN user name.
++    dnUserName = UserGroupInformation.getCurrentUser().getShortUserName();
++    LOG.info("dnUserName = " + dnUserName);
++    LOG.info("supergroup = " + supergroup);
++
+     initIpcServer(conf);
+ 
+     metrics = DataNodeMetrics.create(conf, getMachineName());
+@@ -2230,6 +2271,7 @@ public void refreshNamenodes(Configuration conf) throws IOException {
+ 
+   @Override //ClientDatanodeProtocol
+   public void refreshNamenodes() throws IOException {
++    checkSuperuserPrivilege();
+     conf = new Configuration();
+     refreshNamenodes(conf);
+   }
+@@ -2237,6 +2279,7 @@ public void refreshNamenodes() throws IOException {
+   @Override // ClientDatanodeProtocol
+   public void deleteBlockPool(String blockPoolId, boolean force)
+       throws IOException {
++    checkSuperuserPrivilege();
+     LOG.info("deleteBlockPool command received for block pool " + blockPoolId
+         + ", force=" + force);
+     if (blockPoolManager.get(blockPoolId) != null) {

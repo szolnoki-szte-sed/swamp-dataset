@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:parity:libsecp256k1:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/paritytech/libsecp256k1/commit/11ba23a9766a5079918cd9f515bc100bc8164b50",
+        "version_end_excluding": {
+            "parity:libsecp256k1": "0.3.1"
+        },
+        "path": {
+            "file_path": "src/lib.rs"
+        }
+    },
+    "programming_language": "rust",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-20399"
+        ],
+        "CWE": [
+            "CWE-203"
+        ]
+    }
+}

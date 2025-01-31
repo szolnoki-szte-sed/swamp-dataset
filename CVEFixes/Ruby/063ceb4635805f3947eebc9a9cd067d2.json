@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:tuzitio:camaleon_cms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/owen2345/camaleon-cms/commit/05506e9087bb05282c0bae6ccfe0283d0332ab3c",
+        "version_end_excluding": {
+            "tuzitio:camaleon_cms": "unknown"
+        },
+        "path": {
+            "file_path": "app/helpers/camaleon_cms/comment_helper.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-25969"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

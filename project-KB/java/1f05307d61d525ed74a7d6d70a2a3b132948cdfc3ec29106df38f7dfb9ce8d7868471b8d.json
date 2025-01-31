@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:oracle:flexcube_private_banking:12.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:flexcube_private_banking:12.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:financial_services_analytical_applications_infrastructure:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:spring_web_services:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-ws/commit/1f05307d61d525ed74a7d6d70a2a3b132948cdfc",
+        "version_end_excluding": {
+            "pivotal_software:spring_web_services": "unknown"
+        },
+        "path": {
+            "file_path": "spring-ws-core/src/test/java/org/springframework/ws/transport/http/HttpServletConnectionTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-3773"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

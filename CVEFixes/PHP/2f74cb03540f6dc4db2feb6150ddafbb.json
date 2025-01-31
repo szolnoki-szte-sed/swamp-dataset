@@ -1,0 +1,53 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:horde:horde_image_api:2.0.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.0.0:alpha1:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.3.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.0.0:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.3.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.0.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.3.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.5.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.0.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:horde_image_api:2.3.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/horde/horde/commit/eb3afd14c22c77ae0d29e2848f5ac726ef6e7c5b",
+        "version_end_excluding": {
+            "horde:horde_image_api": "unknown"
+        },
+        "path": {
+            "file_path": "framework/Image/lib/Horde/Image/Im.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-14650"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

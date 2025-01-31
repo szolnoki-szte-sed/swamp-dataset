@@ -1,0 +1,46 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ganglia:ganglia-web:2.1.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:2.1.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:3.5.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:3.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:3.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:3.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:2.1.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:2.1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:2.1.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:2.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:3.5.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:2.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:2.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:3.5.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:3.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:3.5.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:2.1.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ganglia:ganglia-web:3.4.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e",
+        "version_end_excluding": {
+            "ganglia:ganglia-web": "unknown"
+        },
+        "path": {
+            "file_path": "autorotation.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-0275"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

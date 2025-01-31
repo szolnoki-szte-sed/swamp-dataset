@@ -1,0 +1,39 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:element_software:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:active_iq_performance_analytics_services:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:active_iq_unified_manager:*:*:*:*:*:vmware_vsphere:*:*",
+            "cpe:2.3:a:netapp:data_availability_services:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/0625b4ba1a5d4703c7fb01c497bd6c156908af00",
+        "version_end_excluding": {
+            "linux:linux_kernel": "4.18.7",
+            "opensuse:leap": "unknown",
+            "netapp:element_software": "unknown",
+            "netapp:active_iq_performance_analytics_services": "unknown",
+            "netapp:active_iq_unified_manager": "unknown",
+            "netapp:data_availability_services": "unknown"
+        },
+        "path": {
+            "file_path": "drivers/infiniband/hw/mlx5/qp.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20855"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

@@ -1,0 +1,76 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:f5:big-ip_access_policy_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:h:dlink:dir-825:r1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ondanera:hamster_audio_player:0.3a:*:*:*:*:*:*:*",
+            "cpe:2.3:a:shinjichiba:scmpx:1.5.1:*:*:*:*:windows:*:*",
+            "cpe:2.3:a:k-meleon_project:k-meleon:1.5.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:foxitsoftware:foxit_reader:3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:internet_explorer:8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:internet_explorer:6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:office:2004:*:mac:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:office_publisher:2007:sp1:*:*:*:*:*:*",
+            "cpe:2.3:a:novell:netidentity_client1.2.3:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:foxitsoftware:foxit_reader:2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:qmail_project:qmail:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:http_server:1.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:webkitgtk:webkitgtk\\+:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "f5:big-ip_access_policy_manager": "unknown",
+            "dlink:dir-825": "unknown",
+            "ondanera:hamster_audio_player": "unknown",
+            "shinjichiba:scmpx": "unknown",
+            "k-meleon_project:k-meleon": "unknown",
+            "foxitsoftware:foxit_reader": "unknown",
+            "microsoft:internet_explorer": "unknown",
+            "google:tensorflow": "unknown",
+            "microsoft:office": "unknown",
+            "linux:linux_kernel": "2.6.25.14",
+            "microsoft:office_publisher": "unknown",
+            "novell:netidentity_client1.2.3": "unknown",
+            "qmail_project:qmail": "unknown",
+            "apache:http_server": "unknown",
+            "webkitgtk:webkitgtk\\+": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-22991",
+            "CVE-2020-29557",
+            "CVE-2009-2550",
+            "CVE-2009-2403",
+            "CVE-2009-0689",
+            "CVE-2009-0690",
+            "CVE-2009-1532",
+            "CVE-2009-1528",
+            "CVE-2021-29529",
+            "CVE-2009-0558",
+            "CVE-2009-0269",
+            "CVE-2009-0566",
+            "CVE-2009-1350",
+            "CVE-2009-0191",
+            "CVE-2008-4113",
+            "CVE-2005-1513",
+            "CVE-2003-0542",
+            "CVE-2017-1000121"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

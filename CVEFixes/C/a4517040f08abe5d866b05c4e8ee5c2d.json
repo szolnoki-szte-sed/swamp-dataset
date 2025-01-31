@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:rc6:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:3.9:rc4:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:3.9:rc5:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:3.9:rc3:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:3.9:rc2:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:3.9:rc1:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/c802d759623acbd6e1ee9fbdabae89159a513913",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "net/netrom/af_netrom.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-3232"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

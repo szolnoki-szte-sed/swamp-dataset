@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/6402939ec86eaf226c8b8ae00ed983936b164908",
+        "version_end_excluding": {
+            "linux:linux_kernel": "5.3.8"
+        },
+        "path": {
+            "file_path": "drivers/net/ieee802154/ca8210.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-19075"
+        ],
+        "CWE": [
+            "CWE-401"
+        ]
+    }
+}

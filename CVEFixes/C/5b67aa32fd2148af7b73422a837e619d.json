@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:struktur:libheif:1.4.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/strukturag/libheif/commit/2710c930918609caaf0a664e9c7bc3dce05d5b58",
+        "version_end_excluding": {
+            "struktur:libheif": "unknown"
+        },
+        "path": {
+            "file_path": "libheif/heif_limits.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-19498"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:samba:ppp:2.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:barton:ngircd:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:aol:aim:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown",
+            "samba:ppp": "unknown",
+            "barton:ngircd": "unknown",
+            "aol:aim": "5.9.3797"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2004-0816",
+            "CVE-2004-1002",
+            "CVE-2005-0199",
+            "CVE-2005-1891"
+        ],
+        "CWE": [
+            "CWE-191"
+        ]
+    }
+}

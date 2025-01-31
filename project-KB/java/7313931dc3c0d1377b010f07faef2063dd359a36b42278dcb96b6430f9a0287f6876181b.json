@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:antisamy_project:antisamy:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/nahsra/antisamy/commit/7313931dc3c0d1377b010f07faef2063dd359a36",
+        "version_end_excluding": {
+            "antisamy_project:antisamy": "1.5.5"
+        },
+        "path": {
+            "file_path": "src/main/java/org/owasp/validator/html/scan/MagicSAXFilter.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-10006"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

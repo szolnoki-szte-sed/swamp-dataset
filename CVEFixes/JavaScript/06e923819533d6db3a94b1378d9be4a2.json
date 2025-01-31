@@ -1,0 +1,39 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cure53:dompurify:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:visual_studio_2017:15.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:visual_studio_2019:16.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:visual_studio_2019:16.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:visual_studio_2019:16.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:visual_studio_2019:16.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:application_express:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cure53/DOMPurify/commit/02724b8eb048dd219d6725b05c3000936f11d62d",
+        "version_end_excluding": {
+            "cure53:dompurify": "2.0.17",
+            "debian:debian_linux": "unknown",
+            "microsoft:visual_studio_2017": "unknown",
+            "microsoft:visual_studio_2019": "unknown",
+            "oracle:application_express": "21.1.0.00.01"
+        },
+        "path": {
+            "file_path": "dist/purify.cjs.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-26870"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

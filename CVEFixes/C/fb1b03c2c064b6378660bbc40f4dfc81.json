@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:radare:radare2:2.5.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/radare/radare2/commit/9d348bcc2c4bbd3805e7eec97b594be9febbdf9a",
+        "version_end_excluding": {
+            "radare:radare2": "unknown"
+        },
+        "path": {
+            "file_path": "libr/anal/p/anal_avr.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-11383"
+        ],
+        "CWE": [
+            "CWE-908"
+        ]
+    }
+}

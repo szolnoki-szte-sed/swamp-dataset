@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:flatpak:flatpak:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:33:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/flatpak/flatpak/commit/eb7946bb6248923d8c90fe9b84425fef97ae580d",
+        "version_end_excluding": {
+            "flatpak:flatpak": "1.10.2",
+            "debian:debian_linux": "unknown",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "common/flatpak-dir.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v2.1"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21381"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

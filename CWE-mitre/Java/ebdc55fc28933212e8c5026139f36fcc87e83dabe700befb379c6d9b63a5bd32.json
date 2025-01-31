@@ -1,0 +1,52 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:microsoft:windows_2000:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openjournal:openjournal:2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:aspjar:aspjar_guestbook:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:aspbin:newspro:1.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpwebgallery:phpwebgallery:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:teekai:teekai_forum:1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:best_software:saleslogix:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:bluecoat:reporter:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpstat:phpstat:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "microsoft:windows_2000": "unknown",
+            "openjournal:openjournal": "unknown",
+            "aspjar:aspjar_guestbook": "unknown",
+            "aspbin:newspro": "unknown",
+            "phpwebgallery:phpwebgallery": "unknown",
+            "teekai:teekai_forum": "unknown",
+            "best_software:saleslogix": "unknown",
+            "bluecoat:reporter": "7.1.1",
+            "phpstat:phpstat": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2002-0367",
+            "CVE-2004-0261",
+            "CVE-2002-1730",
+            "CVE-2002-1734",
+            "CVE-2002-2064",
+            "CVE-2002-2054",
+            "CVE-2004-1611",
+            "CVE-2005-1708",
+            "CVE-2005-1787"
+        ],
+        "CWE": [
+            "CWE-302"
+        ]
+    }
+}

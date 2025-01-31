@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:shopizer:shopizer:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/shopizer-ecommerce/shopizer/commit/929ca0839a80c6f4dad087e0259089908787ad2a",
+        "version_end_excluding": {
+            "shopizer:shopizer": "2.11.0"
+        },
+        "path": {
+            "file_path": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/shoppingCart/facade/ShoppingCartFacadeImpl.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-11007"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

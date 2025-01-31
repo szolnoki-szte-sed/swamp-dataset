@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gnu:libredwg:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/LibreDWG/libredwg/commit/c6f6668b82bfe595899cc820279ac37bb9ef16f5",
+        "version_end_excluding": {
+            "gnu:libredwg": "unknown"
+        },
+        "path": {
+            "file_path": "include/dwg.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-20911"
+        ],
+        "CWE": [
+            "CWE-835"
+        ]
+    }
+}

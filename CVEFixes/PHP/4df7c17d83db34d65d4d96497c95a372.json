@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:galette:galette:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/galette/galette/commit/8f3bdd9f7d0708466e011253064a867ca2b271a5",
+        "version_end_excluding": {
+            "galette:galette": "0.9.5"
+        },
+        "path": {
+            "file_path": "galette/lib/Galette/DynamicFields/DynamicField.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21319"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

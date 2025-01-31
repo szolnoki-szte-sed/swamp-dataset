@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:facturascripts:facturascripts:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/neorazorx/facturascripts/commit/73a6595ca85984d65f656c6356fabb23d1936c54",
+        "version_end_excluding": {
+            "facturascripts:facturascripts": "2022.06"
+        },
+        "path": {
+            "file_path": "Core/App/AppController.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2066"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jupyter:binderhub:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jupyterhub/binderhub/commit/195caac172690456dcdc8cc7a6ca50e05abf8182",
+        "version_end_excluding": {
+            "jupyter:binderhub": "0.2.0-n653"
+        },
+        "path": {
+            "file_path": "binderhub/repoproviders.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-39159"
+        ],
+        "CWE": [
+            "CWE-94"
+        ]
+    }
+}

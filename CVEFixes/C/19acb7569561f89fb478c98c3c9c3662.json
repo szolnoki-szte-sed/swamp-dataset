@@ -1,0 +1,66 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:5.1:rc2:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.1:rc3:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.1:rc4:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.1:rc1:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:19.04:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.04:*:*:*:esm:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.04:*:*:*:esm:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:42.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:virtual_storage_console:*:*:*:*:*:vsphere:*:*",
+            "cpe:2.3:a:netapp:active_iq_unified_manager:*:*:*:*:*:vmware_vsphere:*:*",
+            "cpe:2.3:a:netapp:vasa_provider_for_clustered_data_ontap:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:solidfire:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:hci_management_node:-:*:*:*:*:*:*:*",
+            "cpe:2.3:h:netapp:hci_storage_node:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:snapprotect:-:*:*:*:*:*:*:*",
+            "cpe:2.3:h:netapp:hci_compute_node:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:storage_replication_adapter:7.2:*:*:*:*:vsphere:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/cb66ddd156203daefb8d71158036b27b0e2caf63",
+        "version_end_excluding": {
+            "linux:linux_kernel": "4.4.179",
+            "canonical:ubuntu_linux": "unknown",
+            "debian:debian_linux": "unknown",
+            "opensuse:leap": "unknown",
+            "netapp:virtual_storage_console": "unknown",
+            "netapp:active_iq_unified_manager": "unknown",
+            "netapp:vasa_provider_for_clustered_data_ontap": "unknown",
+            "netapp:solidfire": "unknown",
+            "netapp:hci_management_node": "unknown",
+            "netapp:hci_storage_node": "unknown",
+            "netapp:snapprotect": "unknown",
+            "netapp:hci_compute_node": "unknown",
+            "netapp:storage_replication_adapter": "unknown"
+        },
+        "path": {
+            "file_path": "net/rds/tcp.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-11815"
+        ],
+        "CWE": [
+            "CWE-362"
+        ]
+    }
+}

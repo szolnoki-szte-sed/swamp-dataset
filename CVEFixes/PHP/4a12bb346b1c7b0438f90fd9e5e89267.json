@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/WordPress/WordPress/commit/ce7fb2934dd111e6353784852de8aea2a938b359",
+        "version_end_excluding": {
+            "wordpress:wordpress": "unknown"
+        },
+        "path": {
+            "file_path": "wp-includes/version.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-5490"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

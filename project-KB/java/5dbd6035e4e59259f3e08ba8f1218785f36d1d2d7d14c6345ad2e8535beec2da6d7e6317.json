@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:orientdb:orientdb:*:*:*:*:community:*:*:*",
+            "cpe:2.3:a:orientdb:orientdb:2.1.0:*:*:*:community:*:*:*"
+        ],
+        "fix_commit": "https://github.com/orientechnologies/orientdb/commit/5dbd6035e4e59259f3e08ba8f1218785f36d1d2d",
+        "version_end_excluding": {
+            "orientdb:orientdb": "unknown"
+        },
+        "path": {
+            "file_path": "server/src/main/java/com/orientechnologies/orient/server/network/protocol/http/ONetworkProtocolHttpAbstract.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-2912"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

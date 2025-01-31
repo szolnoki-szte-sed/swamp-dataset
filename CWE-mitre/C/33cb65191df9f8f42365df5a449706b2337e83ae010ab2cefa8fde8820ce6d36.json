@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:h:intel:atom_c2308:-:*:*:*:*:*:*:*",
+            "cpe:2.3:o:intel:microcode:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "intel:atom_c2308": "unknown",
+            "intel:microcode": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-0551",
+            "CVE-2020-8698"
+        ],
+        "CWE": [
+            "CWE-1422"
+        ]
+    }
+}

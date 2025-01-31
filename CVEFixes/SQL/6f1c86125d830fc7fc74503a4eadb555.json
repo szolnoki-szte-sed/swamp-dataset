@@ -1,0 +1,38 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:systemd_project:systemd:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:openshift_container_platform:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:discovery:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:migration_toolkit:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:ceph_storage:4.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/systemd/systemd/commit/bc130b6858327b382b07b3985cf48e2aa9016b2d",
+        "version_end_excluding": {
+            "systemd_project:systemd": "unknown",
+            "redhat:enterprise_linux": "unknown",
+            "redhat:openshift_container_platform": "unknown",
+            "redhat:discovery": "unknown",
+            "redhat:migration_toolkit": "unknown",
+            "redhat:ceph_storage": "unknown"
+        },
+        "path": {
+            "file_path": "src/libsystemd/libsystemd.sym"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1712"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

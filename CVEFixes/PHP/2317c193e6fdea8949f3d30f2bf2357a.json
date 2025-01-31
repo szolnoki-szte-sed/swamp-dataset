@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ecommerce-codeigniter-bootstrap_project:ecommerce-codeigniter-bootstrap:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/kirilkirkov/Ecommerce-CodeIgniter-Bootstrap/commit/56465fb6a83aaa934a76615a8579100938b790a1",
+        "version_end_excluding": {
+            "ecommerce-codeigniter-bootstrap_project:ecommerce-codeigniter-bootstrap": "2021-08-21"
+        },
+        "path": {
+            "file_path": "application/modules/admin/views/blog/blogpublish.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-35213"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

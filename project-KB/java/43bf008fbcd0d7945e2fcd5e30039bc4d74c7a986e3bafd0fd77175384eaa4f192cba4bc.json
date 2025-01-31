@@ -1,0 +1,59 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:vmware:spring_framework:3.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.3.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.2.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:spring_framework:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.3.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.16:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.2.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:spring_framework:4.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.15:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.2.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.2.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.17:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.13:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:spring_framework:4.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.14:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-framework/commit/43bf008fbcd0d7945e2fcd5e30039bc4d74c7a98",
+        "version_end_excluding": {
+            "pivotal_software:spring_framework": "unknown"
+        },
+        "path": {
+            "file_path": "spring-webmvc/src/main/java/org/springframework/web/servlet/ResourceServlet.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-9878"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

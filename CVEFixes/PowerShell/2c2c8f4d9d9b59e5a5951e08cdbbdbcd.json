@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:winscp:winscp:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/winscp/winscp/commit/faa96e8144e6925a380f94a97aa382c9427f688d",
+        "version_end_excluding": {
+            "winscp:winscp": "5.17.10"
+        },
+        "path": {
+            "file_path": "source/Console.cbproj"
+        }
+    },
+    "programming_language": "powershell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3331"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

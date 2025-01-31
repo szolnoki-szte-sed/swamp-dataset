@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:etherpad:etherpad_lite:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ether/etherpad-lite/commit/ffe24c3dd93efc73e0cbf924db9a0cc40be9511b",
+        "version_end_excluding": {
+            "etherpad:etherpad_lite": "1.6.4"
+        },
+        "path": {
+            "file_path": "src/node/hooks/express/webaccess.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-9845"
+        ],
+        "CWE": [
+            "CWE-178"
+        ]
+    }
+}

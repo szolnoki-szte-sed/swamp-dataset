@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:nottingham.ac:xerte_online_toolkits:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/thexerteproject/xerteonlinetoolkits/commit/694a591b5ab7f634f036afaac10397cf3677a98c",
+        "version_end_excluding": {
+            "nottingham.ac:xerte_online_toolkits": "unknown"
+        },
+        "path": {
+            "file_path": "editor/elfinder/php/mime.types"
+        }
+    },
+    "programming_language": "tex",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-44662"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

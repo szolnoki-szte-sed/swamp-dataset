@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:systeminformation:systeminformation:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/sebhildebrandt/systeminformation/commit/73dce8d717ca9c3b7b0d0688254b8213b957f0fa",
+        "version_end_excluding": {
+            "systeminformation:systeminformation": "4.30.2"
+        },
+        "path": {
+            "file_path": "lib/network.js"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-7778"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

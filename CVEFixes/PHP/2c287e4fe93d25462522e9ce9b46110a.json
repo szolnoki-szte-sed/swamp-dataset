@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:42.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:13.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/php/php-src/commit/3f627e580acfdaf0595ae3b115b8bec677f203ee",
+        "version_end_excluding": {
+            "php:php": "7.0.8",
+            "opensuse:leap": "unknown",
+            "opensuse:opensuse": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "Zend/tests/gc_024.phpt"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-5771"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

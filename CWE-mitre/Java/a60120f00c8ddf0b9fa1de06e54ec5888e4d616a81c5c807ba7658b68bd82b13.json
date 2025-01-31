@@ -1,0 +1,40 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:yiiframework:yii:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:qnap:ts-239_pro_firmware:2.1.7:build0613:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:iomega:storcenter_pro_firmware:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "yiiframework:yii": "unknown",
+            "qnap:ts-239_pro_firmware": "unknown",
+            "linux:linux_kernel": "unknown",
+            "iomega:storcenter_pro_firmware": "unknown",
+            "openssl:openssl": "0.9.8g"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3692",
+            "CVE-2009-3278",
+            "CVE-2009-3238",
+            "CVE-2009-2367",
+            "CVE-2008-0166"
+        ],
+        "CWE": [
+            "CWE-338"
+        ]
+    }
+}

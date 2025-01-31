@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:linuxfoundation:besu:21.10.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:besu:21.10.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:besu:21.10.0:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:besu:21.10.0:rc3:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:besu:21.10.0:rc4:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:besu:21.10.0:-:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/hyperledger/besu/commit/4170524ac3b45185704fcfbdeeb71b0b05dfa0a1",
+        "version_end_excluding": {
+            "linuxfoundation:besu": "unknown"
+        },
+        "path": {
+            "file_path": "evm/src/main/java/org/hyperledger/besu/evm/operation/SarOperation.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41272"
+        ],
+        "CWE": [
+            "CWE-681"
+        ]
+    }
+}

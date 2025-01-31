@@ -1,0 +1,65 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:horde:groupware:4.0:*:webamail:*:*:*:*:*",
+            "cpe:2.3:a:horde:groupware:4.0.3:*:webamail:*:*:*:*:*",
+            "cpe:2.3:a:horde:groupware:4.0:rc1:webamail:*:*:*:*:*",
+            "cpe:2.3:a:horde:groupware:4.0.2:*:webamail:*:*:*:*:*",
+            "cpe:2.3:a:horde:groupware:4.0.7:*:webamail:*:*:*:*:*",
+            "cpe:2.3:a:horde:groupware:4.0.1:*:webamail:*:*:*:*:*",
+            "cpe:2.3:a:horde:groupware:4.0.5:*:webamail:*:*:*:*:*",
+            "cpe:2.3:a:horde:groupware:*:*:webamail:*:*:*:*:*",
+            "cpe:2.3:a:horde:groupware:4.0:rc2:webamail:*:*:*:*:*",
+            "cpe:2.3:a:horde:groupware:4.0.6:*:webamail:*:*:*:*:*",
+            "cpe:2.3:a:horde:groupware:4.0.4:*:webamail:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.19:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.17:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.13:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.16:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.18:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.20:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0:alpha1:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.15:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:imp:5.0.14:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/horde/horde/commit/08c699f744b6d2be1a5f3a2ba7203f4631b4c5dc",
+        "version_end_excluding": {
+            "horde:groupware": "unknown",
+            "horde:imp": "unknown"
+        },
+        "path": {
+            "file_path": "imp/docs/CHANGES"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-6640"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

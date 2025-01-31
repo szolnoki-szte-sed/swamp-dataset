@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:openmicroscopy:omero.web:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ome/omero-web/commit/952f8e5d28532fbb14fb665982211329d137908c",
+        "version_end_excluding": {
+            "openmicroscopy:omero.web": "5.9.0"
+        },
+        "path": {
+            "file_path": "omeroweb/webclient/templates/webclient/base/base_container.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21376"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

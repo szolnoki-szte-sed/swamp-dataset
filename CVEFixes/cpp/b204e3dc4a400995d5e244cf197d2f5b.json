@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:google:extensible_service_proxy:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cloudendpoints/esp/commit/e310c4f91d229a072507f80c73811489b4cdff27",
+        "version_end_excluding": {
+            "google:extensible_service_proxy": "1.58.0"
+        },
+        "path": {
+            "file_path": "src/api_manager/check_auth.cc"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 2-Clause \"Simplified\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41130"
+        ],
+        "CWE": [
+            "CWE-290"
+        ]
+    }
+}

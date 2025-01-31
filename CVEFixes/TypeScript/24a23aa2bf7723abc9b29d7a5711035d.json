@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:finastra:ssr-pages:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/Finastra/ssr-pages/commit/98abc59e28fec48246be0d59ac144675d6361073",
+        "version_end_excluding": {
+            "finastra:ssr-pages": "0.1.5"
+        },
+        "path": {
+            "file_path": "src/helpers/string-encoder.helper.ts"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24717"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:buildah_project:buildah:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:35:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/containers/buildah/commit/e7e55c988c05dd74005184ceb64f097a0cfe645b",
+        "version_end_excluding": {
+            "buildah_project:buildah": "1.25.0",
+            "fedoraproject:fedora": "unknown",
+            "redhat:enterprise_linux": "unknown"
+        },
+        "path": {
+            "file_path": "chroot/run.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-27651"
+        ],
+        "CWE": [
+            "CWE-276"
+        ]
+    }
+}

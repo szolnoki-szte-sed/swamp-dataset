@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.6.0:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.6.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.6.0:rc0:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.5.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/tensorflow/tensorflow/commit/e86605c0a336c088b638da02135ea6f9f6753618",
+        "version_end_excluding": {
+            "google:tensorflow": "unknown"
+        },
+        "path": {
+            "file_path": "tensorflow/core/kernels/inplace_ops.cc"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-37660"
+        ],
+        "CWE": [
+            "CWE-369"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:smallrye_config:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/smallrye/smallrye-config/commit/fb0def6f61c09a2a80c9145e4ec6521225cd0b99",
+        "version_end_excluding": {
+            "redhat:smallrye_config": "1.6.2"
+        },
+        "path": {
+            "file_path": "implementation/src/main/java/io/smallrye/config/SecuritySupport.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1729"
+        ],
+        "CWE": [
+            "CWE-863"
+        ]
+    }
+}

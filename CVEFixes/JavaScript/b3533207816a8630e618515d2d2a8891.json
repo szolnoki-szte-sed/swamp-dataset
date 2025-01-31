@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:momentjs:moment:*:*:*:*:*:nuget:*:*",
+            "cpe:2.3:a:momentjs:moment:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/moment/moment/commit/9a3b5894f3d5d602948ac8a02e4ee528a49ca3a3",
+        "version_end_excluding": {
+            "momentjs:moment": "2.29.4"
+        },
+        "path": {
+            "file_path": "src/lib/create/from-string.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-31129"
+        ],
+        "CWE": [
+            "CWE-400"
+        ]
+    }
+}

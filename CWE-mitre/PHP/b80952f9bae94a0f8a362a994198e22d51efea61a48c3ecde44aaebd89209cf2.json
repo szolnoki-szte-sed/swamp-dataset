@@ -1,0 +1,58 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:istio:istio:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:doas_project:doas:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:citrix:netscaler_access_gateway_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gratisoft:sudo:1.6.9:p17:*:*:*:*:*:*",
+            "cpe:2.3:a:net-snmp:net-snmp:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:kyoceramita:scanner_file_utility:3.3.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:condor_project:condor:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:dovecot:dovecot:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:chetcpasswd_project:chetcpasswd:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:freebsd:freebsd:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "istio:istio": "unknown",
+            "doas_project:doas": "unknown",
+            "citrix:netscaler_access_gateway_firmware": "8.1",
+            "gratisoft:sudo": "unknown",
+            "net-snmp:net-snmp": "5.4.2.1",
+            "kyoceramita:scanner_file_utility": "unknown",
+            "condor_project:condor": "unknown",
+            "dovecot:dovecot": "unknown",
+            "chetcpasswd_project:chetcpasswd": "unknown",
+            "linux:linux_kernel": "unknown",
+            "freebsd:freebsd": "4.3"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-39155",
+            "CVE-2019-15900",
+            "CVE-2009-2213",
+            "CVE-2009-0034",
+            "CVE-2008-6123",
+            "CVE-2008-7109",
+            "CVE-2008-3424",
+            "CVE-2008-4577",
+            "CVE-2006-6679",
+            "CVE-2005-2801",
+            "CVE-2001-1155"
+        ],
+        "CWE": [
+            "CWE-863"
+        ]
+    }
+}

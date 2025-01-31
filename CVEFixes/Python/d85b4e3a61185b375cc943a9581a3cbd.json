@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:flask_unchained_project:flask_unchained:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/briancappello/flask-unchained/commit/71e36b28166f9ffbe0a991f51127f0984f7e6a40",
+        "version_end_excluding": {
+            "flask_unchained_project:flask_unchained": "0.9.0"
+        },
+        "path": {
+            "file_path": "flask_unchained/bundles/controller/utils.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23393"
+        ],
+        "CWE": [
+            "CWE-601"
+        ]
+    }
+}

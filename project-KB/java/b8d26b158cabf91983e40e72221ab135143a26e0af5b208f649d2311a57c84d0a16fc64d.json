@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:geode:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/geode/commit/b8d26b158cabf91983e40e72221ab135143a26e0",
+        "version_end_excluding": {
+            "apache:geode": "unknown"
+        },
+        "path": {
+            "file_path": "geode-protobuf/src/test/java/org/apache/geode/internal/protocol/protobuf/security/SecureCacheImplTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-15694"
+        ],
+        "CWE": [
+            "CWE-88"
+        ]
+    }
+}

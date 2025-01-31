@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:struts:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/struts/commit/74e26830d2849a84729b33497f729e0f033dc147",
+        "version_end_excluding": {
+            "apache:struts": "2.3.16.1"
+        },
+        "path": {
+            "file_path": "core/src/test/java/com/opensymphony/xwork2/interceptor/ParametersInterceptorTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-0094"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fork-cms:fork_cms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/forkcms/forkcms/commit/4a7814762adf4f56f932d95146c7e4126d872114",
+        "version_end_excluding": {
+            "fork-cms:fork_cms": "3.8.4"
+        },
+        "path": {
+            "file_path": "src/Frontend/Modules/Search/Actions/Index.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-9470"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

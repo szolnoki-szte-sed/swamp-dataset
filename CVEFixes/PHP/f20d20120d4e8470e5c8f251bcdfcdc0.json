@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bigtreecms:bigtree_cms:4.0:b1:*:*:*:*:*:*",
+            "cpe:2.3:a:bigtreecms:bigtree_cms:4.0:b7:*:*:*:*:*:*",
+            "cpe:2.3:a:bigtreecms:bigtree_cms:4.0:b5:*:*:*:*:*:*",
+            "cpe:2.3:a:bigtreecms:bigtree_cms:4.0:b6:*:*:*:*:*:*",
+            "cpe:2.3:a:bigtreecms:bigtree_cms:*:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:bigtreecms:bigtree_cms:4.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:bigtreecms:bigtree_cms:4.0:b3:*:*:*:*:*:*",
+            "cpe:2.3:a:bigtreecms:bigtree_cms:4.0:b2:*:*:*:*:*:*",
+            "cpe:2.3:a:bigtreecms:bigtree_cms:4.0:b4:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bigtreecms/BigTree-CMS/commit/8a59c2e13f8e151b6a9e98f73e641e1ec8d928df",
+        "version_end_excluding": {
+            "bigtreecms:bigtree_cms": "unknown"
+        },
+        "path": {
+            "file_path": "core/admin/modules/developer/modules/views/add.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-4880"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

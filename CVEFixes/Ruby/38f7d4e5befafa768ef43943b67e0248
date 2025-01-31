@@ -1,0 +1,2644 @@
+diff --git a/Changes b/Changes
+index 3e694fe7..16922a81 100644
+--- a/Changes
++++ b/Changes
+@@ -7,6 +7,17 @@ RSS feed: https://exiftool.org/rss.xml
+ Note: The most recent production release is Version 12.16. (Other versions are
+ considered development releases, and are not uploaded to MetaCPAN.)
+ 
++Apr. 13, 2021 - Version 12.24
++
++  - Added a new PhaseOne RawFormat value (thanks LibRaw)
++  - Decode a new Sony tag (thanks Jos Roost)
++  - Decode a few new Panasonic and FujiFilm tags (thanks LibRaw and Greybeard)
++  - Patched security vulnerability in DjVu reader
++  - Updated acdsee.config in distribution (thanks StarGeek)
++  - Recognize AutoCAD DXF files
++  - More work on experimental JUMBF read support
++  - More work on experimental JXL read/write support
++
+ Apr. 1, 2021 - Version 12.23
+ 
+   - Added support for Olympus ORI files
+diff --git a/META.json b/META.json
+index f7969da4..f59bd9cd 100644
+--- a/META.json
++++ b/META.json
+@@ -47,6 +47,6 @@
+       }
+    },
+    "release_status" : "stable",
+-   "version" : "12.23",
++   "version" : "12.24",
+    "x_serialization_backend" : "JSON::PP version 4.02"
+ }
+diff --git a/META.yml b/META.yml
+index 3211347e..c874781e 100644
+--- a/META.yml
++++ b/META.yml
+@@ -28,5 +28,5 @@ recommends:
+   Time::HiRes: 0
+ requires:
+   perl: 5.004
+-version: 12.23
++version: 12.24
+ x_serialization_backend: 'JSON::PP version 4.02'
+diff --git a/README b/README
+index 7e6d3873..bad3817d 100644
+--- a/README
++++ b/README
+@@ -106,8 +106,8 @@ your home directory, then you would type the following commands in a
+ terminal window to extract and run ExifTool:
+ 
+   cd ~/Desktop
+-  gzip -dc Image-ExifTool-12.23.tar.gz | tar -xf -
+-  cd Image-ExifTool-12.23
++  gzip -dc Image-ExifTool-12.24.tar.gz | tar -xf -
++  cd Image-ExifTool-12.24
+   ./exiftool t/images/ExifTool.jpg
+ 
+ Note:  These commands extract meta information from one of the test images. 
+diff --git a/config_files/acdsee.config b/config_files/acdsee.config
+index f05fdba9..86330f2e 100644
+--- a/config_files/acdsee.config
++++ b/config_files/acdsee.config
+@@ -2,20 +2,76 @@
+ # File:         acdsee.config
+ #
+ # Description:  This config file defines ACDSee XMP region tags for writing.
++#               The following tags are created in the XMP-acdsee-rs group
+ #
+-# Usage:        exiftool -config acdsee.config -ACDSEETAG=VALUE FILE ...
++#                   RegionInfoACDSee : The structured tag for the ACDSee regions
++#                                      (similar to XMP-mwg-rs:RegionInfo)
++#
++#                   The following tags are the width, height, and unit of the
++#                   image at the time of processing  when storing image region
++#                   metadata.  They are similar to the AppliedToDimensions tags
++#                   of the MWG regions.
++#                       ACDSeeRegionAppliedToDimensionsH : Height of the image
++#                       ACDSeeRegionAppliedToDimensionsUnit : Unit of the image
++#                       ACDSeeRegionAppliedToDimensionsW : Width of the image
++#
++#                   Actual region data, stored in an array.  These flattened tags
++#                   are treated as List Type tags.  There are two region types,
++#                   the ALYArea and the DLYArea.  The ALYArea tags tags assigned
++#                   by ACDSee and are usually square in dimensions.  The DLYArea
++#                   tags are both the tags assigned by ACDSee (but possibly
++#                   rectangular instead of square) as well as any  manual
++#                   assigned tags.  They are similar to the area tags of the MWG
++#                   regions.
++#                       ACDSeeRegionDLYAreaH : Height of DLY region
++#                       ACDSeeRegionDLYAreaW : Width of DLY region
++#                       ACDSeeRegionDLYAreaX : X centerpoint of DLY region
++#                       ACDSeeRegionDLYAreaY : Y centerpoint of DLY region
++#                       ACDSeeRegionALYAreaH : Height of ALY region
++#                       ACDSeeRegionALYAreaW : Width of ALY region
++#                       ACDSeeRegionALYAreaX : X centerpoint of ALY region
++#                       ACDSeeRegionALYAreaY : Y centerpoint of ALY region
++#                       ACDSeeRegionName : Name of region
++#                       ACDSeeRegionType : Type of region
++#                       ACDSeeRegionNameAssignType : How the type was assigned.
++#                                                    "Manual" is the only known
++#                                                    entry at this time
++#
++#               Conversion tags.  These tags can be used to convert other region
++#               type tags to ACDSee regions.
++#                   MPRegion2ACDSeeRegion : Converts a Microsoft RegionInfoMP
++#                   IPTCRegion2ACDSeeRegion : Converts an IPTC ImageRegion
++#                   MWGRegion2ACDSeeRegion : Converts a MWG RegionInfo
++#
++# Usage:        To set individual tags
++#               exiftool -config acdsee.config -ACDSEETAG=VALUE FILE ...
++#
++#               To convert Microsoft Regions to ACDSee regions
++#               exiftool -config acdsee.config "-RegionInfoACDSee<MPRegion2ACDSeeRegion" File ...
++#               To convert IPTC regions to ACDSee regions
++#               exiftool -config acdsee.config "-RegionInfoACDSee<IPTCRegion2ACDSeeRegion" File ...
++#               To convert MWG Regions to ACDSee regions
++#               exiftool -config acdsee.config "-RegionInfoACDSee<MWGRegion2ACDSeeRegion" File ...
+ #
+ # Requires:     ExifTool version 10.28 or later
+ #
+ # Revisions:    2020/01/28 - Bryan K. Williams (aka StarGeek) Created
++#               2021/04/08 - BKW Added tags to convert from Microsoft, IPTC,
++#                            and MWG regions to ACDSee regions based upon
++#                            convert_regions.config.  Expanded docs.
++#                            Shortened ADCSee tag names and added shortcuts
++#                            from original names to new names, for example
++#                            "RegionInfoACDSeeAppliedToDimensions*" -> "ACDSeeRegionAppliedToDimensions*"
++#                            "RegionInfoACDSeeRegionList* -> "ACDSeeRegion*"
+ #------------------------------------------------------------------------------
++use Data::Dumper;
+ 
+ my %sACDSeeDimensions = (
+     STRUCT_NAME => 'ACDSee Dimensions',
+     NAMESPACE   => {'acdsee-stDim' => 'http://ns.acdsee.com/sType/Dimensions#'},
+-    'w'           => { Writable => 'real' },
+-    'h'           => { Writable => 'real' },
+-    'unit'        => { },
++    'w'         => { Writable => 'real' },
++    'h'         => { Writable => 'real' },
++    'unit'      => { },
+ );
+ 
+ my %sACDSeeArea = (
+@@ -38,7 +94,7 @@ my %sACDSeeRegionStruct = (
+ );
+ 
+ %Image::ExifTool::UserDefined = (
+-    # new XMP namespaces (eg. xxx) must be added to the Main XMP table:
++    # new XMP namespaces for ACDSee regions
+     'Image::ExifTool::XMP::Main' => {
+         'acdsee-rs' => { # <-- must be the same as the NAMESPACE prefix
+             SubDirectory => { 
+@@ -46,6 +102,112 @@ my %sACDSeeRegionStruct = (
+             },
+         },
+     },
++    'Image::ExifTool::Composite' => {
++    # create an ACDSee RegionInfo structure from a Microsoft RegionInfoMP structure
++        MPRegion2ACDSeeRegion => {
++            Require => {
++                0 => 'RegionInfoMP',
++                1 => 'ImageWidth',
++                2 => 'ImageHeight',
++            },
++            ValueConv => q{
++                my ($rgn, @newRgns);
++                foreach $rgn (@{$val[0]{Regions}}) {
++                    my $name = $$rgn{PersonDisplayName};
++                    next unless $$rgn{Rectangle} or defined $name;
++                    my %newRgn = ( Type => 'Face' );
++                    if (defined $name) {
++                        # don't add ignored faces
++                        next if $name eq 'ffffffffffffffff';
++                        $newRgn{Name} = $name;
++                    }
++                    if ($$rgn{Rectangle}) {
++                        my @rect = split /\s*,\s*/, $$rgn{Rectangle};
++                        $newRgn{DLYArea} = {
++                            X => $rect[0] + $rect[2]/2,
++                            Y => $rect[1] + $rect[3]/2,
++                            W => $rect[2],
++                            H => $rect[3],
++                        } if @rect == 4;
++                    }
++                    push @newRgns, \%newRgn;
++                }
++                return {
++                    AppliedToDimensions => { W => $val[1], H => $val[2], Unit => 'pixel' },
++                    RegionList => \@newRgns,
++                };
++            },
++        },
++        # create an ACDSee RegionInfo structure from an IPTC ImageRegion list
++        IPTCRegion2ACDSeeRegion => {
++            Require => {
++                0 => 'ImageRegion',
++                1 => 'ImageWidth',
++                2 => 'ImageHeight',
++            },
++            ValueConv => q{
++                my ($rgn, @newRgns);
++                my $rgns = ref $val[0] eq 'ARRAY' ? $val[0] : [ $val[0] ]; 
++                foreach $rgn (@$rgns) {
++                    my %newRgn = ( Type => 'Face' );
++                    if ($$rgn{RegionBoundary} and $$rgn{RegionBoundary}{RbShape} eq 'rectangle') {
++                        my @rect = @{$$rgn{RegionBoundary}}{'RbX','RbY','RbW','RbH'};
++                        if ($$rgn{RegionBoundary}{RbUnit} eq 'pixel') {
++                            $rect[0] /= $val[1],  $rect[2] /= $val[1];
++                            $rect[1] /= $val[2];  $rect[3] /= $val[2];
++                        }
++                        $newRgn{'DLYArea'} = {
++                            X => $rect[0] + $rect[2]/2,
++                            Y => $rect[1] + $rect[3]/2,
++                            W => $rect[2],
++                            H => $rect[3],
++                        };
++                    } else {
++                        next unless defined $$rgn{Name};
++                    }
++                    $newRgn{Name} = $$rgn{Name} if defined $$rgn{Name};
++                    push @newRgns, \%newRgn;
++                }
++                return {
++                    AppliedToDimensions => { 'W' => $val[1], 'H' => $val[2], 'Unit' => 'pixel' },
++                    RegionList => \@newRgns,
++                };
++            },
++        },
++
++        # create an MWG RegionInfo structure from an IPTC ImageRegion list
++        MWGRegion2ACDSeeRegion => {
++            Require => {
++                0 => 'RegionInfo',
++                1 => 'ImageWidth',
++                2 => 'ImageHeight',
++            },
++            ValueConv => q{
++                my ($rgn, @newRgns);
++                my %newRgn;
++                foreach $rgn (@{$val[0]{RegionList}}) {
++                    next unless $$rgn{Area} or defined $$rgn{Name};
++                    my %newRgn;
++                    if ($$rgn{Area}) {
++                        $newRgn{'DLYArea'} = {
++                            'X' => $$rgn{Area}{'X'},
++                            'Y' => $$rgn{Area}{'Y'},
++                            'W' => $$rgn{Area}{'W'},
++                            'H' => $$rgn{Area}{'H'},
++                        };
++                    };
++                    $newRgn{Name} = $$rgn{Name} if defined $$rgn{Name};
++                    $newRgn{'Type'} = $$rgn{'Type'} if defined $$rgn{'Type'};
++                    push @newRgns, \%newRgn;
++                }
++                return {
++                    'AppliedToDimensions' => $val[0]{'AppliedToDimensions'},
++                    RegionList => \@newRgns,
++                }
++            },
++        },
++        ####
++    },
+ );
+ 
+ %Image::ExifTool::UserDefined::ACDSeeRegions = (
+@@ -54,18 +216,43 @@ my %sACDSeeRegionStruct = (
+     WRITABLE => 'string', # (default to string-type tags)
+     Regions => {
+         Name => 'RegionInfoACDSee',
++        FlatName => 'ACDSee',
+         # the "Struct" entry defines the structure fields
+         Struct => {
+             # optional structure name (used for warning messages only)
+             STRUCT_NAME => 'ACDSee RegionInfo',        
+             RegionList => {
++                FlatName => 'Region',
+                 Struct => \%sACDSeeRegionStruct,
+                 List => 'Bag',
+             },
+-            AppliedToDimensions => { Struct => \%sACDSeeDimensions },
++            AppliedToDimensions => { 
++            FlatName => 'RegionAppliedToDimensions',Struct => \%sACDSeeDimensions },
+         },
+     },
+ );
+ 
++# Shortcuts to old names added so as not to break previously used commands
++%Image::ExifTool::UserDefined::Shortcuts = (
++    RegionInfoACDSeeAppliedToDimensionsH        => 'ACDSeeRegionAppliedToDimensionsH',
++    RegionInfoACDSeeAppliedToDimensionsUnit     => 'ACDSeeRegionAppliedToDimensionsUnit',
++    RegionInfoACDSeeAppliedToDimensionsW        => 'ACDSeeRegionAppliedToDimensionsW',
++    RegionInfoACDSeeRegionListDLYAreaH          => 'ACDSeeRegionDLYAreaH',
++    RegionInfoACDSeeRegionListDLYAreaW          => 'ACDSeeRegionDLYAreaW',
++    RegionInfoACDSeeRegionListDLYAreaX          => 'ACDSeeRegionDLYAreaX',  
++    RegionInfoACDSeeRegionListDLYAreaY          => 'ACDSeeRegionDLYAreaY',
++    RegionInfoACDSeeRegionListALGAreaH          => 'ACDSeeRegionALGAreaH',
++    RegionInfoACDSeeRegionListALGAreaW          => 'ACDSeeRegionALGAreaW',
++    RegionInfoACDSeeRegionListALGAreaX          => 'ACDSeeRegionALGAreaX',
++    RegionInfoACDSeeRegionListALGAreaY          => 'ACDSeeRegionALGAreaY',
++    RegionInfoACDSeeRegionListName              => 'ACDSeeRegionName',
++    RegionInfoACDSeeRegionListType              => 'ACDSeeRegionType',
++    RegionInfoACDSeeRegionListNameAssignType    => 'ACDSeeRegionNameAssignType',
++);
++
++# Forced -struct option during debugging
++#%Image::ExifTool::UserDefined::Options = (
++#   Struct => 1,
++#);
+ #------------------------------------------------------------------------------
+ 1;  #end
+\ No newline at end of file
+diff --git a/exiftool b/exiftool
+index 1df77e34..f6a4caea 100755
+--- a/exiftool
++++ b/exiftool
+@@ -10,7 +10,7 @@
+ use strict;
+ require 5.004;
+ 
+-my $version = '12.23';
++my $version = '12.24';
+ 
+ # add our 'lib' directory to the include list BEFORE 'use Image::ExifTool'
+ my $exeDir;
+@@ -5393,7 +5393,7 @@ with this command:
+ 
+ produces output like this:
+ 
+-    -- Generated by ExifTool 12.23 --
++    -- Generated by ExifTool 12.24 --
+     File: a.jpg - 2003:10:31 15:44:19
+     (f/5.6, 1/60s, ISO 100)
+     File: b.jpg - 2006:05:23 11:57:38
+diff --git a/html/ExifTool.html b/html/ExifTool.html
+index ce0cb898..3b71f3b8 100644
+--- a/html/ExifTool.html
++++ b/html/ExifTool.html
+@@ -429,7 +429,7 @@ <h2>Description</h2>
+     specifically requested by name.</td>
+     <td align=center>0 or 1</td><td align=center>undef</td></tr>
+ <tr id="BlockExtract"><td>BlockExtract</td><td>Flag to extract some directories
+-    (mentioned in the Tag Name documentation) as a block.</td>
++    (mentioned in the <a href="TagNames/index.html">Tag Name documentation</a>) as a block.</td>
+     <td align=center><table class=clear>
+     <tr><td valign=top align=right><b>0</b>&nbsp;=</td><td>Extract as block only if tag specified by name</td></tr>
+     <tr><td valign=top align=right><b>1</b>&nbsp;=</td><td>Extract as block, and extract contained tags</td></tr>
+@@ -787,7 +787,7 @@ <h2>Description</h2>
+     This causes some tags to be generated which normally would not be unless specifically
+     requested (by passing the tag name to <a href="#ImageInfo">ImageInfo</a> or
+     <a href="#ExtractInfo">ExtractInfo</a>).  May be set to 2 or 3 to enable generation
+-    of some additional tags as mentioned in the tag name documentation.</td>
++    of some additional tags as mentioned in the <a href="TagNames/index.html">Tag Name documentation</a>.</td>
+     <td align=center>0, 1, 2 or 3</td><td align=center>undef</td></tr>
+ <tr id="RequestTags"><td>RequestTags</td><td>List of additional tag and/or group names
+     to request in the next call to <a href="#ExtractInfo">ExtractInfo</a>. This option is
+diff --git a/html/ExifTool.pdf b/html/ExifTool.pdf
+index c1735324..82f1a631 100644
+Binary files a/html/ExifTool.pdf and b/html/ExifTool.pdf differ
+diff --git a/html/Shift.pdf b/html/Shift.pdf
+index 0322a8c8..5c2a3dbe 100644
+Binary files a/html/Shift.pdf and b/html/Shift.pdf differ
+diff --git a/html/TagNames/FujiFilm.html b/html/TagNames/FujiFilm.html
+index 7214fa43..486c7a41 100644
+--- a/html/TagNames/FujiFilm.html
++++ b/html/TagNames/FujiFilm.html
+@@ -377,7 +377,8 @@ <h2 class=top>FujiFilm Tags</h2>
+   <br><span class=n>(other models)</span>
+   <br>0 = Off
+   <br>1 = On
+-  <br>2 = No flash &amp; flash</span></td></tr>
++  <br>2 = No flash &amp; flash
++  <br>6 = Pixel Shift</span></td></tr>
+ <tr class=b>
+ <td title='0x1101 = 4353'>0x1101</td>
+ <td>SequenceNumber</td>
+@@ -389,6 +390,16 @@ <h2 class=top>FujiFilm Tags</h2>
+ <td class=c>-</td>
+ <td>--&gt; <a href='FujiFilm.html#DriveSettings'>FujiFilm DriveSettings Tags</a></td></tr>
+ <tr class=b>
++<td title='0x1105 = 4357'>0x1105</td>
++<td>PixelShiftShots</td>
++<td class=c>int16u</td>
++<td>&nbsp;</td></tr>
++<tr>
++<td title='0x1106 = 4358'>0x1106</td>
++<td>PixelShiftOffset</td>
++<td class=c>rational64s[2]</td>
++<td>&nbsp;</td></tr>
++<tr class=b>
+ <td title='0x1153 = 4435'>0x1153</td>
+ <td>PanoramaAngle</td>
+ <td class=c>int16u</td>
+@@ -718,27 +729,33 @@ <h2><a name='FocusSettings'>FujiFilm FocusSettings Tags</a></h2>
+ <td class=r title='0 = 0x0'>0.1</td>
+ <td>FocusMode2</td>
+ <td class=c>int32u</td>
+-<td><span class=s>[val &amp; 0xff]
++<td><span class=s>[val &amp; 0xf]
+   <br>0 = AF-M
+   <br>1 = AF-S
+-  <br>2 = AF-C
+-  <br>17 = AF-S (Auto)</span></td></tr>
++  <br>2 = AF-C</span></td></tr>
+ <tr class=b>
+ <td class=r title='0 = 0x0'>0.2</td>
++<td>PreAF</td>
++<td class=c>int32u</td>
++<td><span class=s>[val &gt;&gt; 4 &amp; 0xf]
++  <br>0 = Off
++  <br>1 = On</span></td></tr>
++<tr>
++<td class=r title='0 = 0x0'>0.3</td>
+ <td>AFAreaMode</td>
+ <td class=c>int32u</td>
+ <td><span class=s>[val &gt;&gt; 8 &amp; 0xf]
+   <br>0 = Single Point
+   <br>1 = Zone
+   <br>2 = Wide/Tracking</span></td></tr>
+-<tr>
+-<td class=r title='0 = 0x0'>0.3</td>
++<tr class=b>
++<td class=r title='0 = 0x0'>0.4</td>
+ <td>AFAreaPointSize</td>
+ <td class=c>int32u</td>
+ <td><span class=s>[val &gt;&gt; 12 &amp; 0xf]
+   <br>0 = n/a</span></td></tr>
+-<tr class=b>
+-<td class=r title='0 = 0x0'>0.4</td>
++<tr>
++<td class=r title='0 = 0x0'>0.5</td>
+ <td>AFAreaZoneSize</td>
+ <td class=c>int32u</td>
+ <td><span class=s>[val &gt;&gt; 16 &amp; 0xf]
+@@ -1189,7 +1206,7 @@ <h2><a name='MOV'>FujiFilm MOV Tags</a></h2>
+ 
+ <hr>
+ (This document generated automatically by Image::ExifTool::BuildTagLookup)
+-<br><i>Last revised Feb 3, 2021</i>
++<br><i>Last revised Apr 13, 2021</i>
+ <p class=lf><a href='index.html'>&lt;-- ExifTool Tag Names</a></p>
+ </body>
+ </html>
+diff --git a/html/TagNames/Jpeg2000.html b/html/TagNames/Jpeg2000.html
+index 9fc3c186..accae7ed 100644
+--- a/html/TagNames/Jpeg2000.html
++++ b/html/TagNames/Jpeg2000.html
+@@ -430,23 +430,31 @@ <h2><a name='JUMD'>Jpeg2000 JUMD Tags</a></h2>
+ <tr class=h><th>Tag&nbsp;ID</th><th>Tag Name</th>
+ <th>Writable</th><th>Values / <span class=n>Notes</span></th></tr>
+ <tr>
+-<td>'id'</td>
+-<td>JUMBFID</td>
++<td>'jumd-flags'</td>
++<td>JUMDFlags</td>
+ <td class=c>no</td>
+-<td>&nbsp;</td></tr>
++<td><span class=s>Bit 0 = Requestable
++  <br>Bit 1 = Label
++  <br>Bit 2 = ID
++  <br>Bit 3 = Signature</span></td></tr>
+ <tr class=b>
+-<td>'label'</td>
+-<td>JUMBFLabel</td>
++<td>'jumd-id'</td>
++<td>JUMDID</td>
+ <td class=c>no</td>
+ <td>&nbsp;</td></tr>
+ <tr>
+-<td>'signature'</td>
+-<td>JUMBFSignature</td>
++<td>'jumd-label'</td>
++<td>JUMDLabel</td>
+ <td class=c>no</td>
+ <td>&nbsp;</td></tr>
+ <tr class=b>
+-<td>'type'</td>
+-<td>JUMBFType</td>
++<td>'jumd-sig'</td>
++<td>JUMDSignature</td>
++<td class=c>no</td>
++<td>&nbsp;</td></tr>
++<tr>
++<td>'jumd-type'</td>
++<td>JUMDType</td>
+ <td class=c>no</td>
+ <td>&nbsp;</td></tr>
+ </table></td></tr></table></blockquote>
+@@ -528,7 +536,7 @@ <h2><a name='DisplayResolution'>Jpeg2000 DisplayResolution Tags</a></h2>
+ 
+ <hr>
+ (This document generated automatically by Image::ExifTool::BuildTagLookup)
+-<br><i>Last revised Apr 1, 2021</i>
++<br><i>Last revised Apr 13, 2021</i>
+ <p class=lf><a href='index.html'>&lt;-- ExifTool Tag Names</a></p>
+ </body>
+ </html>
+diff --git a/html/TagNames/MacOS.html b/html/TagNames/MacOS.html
+index 0df5018a..9fdc188f 100644
+--- a/html/TagNames/MacOS.html
++++ b/html/TagNames/MacOS.html
+@@ -46,7 +46,7 @@ <h2><a name='XAttr'>MacOS XAttr Tags</a></h2>
+ <p>XAttr tags are extracted using the &quot;xattr&quot; utility.  They are extracted if
+ any &quot;XAttr*&quot; tag or the MacOS group is specifically requested, or by setting
+ the <a href="../ExifTool.html#XAttrTags">XAttrTags</a> API option to 1 or the <a href="../ExifTool.html#RequestAll">RequestAll</a> API option to 2 or higher.
+-And they extracted by default from MacOS &quot;._&quot; files when reading
++And they are extracted by default from MacOS &quot;._&quot; files when reading
+ these files directly.</p>
+ <blockquote>
+ <table class=frame><tr><td>
+@@ -654,7 +654,7 @@ <h2><a name='MDItem'>MacOS MDItem Tags</a></h2>
+ 
+ <hr>
+ (This document generated automatically by Image::ExifTool::BuildTagLookup)
+-<br><i>Last revised Oct 15, 2020</i>
++<br><i>Last revised Apr 13, 2021</i>
+ <p class=lf><a href='index.html'>&lt;-- ExifTool Tag Names</a></p>
+ </body>
+ </html>
+diff --git a/html/TagNames/Panasonic.html b/html/TagNames/Panasonic.html
+index 612ebecb..602b108a 100644
+--- a/html/TagNames/Panasonic.html
++++ b/html/TagNames/Panasonic.html
+@@ -1874,6 +1874,21 @@ <h2><a name='Leica9'>Panasonic Leica9 Tags</a></h2>
+ <td>FNumber</td>
+ <td class=c>int32s</td>
+ <td>&nbsp;</td></tr>
++<tr>
++<td title='0x035b = 859'>0x035b</td>
++<td>CorrelatedColorTemp</td>
++<td class=c>int16u</td>
++<td>&nbsp;</td></tr>
++<tr class=b>
++<td title='0x035c = 860'>0x035c</td>
++<td>ColorTint</td>
++<td class=c>int16s</td>
++<td>&nbsp;</td></tr>
++<tr>
++<td title='0x035d = 861'>0x035d</td>
++<td>WhitePoint</td>
++<td class=c>rational64u[2]</td>
++<td>&nbsp;</td></tr>
+ </table></td></tr></table></blockquote>
+ 
+ <h2><a name='Type2'>Panasonic Type2 Tags</a></h2>
+@@ -2090,7 +2105,7 @@ <h2><a name='AdvancedSceneMode'>Panasonic AdvancedSceneMode Values</a></h2>
+ 
+ <hr>
+ (This document generated automatically by Image::ExifTool::BuildTagLookup)
+-<br><i>Last revised Oct 2, 2020</i>
++<br><i>Last revised Apr 13, 2021</i>
+ <p class=lf><a href='index.html'>&lt;-- ExifTool Tag Names</a></p>
+ </body>
+ </html>
+diff --git a/html/TagNames/PhaseOne.html b/html/TagNames/PhaseOne.html
+index 0b765427..4903d0f3 100644
+--- a/html/TagNames/PhaseOne.html
++++ b/html/TagNames/PhaseOne.html
+@@ -76,11 +76,14 @@ <h2 class=top>PhaseOne Tags</h2>
+ <td title='0x010e = 270'>0x010e</td>
+ <td>RawFormat</td>
+ <td class=c>int32s</td>
+-<td><span class=s>1 = RAW 1
++<td><table class=cols><tr>
++  <td>1 = RAW 1
+   <br>2 = RAW 2
+-  <br>3 = IIQ L
+-  <br>5 = IIQ S
+-  <br>6 = IIQ Sv2</span></td></tr>
++  <br>3 = IIQ L</td><td>&nbsp;&nbsp;</td>
++  <td>5 = IIQ S
++  <br>6 = IIQ Sv2
++  <br>8 = IIQ L16</td></tr></table>
++</td></tr>
+ <tr>
+ <td title='0x010f = 271'>0x010f</td>
+ <td>RawData</td>
+@@ -258,7 +261,7 @@ <h2><a name='SensorCalibration'>PhaseOne SensorCalibration Tags</a></h2>
+ 
+ <hr>
+ (This document generated automatically by Image::ExifTool::BuildTagLookup)
+-<br><i>Last revised Apr 9, 2019</i>
++<br><i>Last revised Apr 13, 2021</i>
+ <p class=lf><a href='index.html'>&lt;-- ExifTool Tag Names</a></p>
+ </body>
+ </html>
+diff --git a/html/TagNames/Sony.html b/html/TagNames/Sony.html
+index 00d011bc..bb39d71c 100644
+--- a/html/TagNames/Sony.html
++++ b/html/TagNames/Sony.html
+@@ -45,9 +45,10 @@ <h2 class=top>Sony Tags</h2>
+   <br>3 = Standard
+   <br>4 = Economy
+   <br>5 = Extra Fine
+-  <br>6 = RAW + JPEG
++  <br>6 = RAW + JPEG/HEIF
+   <br>7 = Compressed RAW
+   <br>8 = Compressed RAW + JPEG
++  <br>9 = Light
+   <br>4294967295 = n/a</td></tr></table>
+ </td></tr>
+ <tr class=b>
+@@ -785,13 +786,15 @@ <h2 class=top>Sony Tags</h2>
+ <td class=c>int16u[2]</td>
+ <td><table class=cols><tr>
+   <td>&#39;0 0&#39; = n/a
+-  <br>&#39;0 1&#39; = Standard JPEG
+-  <br>&#39;0 2&#39; = Fine JPEG
+-  <br>&#39;0 3&#39; = Extra Fine JPEG
++  <br>&#39;0 1&#39; = Standard
++  <br>&#39;0 2&#39; = Fine
++  <br>&#39;0 3&#39; = Extra Fine
++  <br>&#39;0 4&#39; = Light
+   <br>&#39;1 0&#39; = RAW
+-  <br>&#39;1 1&#39; = RAW + Standard JPEG
+-  <br>&#39;1 2&#39; = RAW + Fine JPEG
+-  <br>&#39;1 3&#39; = RAW + Extra Fine JPEG</td></tr></table>
++  <br>&#39;1 1&#39; = RAW + Standard
++  <br>&#39;1 2&#39; = RAW + Fine
++  <br>&#39;1 3&#39; = RAW + Extra Fine
++  <br>&#39;1 4&#39; = RAW + Light</td></tr></table>
+ </td></tr>
+ <tr class=b>
+ <td title='0x202f = 8239'>0x202f</td>
+@@ -804,16 +807,53 @@ <h2 class=top>Sony Tags</h2>
+ <td class=c>string</td>
+ <td>&nbsp;</td></tr>
+ <tr class=b>
++<td title='0x2032 = 8242'>0x2032</td>
++<td>Shadows</td>
++<td class=c>int32s</td>
++<td>&nbsp;</td></tr>
++<tr>
++<td title='0x2033 = 8243'>0x2033</td>
++<td>Highlights</td>
++<td class=c>int32s</td>
++<td>&nbsp;</td></tr>
++<tr class=b>
++<td title='0x2034 = 8244'>0x2034</td>
++<td>Fade</td>
++<td class=c>int32s</td>
++<td>&nbsp;</td></tr>
++<tr>
++<td title='0x2035 = 8245'>0x2035</td>
++<td>SharpnessRange</td>
++<td class=c>int32s</td>
++<td>&nbsp;</td></tr>
++<tr class=b>
++<td title='0x2036 = 8246'>0x2036</td>
++<td>Clarity</td>
++<td class=c>int32s</td>
++<td>&nbsp;</td></tr>
++<tr>
++<td title='0x2037 = 8247'>0x2037</td>
++<td>FocusFrameSize</td>
++<td class=c>no</td>
++<td>&nbsp;</td></tr>
++<tr class=b>
++<td title='0x2039 = 8249'>0x2039</td>
++<td>JPEG-HEIFSwitch</td>
++<td class=c>int16u</td>
++<td><span class=s>0 = JPEG
++  <br>1 = HEIF
++  <br>65535 = n/a</span></td></tr>
++<tr>
+ <td title='0x3000 = 12288'>0x3000</td>
+ <td>ShotInfo</td>
+ <td class=c>-</td>
+ <td>--&gt; <a href='Sony.html#ShotInfo'>Sony ShotInfo Tags</a></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0x900b = 36875'>0x900b</td>
+ <td>Tag900b</td>
+ <td class=c>-</td>
+ <td>--&gt; <a href='Sony.html#Tag900b'>Sony Tag900b Tags</a></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0x9050 = 36944'>0x9050</td>
+ <td>Tag9050a
+   <br>Tag9050b
+@@ -822,7 +862,7 @@ <h2 class=top>Sony Tags</h2>
+ <td>--&gt; <a href='Sony.html#Tag9050a'>Sony Tag9050a Tags</a>
+   <br>--&gt; <a href='Sony.html#Tag9050b'>Sony Tag9050b Tags</a>
+   <br>--&gt; <a href='Sony.html#Tag9050c'>Sony Tag9050c Tags</a></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0x9400 = 37888'>0x9400</td>
+ <td>Tag9400a
+   <br>Tag9400b
+@@ -831,22 +871,22 @@ <h2 class=top>Sony Tags</h2>
+ <td>--&gt; <a href='Sony.html#Tag9400a'>Sony Tag9400a Tags</a>
+   <br>--&gt; <a href='Sony.html#Tag9400b'>Sony Tag9400b Tags</a>
+   <br>--&gt; <a href='Sony.html#Tag9400c'>Sony Tag9400c Tags</a></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0x9401 = 37889'>0x9401</td>
+ <td>Tag9401</td>
+ <td class=c>-</td>
+ <td>--&gt; <a href='Sony.html#Tag9401'>Sony Tag9401 Tags</a></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0x9402 = 37890'>0x9402</td>
+ <td>Tag9402</td>
+ <td class=c>-</td>
+ <td>--&gt; <a href='Sony.html#Tag9402'>Sony Tag9402 Tags</a></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0x9403 = 37891'>0x9403</td>
+ <td>Tag9403</td>
+ <td class=c>-</td>
+ <td>--&gt; <a href='Sony.html#Tag9403'>Sony Tag9403 Tags</a></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0x9404 = 37892'>0x9404</td>
+ <td>Tag9404a
+   <br>Tag9404b
+@@ -855,41 +895,41 @@ <h2 class=top>Sony Tags</h2>
+ <td>--&gt; <a href='Sony.html#Tag9404a'>Sony Tag9404a Tags</a>
+   <br>--&gt; <a href='Sony.html#Tag9404b'>Sony Tag9404b Tags</a>
+   <br>--&gt; <a href='Sony.html#Tag9404c'>Sony Tag9404c Tags</a></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0x9405 = 37893'>0x9405</td>
+ <td>Tag9405a
+   <br>Tag9405b</td>
+ <td class=c>-<br>-</td>
+ <td>--&gt; <a href='Sony.html#Tag9405a'>Sony Tag9405a Tags</a>
+   <br>--&gt; <a href='Sony.html#Tag9405b'>Sony Tag9405b Tags</a></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0x9406 = 37894'>0x9406</td>
+ <td>Tag9406</td>
+ <td class=c>-</td>
+ <td>--&gt; <a href='Sony.html#Tag9406'>Sony Tag9406 Tags</a></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0x940a = 37898'>0x940a</td>
+ <td>Tag940a</td>
+ <td class=c>-</td>
+ <td>--&gt; <a href='Sony.html#Tag940a'>Sony Tag940a Tags</a></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0x940c = 37900'>0x940c</td>
+ <td>Tag940c</td>
+ <td class=c>-</td>
+ <td>--&gt; <a href='Sony.html#Tag940c'>Sony Tag940c Tags</a></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0x940e = 37902'>0x940e</td>
+ <td>AFInfo
+   <br>Tag940e</td>
+ <td class=c>-<br>-</td>
+ <td>--&gt; <a href='Sony.html#AFInfo'>Sony AFInfo Tags</a>
+   <br>--&gt; <a href='Sony.html#Tag940e'>Sony Tag940e Tags</a></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0x9416 = 37910'>0x9416</td>
+ <td>Sony_0x9416</td>
+ <td class=c>-</td>
+ <td>--&gt; <a href='Sony.html#Tag9416'>Sony Tag9416 Tags</a></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb000 = 45056'>0xb000</td>
+ <td>FileFormat</td>
+ <td class=c>int8u[4]</td>
+@@ -907,7 +947,7 @@ <h2 class=top>Sony Tags</h2>
+   <br>&#39;3 3 5 0&#39; = ARW 2.3.5
+   <br>&#39;4 0 0 0&#39; = ARW 4.0</td></tr></table>
+ </td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb001 = 45057'>0xb001</td>
+ <td>SonyModelID</td>
+ <td class=c>int16u</td>
+@@ -1001,7 +1041,7 @@ <h2 class=top>Sony Tags</h2>
+   <br>384 = ILCE-1
+   <br>385 = ILME-FX3</td></tr></table>
+ </td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb020 = 45088'>0xb020</td>
+ <td>CreativeStyle</td>
+ <td class=c>string</td>
+@@ -1027,17 +1067,17 @@ <h2 class=top>Sony Tags</h2>
+   <br>&#39;VV2&#39; = Vivid 2
+   <br>&#39;Vivid&#39; = Vivid</td></tr></table>
+ </td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb021 = 45089'>0xb021</td>
+ <td>ColorTemperature</td>
+ <td class=c>int32u</td>
+ <td>&nbsp;</td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb022 = 45090'>0xb022</td>
+ <td>ColorCompensationFilter</td>
+ <td class=c>int32u</td>
+ <td><span class=s><span class=n>(negative is green, positive is magenta)</span></span></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb023 = 45091'>0xb023</td>
+ <td>SceneMode</td>
+ <td class=c>int32u</td>
+@@ -1068,14 +1108,14 @@ <h2 class=top>Sony Tags</h2>
+   <br>33 = HDR
+   <br>65535 = n/a</td></tr></table>
+ </td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb024 = 45092'>0xb024</td>
+ <td>ZoneMatching</td>
+ <td class=c>int32u</td>
+ <td><span class=s>0 = ISO Setting Used
+   <br>1 = High Key
+   <br>2 = Low Key</span></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb025 = 45093'>0xb025</td>
+ <td>DynamicRangeOptimizer</td>
+ <td class=c>int32u</td>
+@@ -1095,24 +1135,24 @@ <h2 class=top>Sony Tags</h2>
+   <br>19 = Lv4
+   <br>20 = Lv5</td></tr></table>
+ </td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb026 = 45094'>0xb026</td>
+ <td>ImageStabilization</td>
+ <td class=c>int32u</td>
+ <td><span class=s>0 = Off
+   <br>1 = On
+   <br>4294967295 = n/a</span></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb027 = 45095'>0xb027</td>
+ <td>LensType</td>
+ <td class=c>int32u</td>
+ <td>--&gt; <a href='Sony.html#LensType'>Sony LensType Values</a></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb028 = 45096'>0xb028</td>
+ <td>MinoltaMakerNote</td>
+ <td class=c>-</td>
+ <td>--&gt; <a href='Minolta.html'>Minolta Tags</a></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb029 = 45097'>0xb029</td>
+ <td>ColorMode</td>
+ <td class=c>int32u</td>
+@@ -1144,23 +1184,23 @@ <h2 class=top>Sony Tags</h2>
+   <br>255 = Off
+   <br>4294967295 = n/a</td></tr></table>
+ </td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb02a = 45098'>0xb02a</td>
+ <td>LensSpec</td>
+ <td class=c>int8u[8]</td>
+ <td><span class=s><span class=n>(like LensInfo, but also specifies lens features: DT, E, ZA, G, SSM, SAM,
+ OSS, STF, Reflex, Macro and Fisheye)</span></span></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb02b = 45099'>0xb02b</td>
+ <td>FullImageSize</td>
+ <td class=c>int32u[2]</td>
+ <td>&nbsp;</td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb02c = 45100'>0xb02c</td>
+ <td>PreviewImageSize</td>
+ <td class=c>int32u[2]</td>
+ <td>&nbsp;</td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb040 = 45120'>0xb040</td>
+ <td>Macro</td>
+ <td class=c>int16u</td>
+@@ -1168,7 +1208,7 @@ <h2 class=top>Sony Tags</h2>
+   <br>1 = On
+   <br>2 = Close Focus
+   <br>65535 = n/a</span></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb041 = 45121'>0xb041</td>
+ <td>ExposureMode</td>
+ <td class=c>int16u</td>
+@@ -1205,7 +1245,7 @@ <h2 class=top>Sony Tags</h2>
+   <br>42 = 3D Image
+   <br>65535 = n/a</td></tr></table>
+ </td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb042 = 45122'>0xb042</td>
+ <td>FocusMode</td>
+ <td class=c>int16u</td>
+@@ -1214,7 +1254,7 @@ <h2 class=top>Sony Tags</h2>
+   <br>2 = AF-C
+   <br>4 = Permanent-AF
+   <br>65535 = n/a</span></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb043 = 45123'>0xb043</td>
+ <td>AFAreaMode</td>
+ <td class=c>int16u</td>
+@@ -1238,14 +1278,14 @@ <h2 class=top>Sony Tags</h2>
+   <br>15 = Face Tracking
+   <br>255 = Manual</td></tr></table>
+ </td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb044 = 45124'>0xb044</td>
+ <td>AFIlluminator</td>
+ <td class=c>int16u</td>
+ <td><span class=s>0 = Off
+   <br>1 = Auto
+   <br>65535 = n/a</span></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb047 = 45127'>0xb047</td>
+ <td>JPEGQuality</td>
+ <td class=c>int16u</td>
+@@ -1253,7 +1293,7 @@ <h2 class=top>Sony Tags</h2>
+   <br>1 = Fine
+   <br>2 = Extra Fine
+   <br>65535 = n/a</span></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb048 = 45128'>0xb048</td>
+ <td>FlashLevel</td>
+ <td class=c>int16s</td>
+@@ -1277,7 +1317,7 @@ <h2 class=top>Sony Tags</h2>
+   <br>128 = n/a
+   <br>32767 = High</td></tr></table>
+ </td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb049 = 45129'>0xb049</td>
+ <td>ReleaseMode</td>
+ <td class=c>int16u</td>
+@@ -1289,14 +1329,14 @@ <h2 class=top>Sony Tags</h2>
+   <br>8 = DRO Bracketing
+   <br>65535 = n/a</td></tr></table>
+ </td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb04a = 45130'>0xb04a</td>
+ <td>SequenceNumber</td>
+ <td class=c>int16u</td>
+ <td><span class=s><span class=n>(shot number in continuous burst)</span>
+   <br>0 = Single
+   <br>65535 = n/a</span></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb04b = 45131'>0xb04b</td>
+ <td>Anti-Blur</td>
+ <td class=c>int16u</td>
+@@ -1304,7 +1344,7 @@ <h2 class=top>Sony Tags</h2>
+   <br>1 = On (Continuous)
+   <br>2 = On (Shooting)
+   <br>65535 = n/a</span></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb04e = 45134'>0xb04e</td>
+ <td>FocusMode</td>
+ <td class=c>int16u</td>
+@@ -1314,14 +1354,14 @@ <h2 class=top>Sony Tags</h2>
+   <br>3 = AF-C
+   <br>5 = Semi-manual
+   <br>6 = DMF</span></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb04f = 45135'>0xb04f</td>
+ <td>DynamicRangeOptimizer</td>
+ <td class=c>int16u</td>
+ <td><span class=s>0 = Off
+   <br>1 = Standard
+   <br>2 = Plus</span></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb050 = 45136'>0xb050</td>
+ <td>HighISONoiseReduction2</td>
+ <td class=c>int16u</td>
+@@ -1331,14 +1371,14 @@ <h2 class=top>Sony Tags</h2>
+   <br>2 = Low
+   <br>3 = Off
+   <br>65535 = n/a</span></td></tr>
+-<tr class=b>
++<tr>
+ <td title='0xb052 = 45138'>0xb052</td>
+ <td>IntelligentAuto</td>
+ <td class=c>int16u</td>
+ <td><span class=s>0 = Off
+   <br>1 = On
+   <br>2 = Advanced</span></td></tr>
+-<tr>
++<tr class=b>
+ <td title='0xb054 = 45140'>0xb054</td>
+ <td>WhiteBalance</td>
+ <td class=c>int16u</td>
+@@ -5277,7 +5317,10 @@ <h2><a name='Tag2010a'>Sony Tag2010a Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr class=b>
+ <td class=r title='4447 = 0x115f'>4447</td>
+@@ -5303,7 +5346,10 @@ <h2><a name='Tag2010a'>Sony Tag2010a Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr>
+ <td class=r title='4451 = 0x1163'>4451</td>
+@@ -5671,7 +5717,10 @@ <h2><a name='Tag2010b'>Sony Tag2010b Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr>
+ <td class=r title='4451 = 0x1163'>4451</td>
+@@ -5697,7 +5746,10 @@ <h2><a name='Tag2010b'>Sony Tag2010b Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr class=b>
+ <td class=r title='4455 = 0x1167'>4455</td>
+@@ -5897,7 +5949,10 @@ <h2><a name='Tag2010c'>Sony Tag2010c Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr class=b>
+ <td class=r title='4415 = 0x113f'>4415</td>
+@@ -5923,7 +5978,10 @@ <h2><a name='Tag2010c'>Sony Tag2010c Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr>
+ <td class=r title='4419 = 0x1143'>4419</td>
+@@ -6109,7 +6167,10 @@ <h2><a name='Tag2010d'>Sony Tag2010d Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr class=b>
+ <td class=r title='4539 = 0x11bb'>4539</td>
+@@ -6135,7 +6196,10 @@ <h2><a name='Tag2010d'>Sony Tag2010d Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr>
+ <td class=r title='4543 = 0x11bf'>4543</td>
+@@ -6325,7 +6389,10 @@ <h2><a name='Tag2010e'>Sony Tag2010e Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr class=b>
+ <td class=r title='4503 = 0x1197'>4503</td>
+@@ -6351,7 +6418,10 @@ <h2><a name='Tag2010e'>Sony Tag2010e Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr>
+ <td class=r title='4507 = 0x119b'>4507</td>
+@@ -6592,7 +6662,10 @@ <h2><a name='Tag2010f'>Sony Tag2010f Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr class=b>
+ <td class=r title='4175 = 0x104f'>4175</td>
+@@ -6618,7 +6691,10 @@ <h2><a name='Tag2010f'>Sony Tag2010f Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr>
+ <td class=r title='4179 = 0x1053'>4179</td>
+@@ -6804,7 +6880,10 @@ <h2><a name='Tag2010g'>Sony Tag2010g Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr>
+ <td class=r title='583 = 0x247'>583</td>
+@@ -6830,7 +6909,10 @@ <h2><a name='Tag2010g'>Sony Tag2010g Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr class=b>
+ <td class=r title='587 = 0x24b'>587</td>
+@@ -7062,7 +7144,10 @@ <h2><a name='Tag2010h'>Sony Tag2010h Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr>
+ <td class=r title='583 = 0x247'>583</td>
+@@ -7088,7 +7173,10 @@ <h2><a name='Tag2010h'>Sony Tag2010h Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr class=b>
+ <td class=r title='587 = 0x24b'>587</td>
+@@ -7325,7 +7413,10 @@ <h2><a name='Tag2010i'>Sony Tag2010i Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr>
+ <td class=r title='568 = 0x238'>568</td>
+@@ -7351,7 +7442,10 @@ <h2><a name='Tag2010i'>Sony Tag2010i Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr class=b>
+ <td class=r title='572 = 0x23c'>572</td>
+@@ -8157,7 +8251,7 @@ <h2><a name='Tag9050b'>Sony Tag9050b Tags</a></h2>
+ </table></td></tr></table></blockquote>
+ 
+ <h2><a name='Tag9050c'>Sony Tag9050c Tags</a></h2>
+-<p>Valid from July 2020 for ILCE-1/7SM3.</p>
++<p>Valid from July 2020 for ILCE-1/7SM3, ILME-FX3.</p>
+ <blockquote>
+ <table class=frame><tr><td>
+ <table class=inner cellspacing=1>
+@@ -8226,6 +8320,11 @@ <h2><a name='Tag9050c'>Sony Tag9050c Tags</a></h2>
+ <td>InternalSerialNumber</td>
+ <td class=c title=' ~ = Writable only with -n'>int8u[6]~</td>
+ <td>&nbsp;</td></tr>
++<tr class=b>
++<td class=r title='138 = 0x8a'>138</td>
++<td>InternalSerialNumber</td>
++<td class=c title=' ~ = Writable only with -n'>int8u[6]~</td>
++<td>&nbsp;</td></tr>
+ </table></td></tr></table></blockquote>
+ 
+ <h2><a name='Tag9400a'>Sony Tag9400a Tags</a></h2>
+@@ -8462,7 +8561,12 @@ <h2><a name='Tag9400c'>Sony Tag9400c Tags</a></h2>
+ <td><span class=s>0 = JPEG
+   <br>1 = RAW
+   <br>2 = RAW + JPEG
+-  <br>3 = JPEG + MPO</span></td></tr>
++  <br>3 = JPEG + MPO
++  <br>1 = JPEG
++  <br>2 = RAW
++  <br>3 = RAW + JPEG
++  <br>4 = HEIF
++  <br>6 = RAW + HEIF</span></td></tr>
+ <tr>
+ <td class=r title='71 = 0x47'>71</td>
+ <td>SonyImageHeight</td>
+@@ -9046,7 +9150,7 @@ <h2><a name='Tag940a'>Sony Tag940a Tags</a></h2>
+ </table></td></tr></table></blockquote>
+ 
+ <h2><a name='Tag940c'>Sony Tag940c Tags</a></h2>
+-<p>NEX and ILCE models only.</p>
++<p>E-mount cameras only.</p>
+ <blockquote>
+ <table class=frame><tr><td>
+ <table class=inner cellspacing=1>
+@@ -10816,7 +10920,7 @@ <h2><a name='Tag940e'>Sony Tag940e Tags</a></h2>
+ </table></td></tr></table></blockquote>
+ 
+ <h2><a name='Tag9416'>Sony Tag9416 Tags</a></h2>
+-<p>Valid for the ILCE-1/7SM3.</p>
++<p>Valid for the ILCE-1/7SM3, ILME-FX3.</p>
+ <blockquote>
+ <table class=frame><tr><td>
+ <table class=inner cellspacing=1>
+@@ -10928,7 +11032,10 @@ <h2><a name='Tag9416'>Sony Tag9416 Tags</a></h2>
+   <br>29 = Gamma ITU709 (800%)
+   <br>31 = Gamma S-Log3 (PP8 or PP9)
+   <br>33 = Gamma HLG2 (PP10)
+-  <br>34 = Gamma HLG3</td></tr></table>
++  <br>34 = Gamma HLG3
++  <br>37 = FL
++  <br>39 = IN
++  <br>40 = SH</td></tr></table>
+ </td></tr>
+ <tr>
+ <td class=r title='113 = 0x71'>113</td>
+@@ -11648,7 +11755,7 @@ <h2><a name='rtmd'>Sony rtmd Tags</a></h2>
+ 
+ <hr>
+ (This document generated automatically by Image::ExifTool::BuildTagLookup)
+-<br><i>Last revised Apr 1, 2021</i>
++<br><i>Last revised Apr 13, 2021</i>
+ <p class=lf><a href='index.html'>&lt;-- ExifTool Tag Names</a></p>
+ </body>
+ </html>
+diff --git a/html/TagNames/index.html b/html/TagNames/index.html
+index aeb37210..14cd2554 100644
+--- a/html/TagNames/index.html
++++ b/html/TagNames/index.html
+@@ -10,7 +10,7 @@
+ <h2 class=top>ExifTool Tag Names</h2>
+ <p>
+ The tables listed below give the names of all tags recognized by ExifTool.
+-They contain a total of 24102 tags, with 15604 unique tag names.
++They contain a total of 24118 tags, with 15614 unique tag names.
+ </p>
+ <blockquote>
+ <table width='100%' class=frame><tr><td>
+@@ -233,7 +233,7 @@ <h2 class=top>ExifTool Tag Names</h2>
+ <hr>
+ (This document generated automatically by Image::ExifTool::BuildTagLookup)
+ <br><i>Created Feb 15, 2005</i>
+-<br><i>Last revised Apr 1, 2021</i>
++<br><i>Last revised Apr 13, 2021</i>
+ <p class=lf><a href='../index.html'>&lt;-- Back to ExifTool home page</a></p>
+ </body>
+ </html>
+diff --git a/html/exiftool_pod.html b/html/exiftool_pod.html
+index aae72ef2..e52652e2 100644
+--- a/html/exiftool_pod.html
++++ b/html/exiftool_pod.html
+@@ -685,7 +685,7 @@ <h3 id="Input-output-text-formatting">Input-output text formatting</h3>
+ 
+ <p>produces output like this:</p>
+ 
+-<pre><code>    -- Generated by ExifTool 12.23 --
++<pre><code>    -- Generated by ExifTool 12.24 --
+     File: a.jpg - 2003:10:31 15:44:19
+     (f/5.6, 1/60s, ISO 100)
+     File: b.jpg - 2006:05:23 11:57:38
+diff --git a/html/exiftool_pod.pdf b/html/exiftool_pod.pdf
+index 227c878a..8448225c 100644
+Binary files a/html/exiftool_pod.pdf and b/html/exiftool_pod.pdf differ
+diff --git a/html/history.html b/html/history.html
+index b79d5245..ae5b647f 100644
+--- a/html/history.html
++++ b/html/history.html
+@@ -17,6 +17,18 @@ <h1 class='up'>ExifTool Version History</h1>
+ <!-- Use line width of 80 -->
+ <!-- *********************************************************************** -->
+ 
++<a name='v12.24'><b>Apr. 13, 2021 - Version 12.24</b></a>
++<ul>
++<li>Added a new PhaseOne RawFormat value (thanks LibRaw)
++<li>Decode a new Sony tag (thanks Jos Roost)
++<li>Decode a few new Panasonic and FujiFilm tags (thanks LibRaw and Greybeard)
++<li>Patched security vulnerability in DjVu reader
++<li>Updated acdsee.config in distribution (thanks StarGeek)
++<li>Recognize AutoCAD DXF files
++<li>More work on experimental JUMBF read support
++<li>More work on experimental JXL read/write support
++</ul>
++
+ <a name='v12.23'><b>Apr. 1, 2021 - Version 12.23</b></a>
+ <ul>
+ <li>Added support for Olympus ORI files
+@@ -34,7 +46,7 @@ <h1 class='up'>ExifTool Version History</h1>
+ <li>Fixed -forcewrite=EXIF to apply to EXIF in binary header of EPS files
+ <li>API Changes:
+     <ul>
+-    <li>Added BlockExtract option
++    <li>Added <a href="ExifTool.html#BlockExtract">BlockExtract option</a>
+     </ul>
+ </ul>
+ 
+diff --git a/html/index.html b/html/index.html
+index e9dd5878..725aca3c 100644
+--- a/html/index.html
++++ b/html/index.html
+@@ -81,9 +81,9 @@ <h2 class='tight red'><b>Read</b>, <b>Write</b> and <b>Edit</b> Meta Information
+ </div>
+ 
+ <blockquote><table class='dl lg'><tr><td><b>
+-<a href="http://sourceforge.net/projects/exiftool/files/Image-ExifTool-12.23.tar.gz/download">
+-Download        Version 12.23</a> (4.7 MB) -
+-<a href="history.html">Apr. 1, 2021</a></b></td></tr></table></blockquote>
++<a href="http://sourceforge.net/projects/exiftool/files/Image-ExifTool-12.24.tar.gz/download">
++Download        Version 12.24</a> (4.7 MB) -
++<a href="history.html">Apr. 13, 2021</a></b></td></tr></table></blockquote>
+ 
+ <p><b>ExifTool is a platform-independent <a href="ExifTool.html">Perl
+ library</a> plus a <a href="exiftool_pod.html">command-line application</a> for
+@@ -136,8 +136,8 @@ <h2 class='tight red'><b>Read</b>, <b>Write</b> and <b>Edit</b> Meta Information
+ 
+ <blockquote><table class='dl lg'><tr><td><b>
+ <a name="alone">Windows Executable:</a>
+-<a href="http://sourceforge.net/projects/exiftool/files/exiftool-12.23.zip/download">
+-         exiftool-12.23.zip</a> (6.4 MB)</b></td></tr></table></blockquote>
++<a href="http://sourceforge.net/projects/exiftool/files/exiftool-12.24.zip/download">
++         exiftool-12.24.zip</a> (6.4 MB)</b></td></tr></table></blockquote>
+ 
+ <p><b>The stand-alone Windows executable</b> does not require Perl. Just
+ download and un-zip the archive then double-click on
+@@ -155,7 +155,7 @@ <h2 class='tight red'><b>Read</b>, <b>Write</b> and <b>Edit</b> Meta Information
+ <blockquote><table class='dl lg'><tr><td><b>
+ MacOS Package:
+ <a href="http://sourceforge.net/projects/exiftool/files/ExifTool-9.70.dmg/download">
+-         ExifTool-12.23.dmg</a> (3.0 MB)</b></td></tr></table></blockquote>
++         ExifTool-12.24.dmg</a> (3.0 MB)</b></td></tr></table></blockquote>
+ 
+ <p><b>The MacOS package</b> installs the ExifTool command-line application and
+ libraries in /usr/local/bin. After installing, type "<code>exiftool</code>" in a
+diff --git a/html/install.html b/html/install.html
+index f24fc89f..fc49abba 100644
+--- a/html/install.html
++++ b/html/install.html
+@@ -52,10 +52,10 @@ <h2><a name="Windows">Windows</a></h2>
+ <h3>Stand-Alone Executable</h3>
+ <ol>
+ <li><b>Download</b> the <b>Windows Executable</b> from the <a href="index.html">ExifTool home page</a>.
+-<br><span class=lt>(The file you download should be named "<code>exiftool-12.23.zip</code>".)</span></li>
++<br><span class=lt>(The file you download should be named "<code>exiftool-12.24.zip</code>".)</span></li>
+ <li><b>Extract "<code>exiftool(-k).exe</code>"</b> from the
+ "<code>.zip</code>" file, and place it <b>on your Desktop</b>.
+-<br><span class=lt>(Double-click on "<code>exiftool-12.23.zip</code>" to open
++<br><span class=lt>(Double-click on "<code>exiftool-12.24.zip</code>" to open
+ the archive, then drag "<code>exiftool(-k).exe</code>" to your Desktop.)</span></li>
+ </ol>
+ <p>You can now double-click on "<code>exiftool(-k).exe</code>" to read the
+@@ -109,7 +109,7 @@ <h3>Full Perl Distribution</h3>
+ <a href="http://www.activestate.com/activeperl/">activeperl.com</a>.)</p>
+ <ol>
+ <li><b>Download</b> the <b>Image-ExifTool distribution</b> from the <a href="index.html">ExifTool home page</a>
+-<br><span class=lt>(The file you download should be named "<code>Image-ExifTool-12.23.tar.gz</code>".)</span></li>
++<br><span class=lt>(The file you download should be named "<code>Image-ExifTool-12.24.tar.gz</code>".)</span></li>
+ <li><b>Extract the ExifTool files</b> from the archive.
+ <br><span class=lt>(The archive is a gzipped tar file, and can be opened with
+ various Windows utilities, including WinZip.)</span></li>
+@@ -151,7 +151,7 @@ <h2><a name="MacOS"></a><a name="OSX">MacOS</a></h2>
+ <h3>MacOS Package</h3>
+ <ol>
+ <li><b>Download</b> the <b>ExifTool MacOS Package</b> from the <a href="index.html">ExifTool home page</a>.
+-<br><span class=lt>(The file you download should be named "<code>ExifTool-12.23.dmg</code>".)</span></li>
++<br><span class=lt>(The file you download should be named "<code>ExifTool-12.24.dmg</code>".)</span></li>
+ <li><b>Install</b> as a normal <b>MacOS package</b>.
+ <br><span class=lt>(Open the disk image, double-click on the install package, and follow the instructions.
+ See the second item in the Notes section below if you are stopped with an "unidentified developer" message.)
+@@ -167,12 +167,12 @@ <h3>Full Perl Distribution</h3>
+ <ol>
+ <li><b>Download</b> the <b>Image-ExifTool distribution</b> from the <a href="index.html">ExifTool home page</a>
+ to your Desktop.
+-<br><span class=lt>(The file you download should be named "<code>Image-ExifTool-12.23.tar.gz</code>".)</span></li>
++<br><span class=lt>(The file you download should be named "<code>Image-ExifTool-12.24.tar.gz</code>".)</span></li>
+ <li><b>Launch</b> the <b>Terminal</b> application from the Utilities folder in your Applications folder.</li>
+ <li>In the Terminal window, <b>type the following</b>:
+ <pre class='code'>    cd ~/Desktop
+-    tar -xzf Image-ExifTool-12.23.tar.gz
+-    cd Image-ExifTool-12.23
++    tar -xzf Image-ExifTool-12.24.tar.gz
++    cd Image-ExifTool-12.24
+     sudo cp -r exiftool lib /usr/local/bin
+ </pre>
+ <span class=lt>(Note: The last step above will require you to enter your
+@@ -188,7 +188,7 @@ <h3>Full Perl Distribution</h3>
+ precedence for exiftool, but /Library/Perl/#.#.# is the default for any other
+ Perl scripts.</li>
+ <li>In MacOS 10.8 or later, you may see this message when you try to open the install package:
+-<blockquote class=red>"ExifTool-12.23.pkg" can't be opened because it is from an
++<blockquote class=red>"ExifTool-12.24.pkg" can't be opened because it is from an
+ unidentified developer.</blockquote> The solution is to control-click on the pkg
+ then select "Open" from the pop-up menu instead of just double-clicking.  An alternative
+ is to lower the security settings by changing "Allow applications downloaded from" to
+@@ -215,11 +215,11 @@ <h2><a name="Unix">Unix Platforms</a></h2>
+ 
+ <ol>
+ <li><b>Download</b> the <b>Image-ExifTool distribution</b> from the <a href="index.html">ExifTool home page</a>
+-<br><span class=lt>(The file you download should be named "<code>Image-ExifTool-12.23.tar.gz</code>".)</span></li>
++<br><span class=lt>(The file you download should be named "<code>Image-ExifTool-12.24.tar.gz</code>".)</span></li>
+ <li><b>Unpack the distribution</b> and <b>make it your current directory</b> by typing:
+ <pre class='code'>    cd <i>&lt;your download directory&gt;</i>
+-    gzip -dc Image-ExifTool-12.23.tar.gz | tar -xf -
+-    cd Image-ExifTool-12.23
++    gzip -dc Image-ExifTool-12.24.tar.gz | tar -xf -
++    cd Image-ExifTool-12.24
+ </pre>
+ <span class=lt>(At this point you may run exiftool by typing
+ "<code>./exiftool <i>&lt;image file name&gt;</i></code>".)</span></li>
+diff --git a/lib/Image/ExifTool.pm b/lib/Image/ExifTool.pm
+index 5325f10e..9f3aedfa 100644
+--- a/lib/Image/ExifTool.pm
++++ b/lib/Image/ExifTool.pm
+@@ -28,7 +28,7 @@ use vars qw($VERSION $RELEASE @ISA @EXPORT_OK %EXPORT_TAGS $AUTOLOAD @fileTypes
+             %mimeType $swapBytes $swapWords $currentByteOrder %unpackStd
+             %jpegMarker %specialTags %fileTypeLookup $testLen $exePath);
+ 
+-$VERSION = '12.23';
++$VERSION = '12.24';
+ $RELEASE = '';
+ @ISA = qw(Exporter);
+ %EXPORT_TAGS = (
+@@ -189,19 +189,19 @@ $defaultLang = 'en';    # default language
+                 FLAC APE MPC MKV MXF DV PMP IND PGF ICC ITC FLIR FLIF FPF LFP
+                 HTML VRD RTF FITS XCF DSS QTIF FPX PICT ZIP GZIP PLIST RAR BZ2
+                 CZI TAR  EXE EXR HDR CHM LNK WMF AVC DEX DPX RAW Font RSRC M2TS
+-                MacOS PHP PCX DCX DWF DWG WTV Torrent VCard LRI R3D AA PDB MOI
+-                ISO ALIAS JSON MP3 DICOM PCD TXT);
++                MacOS PHP PCX DCX DWF DWG DXF WTV Torrent VCard LRI R3D AA PDB
++                JXL MOI ISO ALIAS JSON MP3 DICOM PCD TXT);
+ 
+ # file types that we can write (edit)
+ my @writeTypes = qw(JPEG TIFF GIF CRW MRW ORF RAF RAW PNG MIE PSD XMP PPM EPS
+-                    X3F PS PDF ICC VRD DR4 JP2 EXIF AI AIT IND MOV EXV FLIF);
++                    X3F PS PDF ICC VRD DR4 JP2 JXL EXIF AI AIT IND MOV EXV FLIF);
+ my %writeTypes; # lookup for writable file types (hash filled if required)
+ 
+ # file extensions that we can't write for various base types
+ %noWriteFile = (
+     TIFF => [ qw(3FR DCR K25 KDC SRF) ],
+     XMP  => [ qw(SVG INX) ],
+-    JP2  => [ qw(J2C JPC JXC) ],
++    JP2  => [ qw(J2C JPC) ],
+     MOV  => [ qw(INSV) ],
+ );
+ 
+@@ -292,6 +292,7 @@ my %createTypes = map { $_ => 1 } qw(XMP ICC MIE VRD DR4 EXIF EXV);
+     DWF  => ['DWF',  'Autodesk drawing (Design Web Format)'],
+     DWG  => ['DWG',  'AutoCAD Drawing'],
+     DYLIB=> ['EXE',  'Mach-O Dynamic Link Library'],
++    DXF  => ['DXF',  'AutoCAD Drawing Exchange Format'],
+     EIP  => ['ZIP',  'Capture One Enhanced Image Package'],
+     EPS  => ['EPS',  'Encapsulated PostScript Format'],
+     EPS2 =>  'EPS',
+@@ -355,8 +356,7 @@ my %createTypes = map { $_ => 1 } qw(XMP ICC MIE VRD DR4 EXIF EXV);
+     JPM  => ['JP2',  'JPEG 2000 compound image'],
+     JPX  => ['JP2',  'JPEG 2000 with extensions'],
+     JSON => ['JSON', 'JavaScript Object Notation'],
+-    JXC  => ['JP2', 'JPEG XL Codestream'], # (JXC = PH invention, not a real extension)
+-    JXL  => ['JP2', 'JPEG XL'],
++    JXL  => ['JXL',  'JPEG XL'],
+     JXR  => ['TIFF', 'JPEG XR'],
+     K25  => ['TIFF', 'Kodak DC25 RAW'],
+     KDC  => ['TIFF', 'Kodak Digital Camera RAW'],
+@@ -617,6 +617,7 @@ my %fileDescription = (
+    'DVR-MS' => 'video/x-ms-dvr',
+     DWF  => 'model/vnd.dwf',
+     DWG  => 'image/vnd.dwg',
++    DXF  => 'application/dxf',
+     EIP  => 'application/x-captureone', #(NC)
+     EPS  => 'application/postscript',
+     ERF  => 'image/x-epson-erf',
+@@ -654,7 +655,6 @@ my %fileDescription = (
+     JPM  => 'image/jpm',
+     JPX  => 'image/jpx',
+     JSON => 'application/json',
+-    JXC  => 'image/x-jxc', #PH (invented)
+     JXL  => 'image/jxl', #PH (NC)
+     JXR  => 'image/jxr',
+     K25  => 'image/x-kodak-k25',
+@@ -805,6 +805,7 @@ my %moduleName = (
+     DSS  => 'Olympus',
+     DWF  => 0,
+     DWG  => 0,
++    DXF  => 0,
+     EPS  => 'PostScript',
+     EXIF => '',
+     EXR  => 'OpenEXR',
+@@ -880,6 +881,7 @@ $testLen = 1024;    # number of bytes to read when testing for magic number
+     DV   => '\x1f\x07\0[\x3f\xbf]', # (not tested if extension recognized)
+     DWF  => '\(DWF V\d',
+     DWG  => 'AC10\d{2}\0',
++    DXF  => '\s*0\s+\0?\s*SECTION\s+2\s+HEADER',
+     EPS  => '(%!PS|%!Ad|\xc5\xd0\xd3\xc6)',
+     EXE  => '(MZ|\xca\xfe\xba\xbe|\xfe\xed\xfa[\xce\xcf]|[\xce\xcf]\xfa\xed\xfe|Joy!peff|\x7fELF|#!\s*/\S*bin/|!<arch>\x0a)',
+     EXIF => '(II\x2a\0|MM\0\x2a)',
+@@ -902,9 +904,10 @@ $testLen = 1024;    # number of bytes to read when testing for magic number
+     IND  => '\x06\x06\xed\xf5\xd8\x1d\x46\xe5\xbd\x31\xef\xe7\xfe\x74\xb7\x1d',
+   # ISO  =>  signature is at byte 32768
+     ITC  => '.{4}itch',
+-    JP2  => '(\0\0\0\x0cjP(  |\x1a\x1a)\x0d\x0a\x87\x0a|\xff\x4f\xff\x51\0|\xff\x0a|\0\0\0\x0cJXL \x0d\x0a......ftypjxl )',
++    JP2  => '(\0\0\0\x0cjP(  |\x1a\x1a)\x0d\x0a\x87\x0a|\xff\x4f\xff\x51\0)',
+     JPEG => '\xff\xd8\xff',
+     JSON => '(\xef\xbb\xbf)?\s*(\[\s*)?\{\s*"[^"]*"\s*:',
++    JXL  => '\xff\x0a|\0\0\0\x0cJXL \x0d\x0a......ftypjxl ',
+     LFP  => '\x89LFP\x0d\x0a\x1a\x0a',
+     LNK  => '.{4}\x01\x14\x02\0{5}\xc0\0{6}\x46',
+     LRI  => 'LELR \0',
+diff --git a/lib/Image/ExifTool.pod b/lib/Image/ExifTool.pod
+index 25e27205..ebf3d071 100644
+--- a/lib/Image/ExifTool.pod
++++ b/lib/Image/ExifTool.pod
+@@ -441,9 +441,10 @@ Default is undef.
+ 
+ =item BlockExtract
+ 
+-Flag to extract some directories (mentioned in the Tag Name documentation)
+-as a block.  Setting this to a value of 2 also prevents parsing the block to
+-extract tags contained within.
++Flag to extract some directories (mentioned in the
++L<ExifTool tag name documentation|Image::ExifTool::TagNames>) as a block. 
++Setting this to a value of 2 also prevents parsing the block to extract tags
++contained within.
+ 
+ =item ByteOrder
+ 
+diff --git a/lib/Image/ExifTool/DjVu.pm b/lib/Image/ExifTool/DjVu.pm
+index c284d104..03b3f9f0 100644
+--- a/lib/Image/ExifTool/DjVu.pm
++++ b/lib/Image/ExifTool/DjVu.pm
+@@ -18,7 +18,7 @@ use strict;
+ use vars qw($VERSION);
+ use Image::ExifTool qw(:DataAccess :Utils);
+ 
+-$VERSION = '1.06';
++$VERSION = '1.07';
+ 
+ sub ParseAnt($);
+ sub ProcessAnt($$$);
+@@ -227,10 +227,11 @@ Tok: for (;;) {
+                 last unless $tok =~ /(\\+)$/ and length($1) & 0x01;
+                 $tok .= '"';    # quote is part of the string
+             }
+-            # must protect unescaped "$" and "@" symbols, and "\" at end of string
+-            $tok =~ s{\\(.)|([\$\@]|\\$)}{'\\'.($2 || $1)}sge;
+-            # convert C escape sequences (allowed in quoted text)
+-            $tok = eval qq{"$tok"};
++            # convert C escape sequences, allowed in quoted text
++            # (note: this only converts a few of them!)
++            my %esc = ( a => "\a", b => "\b", f => "\f", n => "\n",
++                        r => "\r", t => "\t", '"' => '"', '\\' => '\\' );
++            $tok =~ s/\\(.)/$esc{$1}||'\\'.$1/egs;
+         } else {                # key name
+             pos($$dataPt) = pos($$dataPt) - 1;
+             # allow anything in key but whitespace, braces and double quotes
+diff --git a/lib/Image/ExifTool/FujiFilm.pm b/lib/Image/ExifTool/FujiFilm.pm
+index baf488bd..d21b2108 100644
+--- a/lib/Image/ExifTool/FujiFilm.pm
++++ b/lib/Image/ExifTool/FujiFilm.pm
+@@ -31,7 +31,7 @@ use vars qw($VERSION);
+ use Image::ExifTool qw(:DataAccess :Utils);
+ use Image::ExifTool::Exif;
+ 
+-$VERSION = '1.79';
++$VERSION = '1.80';
+ 
+ sub ProcessFujiDir($$$);
+ sub ProcessFaceRec($$$);
+@@ -507,6 +507,7 @@ my %faceCategories = (
+             0 => 'Off',
+             1 => 'On',
+             2 => 'No flash & flash', #3
++            6 => 'Pixel Shift', #IB (GFX100S)
+         },
+     }],
+     0x1101 => {
+@@ -517,6 +518,8 @@ my %faceCategories = (
+         Name => 'DriveSettings',
+         SubDirectory => { TagTable => 'Image::ExifTool::FujiFilm::DriveSettings' },
+     },
++    0x1105 => { Name => 'PixelShiftShots',  Writable => 'int16u' }, #IB
++    0x1106 => { Name => 'PixelShiftOffset', Writable => 'rational64s', Count => 2 }, #IB
+     # (0x1150-0x1152 exist only for Pro Low-light and Pro Focus PictureModes)
+     # 0x1150 - Pro Low-light - val=1; Pro Focus - val=2 (ref 7); HDR - val=128 (forum10799)
+     # 0x1151 - Pro Low-light - val=4 (number of pictures taken?); Pro Focus - val=2,3 (ref 7); HDR - val=3 (forum10799)
+@@ -915,15 +918,22 @@ my %faceCategories = (
+     WRITABLE => 1,
+     0.1 => {
+         Name => 'FocusMode2',
+-        Mask => 0x000000ff,
++        Mask => 0x0000000f,
+         PrintConv => {
+-            0x00 => 'AF-M',
+-            0x01 => 'AF-S',
+-            0x02 => 'AF-C',
+-            0x11 => 'AF-S (Auto)',
++            0x0 => 'AF-M',
++            0x1 => 'AF-S',
++            0x2 => 'AF-C',
+         },
+     },
+     0.2 => {
++        Name => 'PreAF',
++        Mask => 0x00f0,
++        PrintConv => {
++            0 => 'Off',
++            1 => 'On',
++        },
++    },
++    0.3 => {
+         Name => 'AFAreaMode',
+         Mask => 0x0f00,
+         PrintConv => {
+@@ -932,7 +942,7 @@ my %faceCategories = (
+             2 => 'Wide/Tracking',
+         },
+     },
+-    0.3 => {
++    0.4 => {
+         Name => 'AFAreaPointSize',
+         Mask => 0xf000,
+         PrintConv => {
+@@ -940,7 +950,7 @@ my %faceCategories = (
+             OTHER => sub { return $_[0] },
+         },
+     },
+-    0.4 => {
++    0.5 => {
+         Name => 'AFAreaZoneSize',
+         Mask => 0xf0000,
+         PrintConv => {
+diff --git a/lib/Image/ExifTool/Jpeg2000.pm b/lib/Image/ExifTool/Jpeg2000.pm
+index fc38cab0..ba141244 100644
+--- a/lib/Image/ExifTool/Jpeg2000.pm
++++ b/lib/Image/ExifTool/Jpeg2000.pm
+@@ -607,8 +607,8 @@ my %jumbfTypes = (
+     PROCESS_PROC => \&ProcessJUMD,
+     GROUPS => { 0 => 'JUMBF', 1 => 'JUMBF', 2 => 'Image' },
+     NOTES => 'Information extracted from the JUMBF description box.',
+-    type => {
+-        Name => 'JUMBFType',
++    'jumd-type' => {
++        Name => 'JUMDType',
+         ValueConv => 'unpack "H*", $val',
+         PrintConv => q{
+             my @a = $val =~ /^(\w{8})(\w{4})(\w{4})(\w{16})$/;
+@@ -621,9 +621,18 @@ my %jumbfTypes = (
+         # cacb/cast/caas/cacl/casg/json-00110010800000aa00389b71
+         # 6579d6fbdba2446bb2ac1b82feeb89d1 - JPEG image
+     },
+-    label      => { Name => 'JUMBFLabel' },
+-    id         => { Name => 'JUMBFID', Description => 'JUMBF ID' },
+-    signature  => { Name => 'JUMBFSignature', PrintConv => 'unpack "H*", $val' },
++    'jumd-label' => { Name => 'JUMDLabel' },
++    'jumd-flags' => {
++        Name => 'JUMDFlags',
++        PrintConv => { BITMASK => {
++            0 => 'Requestable',
++            1 => 'Label',
++            2 => 'ID',
++            3 => 'Signature',
++        }},
++    },
++    'jumd-id'    => { Name => 'JUMDID', Description => 'JUMD ID' },
++    'jumd-sig'   => { Name => 'JUMDSignature', PrintConv => 'unpack "H*", $val' },
+ );
+ 
+ #------------------------------------------------------------------------------
+@@ -666,15 +675,16 @@ sub ProcessJUMD($$$)
+     delete $$et{JUMBFLabel};
+     $$dirInfo{DirLen} < 17 and $et->Warn('Truncated JUMD directory'), return 0;
+     my $type = substr($$dataPt, $pos, 4);
+-    $et->HandleTag($tagTablePtr, 'type', substr($$dataPt, $pos, 16));
++    $et->HandleTag($tagTablePtr, 'jumd-type', substr($$dataPt, $pos, 16));
+     $pos += 16;
+     my $flags = Get8u($dataPt, $pos++);
++    $et->HandleTag($tagTablePtr, 'jumd-flags', $flags);
+     if ($flags & 0x02) {    # label exists?
+         pos($$dataPt) = $pos;
+         $$dataPt =~ /\0/g or $et->Warn('Missing JUMD label terminator'), return 0;
+         my $len = pos($$dataPt) - $pos;
+         my $name = substr($$dataPt, $pos, $len);
+-        $et->HandleTag($tagTablePtr, 'label', $name);
++        $et->HandleTag($tagTablePtr, 'jumd-label', $name);
+         $pos += $len;
+         if ($len) {
+             $name =~ s/[^-_a-zA-Z0-9]([a-z])/\U$1/g; # capitalize characters after illegal characters
+@@ -686,12 +696,12 @@ sub ProcessJUMD($$$)
+     }
+     if ($flags & 0x04) {    # ID exists?
+         $pos + 4 > $end and $et->Warn('Missing JUMD ID'), return 0;
+-        $et->HandleTag($tagTablePtr, 'id', Get32u($dataPt, $pos));
++        $et->HandleTag($tagTablePtr, 'jumd-id', Get32u($dataPt, $pos));
+         $pos += 4;
+     }
+     if ($flags & 0x08) {    # signature exists?
+         $pos + 32 > $end and $et->Warn('Missing JUMD signature'), return 0;
+-        $et->HandleTag($tagTablePtr, 'signature', substr($$dataPt, $pos, 32));
++        $et->HandleTag($tagTablePtr, 'jumd-sig', substr($$dataPt, $pos, 32));
+         $pos += 32;
+     }
+     $pos == $end or $et->Warn('Extra data in JUMD box'." $pos $end", 1);
+@@ -1043,6 +1053,7 @@ sub GetBits($$)
+ #------------------------------------------------------------------------------
+ # Extract parameters from JPEG XL codestream [unverified!]
+ # Inputs: 0) ExifTool ref, 1) codestream ref
++# Returns: 1
+ sub ProcessJXLCodestream($$)
+ {
+     my ($et, $dataPt) = @_;
+@@ -1076,6 +1087,7 @@ sub ProcessJXLCodestream($$)
+     }
+     $et->FoundTag(ImageWidth => $x);
+     $et->FoundTag(ImageHeight => $y);
++    return 1;
+ }
+ 
+ #------------------------------------------------------------------------------
+@@ -1094,16 +1106,8 @@ sub ProcessJP2($$)
+     return 0 unless $raf->Read($hdr,12) == 12;
+     unless ($hdr eq "\0\0\0\x0cjP  \x0d\x0a\x87\x0a" or     # (ref 1)
+             $hdr eq "\0\0\0\x0cjP\x1a\x1a\x0d\x0a\x87\x0a" or # (ref 2)
+-            ($hdr eq "\0\0\0\x0cJXL \x0d\x0a\x87\x0a" and $$et{IsJXL} = 1)) # (JPEG XL)
++            $$et{IsJXL})
+     {
+-        if ($hdr =~ /^\xff\x0a/) {
+-            $outfile and $et->Error('Writing of JPEG XL codestream files is not yet supported'), return 0;
+-            # JPEG XL codestream
+-            $et->SetFileType('JXC',undef,'JXL'); # (PH invention)
+-            $et->Warn('JPEG XL codestream support is currently experimental',1);
+-            ProcessJXLCodestream($et, \$hdr);
+-            return 1;
+-        }
+         return 0 unless $hdr =~ /^\xff\x4f\xff\x51\0/;  # check for JP2 codestream format
+         if ($outfile) {
+             $et->Error('Writing of J2C files is not yet supported');
+@@ -1117,7 +1121,6 @@ sub ProcessJP2($$)
+         $raf->Seek(0,0);
+         return $et->ProcessJPEG($dirInfo);    # decode with JPEG processor
+     }
+-    $et->Warn('JPEG XL support is currently experimental',1) if $$et{IsJXL};
+     if ($outfile) {
+         Write($outfile, $hdr) or return -1;
+         if ($$et{IsJXL}) {
+@@ -1154,11 +1157,56 @@ sub ProcessJP2($$)
+ #------------------------------------------------------------------------------
+ # Read meta information from a JPEG XL image
+ # Inputs: 0) ExifTool object reference, 1) dirInfo reference
+-# Returns: 1 on success, 0 if this wasn't a valid JPEG XL file
++# Returns: 1 on success, 0 if this wasn't a valid JPEG XL file, -1 on write error
+ sub ProcessJXL($$)
+ {
+     my ($et, $dirInfo) = @_;
+-    return ProcessJP2($et, $dirInfo);
++    my $raf = $$dirInfo{RAF};
++    my $outfile = $$dirInfo{OutFile};
++    my ($hdr, $buff);
++
++    return 0 unless $raf->Read($hdr,12) == 12;
++    if ($hdr eq "\0\0\0\x0cJXL \x0d\x0a\x87\x0a") {
++        # JPEG XL in ISO BMFF container
++        $$et{IsJXL} = 1;
++    } elsif ($hdr =~ /^\xff\x0a/) {
++        # JPEG XL codestream
++        if ($outfile) {
++            if ($$et{OPTIONS}{IgnoreMinorErrors}) {
++                $et->Warn('Wrapped JXL codestream in ISO BMFF container');
++            } else {
++                $et->Error('Will wrap JXL codestream in ISO BMFF container for writing',1);
++                return 0;
++            }
++            $$et{IsJXL} = 2;
++            my $buff = "\0\0\0\x0cJXL \x0d\x0a\x87\x0a\0\0\0\x14ftypjxl \0\0\0\0jxl ";
++            # add metadata to empty ISO BMFF container
++            $$dirInfo{RAF} = new File::RandomAccess(\$buff);
++        } else {
++            $et->Warn('JPEG XL codestream support is currently experimental',1);
++            $et->SetFileType('JXL Codestream','image/jxl', 'jxl');
++            return ProcessJXLCodestream($et, \$hdr);
++        }
++    } else {
++        return 0;
++    }
++    $raf->Seek(0,0) or $et->Error('Seek error'), return 0;
++    $et->Warn('JPEG XL support is currently experimental',1);
++
++    my $success = ProcessJP2($et, $dirInfo);
++
++    if ($outfile and $success > 0 and $$et{IsJXL} == 2) {
++        # attach the JXL codestream box to the ISO BMFF file
++        $raf->Seek(0,2) or return -1;
++        my $size = $raf->Tell();
++        $raf->Seek(0,0) or return -1;
++        SetByteOrder('MM');
++        Write($outfile, Set32u($size + 8), 'jxlc') or return -1;
++        while ($raf->Read($buff, 65536)) {
++            Write($outfile, $buff) or return -1;
++        }
++    }
++    return $success;
+ }
+ 
+ 1;  # end
+diff --git a/lib/Image/ExifTool/MacOS.pm b/lib/Image/ExifTool/MacOS.pm
+index dc2f2e3c..c28584b8 100644
+--- a/lib/Image/ExifTool/MacOS.pm
++++ b/lib/Image/ExifTool/MacOS.pm
+@@ -245,7 +245,7 @@ my %mdDateInfo = (
+         XAttr tags are extracted using the "xattr" utility.  They are extracted if
+         any "XAttr*" tag or the MacOS group is specifically requested, or by setting
+         the L<XAttrTags|../ExifTool.html#XAttrTags> API option to 1 or the L<RequestAll|../ExifTool.html#RequestAll> API option to 2 or higher.
+-        And they extracted by default from MacOS "._" files when reading
++        And they are extracted by default from MacOS "._" files when reading
+         these files directly.
+     },
+     'com.apple.FinderInfo' => {
+diff --git a/lib/Image/ExifTool/Microsoft.pm b/lib/Image/ExifTool/Microsoft.pm
+index cb1fba06..5de05129 100644
+--- a/lib/Image/ExifTool/Microsoft.pm
++++ b/lib/Image/ExifTool/Microsoft.pm
+@@ -889,12 +889,14 @@ sub WriteXtraValue($$$)
+         } elsif ($format eq 'date') {
+             $dat = Image::ExifTool::GetUnixTime($val, 1);   # (convert to UTC, NC)
+             if ($dat) {
++                # 100ns intervals since Jan 1, 1601
+                 $dat = Set64u(($dat + 11644473600) * 1e7);
+                 $type = 21;
+             }
+-        } elsif ($format eq 'vt_filetime') {
++        } elsif ($format eq 'vt_filetime') { # 'date' value inside a VT_VARIANT
+             $dat = Image::ExifTool::GetUnixTime($val);  # (leave as local time, NC)
+             if ($dat) {
++                # 100ns intervals since Jan 1, 1601
+                 $dat = Set32u(64) . Set64u(($dat + 11644473600) * 1e7);
+                 $type = 65;
+             }
+diff --git a/lib/Image/ExifTool/Panasonic.pm b/lib/Image/ExifTool/Panasonic.pm
+index 54554a40..6ad8619b 100644
+--- a/lib/Image/ExifTool/Panasonic.pm
++++ b/lib/Image/ExifTool/Panasonic.pm
+@@ -2118,6 +2118,7 @@ my %shootingMode = (
+         Name => 'UserProfile',
+         Writable => 'string',
+     },
++    # 0x357 int32u - 0=DNG, 3162=JPG (ref 23)
+     0x359 => { #23
+         Name => 'ISOSelected',
+         Writable => 'int32s',
+@@ -2134,7 +2135,19 @@ my %shootingMode = (
+         PrintConv => 'sprintf("%.1f", $val)',
+         PrintConvInv => '$val',
+     },
+-    # 0x357 int32u - 0=DNG, 3162=JPG (ref 23)
++    0x035b => { #IB
++        Name => 'CorrelatedColorTemp', # (in Kelvin)
++        Writable => 'int16u',
++    },
++    0x035c => { #IB
++        Name => 'ColorTint', # (same units as Adobe is using)
++        Writable => 'int16s',
++    },
++    0x035d => { #IB
++        Name => 'WhitePoint', # (x/y)
++        Writable => 'rational64u',
++        Count => 2,
++    },
+ );
+ 
+ # Type 2 tags (ref PH)
+diff --git a/lib/Image/ExifTool/PhaseOne.pm b/lib/Image/ExifTool/PhaseOne.pm
+index c95831ac..29a07869 100644
+--- a/lib/Image/ExifTool/PhaseOne.pm
++++ b/lib/Image/ExifTool/PhaseOne.pm
+@@ -15,7 +15,7 @@ use vars qw($VERSION);
+ use Image::ExifTool qw(:DataAccess :Utils);
+ use Image::ExifTool::Exif;
+ 
+-$VERSION = '1.06';
++$VERSION = '1.07';
+ 
+ sub WritePhaseOne($$$);
+ sub ProcessPhaseOne($$$);
+@@ -73,10 +73,11 @@ my @formatName = ( undef, 'string', 'int16s', undef, 'int32s' );
+         PrintConv => { #PH
+             1 => 'RAW 1', #? (encrypted)
+             2 => 'RAW 2', #? (encrypted)
+-            3 => 'IIQ L',
++            3 => 'IIQ L', # (now "L14", ref IB)
+             # 4?
+             5 => 'IIQ S',
+-            6 => 'IIQ Sv2',
++            6 => 'IIQ Sv2', # (now "S14" for "IIQ 14 Smart" and "IIQ 14 Sensor+", ref IB)
++            8 => 'IIQ L16', #IB ("IIQ 16 Extended" and "IIQ 16 Large")
+         },
+     },
+     0x010f => {
+diff --git a/lib/Image/ExifTool/Sony.pm b/lib/Image/ExifTool/Sony.pm
+index 28a7f25a..0962b88c 100644
+--- a/lib/Image/ExifTool/Sony.pm
++++ b/lib/Image/ExifTool/Sony.pm
+@@ -34,7 +34,7 @@ use Image::ExifTool qw(:DataAccess :Utils);
+ use Image::ExifTool::Exif;
+ use Image::ExifTool::Minolta;
+ 
+-$VERSION = '3.39';
++$VERSION = '3.40';
+ 
+ sub ProcessSRF($$$);
+ sub ProcessSR2($$$);
+@@ -633,9 +633,10 @@ my %hidUnk = ( Hidden => 1, Unknown => 1 );
+             3 => 'Standard',
+             4 => 'Economy',
+             5 => 'Extra Fine',
+-            6 => 'RAW + JPEG',
++            6 => 'RAW + JPEG/HEIF',
+             7 => 'Compressed RAW',
+             8 => 'Compressed RAW + JPEG',
++            9 => 'Light', #JR
+             0xffffffff => 'n/a', #PH (SLT-A57 panorama)
+         },
+     },
+@@ -1179,7 +1180,7 @@ my %hidUnk = ( Hidden => 1, Unknown => 1 );
+         # doesn't seem to apply to DSC models (always 0)
+         Name => 'AFPointSelected',
+         Condition => q{
+-            ($$self{Model} =~ /^(SLT-|HV)/) or ($$self{Model} =~ /^ILCE-/ and
++            ($$self{Model} =~ /^(SLT-|HV)/) or ($$self{Model} =~ /^(ILCE-|ILME-)/ and
+             defined $$self{AFAreaILCE} and  $$self{AFAreaILCE} == 4)
+         },
+         Notes => 'SLT models or ILCE with LA-EA2/EA4',
+@@ -1462,13 +1463,15 @@ my %hidUnk = ( Hidden => 1, Unknown => 1 );
+         Count => 2,
+         PrintConv => {
+             '0 0' => 'n/a',
+-            '0 1' => 'Standard JPEG',
+-            '0 2' => 'Fine JPEG',
+-            '0 3' => 'Extra Fine JPEG',
++            '0 1' => 'Standard',
++            '0 2' => 'Fine',
++            '0 3' => 'Extra Fine',
++            '0 4' => 'Light', #JR
+             '1 0' => 'RAW',
+-            '1 1' => 'RAW + Standard JPEG',
+-            '1 2' => 'RAW + Fine JPEG',
+-            '1 3' => 'RAW + Extra Fine JPEG',
++            '1 1' => 'RAW + Standard',
++            '1 2' => 'RAW + Fine',
++            '1 3' => 'RAW + Extra Fine',
++            '1 4' => 'RAW + Light', #JR
+         },
+     },
+     0x202f => { #JR (ILCE-7RM3)
+@@ -1514,13 +1517,56 @@ my %hidUnk = ( Hidden => 1, Unknown => 1 );
+         PrintConv => 'sprintf("%.8d",$val)',
+         PrintConvInv => '$val',
+     },
+-# 0x2032 - first seen for ILCE-7SM3, July 2020
+-# 0x2033 - first seen for ILCE-7SM3, July 2020
+-# 0x2034 - first seen for ILCE-7SM3, July 2020
+-# 0x2035 - first seen for ILCE-7SM3, July 2020
+-# 0x2036 - first seen for ILCE-7SM3, July 2020
+-# 0x2037 - first seen for ILCE-7SM3, July 2020
+-# 0x2039 - first seen for ILCE-7SM3, July 2020
++# 0x2032 - 0x2039: from July 2020 for ILCE-7SM3, ILCE-1, ILME-FX3 and newer
++    0x2032 => {
++        Name => 'Shadows',
++        Writable => 'int32s',
++        PrintConv => '$val > 0 ? "+$val" : $val',
++        PrintConvInv => '$val',
++    },
++    0x2033 => {
++        Name => 'Highlights',
++        Writable => 'int32s',
++        PrintConv => '$val > 0 ? "+$val" : $val',
++        PrintConvInv => '$val',
++    },
++    0x2034 => {
++        Name => 'Fade',
++        Writable => 'int32s',
++        PrintConv => '$val > 0 ? "+$val" : $val',
++        PrintConvInv => '$val',
++    },
++    0x2035 => {
++        Name => 'SharpnessRange',
++        Writable => 'int32s',
++        PrintConv => '$val > 0 ? "+$val" : $val',
++        PrintConvInv => '$val',
++    },
++    0x2036 => {
++        Name => 'Clarity',
++        Writable => 'int32s',
++        PrintConv => '$val > 0 ? "+$val" : $val',
++        PrintConvInv => '$val',
++    },
++    0x2037 => {
++        Name => 'FocusFrameSize',
++        Format => 'int16u',
++        Count => '3',
++        PrintConv => q{
++            my @a = split ' ', $val;
++            return $a[2] ? sprintf('%3dx%3d', $a[0], $a[1]) : 'n/a';
++        },
++        PrintConvInv => '$val =~ /(\d+)x(\d+)/ ? "$1 $2 257" : "0 0 0"',
++    },
++    0x2039 => { #JR
++        Name => 'JPEG-HEIFSwitch', # (name used in camera menus)
++        Writable => 'int16u',
++        PrintConv => {
++            0 => 'JPEG',
++            1 => 'HEIF',
++            65535 => 'n/a',
++        },
++    },
+     0x3000 => {
+         Name => 'ShotInfo',
+         SubDirectory => { TagTable => 'Image::ExifTool::Sony::ShotInfo' },
+@@ -1583,7 +1629,7 @@ my %hidUnk = ( Hidden => 1, Unknown => 1 );
+     # 0x24 (e) for ILCA-99M2,ILCE-5100/6300/6500/7M2/7RM2/7S/7SM2/QX1, DSC-HX80/HX90V/QX30/RX0/RX100M3/RX100M4/RX100M5/RX10M2/RX10M3/RX1RM2/WX500
+     # 0x26 (e) for ILCE-6100/6400/6600/7M3/7RM3/9, DSC-RX0M2/RX10M4/RX100M5A/RX100M6/HX99
+     # 0x28 (e) for ILCE-7RM4/9M2, DSC-RX100M7, ZV-1
+-    # 0x31 (e) for ILCE-1, 7SM3
++    # 0x31 (e) for ILCE-1/7SM3, ILME-FX3
+     # first byte decoded: 40, 204, 202, 27, 58, 62, 48, 215, 28, 106 respectively
+     {
+         Name => 'Tag9400a',
+@@ -6080,6 +6126,9 @@ my %pictureProfile2010 = (
+         31 => 'Gamma S-Log3 (PP8 or PP9)', #14
+         33 => 'Gamma HLG2 (PP10)', #14
+         34 => 'Gamma HLG3', #IB
++        37 => 'FL',
++        39 => 'IN',
++        40 => 'SH',
+     },
+ );
+ my %isoSetting2010 = (
+@@ -7801,7 +7850,7 @@ my %isoSetting2010 = (
+     CHECK_PROC => \&Image::ExifTool::CheckBinaryData,
+     FORMAT => 'int8u',
+     NOTES => q{
+-        Valid from July 2020 for ILCE-1/7SM3.
++        Valid from July 2020 for ILCE-1/7SM3, ILME-FX3.
+     },
+     WRITABLE => 1,
+     FIRST_ENTRY => 0,
+@@ -7888,6 +7937,13 @@ my %isoSetting2010 = (
+     },
+     0x0088 => {
+         Name => 'InternalSerialNumber', #(NC)
++        Condition => '$$self{Model} =~ /^(ILCE-7SM3|ILME-FX3)/',
++        Format => 'int8u[6]',
++        PrintConv => 'unpack "H*", pack "C*", split " ", $val',
++    },
++    0x008a => {
++        Name => 'InternalSerialNumber', #(NC)
++        Condition => '$$self{Model} =~ /^(ILCE-1)/',
+         Format => 'int8u[6]',
+         PrintConv => 'unpack "H*", pack "C*", split " ", $val',
+     },
+@@ -8117,7 +8173,7 @@ my %isoSetting2010 = (
+             8 => 'Rotate 270 CW',
+         },
+     },
+-    0x002a => {
++    0x002a => [{
+         Name => 'Quality2',
+         Condition => '$$self{Model} !~ /^(ILCE-(1|7SM3)|ILME-FX3)\b/',
+         PrintConv => {
+@@ -8126,7 +8182,17 @@ my %isoSetting2010 = (
+             2 => 'RAW + JPEG',
+             3 => 'JPEG + MPO', # 3D images
+         },
+-    },
++    },{
++        Name => 'Quality2',
++        Condition => '$$self{Model} =~ /^(ILCE-(1|7SM3)|ILME-FX3)\b/',
++        PrintConv => {
++            1 => 'JPEG',
++            2 => 'RAW',
++            3 => 'RAW + JPEG',
++            4 => 'HEIF',
++            6 => 'RAW + HEIF',
++        },
++    }],
+     0x0047 => {
+         Name => 'SonyImageHeight',
+         Condition => '$$self{Model} !~ /^(ILCE-(1|7SM3)|ILME-FX3)\b/',
+@@ -8795,7 +8861,7 @@ my %isoSetting2010 = (
+     FIRST_ENTRY => 0,
+     GROUPS => { 0 => 'MakerNotes', 2 => 'Image' },
+     DATAMEMBER => [ 0x0008 ],
+-    NOTES => 'NEX and ILCE models only.',
++    NOTES => 'E-mount cameras only.',
+ 
+     # 0x0001 - 0 for all NEX and ILCE-3000/3500, 20 for all other ILCE (17 for ILCE samples from Sony.net)
+     # 0x0008 - LensMount, but different values from Tag9405-0x0105 and Tag9050-0x0604.
+@@ -9422,7 +9488,7 @@ my %isoSetting2010 = (
+     WRITE_PROC => \&WriteEnciphered,
+     CHECK_PROC => \&Image::ExifTool::CheckBinaryData,
+     FORMAT => 'int8u',
+-    NOTES => 'Valid for the ILCE-1/7SM3.',
++    NOTES => 'Valid for the ILCE-1/7SM3, ILME-FX3.',
+     FIRST_ENTRY => 0,
+     GROUPS => { 0 => 'MakerNotes', 2 => 'Image' },
+     0x0000 => { Name => 'Tag9416_0000', PrintConv => 'sprintf("%3d",$val)', RawConv => '$$self{TagVersion} = $val' },
+diff --git a/lib/Image/ExifTool/TagLookup.pm b/lib/Image/ExifTool/TagLookup.pm
+index fa7f2be5..767d349d 100644
+--- a/lib/Image/ExifTool/TagLookup.pm
++++ b/lib/Image/ExifTool/TagLookup.pm
+@@ -631,9 +631,9 @@ my %tagLookup = (
+ 	'afaperture' => { 215 => 0x5, 216 => 0x5, 220 => 0x5 },
+ 	'afareaheight' => { 190 => [0x1a,0x34,0x50] },
+ 	'afareaillumination' => { 181 => 0x4b, 282 => '15.3' },
+-	'afareamode' => { 124 => '0.2', 177 => 0x33, 181 => 0xe, 189 => 0x0, 190 => 0x5, 311 => 0xf, 378 => 0x1205, 391 => [0xa,0x3a], 398 => 0x11, 399 => 0x10, 400 => 0x24, 411 => 0xb043, 435 => 0x17 },
++	'afareamode' => { 124 => '0.3', 177 => 0x33, 181 => 0xe, 189 => 0x0, 190 => 0x5, 311 => 0xf, 378 => 0x1205, 391 => [0xa,0x3a], 398 => 0x11, 399 => 0x10, 400 => 0x24, 411 => 0xb043, 435 => 0x17 },
+ 	'afareamodesetting' => { 273 => '11.1', 276 => '0.1', 282 => '16.1', 286 => '2.1', 411 => 0x201c },
+-	'afareapointsize' => { 124 => '0.3' },
++	'afareapointsize' => { 124 => '0.4' },
+ 	'afareas' => { 288 => 0x304 },
+ 	'afareaselectionmethod' => { 2 => 0xd },
+ 	'afareaselectmethod' => { 82 => 0x51b },
+@@ -642,7 +642,7 @@ my %tagLookup = (
+ 	'afareaxposition1' => { 378 => 0x1201 },
+ 	'afareayposition' => { 190 => [0x16,0x30,0x4c], 378 => 0x1204 },
+ 	'afareayposition1' => { 378 => 0x1202 },
+-	'afareazonesize' => { 124 => '0.4' },
++	'afareazonesize' => { 124 => '0.5' },
+ 	'afassist' => { 80 => 0x5, 88 => 0x5, 181 => 0x48, 271 => '2.5', 273 => '0.2', 276 => '0.2', 277 => '1.1', 278 => '1.1', 279 => '1.3', 280 => '2.4', 281 => '1.3', 282 => '0.2', 284 => '2.4', 286 => '2.3' },
+ 	'afassistbeam' => { 2 => 0x8, 82 => 0x50e, 83 => 0x4, 84 => 0x5, 85 => 0x4, 86 => 0x4, 87 => 0x5 },
+ 	'afassistlamp' => { 311 => 0x31 },
+@@ -1453,7 +1453,7 @@ my %tagLookup = (
+ 	'circulargradientbasedcorrections' => { 468 => 'CircularGradientBasedCorrections', 470 => 'CircularGradientBasedCorrections' },
+ 	'city' => { 129 => 0x5a, 158 => 'City', 311 => 0x6d, 482 => 'City' },
+ 	'city2' => { 311 => 0x80 },
+-	'clarity' => { 225 => 0x35, 226 => 0x3d, 468 => 'Clarity', 470 => 'Clarity' },
++	'clarity' => { 225 => 0x35, 226 => 0x3d, 411 => 0x2036, 468 => 'Clarity', 470 => 'Clarity' },
+ 	'clarity2012' => { 468 => 'Clarity2012', 470 => 'Clarity2012' },
+ 	'claritycontrol' => { 346 => 0x96 },
+ 	'classifystate' => { 129 => 0xe1 },
+@@ -1620,6 +1620,7 @@ my %tagLookup = (
+ 	'colortempunknown7' => { 38 => 0x54, 39 => 0x87, 41 => 0x86, 42 => 0x67, 46 => 0x93, 47 => 0x70, 48 => 0x70, 49 => 0x78 },
+ 	'colortempunknown8' => { 38 => 0x59, 39 => 0x8f, 41 => 0x8b, 42 => 0x6c, 46 => 0x98, 47 => 0x75, 48 => 0x75, 49 => 0x7d },
+ 	'colortempunknown9' => { 38 => 0x5e, 39 => 0x97, 41 => 0x90, 42 => 0x71, 46 => 0x9d, 47 => 0x7a, 48 => 0x7a, 49 => 0x82 },
++	'colortint' => { 310 => 0x35c },
+ 	'colortone' => { 10 => 0x6f, 12 => 0x77, 34 => 0x2a, 50 => 0x2 },
+ 	'colortoneadj' => { 101 => 0x20304, 106 => 0x11e },
+ 	'colortoneauto' => { 69 => 0x9c },
+@@ -1786,6 +1787,7 @@ my %tagLookup = (
+ 	'coringfilter' => { 292 => 0x310, 293 => 0x102d, 296 => 0x310 },
+ 	'coringvalues' => { 292 => 0x311, 296 => 0x311 },
+ 	'corporateentity' => { 484 => 'corporateEntity' },
++	'correlatedcolortemp' => { 310 => 0x35b },
+ 	'country' => { 158 => 'Country', 311 => 0x69, 482 => 'Country' },
+ 	'country-primarylocationcode' => { 129 => 0x64 },
+ 	'country-primarylocationname' => { 129 => 0x65 },
+@@ -2529,6 +2531,7 @@ my %tagLookup = (
+ 	'facesdetected' => { 53 => 0x2, 54 => 0x2, 55 => 0x3, 108 => 0x0, 109 => 0x2, 111 => 0x211c, 125 => 0x4100, 203 => 0x3, 292 => 0x1200, 311 => 0x3f, 330 => 0x0, 375 => 0xb5, 386 => 0x0, 405 => 0x0, 408 => 0x3, 418 => 0x30 },
+ 	'facesrecognized' => { 304 => 0x0 },
+ 	'facewidth' => { 54 => 0x1 },
++	'fade' => { 411 => 0x2034 },
+ 	'faithfuloutputhighlightpoint' => { 107 => 0x38 },
+ 	'faithfuloutputshadowpoint' => { 107 => 0x39 },
+ 	'faithfulrawcolortone' => { 107 => 0x31 },
+@@ -3059,7 +3062,7 @@ my %tagLookup = (
+ 	'highlightlinearitylimit' => { 385 => 0xa025 },
+ 	'highlightprotection' => { 263 => 0x6 },
+ 	'highlightrecovery' => { 468 => 'HighlightRecovery', 470 => 'HighlightRecovery' },
+-	'highlights' => { 462 => 'Highlights' },
++	'highlights' => { 411 => 0x2033, 462 => 'Highlights' },
+ 	'highlights2012' => { 468 => 'Highlights2012', 470 => 'Highlights2012' },
+ 	'highlightsadj' => { 445 => 0x9019 },
+ 	'highlightshadow' => { 311 => 0xad },
+@@ -3304,7 +3307,7 @@ my %tagLookup = (
+ 	'internalflashtable' => { 293 => 0x1024 },
+ 	'internallensserialnumber' => { 385 => 0xa005 },
+ 	'internalndfilter' => { 311 => 0x9d },
+-	'internalserialnumber' => { 62 => 0x96, 74 => 0x9, 125 => 0x10, 184 => 0x49dc, 287 => 0x18, 289 => 0x102, 308 => 0x500, 311 => 0x25, 326 => 0x4, 378 => 0x5, 429 => [0x7c,0xf0], 430 => 0x88, 431 => 0x88 },
++	'internalserialnumber' => { 62 => 0x96, 74 => 0x9, 125 => 0x10, 184 => 0x49dc, 287 => 0x18, 289 => 0x102, 308 => 0x500, 311 => 0x25, 326 => 0x4, 378 => 0x5, 429 => [0x7c,0xf0], 430 => 0x88, 431 => [0x88,0x8a] },
+ 	'interopindex' => { 117 => 0x1, 475 => 'InteroperabilityIndex' },
+ 	'interopversion' => { 117 => 0x2 },
+ 	'intervallength' => { 178 => 0x10 },
+@@ -3374,6 +3377,7 @@ my %tagLookup = (
+ 	'jobrefname' => { 493 => [\'JobRef','JobRefName'] },
+ 	'jobrefurl' => { 493 => [\'JobRef','JobRefUrl'] },
+ 	'jobstatus' => { 476 => 'JobStatus' },
++	'jpeg-heifswitch' => { 411 => 0x2039 },
+ 	'jpeghandling' => { 468 => 'JPEGHandling', 470 => 'JPEGHandling' },
+ 	'jpegquality' => { 10 => 0x66, 311 => 0x43, 313 => 0x3034, 411 => 0xb047 },
+ 	'jpegsize' => { 313 => 0x303a },
+@@ -4655,7 +4659,9 @@ my %tagLookup = (
+ 	'pixelcorrectionscale' => { 135 => 0x971 },
+ 	'pixelscale' => { 117 => 0x830e },
+ 	'pixelshiftinfo' => { 411 => 0x202f },
++	'pixelshiftoffset' => { 125 => 0x1106 },
+ 	'pixelshiftresolution' => { 347 => 0x0 },
++	'pixelshiftshots' => { 125 => 0x1105 },
+ 	'pixelsperunitx' => { 300 => 0x0 },
+ 	'pixelsperunity' => { 300 => 0x4 },
+ 	'pixelunits' => { 300 => 0x8 },
+@@ -4746,6 +4752,7 @@ my %tagLookup = (
+ 	'potentialface8position' => { 408 => 0x51 },
+ 	'powersource' => { 325 => '0.1' },
+ 	'poweruptime' => { 222 => 0xb6 },
++	'preaf' => { 124 => '0.2' },
+ 	'precaptureframes' => { 293 => 0x300 },
+ 	'predictor' => { 117 => 0x13d },
+ 	'preflashreturnstrength' => { 238 => 0x28a },
+@@ -5351,7 +5358,7 @@ my %tagLookup = (
+ 	'shadowadj' => { 101 => 0x2030b },
+ 	'shadowcorrection' => { 346 => 0x79 },
+ 	'shadowprotection' => { 263 => 0x0 },
+-	'shadows' => { 117 => 0xfe52, 462 => 'Shadows', 468 => 'Shadows', 470 => 'Shadows' },
++	'shadows' => { 117 => 0xfe52, 411 => 0x2032, 462 => 'Shadows', 468 => 'Shadows', 470 => 'Shadows' },
+ 	'shadows2012' => { 468 => 'Shadows2012', 470 => 'Shadows2012' },
+ 	'shadowsadj' => { 445 => 0x901a },
+ 	'shadowscale' => { 117 => 0xc633 },
+@@ -5377,6 +5384,7 @@ my %tagLookup = (
+ 	'sharpnessneutral' => { 19 => 0xf4, 68 => 0x4c, 69 => 0x4c },
+ 	'sharpnessovershoot' => { 445 => 0x801b },
+ 	'sharpnessportrait' => { 19 => 0xf2, 68 => 0x1c, 69 => 0x1c },
++	'sharpnessrange' => { 411 => 0x2035 },
+ 	'sharpnesssetting' => { 288 => 0x506, 296 => 0x1013, 400 => 0x12, 416 => 0xa },
+ 	'sharpnessstandard' => { 19 => 0xf1, 68 => 0x4, 69 => 0x4 },
+ 	'sharpnessstrength' => { 101 => 0x20311 },
+@@ -6354,7 +6362,7 @@ my %tagLookup = (
+ 	'whitebalancetemperature' => { 288 => 0x501 },
+ 	'whiteboard' => { 293 => 0x301 },
+ 	'whitelevel' => { 117 => 0xc61d, 346 => 0x7e },
+-	'whitepoint' => { 117 => 0x13e, 346 => 0x201, 490 => 'WhitePoint' },
++	'whitepoint' => { 117 => 0x13e, 310 => 0x35d, 346 => 0x201, 490 => 'WhitePoint' },
+ 	'whites2012' => { 468 => 'Whites2012', 470 => 'Whites2012' },
+ 	'whitesadj' => { 445 => 0x9017 },
+ 	'wideadapter' => { 378 => 0x1017 },
+@@ -8117,6 +8125,7 @@ my %tagExists = (
+ 	'focalrange' => 1,
+ 	'focusdistance2' => 1,
+ 	'focusedgemap' => 1,
++	'focusframesize' => 1,
+ 	'focusinfo' => 1,
+ 	'focusinfoifd' => 1,
+ 	'focuspeakinghighlightcolor' => 1,
+@@ -8703,10 +8712,11 @@ my %tagExists = (
+ 	'jumbf' => 1,
+ 	'jumbfbox' => 1,
+ 	'jumbfdescr' => 1,
+-	'jumbfid' => 1,
+-	'jumbflabel' => 1,
+-	'jumbfsignature' => 1,
+-	'jumbftype' => 1,
++	'jumdflags' => 1,
++	'jumdid' => 1,
++	'jumdlabel' => 1,
++	'jumdsignature' => 1,
++	'jumdtype' => 1,
+ 	'jumptoxpep' => 1,
+ 	'junk' => 1,
+ 	'jxlcodestream' => 1,
+diff --git a/lib/Image/ExifTool/TagNames.pod b/lib/Image/ExifTool/TagNames.pod
+index d1e8a1e5..f1e52e1c 100644
+--- a/lib/Image/ExifTool/TagNames.pod
++++ b/lib/Image/ExifTool/TagNames.pod
+@@ -12,7 +12,7 @@ meta information extracted from or written to a file.
+ =head1 TAG TABLES
+ 
+ The tables listed below give the names of all tags recognized by ExifTool.
+-They contain a total of 24102 tags, with 15604 unique tag names.
++They contain a total of 24118 tags, with 15614 unique tag names.
+ 
+ B<Tag ID>, B<Index#> or B<Sequence> is given in the first column of each
+ table.  A B<Tag ID> is the computer-readable equivalent of a tag name, and
+@@ -9933,6 +9933,8 @@ Tags extracted from FLIR Public image Format (FPF) files.
+   0x1100   AutoBracketing                       int16u
+   0x1101   SequenceNumber                       int16u
+   0x1103   DriveSettings                        FujiFilm DriveSettings
++  0x1105   PixelShiftShots                      int16u
++  0x1106   PixelShiftOffset                     rational64s[2]
+   0x1153   PanoramaAngle                        int16u
+   0x1154   PanoramaDirection                    int16u
+   0x1201   AdvancedFilter                       int32u
+@@ -9989,10 +9991,11 @@ Tags extracted from FLIR Public image Format (FPF) files.
+ 
+   Index4   Tag Name                             Writable
+   ------   --------                             --------
+-    0.1    FocusMode2                           int32u & 0xff
+-    0.2    AFAreaMode                           int32u & 0xf00
+-    0.3    AFAreaPointSize                      int32u & 0xf000
+-    0.4    AFAreaZoneSize                       int32u & 0xf0000
++    0.1    FocusMode2                           int32u & 0x0f
++    0.2    PreAF                                int32u & 0xf0
++    0.3    AFAreaMode                           int32u & 0xf00
++    0.4    AFAreaPointSize                      int32u & 0xf000
++    0.5    AFAreaZoneSize                       int32u & 0xf0000
+ 
+ =head3 FujiFilm AFCSettings Tags
+ 
+@@ -15802,6 +15805,9 @@ This information is written by the Leica S (Typ 007) and M10 models.
+   0x034c   UserProfile                          string
+   0x0359   ISOSelected                          int32s
+   0x035a   FNumber                              int32s
++  0x035b   CorrelatedColorTemp                  int16u
++  0x035c   ColorTint                            int16s
++  0x035d   WhitePoint                           rational64u[2]
+ 
+ =head3 Panasonic Type2 Tags
+ 
+@@ -17514,6 +17520,13 @@ MakerNotes.
+   0x202e   Quality                              int16u[2]
+   0x202f   PixelShiftInfo                       undef
+   0x2031   SerialNumber                         string
++  0x2032   Shadows                              int32s
++  0x2033   Highlights                           int32s
++  0x2034   Fade                                 int32s
++  0x2035   SharpnessRange                       int32s
++  0x2036   Clarity                              int32s
++  0x2037   FocusFrameSize                       no
++  0x2039   JPEG-HEIFSwitch                      int16u
+   0x3000   ShotInfo                             Sony ShotInfo
+   0x900b   Tag900b                              Sony Tag900b
+   0x9050   Tag9050a                             Sony Tag9050a
+@@ -18600,7 +18613,7 @@ Valid from July 2015 for ILCE-6100/6300/6400/6500/6600/7C/7M3/7RM2/7RM3/7RM4/
+ 
+ =head3 Sony Tag9050c Tags
+ 
+-Valid from July 2020 for ILCE-1/7SM3.
++Valid from July 2020 for ILCE-1/7SM3, ILME-FX3.
+ 
+   Index1   Tag Name                             Writable
+   ------   --------                             --------
+@@ -18615,6 +18628,7 @@ Valid from July 2020 for ILCE-1/7SM3.
+     104    SonyFNumber                          int16u
+     107    ReleaseMode2                         int8u
+     136    InternalSerialNumber                 int8u[6]~
++    138    InternalSerialNumber                 int8u[6]~
+ 
+ =head3 Sony Tag9400a Tags
+ 
+@@ -18816,7 +18830,7 @@ These tags are currently extracted for SLT models only.
+ 
+ =head3 Sony Tag940c Tags
+ 
+-NEX and ILCE models only.
++E-mount cameras only.
+ 
+   Index1   Tag Name                             Writable
+   ------   --------                             --------
+@@ -19006,7 +19020,7 @@ E-mount models.
+ 
+ =head3 Sony Tag9416 Tags
+ 
+-Valid for the ILCE-1/7SM3.
++Valid for the ILCE-1/7SM3, ILME-FX3.
+ 
+   Index1   Tag Name                             Writable
+   ------   --------                             --------
+@@ -21877,10 +21891,11 @@ Information extracted from the JUMBF description box.
+ 
+   Tag ID               Tag Name                 Writable
+   ------               --------                 --------
+-  'id'                 JUMBFID                  no
+-  'label'              JUMBFLabel               no
+-  'signature'          JUMBFSignature           no
+-  'type'               JUMBFType                no
++  'jumd-flags'         JUMDFlags                no
++  'jumd-id'            JUMDID                   no
++  'jumd-label'         JUMDLabel                no
++  'jumd-sig'           JUMDSignature            no
++  'jumd-type'          JUMDType                 no
+ 
+ =head3 Jpeg2000 CaptureResolution Tags
+ 
+@@ -34897,7 +34912,7 @@ options, but these files are not writable directly.
+ XAttr tags are extracted using the "xattr" utility.  They are extracted if
+ any "XAttr*" tag or the MacOS group is specifically requested, or by setting
+ the XAttrTags API option to 1 or the RequestAll API option to 2 or higher.
+-And they extracted by default from MacOS "._" files when reading
++And they are extracted by default from MacOS "._" files when reading
+ these files directly.
+ 
+   Tag Name                                      Writable
+diff --git a/lib/Image/ExifTool/Writer.pl b/lib/Image/ExifTool/Writer.pl
+index fa85bc55..6bc7055d 100644
+--- a/lib/Image/ExifTool/Writer.pl
++++ b/lib/Image/ExifTool/Writer.pl
+@@ -105,6 +105,7 @@ package Image::ExifTool;
+     ICC => [ 'ICC_Profile', 'WriteICC' ],
+     IND =>   'InDesign',
+     JP2 =>   'Jpeg2000',
++    JXL =>   'Jpeg2000',
+     MIE =>   undef,
+     MOV => [ 'QuickTime',   'WriteMOV' ],
+     MRW =>   'MinoltaRaw',
+diff --git a/perl-Image-ExifTool.spec b/perl-Image-ExifTool.spec
+index 889f47d4..2c9491e4 100644
+--- a/perl-Image-ExifTool.spec
++++ b/perl-Image-ExifTool.spec
+@@ -1,6 +1,6 @@
+ Summary: perl module for image data extraction
+ Name: perl-Image-ExifTool
+-Version: 12.23
++Version: 12.24
+ Release: 1
+ License: Artistic/GPL
+ Group: Development/Libraries/Perl
+diff --git a/t/ExifTool_2.out b/t/ExifTool_2.out
+index ed218740..699f9064 100644
+--- a/t/ExifTool_2.out
++++ b/t/ExifTool_2.out
+@@ -1,9 +1,9 @@
+-[ExifTool, ExifTool, ExifTool] ExifToolVersion - ExifTool Version Number: 12.23
++[ExifTool, ExifTool, ExifTool] ExifToolVersion - ExifTool Version Number: 12.24
+ [File, System, Other] FileName - File Name: ExifTool.jpg
+ [File, System, Other] Directory - Directory: t/images
+ [File, System, Other] FileSize - File Size: 25 KiB
+ [File, System, Time] FileModifyDate - File Modification Date/Time: 2021:03:19 14:14:12-04:00
+-[File, System, Time] FileAccessDate - File Access Date/Time: 2021:04:01 13:20:48-04:00
++[File, System, Time] FileAccessDate - File Access Date/Time: 2021:04:12 12:43:44-04:00
+ [File, System, Time] FileInodeChangeDate - File Inode Change Date/Time: 2021:03:19 14:31:48-04:00
+ [File, System, Other] FilePermissions - File Permissions: -rw-r--r--
+ [File, File, Other] FileType - File Type: JPEG
+@@ -259,20 +259,26 @@
+ [APP11, JPEG-HDR, Image] bet - Beta: 1.000000
+ [APP11, JPEG-HDR, Image] cor - Correction Method: 0
+ [APP11, JPEG-HDR, Preview] RatioImage - Ratio Image: (Binary data 19 bytes)
+-[JUMBF, JUMBF, Image] type - JUMBF Type: cacb-0011-0010-800000aa00389b71
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cai
+-[JUMBF, JUMBF, Image] type - JUMBF Type: cast-0011-0010-800000aa00389b71
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cb.reuters_1
+-[JUMBF, JUMBF, Image] type - JUMBF Type: caas-0011-0010-800000aa00389b71
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cai.assertions
+-[JUMBF, JUMBF, Image] type - JUMBF Type: json-0011-0010-800000aa00389b71
+-[JUMBF, JUMBF, Image] label - JUMBF Label: adobe.asset.info
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: cacb-0011-0010-800000aa00389b71
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable, Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cai
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: cast-0011-0010-800000aa00389b71
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable, Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cb.reuters_1
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: caas-0011-0010-800000aa00389b71
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable, Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cai.assertions
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: json-0011-0010-800000aa00389b71
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable, Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: adobe.asset.info
+ [JUMBF, JSON, Other] title - Title: HEALTHCORONAVIRUSUSAOREGON_SALEM_08.jpg
+-[JUMBF, JUMBF, Image] type - JUMBF Type: json-0011-0010-800000aa00389b71
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cai.location.broad
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: json-0011-0010-800000aa00389b71
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable, Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cai.location.broad
+ [JUMBF, JSON, Other] location - Location: Salem, Oregon
+-[JUMBF, JUMBF, Image] type - JUMBF Type: json-0011-0010-800000aa00389b71
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cai.rights
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: json-0011-0010-800000aa00389b71
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable, Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cai.rights
+ [JUMBF, JSON, Other] copyright - Copyright: Alisha Jucevic
+ [APP12, PictureInfo, Time] TimeDate - Date/Time Original: 1998:12:31 15:17:20
+ [APP12, PictureInfo, Image] Shutter - Exposure Time: 1/155
+diff --git a/t/ExifTool_29.out b/t/ExifTool_29.out
+index 3f4cca6d..c032073b 100644
+--- a/t/ExifTool_29.out
++++ b/t/ExifTool_29.out
+@@ -258,20 +258,26 @@
+ [APP11, JPEG-HDR, Image] bet - Beta: #.######
+ [APP11, JPEG-HDR, Image] cor - Correction Method: #
+ [APP11, JPEG-HDR, Preview] RatioImage - Ratio Image: (Binary data 19 bytes)
+-[JUMBF, JUMBF, Image] type - JUMBF Type: cacb-####-####-######aa#####b##
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cai
+-[JUMBF, JUMBF, Image] type - JUMBF Type: cast-####-####-######aa#####b##
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cb.reuters_#
+-[JUMBF, JUMBF, Image] type - JUMBF Type: caas-####-####-######aa#####b##
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cai.assertions
+-[JUMBF, JUMBF, Image] type - JUMBF Type: json-####-####-######aa#####b##
+-[JUMBF, JUMBF, Image] label - JUMBF Label: adobe.asset.info
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: cacb-####-####-######aa#####b##
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable,_Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cai
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: cast-####-####-######aa#####b##
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable,_Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cb.reuters_#
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: caas-####-####-######aa#####b##
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable,_Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cai.assertions
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: json-####-####-######aa#####b##
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable,_Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: adobe.asset.info
+ [JUMBF, JSON, Other] title - Title: HEALTHCORONAVIRUSUSAOREGON_SALEM_##.jpg
+-[JUMBF, JUMBF, Image] type - JUMBF Type: json-####-####-######aa#####b##
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cai.location.broad
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: json-####-####-######aa#####b##
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable,_Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cai.location.broad
+ [JUMBF, JSON, Other] location - Location: Salem,_Oregon
+-[JUMBF, JUMBF, Image] type - JUMBF Type: json-####-####-######aa#####b##
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cai.rights
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: json-####-####-######aa#####b##
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable,_Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cai.rights
+ [JUMBF, JSON, Other] copyright - Copyright: Alisha_Jucevic
+ [APP12, PictureInfo, Time] TimeDate - Date/Time Original: ####:##:##_##:##:##
+ [APP12, PictureInfo, Image] Shutter - Exposure Time: #/###
+diff --git a/t/Writer_51.out b/t/Writer_51.out
+index 7e2484ed..beb5127e 100644
+--- a/t/Writer_51.out
++++ b/t/Writer_51.out
+@@ -1,10 +1,10 @@
+-[ExifTool, ExifTool, ExifTool] ExifToolVersion - ExifTool Version Number: 12.23
++[ExifTool, ExifTool, ExifTool] ExifToolVersion - ExifTool Version Number: 12.24
+ [File, System, Other] FileName - File Name: Writer_51_failed.jpg
+ [File, System, Other] Directory - Directory: t
+ [File, System, Other] FileSize - File Size: 25 KiB
+-[File, System, Time] FileModifyDate - File Modification Date/Time: 2021:04:01 13:21:08-04:00
+-[File, System, Time] FileAccessDate - File Access Date/Time: 2021:04:01 13:21:08-04:00
+-[File, System, Time] FileInodeChangeDate - File Inode Change Date/Time: 2021:04:01 13:21:08-04:00
++[File, System, Time] FileModifyDate - File Modification Date/Time: 2021:04:12 12:44:05-04:00
++[File, System, Time] FileAccessDate - File Access Date/Time: 2021:04:12 12:44:05-04:00
++[File, System, Time] FileInodeChangeDate - File Inode Change Date/Time: 2021:04:12 12:44:05-04:00
+ [File, System, Other] FilePermissions - File Permissions: -rw-r--r--
+ [File, File, Other] FileType - File Type: JPEG
+ [File, File, Other] FileTypeExtension - File Type Extension: jpg
+@@ -246,20 +246,26 @@
+ [APP11, JPEG-HDR, Image] bet - Beta: 1.000000
+ [APP11, JPEG-HDR, Image] cor - Correction Method: 0
+ [APP11, JPEG-HDR, Preview] RatioImage - Ratio Image: (Binary data 19 bytes)
+-[JUMBF, JUMBF, Image] type - JUMBF Type: cacb-0011-0010-800000aa00389b71
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cai
+-[JUMBF, JUMBF, Image] type - JUMBF Type: cast-0011-0010-800000aa00389b71
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cb.reuters_1
+-[JUMBF, JUMBF, Image] type - JUMBF Type: caas-0011-0010-800000aa00389b71
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cai.assertions
+-[JUMBF, JUMBF, Image] type - JUMBF Type: json-0011-0010-800000aa00389b71
+-[JUMBF, JUMBF, Image] label - JUMBF Label: adobe.asset.info
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: cacb-0011-0010-800000aa00389b71
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable, Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cai
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: cast-0011-0010-800000aa00389b71
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable, Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cb.reuters_1
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: caas-0011-0010-800000aa00389b71
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable, Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cai.assertions
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: json-0011-0010-800000aa00389b71
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable, Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: adobe.asset.info
+ [JUMBF, JSON, Other] title - Title: HEALTHCORONAVIRUSUSAOREGON_SALEM_08.jpg
+-[JUMBF, JUMBF, Image] type - JUMBF Type: json-0011-0010-800000aa00389b71
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cai.location.broad
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: json-0011-0010-800000aa00389b71
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable, Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cai.location.broad
+ [JUMBF, JSON, Other] location - Location: Salem, Oregon
+-[JUMBF, JUMBF, Image] type - JUMBF Type: json-0011-0010-800000aa00389b71
+-[JUMBF, JUMBF, Image] label - JUMBF Label: cai.rights
++[JUMBF, JUMBF, Image] jumd-type - JUMD Type: json-0011-0010-800000aa00389b71
++[JUMBF, JUMBF, Image] jumd-flags - JUMD Flags: Requestable, Label
++[JUMBF, JUMBF, Image] jumd-label - JUMD Label: cai.rights
+ [JUMBF, JSON, Other] copyright - Copyright: Alisha Jucevic
+ [APP12, PictureInfo, Time] TimeDate - Date/Time Original: 1998:12:31 15:17:20
+ [APP12, PictureInfo, Image] Shutter - Exposure Time: 1/155
+diff --git a/windows_exiftool b/windows_exiftool
+index 480dc72d..a90dae76 100755
+--- a/windows_exiftool
++++ b/windows_exiftool
+@@ -10,7 +10,7 @@
+ use strict;
+ require 5.004;
+ 
+-my $version = '12.23';
++my $version = '12.24';
+ 
+ # add our 'lib' directory to the include list BEFORE 'use Image::ExifTool'
+ my $exeDir;
+@@ -5417,7 +5417,7 @@ OPTIONS
+ 
+          produces output like this:
+ 
+-             -- Generated by ExifTool 12.23 --
++             -- Generated by ExifTool 12.24 --
+              File: a.jpg - 2003:10:31 15:44:19
+              (f/5.6, 1/60s, ISO 100)
+              File: b.jpg - 2006:05:23 11:57:38

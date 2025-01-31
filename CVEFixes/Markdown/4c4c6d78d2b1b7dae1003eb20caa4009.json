@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:yii_software:yii:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/yiisoft/yii2/commit/97171a0db7cda0a49931ee0c3b998ef50bd06756",
+        "version_end_excluding": {
+            "yii_software:yii": "unknown"
+        },
+        "path": {
+            "file_path": "framework/CHANGELOG.md"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-7271"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

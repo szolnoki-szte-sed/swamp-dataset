@@ -1,0 +1,55 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.14.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.14.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.13:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.14:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.1.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.2.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.2.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.2.5:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:13.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:13.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/phpmyadmin/phpmyadmin/commit/0cd293f5e13aa245e4a57b8d373597cc0e421b6f",
+        "version_end_excluding": {
+            "phpmyadmin:phpmyadmin": "unknown",
+            "opensuse:opensuse": "unknown"
+        },
+        "path": {
+            "file_path": "js/functions.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-5274"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

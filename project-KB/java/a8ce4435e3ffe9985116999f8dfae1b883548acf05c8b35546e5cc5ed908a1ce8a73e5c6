@@ -1,0 +1,216 @@
+diff --git a/assembly/assembly-wsmaster-war/src/main/java/org/eclipse/che/api/deploy/WsMasterModule.java b/assembly/assembly-wsmaster-war/src/main/java/org/eclipse/che/api/deploy/WsMasterModule.java
+index 515cc29265f..9daa549d444 100644
+--- a/assembly/assembly-wsmaster-war/src/main/java/org/eclipse/che/api/deploy/WsMasterModule.java
++++ b/assembly/assembly-wsmaster-war/src/main/java/org/eclipse/che/api/deploy/WsMasterModule.java
+@@ -60,9 +60,6 @@
+ import org.eclipse.che.api.workspace.server.spi.provision.env.MachineTokenEnvVarProvider;
+ import org.eclipse.che.api.workspace.server.spi.provision.env.MavenOptsEnvVariableProvider;
+ import org.eclipse.che.api.workspace.server.spi.provision.env.ProjectsRootEnvVariableProvider;
+-import org.eclipse.che.api.workspace.server.spi.provision.env.WorkspaceAgentCorsAllowCredentialsEnvVarProvider;
+-import org.eclipse.che.api.workspace.server.spi.provision.env.WorkspaceAgentCorsAllowedOriginsEnvVarProvider;
+-import org.eclipse.che.api.workspace.server.spi.provision.env.WorkspaceAgentCorsEnabledEnvVarProvider;
+ import org.eclipse.che.api.workspace.server.spi.provision.env.WorkspaceAgentJavaOptsEnvVariableProvider;
+ import org.eclipse.che.api.workspace.server.spi.provision.env.WorkspaceIdEnvVarProvider;
+ import org.eclipse.che.api.workspace.server.spi.provision.env.WorkspaceNameEnvVarProvider;
+@@ -180,14 +177,6 @@ protected void configure() {
+         .addBinding()
+         .to(WorkspaceAgentJavaOptsEnvVariableProvider.class);
+ 
+-    legacyEnvVarProviderMultibinders
+-        .addBinding()
+-        .to(WorkspaceAgentCorsAllowedOriginsEnvVarProvider.class);
+-    legacyEnvVarProviderMultibinders
+-        .addBinding()
+-        .to(WorkspaceAgentCorsAllowCredentialsEnvVarProvider.class);
+-    legacyEnvVarProviderMultibinders.addBinding().to(WorkspaceAgentCorsEnabledEnvVarProvider.class);
+-
+     bind(org.eclipse.che.api.workspace.server.event.WorkspaceJsonRpcMessenger.class)
+         .asEagerSingleton();
+     bind(org.eclipse.che.everrest.EverrestDownloadFileResponseFilter.class);
+diff --git a/assembly/assembly-wsmaster-war/src/main/java/org/eclipse/che/api/deploy/WsMasterServletModule.java b/assembly/assembly-wsmaster-war/src/main/java/org/eclipse/che/api/deploy/WsMasterServletModule.java
+index 04978b5793a..0acde910ff7 100644
+--- a/assembly/assembly-wsmaster-war/src/main/java/org/eclipse/che/api/deploy/WsMasterServletModule.java
++++ b/assembly/assembly-wsmaster-war/src/main/java/org/eclipse/che/api/deploy/WsMasterServletModule.java
+@@ -52,8 +52,8 @@ protected void configureServlets() {
+   private boolean isCheCorsEnabled() {
+     String cheCorsEnabledEnvVar = System.getenv("CHE_CORS_ENABLED");
+     if (cheCorsEnabledEnvVar == null) {
+-      // by default CORS should be enabled
+-      return true;
++      // by default CORS should be disabled
++      return false;
+     } else {
+       return Boolean.valueOf(cheCorsEnabledEnvVar);
+     }
+diff --git a/assembly/assembly-wsmaster-war/src/main/webapp/WEB-INF/classes/che/che.properties b/assembly/assembly-wsmaster-war/src/main/webapp/WEB-INF/classes/che/che.properties
+index f272936180f..a71cceb0915 100644
+--- a/assembly/assembly-wsmaster-war/src/main/webapp/WEB-INF/classes/che/che.properties
++++ b/assembly/assembly-wsmaster-war/src/main/webapp/WEB-INF/classes/che/che.properties
+@@ -685,20 +685,13 @@ che.core.jsonrpc.minor_processor_queue_capacity=10000
+ che.metrics.port=8087
+ 
+ # CORS settings
+-# CORS filter on WS Master is turned on by default.
+-# Use environment variable "CHE_CORS_ENABLED=false" to turn it off
++# CORS filter on WS Master is turned off by default.
++# Use environment variable "CHE_CORS_ENABLED=true" to turn it on
+ # "cors.allowed.origins" indicates which request origins are allowed
+ che.cors.allowed_origins=*
+ # "cors.support.credentials" indicates if it allows processing of requests with credentials
+ # (in cookies, headers, TLS client certificates)
+ che.cors.allow_credentials=false
+-# This property is used to provide value for WS Agent CORS allowed origins env variable from WS Master.
+-# If set to null, then the value will be automatically provided by WS Agent.
+-che.wsagent.cors.allowed_origins=NULL
+-# This property is used to provide value for WS Agent CORS credentials origins env variable from WS Master,
+-che.wsagent.cors.allow_credentials=true
+-# This property is used to provide value for WS Agent CORS enabling.
+-che.wsagent.cors.enabled=true
+ 
+ ## Factory defaults.
+ # Editor and plugin which will be used for factories which are created from remote git repository
+diff --git a/wsmaster/che-core-api-workspace/src/main/java/org/eclipse/che/api/workspace/server/spi/provision/env/WorkspaceAgentCorsAllowCredentialsEnvVarProvider.java b/wsmaster/che-core-api-workspace/src/main/java/org/eclipse/che/api/workspace/server/spi/provision/env/WorkspaceAgentCorsAllowCredentialsEnvVarProvider.java
+deleted file mode 100644
+index 6db5012de23..00000000000
+--- a/wsmaster/che-core-api-workspace/src/main/java/org/eclipse/che/api/workspace/server/spi/provision/env/WorkspaceAgentCorsAllowCredentialsEnvVarProvider.java
++++ /dev/null
+@@ -1,43 +0,0 @@
+-/*
+- * Copyright (c) 2012-2018 Red Hat, Inc.
+- * This program and the accompanying materials are made
+- * available under the terms of the Eclipse Public License 2.0
+- * which is available at https://www.eclipse.org/legal/epl-2.0/
+- *
+- * SPDX-License-Identifier: EPL-2.0
+- *
+- * Contributors:
+- *   Red Hat, Inc. - initial API and implementation
+- */
+-package org.eclipse.che.api.workspace.server.spi.provision.env;
+-
+-import javax.inject.Inject;
+-import javax.inject.Named;
+-import org.eclipse.che.api.core.model.workspace.runtime.RuntimeIdentity;
+-import org.eclipse.che.api.workspace.server.spi.InfrastructureException;
+-import org.eclipse.che.commons.annotation.Nullable;
+-import org.eclipse.che.commons.lang.Pair;
+-
+-/**
+- * Add environment variable that defines support for requests with credentials for {@link
+- * CheCorsFilterConfig} of WS Agent
+- *
+- * @author Mykhailo Kuznietsov
+- */
+-public class WorkspaceAgentCorsAllowCredentialsEnvVarProvider implements LegacyEnvVarProvider {
+-
+-  private String wsAgentCorsAllowCredentials;
+-
+-  @Inject
+-  public WorkspaceAgentCorsAllowCredentialsEnvVarProvider(
+-      @Nullable @Named("che.wsagent.cors.allow_credentials") String wsAgentCorsAllowCredentials) {
+-    this.wsAgentCorsAllowCredentials = wsAgentCorsAllowCredentials;
+-  }
+-
+-  @Override
+-  public Pair<String, String> get(RuntimeIdentity runtimeIdentity) throws InfrastructureException {
+-    return wsAgentCorsAllowCredentials == null
+-        ? null
+-        : Pair.of("CHE_WSAGENT_CORS_ALLOW__CREDENTIALS", wsAgentCorsAllowCredentials);
+-  }
+-}
+diff --git a/wsmaster/che-core-api-workspace/src/main/java/org/eclipse/che/api/workspace/server/spi/provision/env/WorkspaceAgentCorsAllowedOriginsEnvVarProvider.java b/wsmaster/che-core-api-workspace/src/main/java/org/eclipse/che/api/workspace/server/spi/provision/env/WorkspaceAgentCorsAllowedOriginsEnvVarProvider.java
+deleted file mode 100644
+index fc8b1f9e1ba..00000000000
+--- a/wsmaster/che-core-api-workspace/src/main/java/org/eclipse/che/api/workspace/server/spi/provision/env/WorkspaceAgentCorsAllowedOriginsEnvVarProvider.java
++++ /dev/null
+@@ -1,42 +0,0 @@
+-/*
+- * Copyright (c) 2012-2018 Red Hat, Inc.
+- * This program and the accompanying materials are made
+- * available under the terms of the Eclipse Public License 2.0
+- * which is available at https://www.eclipse.org/legal/epl-2.0/
+- *
+- * SPDX-License-Identifier: EPL-2.0
+- *
+- * Contributors:
+- *   Red Hat, Inc. - initial API and implementation
+- */
+-package org.eclipse.che.api.workspace.server.spi.provision.env;
+-
+-import javax.inject.Inject;
+-import javax.inject.Named;
+-import org.eclipse.che.api.core.model.workspace.runtime.RuntimeIdentity;
+-import org.eclipse.che.api.workspace.server.spi.InfrastructureException;
+-import org.eclipse.che.commons.annotation.Nullable;
+-import org.eclipse.che.commons.lang.Pair;
+-
+-/**
+- * Add environment variable that defines allowed origins for {@link CheCorsFilterConfig} of WS Agent
+- *
+- * @author Mykhailo Kuznietsov
+- */
+-public class WorkspaceAgentCorsAllowedOriginsEnvVarProvider implements LegacyEnvVarProvider {
+-
+-  private String wsAgentCorsAllowedOrigins;
+-
+-  @Inject
+-  public WorkspaceAgentCorsAllowedOriginsEnvVarProvider(
+-      @Nullable @Named("che.wsagent.cors.allowed_origins") String wsAgentCorsAllowedOrigins) {
+-    this.wsAgentCorsAllowedOrigins = wsAgentCorsAllowedOrigins;
+-  }
+-
+-  @Override
+-  public Pair<String, String> get(RuntimeIdentity runtimeIdentity) throws InfrastructureException {
+-    return wsAgentCorsAllowedOrigins == null
+-        ? null
+-        : Pair.of("CHE_WSAGENT_CORS_ALLOWED__ORIGINS", wsAgentCorsAllowedOrigins);
+-  }
+-}
+diff --git a/wsmaster/che-core-api-workspace/src/main/java/org/eclipse/che/api/workspace/server/spi/provision/env/WorkspaceAgentCorsEnabledEnvVarProvider.java b/wsmaster/che-core-api-workspace/src/main/java/org/eclipse/che/api/workspace/server/spi/provision/env/WorkspaceAgentCorsEnabledEnvVarProvider.java
+deleted file mode 100644
+index eda7a1404a6..00000000000
+--- a/wsmaster/che-core-api-workspace/src/main/java/org/eclipse/che/api/workspace/server/spi/provision/env/WorkspaceAgentCorsEnabledEnvVarProvider.java
++++ /dev/null
+@@ -1,42 +0,0 @@
+-/*
+- * Copyright (c) 2012-2018 Red Hat, Inc.
+- * This program and the accompanying materials are made
+- * available under the terms of the Eclipse Public License 2.0
+- * which is available at https://www.eclipse.org/legal/epl-2.0/
+- *
+- * SPDX-License-Identifier: EPL-2.0
+- *
+- * Contributors:
+- *   Red Hat, Inc. - initial API and implementation
+- */
+-package org.eclipse.che.api.workspace.server.spi.provision.env;
+-
+-import javax.inject.Inject;
+-import javax.inject.Named;
+-import org.eclipse.che.api.core.model.workspace.runtime.RuntimeIdentity;
+-import org.eclipse.che.api.workspace.server.spi.InfrastructureException;
+-import org.eclipse.che.commons.annotation.Nullable;
+-import org.eclipse.che.commons.lang.Pair;
+-
+-/**
+- * Add environment variable that enables CORS filter on WS Agent
+- *
+- * @author Mykhailo Kuznietsov
+- */
+-public class WorkspaceAgentCorsEnabledEnvVarProvider implements LegacyEnvVarProvider {
+-
+-  private String wsAgentCorsEnabled;
+-
+-  @Inject
+-  public WorkspaceAgentCorsEnabledEnvVarProvider(
+-      @Nullable @Named("che.wsagent.cors.enabled") String wsAgentCorsEnabled) {
+-    this.wsAgentCorsEnabled = wsAgentCorsEnabled;
+-  }
+-
+-  @Override
+-  public Pair<String, String> get(RuntimeIdentity runtimeIdentity) throws InfrastructureException {
+-    return wsAgentCorsEnabled == null
+-        ? null
+-        : Pair.of("CHE_WSAGENT_CORS_ENABLED", wsAgentCorsEnabled);
+-  }
+-}

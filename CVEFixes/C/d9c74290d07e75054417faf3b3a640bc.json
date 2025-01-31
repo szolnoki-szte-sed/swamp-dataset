@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:19.10:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/c7ed6d0183d5ea9bc31bcaeeba4070bd62546471",
+        "version_end_excluding": {
+            "linux:linux_kernel": "5.3.11",
+            "canonical:ubuntu_linux": "unknown"
+        },
+        "path": {
+            "file_path": "drivers/net/ethernet/mellanox/mlx5/core/health.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-19047"
+        ],
+        "CWE": [
+            "CWE-401"
+        ]
+    }
+}

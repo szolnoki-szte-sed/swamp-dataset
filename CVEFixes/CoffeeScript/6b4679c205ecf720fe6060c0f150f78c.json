@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:shiba_project:shiba:1.1.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/rhysd/Shiba/commit/e8a65b0f81eb04903eedd29500d7e1bedf249eab",
+        "version_end_excluding": {
+            "shiba_project:shiba": "unknown"
+        },
+        "path": {
+            "file_path": "renderer/tsconfig.json"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-1000491"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fastify-http-proxy_project:fastify-http-proxy:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/fastify/fastify-http-proxy/commit/02d9b43c770aa16bc44470edecfaeb7c17985016",
+        "version_end_excluding": {
+            "fastify-http-proxy_project:fastify-http-proxy": "4.3.1"
+        },
+        "path": {
+            "file_path": "test/test.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21322"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

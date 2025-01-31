@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:facebook:hermes:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/facebook/hermes/commit/fe52854cdf6725c2eaa9e125995da76e6ceb27da",
+        "version_end_excluding": {
+            "facebook:hermes": "0.4.3"
+        },
+        "path": {
+            "file_path": "lib/VM/JSObject.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1911"
+        ],
+        "CWE": [
+            "CWE-843"
+        ]
+    }
+}

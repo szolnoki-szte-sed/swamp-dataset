@@ -1,0 +1,426 @@
+diff --git a/soapui/src/main/java/com/eviware/soapui/impl/WsdlInterfaceFactory.java b/soapui/src/main/java/com/eviware/soapui/impl/WsdlInterfaceFactory.java
+index 9278c14df9..de8fa2e9a5 100644
+--- a/soapui/src/main/java/com/eviware/soapui/impl/WsdlInterfaceFactory.java
++++ b/soapui/src/main/java/com/eviware/soapui/impl/WsdlInterfaceFactory.java
+@@ -35,6 +35,7 @@
+ import com.eviware.soapui.support.SoapUIException;
+ import org.apache.log4j.Logger;
+ 
++import javax.annotation.Nullable;
+ import javax.xml.namespace.QName;
+ import java.io.IOException;
+ import java.net.URI;
+@@ -66,6 +67,7 @@ public static WsdlInterface[] importWsdl(WsdlProject project, String url, boolea
+         return importWsdl(project, url, createRequests, null, wsdlLoader);
+     }
+ 
++    @Nullable
+     public static WsdlInterface[] importWsdl(WsdlProject project, String url, boolean createRequests,
+                                              QName bindingName, WsdlLoader wsdlLoader) throws SoapUIException {
+         WsdlInterface[] result;
+diff --git a/soapui/src/main/java/com/eviware/soapui/impl/rest/support/WadlImporter.java b/soapui/src/main/java/com/eviware/soapui/impl/rest/support/WadlImporter.java
+index 68f661fb4b..4128f464ce 100644
+--- a/soapui/src/main/java/com/eviware/soapui/impl/rest/support/WadlImporter.java
++++ b/soapui/src/main/java/com/eviware/soapui/impl/rest/support/WadlImporter.java
+@@ -81,6 +81,11 @@ public void initFromWadl(String wadlUrl) {
+             XmlObject xmlObject = XmlUtils.createXmlObject(new URL(wadlUrl));
+ 
+             String content = xmlObject.xmlText();
++
++            if (!UISupport.handleDefinitionPropertyExpansions(wadlUrl, content)) {
++                return;
++            }
++
+             Element element = ((Document) xmlObject.getDomNode()).getDocumentElement();
+ 
+             // try to allow older namespaces
+@@ -92,7 +97,7 @@ public void initFromWadl(String wadlUrl) {
+                     || !element.getNamespaceURI().equals(Constants.WADL11_NS)) {
+                 throw new Exception("Document is not a WADL application with " + Constants.WADL11_NS + " namespace");
+             }
+-            content = PropertyExpansionRemover.removeExpansions(content);
++
+             ApplicationDocument applicationDocument = ApplicationDocument.Factory.parse(content);
+             application = applicationDocument.getApplication();
+ 
+diff --git a/soapui/src/main/java/com/eviware/soapui/impl/wsdl/actions/project/AddWsdlAction.java b/soapui/src/main/java/com/eviware/soapui/impl/wsdl/actions/project/AddWsdlAction.java
+index cd1b261f63..8113471da2 100644
+--- a/soapui/src/main/java/com/eviware/soapui/impl/wsdl/actions/project/AddWsdlAction.java
++++ b/soapui/src/main/java/com/eviware/soapui/impl/wsdl/actions/project/AddWsdlAction.java
+@@ -37,6 +37,7 @@
+ import com.eviware.x.form.support.AField.AFieldType;
+ import com.eviware.x.form.support.AForm;
+ 
++import javax.annotation.Nullable;
+ import java.io.File;
+ 
+ /**
+@@ -87,13 +88,14 @@ public void valueChanged(XFormField sourceField, String newValue, String oldValu
+ 
+                     WsdlInterface[] results = importWsdl(project, expUrl);
+ 
+-                    if (!url.equals(expUrl)) {
+-                        for (WsdlInterface iface : results) {
+-                            iface.setDefinition(url, false);
++                    if (results != null) {
++                        if (!url.equals(expUrl)) {
++                            for (WsdlInterface iface : results) {
++                                iface.setDefinition(url, false);
++                            }
+                         }
++                        break;
+                     }
+-
+-                    break;
+                 }
+             } catch (InvalidDefinitionException ex) {
+                 ex.show();
+@@ -103,20 +105,24 @@ public void valueChanged(XFormField sourceField, String newValue, String oldValu
+         }
+     }
+ 
++    @Nullable
+     private WsdlInterface[] importWsdl(WsdlProject project, String url) throws SoapUIException {
+         WsdlInterface[] results = WsdlInterfaceFactory.importWsdl(project, url, dialog.getValue(Form.CREATEREQUEST)
+                 .equals("true"));
+-        for (WsdlInterface iface : results) {
+-            UISupport.select(iface);
+ 
+-            if (dialog.getValue(Form.GENERATETESTSUITE).equals("true")) {
+-                GenerateWsdlTestSuiteAction generateTestSuiteAction = new GenerateWsdlTestSuiteAction();
+-                generateTestSuiteAction.generateTestSuite(iface, true);
+-            }
++        if (results != null) {
++            for (WsdlInterface iface : results) {
++                UISupport.select(iface);
+ 
+-            if (dialog.getValue(Form.GENERATEMOCKSERVICE).equals("true")) {
+-                GenerateMockServiceAction generateMockAction = new GenerateMockServiceAction();
+-                generateMockAction.generateMockService(iface, false);
++                if (dialog.getValue(Form.GENERATETESTSUITE).equals("true")) {
++                    GenerateWsdlTestSuiteAction generateTestSuiteAction = new GenerateWsdlTestSuiteAction();
++                    generateTestSuiteAction.generateTestSuite(iface, true);
++                }
++
++                if (dialog.getValue(Form.GENERATEMOCKSERVICE).equals("true")) {
++                    GenerateMockServiceAction generateMockAction = new GenerateMockServiceAction();
++                    generateMockAction.generateMockService(iface, false);
++                }
+             }
+         }
+ 
+diff --git a/soapui/src/main/java/com/eviware/soapui/impl/wsdl/support/wsdl/WsdlImporter.java b/soapui/src/main/java/com/eviware/soapui/impl/wsdl/support/wsdl/WsdlImporter.java
+index 5a06382997..d2b67fed01 100644
+--- a/soapui/src/main/java/com/eviware/soapui/impl/wsdl/support/wsdl/WsdlImporter.java
++++ b/soapui/src/main/java/com/eviware/soapui/impl/wsdl/support/wsdl/WsdlImporter.java
+@@ -31,6 +31,7 @@
+ import com.eviware.soapui.support.UISupport;
+ import org.apache.log4j.Logger;
+ 
++import javax.annotation.Nullable;
+ import javax.wsdl.Binding;
+ import javax.wsdl.Definition;
+ import javax.wsdl.Port;
+@@ -75,6 +76,7 @@ public static WsdlInterface[] importWsdl(WsdlProject project, String wsdlUrl, QN
+         return importWsdl(project, wsdlUrl, bindingName, null);
+     }
+ 
++    @Nullable
+     public static WsdlInterface[] importWsdl(WsdlProject project, String wsdlUrl, QName bindingName,
+                                              WsdlLoader wsdlLoader) throws Exception {
+         wsdlUrl = Tools.normalizeFileSeparators(wsdlUrl);
+diff --git a/soapui/src/main/java/com/eviware/soapui/impl/wsdl/support/wsdl/WsdlLoader.java b/soapui/src/main/java/com/eviware/soapui/impl/wsdl/support/wsdl/WsdlLoader.java
+index d3e98555c1..d883bbcb50 100644
+--- a/soapui/src/main/java/com/eviware/soapui/impl/wsdl/support/wsdl/WsdlLoader.java
++++ b/soapui/src/main/java/com/eviware/soapui/impl/wsdl/support/wsdl/WsdlLoader.java
+@@ -23,6 +23,7 @@
+ import com.eviware.soapui.settings.WsdlSettings;
+ import com.eviware.soapui.support.StringUtils;
+ import com.eviware.soapui.support.Tools;
++import com.eviware.soapui.support.UISupport;
+ import com.eviware.soapui.support.xml.XmlUtils;
+ import com.eviware.soapui.tools.PropertyExpansionRemover;
+ import org.apache.log4j.Logger;
+@@ -42,12 +43,13 @@
+  */
+ 
+ public abstract class WsdlLoader extends AbstractDefinitionLoader implements WsdlDefinitionLoader {
++    protected static final Logger log = Logger.getLogger(WsdlLoader.class);
++
+     private String url;
+     private String firstNewURI;
+     private String last;
+     private String username;
+     private String password;
+-    protected static final Logger log = Logger.getLogger(WsdlLoader.class);
+ 
+     public WsdlLoader(String url) {
+         this.url = url;
+@@ -129,11 +131,13 @@ private InvalidDefinitionException makeInvalidDefinitionException(String url, Ex
+ 
+     private String readCleanWsdlFrom(String url) throws Exception {
+         String content = XmlUtils.createXmlObject(load(url)).xmlText();
+-
+         if (SoapUI.getSettings().getBoolean(WsdlSettings.TRIM_WSDL)) {
+             content = content.trim();
+         }
+-        return PropertyExpansionRemover.removeExpansions(content);
++        if (!UISupport.handleDefinitionPropertyExpansions(url, content)) {
++            throw new Exception("The action has been cancelled.");
++        }
++        return content;
+     }
+ 
+     public String getBaseURI() {
+diff --git a/soapui/src/main/java/com/eviware/soapui/support/DefinitionPropertyExpansionsDialog.java b/soapui/src/main/java/com/eviware/soapui/support/DefinitionPropertyExpansionsDialog.java
+new file mode 100644
+index 0000000000..e50012c492
+--- /dev/null
++++ b/soapui/src/main/java/com/eviware/soapui/support/DefinitionPropertyExpansionsDialog.java
+@@ -0,0 +1,93 @@
++package com.eviware.soapui.support;
++
++import com.eviware.soapui.support.action.swing.ActionList;
++import com.eviware.soapui.support.action.swing.DefaultActionList;
++import com.eviware.x.form.XForm;
++import com.eviware.x.form.XFormDialog;
++import com.eviware.x.form.XFormDialogBuilder;
++import com.eviware.x.form.XFormFactory;
++import com.eviware.x.form.XFormTextField;
++import com.eviware.x.impl.swing.JTextAreaFormField;
++
++import javax.swing.AbstractAction;
++import java.awt.event.ActionEvent;
++import java.util.List;
++
++public class DefinitionPropertyExpansionsDialog {
++    public static final MessageSupport messages = MessageSupport.getMessages(DefinitionPropertyExpansionsDialog.class);
++
++    private XFormDialog dialog = null;
++    private boolean importDefinition;
++
++    public boolean isImportDefinition() {
++        return importDefinition;
++    }
++
++    private ActionList buildActions() {
++        ActionList actions = new DefaultActionList("Actions");
++        actions.addAction(new ImportAction());
++        actions.addAction(new CancelAction());
++        return actions;
++    }
++
++    private XFormDialog buildDialog(List<String> propertyExpansions) {
++        XFormDialogBuilder builder = XFormFactory.createDialogBuilder(messages.get(
++                "DefinitionPropertyExpansionsDialog.Title"));
++        XForm form = builder.createForm("Basic");
++        XFormTextField vulnerabilitiesTextField = form.addTextField(
++                messages.get("DefinitionPropertyExpansionsDialog.Field.Vulnerabilities.Name"),
++                messages.get("DefinitionPropertyExpansionsDialog.Field.Vulnerabilities.Description"),
++                XForm.FieldType.TEXTAREA);
++        StringBuilder propertyExpansionsBuilder = new StringBuilder();
++        for (String propertyExpansion : propertyExpansions) {
++            propertyExpansionsBuilder.append(propertyExpansion).append("\n");
++        }
++        if (propertyExpansionsBuilder.length() > 0) {
++            propertyExpansionsBuilder.deleteCharAt(propertyExpansionsBuilder.length() - 1);
++        }
++        vulnerabilitiesTextField.setValue(propertyExpansionsBuilder.toString());
++        ((JTextAreaFormField) vulnerabilitiesTextField).setEditable(false);
++        dialog = builder.buildDialog(buildActions(),
++                messages.get("DefinitionPropertyExpansionsDialog.Description"),
++                UISupport.createImageIcon("/warning_32x32.png"));
++        return dialog;
++    }
++
++    public void showDialog(List<String> propertyExpansions) {
++        if (dialog == null) {
++            dialog = buildDialog(propertyExpansions);
++        }
++        dialog.show();
++    }
++
++    private void closeDialog() {
++        dialog.setVisible(false);
++        dialog = null;
++    }
++
++    private class ImportAction extends AbstractAction {
++
++        public ImportAction() {
++            super(messages.get("DefinitionPropertyExpansionsDialog.Action.Import.Name"));
++        }
++
++        @Override
++        public void actionPerformed(ActionEvent e) {
++            importDefinition = true;
++            closeDialog();
++        }
++    }
++
++    private class CancelAction extends AbstractAction {
++
++        public CancelAction() {
++            super(messages.get("DefinitionPropertyExpansionsDialog.Action.Cancel.Name"));
++        }
++
++        @Override
++        public void actionPerformed(ActionEvent e) {
++            importDefinition = false;
++            closeDialog();
++        }
++    }
++}
+diff --git a/soapui/src/main/java/com/eviware/soapui/support/Tools.java b/soapui/src/main/java/com/eviware/soapui/support/Tools.java
+index 00033761b0..c7fb87f4cf 100644
+--- a/soapui/src/main/java/com/eviware/soapui/support/Tools.java
++++ b/soapui/src/main/java/com/eviware/soapui/support/Tools.java
+@@ -23,6 +23,7 @@
+ import org.apache.commons.io.FileUtils;
+ import org.apache.log4j.Logger;
+ 
++import javax.annotation.Nullable;
+ import java.awt.event.ActionEvent;
+ import java.io.BufferedInputStream;
+ import java.io.BufferedOutputStream;
+@@ -44,13 +45,17 @@
+ import java.util.List;
+ import java.util.Properties;
+ import java.util.UUID;
++import java.util.regex.Matcher;
+ import java.util.regex.Pattern;
+ 
+ public class Tools {
+     public static final int COPY_BUFFER_SIZE = 1000;
+ 
+-    private static final Logger log = Logger.getLogger(Tools.class);
++    private static final Pattern PROPERTY_EXPANSION_EQUALS_PATTERN = Pattern.compile("^\\$\\{(.*)\\}$");
++    private static final Pattern PROPERTY_EXPANSION_CONTAINS_PATTERN =
++            Pattern.compile("(\\$\\{(.*)\\})|(%24%7B.*%7D)|(%2524%257B.*%257D)|(%252524%25257B.*%25257D)");
+ 
++    private static final Logger log = Logger.getLogger(Tools.class);
+ 
+     public static String[] tokenizeArgs(String args) {
+         if (args == null || args.trim().length() == 0) {
+@@ -641,4 +646,17 @@ public void run() {
+             }
+         }));
+     }
++
++    public static boolean isPropertyExpansion(@Nullable String value) {
++        return value != null && PROPERTY_EXPANSION_EQUALS_PATTERN.matcher(value).matches();
++    }
++
++    public static List<String> getPropertyExpansions(String value) {
++        List<String> properyExpansions = new ArrayList<>();
++        Matcher matcher = PROPERTY_EXPANSION_CONTAINS_PATTERN.matcher(value);
++        while (matcher.find()) {
++            properyExpansions.add(matcher.group());
++        }
++        return properyExpansions;
++    }
+ }
+diff --git a/soapui/src/main/java/com/eviware/soapui/support/UISupport.java b/soapui/src/main/java/com/eviware/soapui/support/UISupport.java
+index 25b13a031f..08693499d8 100644
+--- a/soapui/src/main/java/com/eviware/soapui/support/UISupport.java
++++ b/soapui/src/main/java/com/eviware/soapui/support/UISupport.java
+@@ -1012,4 +1012,18 @@ private static GraphicsConfiguration getGraphicsConfigurationForPosition(Point p
+         }
+         return null;
+     }
++
++    public static boolean handleDefinitionPropertyExpansions(String url, String definition) {
++        List<String> propertyExpansions = Tools.getPropertyExpansions(definition);
++        if (propertyExpansions.size() > 0) {
++            if (UISupport.isHeadless()) {
++                SoapUI.getErrorLog().error("The definition [" + url + "] contains potential security vulnerabilities.");
++                return false;
++            }
++            DefinitionPropertyExpansionsDialog dialog = new DefinitionPropertyExpansionsDialog();
++            dialog.showDialog(propertyExpansions);
++            return dialog.isImportDefinition();
++        }
++        return true;
++    }
+ }
+diff --git a/soapui/src/main/java/com/eviware/soapui/support/propertyexpansion/PropertyExpansionPopupListener.java b/soapui/src/main/java/com/eviware/soapui/support/propertyexpansion/PropertyExpansionPopupListener.java
+index 482777d749..cafc70ac09 100644
+--- a/soapui/src/main/java/com/eviware/soapui/support/propertyexpansion/PropertyExpansionPopupListener.java
++++ b/soapui/src/main/java/com/eviware/soapui/support/propertyexpansion/PropertyExpansionPopupListener.java
+@@ -38,6 +38,7 @@
+ import com.eviware.soapui.security.SecurityTest;
+ import com.eviware.soapui.support.JsonUtil;
+ import com.eviware.soapui.support.StringUtils;
++import com.eviware.soapui.support.Tools;
+ import com.eviware.soapui.support.UISupport;
+ import com.eviware.soapui.support.components.GroovyEditorComponent;
+ import com.eviware.soapui.support.components.ShowPopupAction;
+@@ -62,8 +63,6 @@
+ import java.awt.dnd.DnDConstants;
+ import java.awt.dnd.DropTarget;
+ import java.awt.event.ActionEvent;
+-import java.util.regex.Matcher;
+-import java.util.regex.Pattern;
+ 
+ public class PropertyExpansionPopupListener implements PopupMenuListener {
+     private final Container targetMenu;
+@@ -272,7 +271,7 @@ public void actionPerformed(ActionEvent arg0) {
+ 
+             if (!StringUtils.hasContent(sourceXPath) && StringUtils.hasContent(userSelectedValue)
+                     && !property.isReadOnly()) {
+-                if (!userInputIsPropertyExpansion(userSelectedValue)) {
++                if (!Tools.isPropertyExpansion(userSelectedValue)) {
+                     userSelectedValue = UISupport.prompt("Do you want to update the value of the property? (" + val + ")",
+                             "Get Data", userSelectedValue);
+                     if (userSelectedValue != null) {
+@@ -283,16 +282,6 @@ public void actionPerformed(ActionEvent arg0) {
+         }
+     }
+ 
+-    private static final Pattern pattern = Pattern.compile("^\\$\\{(.*)\\}$");
+-
+-    private static boolean userInputIsPropertyExpansion(String userSelectedValue) {
+-        if (userSelectedValue == null) {
+-            return false;
+-        }
+-        Matcher matcher = pattern.matcher(userSelectedValue);
+-        return matcher.matches();
+-    }
+-
+     public static void addMenu(JPopupMenu popup, String menuName, ModelItem item, PropertyExpansionTarget component) {
+         ScrollableMenu menu = new ScrollableMenu(menuName);
+         menu.setName(menuName);
+diff --git a/soapui/src/main/java/com/eviware/x/impl/swing/JTextAreaFormField.java b/soapui/src/main/java/com/eviware/x/impl/swing/JTextAreaFormField.java
+index f743e5aa36..99baef1181 100644
+--- a/soapui/src/main/java/com/eviware/x/impl/swing/JTextAreaFormField.java
++++ b/soapui/src/main/java/com/eviware/x/impl/swing/JTextAreaFormField.java
+@@ -68,6 +68,10 @@ public void setWidth(int columns) {
+         getTextArea().setColumns(columns);
+     }
+ 
++    public void setEditable(boolean value) {
++        getTextArea().setEditable(value);
++    }
++
+     @Override
+     public boolean isMultiRow() {
+         return true;
+diff --git a/soapui/src/main/resources/com/eviware/soapui/resources/images/warning_32x32.png b/soapui/src/main/resources/com/eviware/soapui/resources/images/warning_32x32.png
+new file mode 100644
+index 0000000000..0f8256db4d
+Binary files /dev/null and b/soapui/src/main/resources/com/eviware/soapui/resources/images/warning_32x32.png differ
+diff --git a/soapui/src/main/resources/com/eviware/soapui/support/Bundle.properties b/soapui/src/main/resources/com/eviware/soapui/support/Bundle.properties
+new file mode 100644
+index 0000000000..0dbc2f46d3
+--- /dev/null
++++ b/soapui/src/main/resources/com/eviware/soapui/support/Bundle.properties
+@@ -0,0 +1,8 @@
++DefinitionPropertyExpansionsDialog.Title=Potential Security Vulnerabilities Found
++DefinitionPropertyExpansionsDialog.Description=The definition contains SoapUI property expansions. \
++  It is a potential security vulnerability
++DefinitionPropertyExpansionsDialog.Field.Vulnerabilities.Name=Property expansions:
++DefinitionPropertyExpansionsDialog.Field.Vulnerabilities.Description=The list of SoapUI \
++  property expansions found in the definition.
++DefinitionPropertyExpansionsDialog.Action.Import.Name=Import Anyway
++DefinitionPropertyExpansionsDialog.Action.Cancel.Name=Cancel
+\ No newline at end of file

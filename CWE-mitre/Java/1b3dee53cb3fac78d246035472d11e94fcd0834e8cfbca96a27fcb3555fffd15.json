@@ -1,0 +1,73 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:montala:resourcespace:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:jtekt:pc10g-cpu_tcc-6353_firmware:-:*:*:*:*:*:*:*",
+            "cpe:2.3:o:bakerhughes:bently_nevada_3701\\/40_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:motorola:moscad_ip_gateway_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:honeywell:safety_manager_firmware:-:*:*:*:*:*:*:*",
+            "cpe:2.3:o:honeywell:experion_lx_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:cloud_foundation:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:mi:xiaomi_xiaoai_speaker_pro_lx06_firmware:1.52.4:*:*:*:*:*:*:*",
+            "cpe:2.3:h:netgear:r6700:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:zohocorp:manageengine_servicedesk_plus:11.0:11005:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:airflow:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:dlink:dwl-900ap\\+_firmware:2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:symantec:altiris_deployment_solution:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:microsoft:windows_2000:-:sp2:*:*:*:*:*:*",
+            "cpe:2.3:h:niscomed:m1000_multipara_patient_monitor:-:*:*:*:*:*:*:*",
+            "cpe:2.3:o:phoenixcontact:ilc_131_eth_firmware:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "montala:resourcespace": "unknown",
+            "jtekt:pc10g-cpu_tcc-6353_firmware": "unknown",
+            "bakerhughes:bently_nevada_3701\\/40_firmware": "unknown",
+            "motorola:moscad_ip_gateway_firmware": "unknown",
+            "honeywell:safety_manager_firmware": "unknown",
+            "honeywell:experion_lx_firmware": "unknown",
+            "vmware:cloud_foundation": "unknown",
+            "mi:xiaomi_xiaoai_speaker_pro_lx06_firmware": "unknown",
+            "netgear:r6700": "unknown",
+            "zohocorp:manageengine_servicedesk_plus": "unknown",
+            "apache:airflow": "unknown",
+            "dlink:dwl-900ap\\+_firmware": "unknown",
+            "symantec:altiris_deployment_solution": "unknown",
+            "microsoft:windows_2000": "unknown",
+            "niscomed:m1000_multipara_patient_monitor": "unknown",
+            "phoenixcontact:ilc_131_eth_firmware": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-31260",
+            "CVE-2022-29951",
+            "CVE-2022-29952",
+            "CVE-2022-30276",
+            "CVE-2022-30313",
+            "CVE-2022-30317",
+            "CVE-2021-21972",
+            "CVE-2020-10263",
+            "CVE-2021-23147",
+            "CVE-2021-37415",
+            "CVE-2020-13927",
+            "CVE-2002-1810",
+            "CVE-2008-6827",
+            "CVE-2004-0213",
+            "CVE-2020-15483",
+            "CVE-2019-9201"
+        ],
+        "CWE": [
+            "CWE-306"
+        ]
+    }
+}

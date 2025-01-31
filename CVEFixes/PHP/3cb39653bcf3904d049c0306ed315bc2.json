@@ -1,0 +1,47 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.17:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.20:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.13:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.19:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.15:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.16:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.18:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.14:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pnp4nagios:pnp4nagios:0.6.4:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/lingej/pnp4nagios/commit/e4a19768a5c5e5b1276caf3dd5bb721a540ec014",
+        "version_end_excluding": {
+            "pnp4nagios:pnp4nagios": "unknown"
+        },
+        "path": {
+            "file_path": "share/pnp/application/views/kohana_error_page.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-4908"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

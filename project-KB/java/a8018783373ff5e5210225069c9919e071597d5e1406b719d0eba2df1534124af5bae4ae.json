@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:shiro:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/shiro/commit/a8018783373ff5e5210225069c9919e071597d5e",
+        "version_end_excluding": {
+            "apache:shiro": "1.4.2"
+        },
+        "path": {
+            "file_path": "crypto/cipher/src/main/java/org/apache/shiro/crypto/JcaCipherService.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-12422"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

@@ -1,0 +1,61 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.1.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:2.8.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:2.8.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.2.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:2.8.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:2.8.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.1.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.1.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.1.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:2.8.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:2.8.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:2.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:2.8.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:2.8.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:2.8.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:2.8.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:3.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:2.8.7:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FFmpeg/FFmpeg/commit/e1b60aad77c27ed5d4dfc11e5e6a05a38c70489d",
+        "version_end_excluding": {
+            "ffmpeg:ffmpeg": "unknown"
+        },
+        "path": {
+            "file_path": "libavcodec/cdxl.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-9996"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

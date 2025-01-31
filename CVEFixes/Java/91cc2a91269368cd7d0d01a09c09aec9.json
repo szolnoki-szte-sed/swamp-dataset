@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:torpedoquery:torpedo_query:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/xjodoin/torpedoquery/commit/3c20b874fba9cc2a78b9ace10208de1602b56c3f",
+        "version_end_excluding": {
+            "torpedoquery:torpedo_query": "2.5.3"
+        },
+        "path": {
+            "file_path": "src/test/java/org/torpedoquery/jpa/ValueOnGoingConditionTest.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-11343"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

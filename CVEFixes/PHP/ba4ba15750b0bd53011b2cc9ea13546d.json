@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:dolibarr:dolibarr:7.0.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Dolibarr/dolibarr/commit/36402c22eef49d60edd73a2f312f8e28fe0bd1cb",
+        "version_end_excluding": {
+            "dolibarr:dolibarr": "unknown"
+        },
+        "path": {
+            "file_path": "htdocs/societe/ajax/company.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-13447"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

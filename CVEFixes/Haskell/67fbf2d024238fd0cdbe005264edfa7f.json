@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apereo:opencast:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/opencast/opencast/commit/8f8271e1085f6f8e306c689d6a56b0bb8d076444",
+        "version_end_excluding": {
+            "apereo:opencast": "9.10"
+        },
+        "path": {
+            "file_path": "pom.xml"
+        }
+    },
+    "programming_language": "haskell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Educational Community License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-43807"
+        ],
+        "CWE": [
+            "CWE-290"
+        ]
+    }
+}

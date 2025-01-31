@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:dns-packet_project:dns-packet:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:dns-packet_project:dns-packet:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/mafintosh/dns-packet/commit/25f15dd0fedc53688b25fd053ebbdffe3d5c1c56",
+        "version_end_excluding": {
+            "dns-packet_project:dns-packet": "5.2.2"
+        },
+        "path": {
+            "file_path": "index.js"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23386"
+        ],
+        "CWE": [
+            "CWE-909"
+        ]
+    }
+}

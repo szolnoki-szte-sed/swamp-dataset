@@ -1,0 +1,38 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:vim:vim:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.04:*:*:*:esm:*:*:*",
+            "cpe:2.3:o:apple:mac_os_x:10.13.6:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:mac_os_x:10.14.6:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/vim/vim/commit/8c62a08faf89663e5633dc5036cd8695c80f1075",
+        "version_end_excluding": {
+            "vim:vim": "8.1.0881",
+            "debian:debian_linux": "unknown",
+            "opensuse:leap": "unknown",
+            "canonical:ubuntu_linux": "unknown",
+            "apple:mac_os_x": "unknown"
+        },
+        "path": {
+            "file_path": "src/ex_cmds.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Vim License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-20807"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

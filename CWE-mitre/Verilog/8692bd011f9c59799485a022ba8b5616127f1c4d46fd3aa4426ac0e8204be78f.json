@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mozilla:firefox:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:kernel:util-linux:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:myserver:myserver:0.8.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:graphql-java_project:graphql-java:*:*:*:*:*:java:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "mozilla:firefox": "unknown",
+            "kernel:util-linux": "2.13.1.1",
+            "myserver:myserver": "unknown",
+            "graphql-java_project:graphql-java": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "verilog",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-9805",
+            "CVE-2007-5191",
+            "CVE-2007-1588",
+            "CVE-2022-37734"
+        ],
+        "CWE": [
+            "CWE-696"
+        ]
+    }
+}

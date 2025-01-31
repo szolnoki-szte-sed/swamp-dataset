@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jetbrains:mps:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/JetBrains/MPS/commit/0e9dd189cb97900fb6a665bb67c669456b4553f3",
+        "version_end_excluding": {
+            "jetbrains:mps": "2019.2.2"
+        },
+        "path": {
+            "file_path": "plugins/mps-httpsupport/source_gen/jetbrains/mps/ide/httpsupport/manager/plugin/MPSInternalPortManager.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-18362"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

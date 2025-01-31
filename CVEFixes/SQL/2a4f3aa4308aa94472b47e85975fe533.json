@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:dbdeployer:dbdeployer:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/datacharmer/dbdeployer/commit/548e256c1de2f99746e861454e7714ec6bc9bb10",
+        "version_end_excluding": {
+            "dbdeployer:dbdeployer": "1.58.2"
+        },
+        "path": {
+            "file_path": ".build/VERSION"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-26277"
+        ],
+        "CWE": [
+            "CWE-59"
+        ]
+    }
+}

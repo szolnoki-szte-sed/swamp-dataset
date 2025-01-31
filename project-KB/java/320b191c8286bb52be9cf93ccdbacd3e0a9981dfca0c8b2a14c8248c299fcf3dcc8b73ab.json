@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:geode:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/geode/commit/320b191c8286bb52be9cf93ccdbacd3e0a9981df",
+        "version_end_excluding": {
+            "apache:geode": "unknown"
+        },
+        "path": {
+            "file_path": "geode-assembly/src/integrationTest/java/org/apache/geode/rest/internal/web/RestServersIntegrationTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-15694"
+        ],
+        "CWE": [
+            "CWE-88"
+        ]
+    }
+}

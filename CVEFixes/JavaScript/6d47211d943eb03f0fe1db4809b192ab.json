@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:w-zip_project:w-zip:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/yuda-lyu/w-zip/commit/d7039d034e02fa358e6656565157cedf5fa83288",
+        "version_end_excluding": {
+            "w-zip_project:w-zip": "1.0.12"
+        },
+        "path": {
+            "file_path": "dist/w-zip.umd.js.map"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0401"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

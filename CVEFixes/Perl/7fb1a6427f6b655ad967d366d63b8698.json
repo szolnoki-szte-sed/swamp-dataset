@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:perl_crypt\\:\\:jwt_project:perl_crypt\\:\\:jwt:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/DCIT/perl-Crypt-JWT/commit/b98a59b42ded9f9e51b2560410106207c2152d6c",
+        "version_end_excluding": {
+            "perl_crypt\\:\\": "0.023"
+        },
+        "path": {
+            "file_path": "t/jws_no_key.t"
+        }
+    },
+    "programming_language": "perl",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-1010263"
+        ],
+        "CWE": [
+            "CWE-347"
+        ]
+    }
+}

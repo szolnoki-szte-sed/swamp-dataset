@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:openstack:10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:keycloak:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/keycloak/keycloak/commit/97b565469058cacac6d2559b2cff37effcca2cfd",
+        "version_end_excluding": {
+            "redhat:keycloak": "10.0.0"
+        },
+        "path": {
+            "file_path": "services/src/main/java/org/keycloak/email/DefaultEmailSenderProvider.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1758"
+        ],
+        "CWE": [
+            "CWE-295",
+            "CWE-297"
+        ]
+    }
+}

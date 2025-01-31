@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:hestiacp:control_panel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/hestiacp/hestiacp/commit/640f822d306ffb3eddf8ce2f46de75d7344283c1",
+        "version_end_excluding": {
+            "hestiacp:control_panel": "1.5.10"
+        },
+        "path": {
+            "file_path": "web/js/app.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0838"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

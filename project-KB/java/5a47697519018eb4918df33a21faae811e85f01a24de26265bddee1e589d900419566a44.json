@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:hazelcast:hazelcast:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/hazelcast/hazelcast/commit/5a47697519018eb4918df33a21faae811e85f01a",
+        "version_end_excluding": {
+            "hazelcast:hazelcast": "3.11"
+        },
+        "path": {
+            "file_path": "hazelcast/src/test/java/com/hazelcast/nio/serialization/SerializationTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-10750"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

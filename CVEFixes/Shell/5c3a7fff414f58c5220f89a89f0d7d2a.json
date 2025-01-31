@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:zmartzone:mod_auth_openidc:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/zmartzone/mod_auth_openidc/commit/132a4111bf3791e76437619a66336dce2ce4c79b",
+        "version_end_excluding": {
+            "zmartzone:mod_auth_openidc": "2.3.10.2"
+        },
+        "path": {
+            "file_path": "configure.ac"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-1010247"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

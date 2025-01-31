@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:google:gvisor:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/google/gvisor/commit/0e277a39c8b6f905e289b75e8ad0594e6b3562ca",
+        "version_end_excluding": {
+            "google:gvisor": "2018-11-01"
+        },
+        "path": {
+            "file_path": "pkg/sentry/syscalls/linux/sys_shm.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-19333"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

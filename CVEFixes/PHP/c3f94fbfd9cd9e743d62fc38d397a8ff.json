@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:zenphoto:zenphoto:1.4.14:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/zenphoto/zenphoto/commit/695fb61707e4286b64f6e446c189b449bd07d00a",
+        "version_end_excluding": {
+            "zenphoto:zenphoto": "unknown"
+        },
+        "path": {
+            "file_path": "zp-core/template-functions.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20140"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

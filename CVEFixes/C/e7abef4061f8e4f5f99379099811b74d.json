@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:keepalived:keepalived:2.0.8:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/acassen/keepalived/commit/04f2d32871bb3b11d7dc024039952f2fe2750306",
+        "version_end_excluding": {
+            "keepalived:keepalived": "unknown"
+        },
+        "path": {
+            "file_path": "keepalived/core/main.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-19044"
+        ],
+        "CWE": [
+            "CWE-59"
+        ]
+    }
+}

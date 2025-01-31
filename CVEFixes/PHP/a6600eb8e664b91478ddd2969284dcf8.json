@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:b2evolution:b2evolution:6.7.6:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/b2evolution/b2evolution/commit/999b5ad1d59760d7e450ceb541f55432fc74cd27",
+        "version_end_excluding": {
+            "b2evolution:b2evolution": "unknown"
+        },
+        "path": {
+            "file_path": "htsrv/call_plugin.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-8901"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

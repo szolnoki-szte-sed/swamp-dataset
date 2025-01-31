@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:neo4j:neo4j:*:*:*:*:enterprise:*:*:*"
+        ],
+        "fix_commit": "https://github.com/neo4j/neo4j/commit/46de5d01ae2741ffe04c36270fc62c6d490f65c9",
+        "version_end_excluding": {
+            "neo4j:neo4j": "3.4.9"
+        },
+        "path": {
+            "file_path": "enterprise/security/src/test/java/org/neo4j/server/security/enterprise/auth/integration/bolt/LdapAuthIT.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-18389"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

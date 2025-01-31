@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:simpleledger:slp-validate:1.0.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/simpleledger/slp-validate/commit/50ad96c2798dad6b9f9a13333dd05232defe5730",
+        "version_end_excluding": {
+            "simpleledger:slp-validate": "unknown"
+        },
+        "path": {
+            "file_path": "lib/script.ts"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-16761"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

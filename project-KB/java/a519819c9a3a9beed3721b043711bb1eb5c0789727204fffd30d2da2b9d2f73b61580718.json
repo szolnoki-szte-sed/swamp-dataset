@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wso2:identity_server:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wso2:api_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wso2:api_microgateway:2.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wso2:api_manager_analytics:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wso2:identity_server_analytics:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wso2:enterprise_integrator:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wso2:identity_server_as_key_manager:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/wso2/carbon-analytics-common/commit/a519819c9a3a9beed3721b043711bb1eb5c07897",
+        "version_end_excluding": {
+            "wso2:api_manager": "unknown"
+        },
+        "path": {
+            "file_path": "components/event-publisher/org.wso2.carbon.event.publisher.core/src/main/java/org/wso2/carbon/event/publisher/core/internal/util/EventPublisherUtil.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-12719"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

@@ -1,0 +1,330 @@
+diff --git a/servlet/src/main/java/io/undertow/servlet/core/DeploymentManagerImpl.java b/servlet/src/main/java/io/undertow/servlet/core/DeploymentManagerImpl.java
+index 1906c4eaa0..9c49c4ad53 100644
+--- a/servlet/src/main/java/io/undertow/servlet/core/DeploymentManagerImpl.java
++++ b/servlet/src/main/java/io/undertow/servlet/core/DeploymentManagerImpl.java
+@@ -71,6 +71,7 @@
+ import io.undertow.servlet.api.ThreadSetupHandler;
+ import io.undertow.servlet.api.WebResourceCollection;
+ import io.undertow.servlet.handlers.CrawlerSessionManagerHandler;
++import io.undertow.servlet.handlers.RedirectDirHandler;
+ import io.undertow.servlet.handlers.ServletDispatchingHandler;
+ import io.undertow.servlet.handlers.ServletHandler;
+ import io.undertow.servlet.handlers.ServletInitialHandler;
+@@ -218,6 +219,7 @@ public Void call(HttpServerExchange exchange, Object ignore) throws Exception {
+ 
+                     HttpHandler wrappedHandlers = ServletDispatchingHandler.INSTANCE;
+                     wrappedHandlers = wrapHandlers(wrappedHandlers, deploymentInfo.getInnerHandlerChainWrappers());
++                    wrappedHandlers = new RedirectDirHandler(wrappedHandlers, deployment.getServletPaths());
+                     if(!deploymentInfo.isSecurityDisabled()) {
+                         HttpHandler securityHandler = setupSecurityHandlers(wrappedHandlers);
+                         wrappedHandlers = new PredicateHandler(DispatcherTypePredicate.REQUEST, securityHandler, wrappedHandlers);
+diff --git a/servlet/src/main/java/io/undertow/servlet/handlers/RedirectDirHandler.java b/servlet/src/main/java/io/undertow/servlet/handlers/RedirectDirHandler.java
+new file mode 100644
+index 0000000000..576eb11a87
+--- /dev/null
++++ b/servlet/src/main/java/io/undertow/servlet/handlers/RedirectDirHandler.java
+@@ -0,0 +1,71 @@
++/*
++ * JBoss, Home of Professional Open Source.
++ * Copyright 2019 Red Hat, Inc., and individual contributors
++ * as indicated by the @author tags.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ *  Unless required by applicable law or agreed to in writing, software
++ *  distributed under the License is distributed on an "AS IS" BASIS,
++ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ *  See the License for the specific language governing permissions and
++ *  limitations under the License.
++ */
++
++package io.undertow.servlet.handlers;
++
++import io.undertow.server.HttpHandler;
++import io.undertow.server.HttpServerExchange;
++import io.undertow.util.Headers;
++import io.undertow.util.Methods;
++import io.undertow.util.RedirectBuilder;
++import io.undertow.util.StatusCodes;
++
++/**
++ * Handler that redirects the directory requests without trailing slash to the one append trailing slash.
++ *
++ * @author Lin Gao
++ */
++public class RedirectDirHandler implements HttpHandler {
++
++    private static final String HTTP2_UPGRADE_PREFIX = "h2";
++
++    private final HttpHandler next;
++    private final ServletPathMatches paths;
++
++    public RedirectDirHandler(HttpHandler next, ServletPathMatches paths) {
++        this.next = next;
++        this.paths = paths;
++    }
++
++    @Override
++    public void handleRequest(HttpServerExchange exchange) throws Exception {
++        final String path = exchange.getRelativePath();
++        final ServletPathMatch info = paths.getServletHandlerByPath(path);
++        // https://issues.jboss.org/browse/WFLY-3439
++        // if the request is an upgrade request then we don't want to redirect
++        // as there is a good chance the web socket client won't understand the redirect
++        // we make an exception for HTTP2 upgrade requests, as this would have already be handled at
++        // the connector level if it was going to be handled.
++        String upgradeString = exchange.getRequestHeaders().getFirst(Headers.UPGRADE);
++        boolean isUpgradeRequest = upgradeString != null && !upgradeString.startsWith(HTTP2_UPGRADE_PREFIX);
++        if (info.getType() == ServletPathMatch.Type.REDIRECT && !isUpgradeRequest) {
++            // UNDERTOW-89
++            // we redirect on GET requests to the root context to add an / to the end
++            if (exchange.getRequestMethod().equals(Methods.GET) || exchange.getRequestMethod().equals(Methods.HEAD)) {
++                exchange.setStatusCode(StatusCodes.FOUND);
++            } else {
++                exchange.setStatusCode(StatusCodes.TEMPORARY_REDIRECT);
++            }
++            exchange.getResponseHeaders().put(Headers.LOCATION,
++                    RedirectBuilder.redirect(exchange, exchange.getRelativePath() + "/", true));
++            return;
++        }
++        next.handleRequest(exchange);
++    }
++
++}
+diff --git a/servlet/src/main/java/io/undertow/servlet/handlers/ServletInitialHandler.java b/servlet/src/main/java/io/undertow/servlet/handlers/ServletInitialHandler.java
+index 82a3ad7360..7edc7e493c 100644
+--- a/servlet/src/main/java/io/undertow/servlet/handlers/ServletInitialHandler.java
++++ b/servlet/src/main/java/io/undertow/servlet/handlers/ServletInitialHandler.java
+@@ -39,11 +39,8 @@
+ import io.undertow.servlet.spec.HttpServletResponseImpl;
+ import io.undertow.servlet.spec.RequestDispatcherImpl;
+ import io.undertow.servlet.spec.ServletContextImpl;
+-import io.undertow.util.Headers;
+ import io.undertow.util.HttpString;
+-import io.undertow.util.Methods;
+ import io.undertow.util.Protocols;
+-import io.undertow.util.RedirectBuilder;
+ import io.undertow.util.StatusCodes;
+ import org.xnio.ChannelListener;
+ import org.xnio.Option;
+@@ -80,8 +77,6 @@
+  */
+ public class ServletInitialHandler implements HttpHandler, ServletDispatcher {
+ 
+-    private static final String HTTP2_UPGRADE_PREFIX = "h2";
+-
+     private static final RuntimePermission PERMISSION = new RuntimePermission("io.undertow.servlet.CREATE_INITIAL_HANDLER");
+ 
+     private final HttpHandler next;
+@@ -149,30 +144,12 @@ public void handleRequest(final HttpServerExchange exchange) throws Exception {
+             return;
+         }
+         final ServletPathMatch info = paths.getServletHandlerByPath(path);
+-        //https://issues.jboss.org/browse/WFLY-3439
+-        //if the request is an upgrade request then we don't want to redirect
+-        //as there is a good chance the web socket client won't understand the redirect
+-        //we make an exception for HTTP2 upgrade requests, as this would have already be handled at
+-        //the connector level if it was going to be handled.
+-        String upgradeString = exchange.getRequestHeaders().getFirst(Headers.UPGRADE);
+-        boolean isUpgradeRequest = upgradeString != null && !upgradeString.startsWith(HTTP2_UPGRADE_PREFIX);
+-        if (info.getType() == ServletPathMatch.Type.REDIRECT && !isUpgradeRequest) {
+-            //UNDERTOW-89
+-            //we redirect on GET requests to the root context to add an / to the end
+-            if(exchange.getRequestMethod().equals(Methods.GET) || exchange.getRequestMethod().equals(Methods.HEAD)) {
+-                exchange.setStatusCode(StatusCodes.FOUND);
+-            } else {
+-                exchange.setStatusCode(StatusCodes.TEMPORARY_REDIRECT);
+-            }
+-            exchange.getResponseHeaders().put(Headers.LOCATION, RedirectBuilder.redirect(exchange, exchange.getRelativePath() + "/", true));
+-            return;
+-        } else if (info.getType() == ServletPathMatch.Type.REWRITE) {
+-            //this can only happen if the path ends with a /
+-            //otherwise there would be a redirect instead
++        if (info.getType() == ServletPathMatch.Type.REWRITE) {
++            // this can only happen if the path ends with a /
++            // otherwise there would be a redirect instead
+             exchange.setRelativePath(info.getRewriteLocation());
+             exchange.setRequestPath(exchange.getResolvedPath() + info.getRewriteLocation());
+         }
+-
+         final HttpServletResponseImpl response = new HttpServletResponseImpl(exchange, servletContext);
+         final HttpServletRequestImpl request = new HttpServletRequestImpl(exchange, servletContext);
+         final ServletRequestContext servletRequestContext = new ServletRequestContext(servletContext.getDeployment(), request, response, info);
+diff --git a/servlet/src/test/java/io/undertow/servlet/test/defaultservlet/SecurityRedirectTestCase.java b/servlet/src/test/java/io/undertow/servlet/test/defaultservlet/SecurityRedirectTestCase.java
+new file mode 100644
+index 0000000000..8fa9323177
+--- /dev/null
++++ b/servlet/src/test/java/io/undertow/servlet/test/defaultservlet/SecurityRedirectTestCase.java
+@@ -0,0 +1,168 @@
++/*
++ * JBoss, Home of Professional Open Source.
++ * Copyright 2019 Red Hat, Inc., and individual contributors
++ * as indicated by the @author tags.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ *  Unless required by applicable law or agreed to in writing, software
++ *  distributed under the License is distributed on an "AS IS" BASIS,
++ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ *  See the License for the specific language governing permissions and
++ *  limitations under the License.
++ */
++
++package io.undertow.servlet.test.defaultservlet;
++
++import static io.undertow.util.Headers.AUTHORIZATION;
++import static io.undertow.util.Headers.BASIC;
++import static io.undertow.util.Headers.LOCATION;
++import static io.undertow.util.Headers.WWW_AUTHENTICATE;
++import static org.junit.Assert.assertEquals;
++
++import java.io.IOException;
++
++import javax.servlet.ServletException;
++
++import org.apache.http.Header;
++import org.apache.http.HttpResponse;
++import org.apache.http.client.HttpClient;
++import org.apache.http.client.methods.HttpGet;
++import org.apache.http.impl.client.HttpClientBuilder;
++import org.junit.Assert;
++import org.junit.BeforeClass;
++import org.junit.Test;
++import org.junit.runner.RunWith;
++
++import io.undertow.server.handlers.PathHandler;
++import io.undertow.servlet.api.DeploymentInfo;
++import io.undertow.servlet.api.DeploymentManager;
++import io.undertow.servlet.api.LoginConfig;
++import io.undertow.servlet.api.SecurityConstraint;
++import io.undertow.servlet.api.ServletContainer;
++import io.undertow.servlet.api.WebResourceCollection;
++import io.undertow.servlet.test.path.ServletPathMappingTestCase;
++import io.undertow.servlet.test.security.constraint.ServletIdentityManager;
++import io.undertow.servlet.test.util.TestClassIntrospector;
++import io.undertow.servlet.test.util.TestResourceLoader;
++import io.undertow.testutils.DefaultServer;
++import io.undertow.testutils.HttpClientUtils;
++import io.undertow.util.FlexBase64;
++import io.undertow.util.StatusCodes;
++
++/**
++ * TestCase on redirect with or without trailing slash when requesting protected path.
++ *
++ * @author Lin Gao
++ */
++@RunWith(DefaultServer.class)
++public class SecurityRedirectTestCase {
++
++    @BeforeClass
++    public static void setup() throws ServletException {
++
++        final PathHandler root = new PathHandler();
++        final ServletContainer container = ServletContainer.Factory.newInstance();
++
++        ServletIdentityManager identityManager = new ServletIdentityManager();
++        identityManager.addUser("user1", "password1", "role1");
++
++        DeploymentInfo builder = new DeploymentInfo()
++                .setClassIntrospecter(TestClassIntrospector.INSTANCE)
++                .setClassLoader(ServletPathMappingTestCase.class.getClassLoader())
++                .setContextPath("/servletContext")
++                .setDeploymentName("servletContext.war")
++                .setResourceManager(new TestResourceLoader(SecurityRedirectTestCase.class))
++                .addWelcomePages("index.html")
++                .setIdentityManager(identityManager)
++                .setLoginConfig(new LoginConfig("BASIC", "Test Realm"))
++                .addSecurityConstraint(new SecurityConstraint()
++                        .addRoleAllowed("role1")
++                        .addWebResourceCollection(new WebResourceCollection()
++                                .addUrlPatterns("/index.html", "/filterpath/*")));
++
++        DeploymentManager manager = container.addDeployment(builder);
++        manager.deploy();
++        root.addPrefixPath(builder.getContextPath(), manager.start());
++        DefaultServer.setRootHandler(root);
++    }
++
++    @SuppressWarnings("deprecation")
++    @Test
++    public void testSecurityWithWelcomeFileRedirect() throws IOException {
++        // disable following redirect
++        HttpClient client = HttpClientBuilder.create().disableRedirectHandling().build();
++        try {
++            HttpGet get = new HttpGet(DefaultServer.getDefaultServerURL() + "/servletContext");
++            HttpResponse result = client.execute(get);
++            Assert.assertEquals(StatusCodes.FOUND, result.getStatusLine().getStatusCode());
++            Header[] values = result.getHeaders(LOCATION.toString());
++            assertEquals(1, values.length);
++            assertEquals(DefaultServer.getDefaultServerURL() + "/servletContext/", values[0].getValue());
++            HttpClientUtils.readResponse(result);
++
++            get = new HttpGet(DefaultServer.getDefaultServerURL() + "/servletContext/");
++            result = client.execute(get);
++            Assert.assertEquals(StatusCodes.UNAUTHORIZED, result.getStatusLine().getStatusCode());
++
++            values = result.getHeaders(WWW_AUTHENTICATE.toString());
++            assertEquals(1, values.length);
++            assertEquals(BASIC + " realm=\"Test Realm\"", values[0].getValue());
++            HttpClientUtils.readResponse(result);
++
++            get = new HttpGet(DefaultServer.getDefaultServerURL() + "/servletContext/");
++            get.addHeader(AUTHORIZATION.toString(), BASIC + " " + FlexBase64.encodeString("user1:password1".getBytes(), false));
++            result = client.execute(get);
++            String response = HttpClientUtils.readResponse(result);
++            Assert.assertEquals(StatusCodes.OK, result.getStatusLine().getStatusCode());
++            Assert.assertTrue(response.contains("Redirected home page"));
++        } finally {
++            client.getConnectionManager().shutdown();
++        }
++    }
++
++    @SuppressWarnings("deprecation")
++    @Test
++    public void testSecurityWithoutWelcomeFileRedirect() throws IOException {
++        // disable following redirect
++        HttpClient client = HttpClientBuilder.create().disableRedirectHandling().build();
++        try {
++            HttpGet get = new HttpGet(DefaultServer.getDefaultServerURL() + "/servletContext/filterpath");
++            HttpResponse result = client.execute(get);
++            Assert.assertEquals(StatusCodes.UNAUTHORIZED, result.getStatusLine().getStatusCode());
++            HttpClientUtils.readResponse(result);
++
++            get = new HttpGet(DefaultServer.getDefaultServerURL() + "/servletContext/filterpath/");
++            result = client.execute(get);
++            Assert.assertEquals(StatusCodes.UNAUTHORIZED, result.getStatusLine().getStatusCode());
++
++            Header[] values = result.getHeaders(WWW_AUTHENTICATE.toString());
++            assertEquals(1, values.length);
++            assertEquals(BASIC + " realm=\"Test Realm\"", values[0].getValue());
++            HttpClientUtils.readResponse(result);
++
++            get = new HttpGet(DefaultServer.getDefaultServerURL() + "/servletContext/filterpath");
++            get.addHeader(AUTHORIZATION.toString(), BASIC + " " + FlexBase64.encodeString("user1:password1".getBytes(), false));
++            result = client.execute(get);
++            Assert.assertEquals(StatusCodes.FOUND, result.getStatusLine().getStatusCode());
++            values = result.getHeaders(LOCATION.toString());
++            assertEquals(1, values.length);
++            assertEquals(DefaultServer.getDefaultServerURL() + "/servletContext/filterpath/", values[0].getValue());
++            HttpClientUtils.readResponse(result);
++
++            get = new HttpGet(DefaultServer.getDefaultServerURL() + "/servletContext/filterpath/filtered.txt");
++            get.addHeader(AUTHORIZATION.toString(), BASIC + " " + FlexBase64.encodeString("user1:password1".getBytes(), false));
++            result = client.execute(get);
++            String response = HttpClientUtils.readResponse(result);
++            Assert.assertEquals(StatusCodes.OK, result.getStatusLine().getStatusCode());
++            Assert.assertTrue(response.equals("Stuart"));
++        } finally {
++            client.getConnectionManager().shutdown();
++        }
++    }
++
++}

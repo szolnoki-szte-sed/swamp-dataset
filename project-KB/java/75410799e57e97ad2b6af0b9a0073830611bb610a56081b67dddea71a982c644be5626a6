@@ -1,0 +1,347 @@
+diff --git a/docs/UserGuide/3-Server/4-Config Manual.md b/docs/UserGuide/3-Server/4-Config Manual.md
+index ce3f8e3c32f1..62a6234d2c63 100644
+--- a/docs/UserGuide/3-Server/4-Config Manual.md	
++++ b/docs/UserGuide/3-Server/4-Config Manual.md	
+@@ -39,13 +39,32 @@ The environment configuration file is mainly used to configure the Java environm
+ 
+ The detail of each variables are as follows:
+ 
+-* LOCAL\_JMX
+ 
+-|Name|LOCAL\_JMX|
++* MAX\_HEAP\_SIZE
++
++|Name|MAX\_HEAP\_SIZE|
++|:---:|:---|
++|Description|The maximum heap memory size that IoTDB can use at startup.|
++|Type|String|
++|Default| On Linux or MacOS, the default is one quarter of the memory. On Windows, the default value for 32-bit systems is 512M, and the default for 64-bit systems is 2G.|
++|Effective|After restart system|
++
++* HEAP\_NEWSIZE
++
++|Name|HEAP\_NEWSIZE|
++|:---:|:---|
++|Description|The minimum heap memory size that IoTDB can use at startup.|
++|Type|String|
++|Default| On Linux or MacOS, the default is min{cores * 100M, one quarter of MAX\_HEAP\_SIZE}. On Windows, the default value for 32-bit systems is 512M, and the default for 64-bit systems is 2G.|
++|Effective|After restart system|
++
++* JMX\_LOCAL
++
++|Name|JMX\_LOCAL|
+ |:---:|:---|
+ |Description|JMX monitoring mode, configured as yes to allow only local monitoring, no to allow remote monitoring|
+-|Type|Enum String: "yes", "no"|
+-|Default|yes|
++|Type|Enum String: "true", "false"|
++|Default|true|
+ |Effective|After restart system|
+ 
+ 
+@@ -58,23 +77,22 @@ The detail of each variables are as follows:
+ |Default|31999|
+ |Effective|After restart system|
+ 
+-* MAX\_HEAP\_SIZE
++* JMX\_IP
+ 
+-|Name|MAX\_HEAP\_SIZE|
++|Name|JMX\_IP|
+ |:---:|:---|
+-|Description|The maximum heap memory size that IoTDB can use at startup.|
++|Description|JMX listening address. Only take effect if JMX\_LOCAL=false. 0.0.0.0 is never allowed|
+ |Type|String|
+-|Default| On Linux or MacOS, the default is one quarter of the memory. On Windows, the default value for 32-bit systems is 512M, and the default for 64-bit systems is 2G.|
++|Default|127.0.0.1|
+ |Effective|After restart system|
+ 
+-* HEAP\_NEWSIZE
++## JMX Authorization
+ 
+-|Name|HEAP\_NEWSIZE|
+-|:---:|:---|
+-|Description|The minimum heap memory size that IoTDB can use at startup.|
+-|Type|String|
+-|Default| On Linux or MacOS, the default is min{cores * 100M, one quarter of MAX\_HEAP\_SIZE}. On Windows, the default value for 32-bit systems is 512M, and the default for 64-bit systems is 2G.|
+-|Effective|After restart system|
++We **STRONGLY RECOMMENDED** you CHANGE the PASSWORD for the JMX remote connection.
++
++The user and passwords are in ${IOTDB\_CONF}/conf/jmx.password.
++
++The permission definitions are in ${IOTDB\_CONF}/conf/jmx.access.
+ 
+ ## IoTDB System Configuration File
+ 
+diff --git a/server/src/assembly/resources/conf/iotdb-env.bat b/server/src/assembly/resources/conf/iotdb-env.bat
+index 5484cd95781c..42e132eec147 100644
+--- a/server/src/assembly/resources/conf/iotdb-env.bat
++++ b/server/src/assembly/resources/conf/iotdb-env.bat
+@@ -18,14 +18,33 @@
+ @REM
+ 
+ @echo off
+-set LOCAL_JMX=no
+-set JMX_PORT=31999
+ 
+-if "%LOCAL_JMX%" == "yes" (
+-		set IOTDB_JMX_OPTS="-Diotdb.jmx.local.port=%JMX_PORT%" "-Dcom.sun.management.jmxremote.authenticate=false" "-Dcom.sun.management.jmxremote.ssl=false"
+-	) else (
+-		set IOTDB_JMX_OPTS="-Dcom.sun.management.jmxremote" "-Dcom.sun.management.jmxremote.authenticate=false"  "-Dcom.sun.management.jmxremote.ssl=false" "-Dcom.sun.management.jmxremote.port=%JMX_PORT%"
+-	)
++@REM true or false
++@REM DO NOT FORGET TO MODIFY THE PASSWORD FOR SECURITY (%IOTDB_CONF%\jmx.password and %{IOTDB_CONF%\jmx.access)
++set JMX_LOCAL="true"
++set JMX_PORT="31999"
++@REM only take effect when the jmx_local=false
++@REM You need to change this IP as a public IP if you want to remotely connect IoTDB by JMX.
++@REM  0.0.0.0 is not allowed
++set JMX_IP="127.0.0.1"
++
++if %JMX_LOCAL% == "false" (
++  echo "setting remote JMX..."
++  #you may have no permission to run chmod. If so, contact your system administrator.
++  set IOTDB_JMX_OPTS="%IOTDB_JMX_OPTS% -Dcom.sun.management.jmxremote"
++  set IOTDB_JMX_OPTS="%IOTDB_JMX_OPTS% -Dcom.sun.management.jmxremote.port=%JMX_PORT%"
++  set IOTDB_JMX_OPTS="%IOTDB_JMX_OPTS% -Djava.rmi.server.randomIDs=true"
++  set IOTDB_JMX_OPTS="%IOTDB_JMX_OPTS% -Dcom.sun.management.jmxremote.authenticate=true"
++  set IOTDB_JMX_OPTS="%IOTDB_JMX_OPTS% -Dcom.sun.management.jmxremote.ssl=false"
++  set IOTDB_JMX_OPTS="%IOTDB_JMX_OPTS% -Dcom.sun.management.jmxremote.authenticate=true"
++  set IOTDB_JMX_OPTS="%IOTDB_JMX_OPTS% -Dcom.sun.management.jmxremote.password.file=%IOTDB_CONF%\jmx.password"
++  set IOTDB_JMX_OPTS="%IOTDB_JMX_OPTS% -Dcom.sun.management.jmxremote.access.file=%IOTDB_CONF%\jmx.access"
++  set IOTDB_JMX_OPTS="%IOTDB_JMX_OPTS% -Djava.rmi.server.hostname=%JMX_IP%"
++) else (
++  echo "setting local JMX..."
++)
++
++
+ 
+ IF ["%IOTDB_HEAP_OPTS%"] EQU [""] (
+ 	rem detect Java 8 or 11
+diff --git a/server/src/assembly/resources/conf/iotdb-env.sh b/server/src/assembly/resources/conf/iotdb-env.sh
+index 3d8e39bcf54d..7c573038eeba 100755
+--- a/server/src/assembly/resources/conf/iotdb-env.sh
++++ b/server/src/assembly/resources/conf/iotdb-env.sh
+@@ -145,16 +145,32 @@ calculate_heap_sizes
+ # Minimum heap size
+ #HEAP_NEWSIZE="2G"
+ 
+-JMX_LOCAL=no
++#true or false
++#DO NOT FORGET TO MODIFY THE PASSWORD FOR SECURITY (${IOTDB_CONF}/jmx.password and ${IOTDB_CONF}/jmx.access)
++JMX_LOCAL="true"
+ 
+ JMX_PORT="31999"
+-
+-if [ "JMX_LOCAL" = "yes" ]; then
+-	IOTDB_JMX_OPTS="-Diotdb.jmx.local.port=$JMX_PORT"
+-	IOTDB_JMX_OPTS="$IOTDB_JMX_OPTS -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
++#only take effect when the jmx_local=false
++#You need to change this IP as a public IP if you want to remotely connect IoTDB by JMX.
++# 0.0.0.0 is not allowed
++JMX_IP="127.0.0.1"
++
++if [ ${JMX_LOCAL} = "false" ]; then
++  echo "setting remote JMX..."
++  #you may have no permission to run chmod. If so, contact your system administrator.
++  chmod 600 ${IOTDB_CONF}/jmx.password
++  chmod 600 ${IOTDB_CONF}/jmx.access
++  IOTDB_JMX_OPTS="$IOTDB_JMX_OPTS -Dcom.sun.management.jmxremote"
++  IOTDB_JMX_OPTS="$IOTDB_JMX_OPTS -Dcom.sun.management.jmxremote.port=$JMX_PORT"
++  IOTDB_JMX_OPTS="$IOTDB_JMX_OPTS -Djava.rmi.server.randomIDs=true"
++  IOTDB_JMX_OPTS="$IOTDB_JMX_OPTS -Dcom.sun.management.jmxremote.authenticate=true"
++  IOTDB_JMX_OPTS="$IOTDB_JMX_OPTS -Dcom.sun.management.jmxremote.ssl=false"
++  IOTDB_JMX_OPTS="$IOTDB_JMX_OPTS -Dcom.sun.management.jmxremote.authenticate=true"
++  IOTDB_JMX_OPTS="$IOTDB_JMX_OPTS -Dcom.sun.management.jmxremote.password.file=${IOTDB_CONF}/jmx.password"
++  IOTDB_JMX_OPTS="$IOTDB_JMX_OPTS -Dcom.sun.management.jmxremote.access.file=${IOTDB_CONF}/jmx.access"
++  IOTDB_JMX_OPTS="$IOTDB_JMX_OPTS -Djava.rmi.server.hostname=$JMX_IP"
+ else
+-	IOTDB_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false  -Dcom.sun.management.jmxremote.ssl=false"
+-	IOTDB_JMX_OPTS="$IOTDB_JMX_OPTS -Dcom.sun.management.jmxremote.port=$JMX_PORT "
++  echo "setting local JMX..."
+ fi
+ 
+ 
+diff --git a/server/src/assembly/resources/conf/jmx.access b/server/src/assembly/resources/conf/jmx.access
+new file mode 100644
+index 000000000000..4469a4227a0c
+--- /dev/null
++++ b/server/src/assembly/resources/conf/jmx.access
+@@ -0,0 +1,22 @@
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++#
++
++# see https://docs.oracle.com/javase/8/docs/technotes/guides/management/agent.html#gdeup
++iotdb readonly
++root readwrite
+\ No newline at end of file
+diff --git a/server/src/assembly/resources/conf/jmx.password b/server/src/assembly/resources/conf/jmx.password
+new file mode 100644
+index 000000000000..9055f01997f2
+--- /dev/null
++++ b/server/src/assembly/resources/conf/jmx.password
+@@ -0,0 +1,22 @@
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++#
++
++# see https://docs.oracle.com/javase/8/docs/technotes/guides/management/agent.html#gdeup
++iotdb passw!d
++root  passw!d
+\ No newline at end of file
+diff --git a/server/src/main/java/org/apache/iotdb/db/conf/IoTDBConstant.java b/server/src/main/java/org/apache/iotdb/db/conf/IoTDBConstant.java
+index dd23b4977381..02076981bf77 100644
+--- a/server/src/main/java/org/apache/iotdb/db/conf/IoTDBConstant.java
++++ b/server/src/main/java/org/apache/iotdb/db/conf/IoTDBConstant.java
+@@ -27,12 +27,7 @@ private IoTDBConstant() {
+   public static final String IOTDB_CONF = "IOTDB_CONF";
+   public static final String GLOBAL_DB_NAME = "IoTDB";
+   public static final String VERSION = "0.9.1";
+-  public static final String REMOTE_JMX_PORT_NAME = "com.sun.management.jmxremote.port";
+-  public static final String IOTDB_LOCAL_JMX_PORT_NAME = "iotdb.jmx.local.port";
+-  public static final String IOTDB_REMOTE_JMX_PORT_NAME = "iotdb.jmx.remote.port";
+-  public static final String SERVER_RMI_ID = "java.rmi.server.randomIDs";
+-  public static final String RMI_SERVER_HOST_NAME = "java.rmi.server.hostname";
+-  public static final String JMX_REMOTE_RMI_PORT = "com.sun.management.jmxremote.rmi.port";
++  public static final String IOTDB_JMX_PORT = "iotdb.jmx.port";
+   public static final String IOTDB_PACKAGE = "org.apache.iotdb.service";
+   public static final String JMX_TYPE = "type";
+ 
+diff --git a/server/src/main/java/org/apache/iotdb/db/service/JMXService.java b/server/src/main/java/org/apache/iotdb/db/service/JMXService.java
+index e850aacf557f..5c5de877f4a7 100644
+--- a/server/src/main/java/org/apache/iotdb/db/service/JMXService.java
++++ b/server/src/main/java/org/apache/iotdb/db/service/JMXService.java
+@@ -84,20 +84,6 @@ public static void deregisterMBean(String name) {
+     }
+   }
+ 
+-  private JMXConnectorServer createJMXServer(boolean local) throws IOException {
+-    Map<String, Object> env = new HashMap<>();
+-
+-    InetAddress serverAddress;
+-    if (local) {
+-      serverAddress = InetAddress.getLoopbackAddress();
+-      System.setProperty(IoTDBConstant.RMI_SERVER_HOST_NAME, serverAddress.getHostAddress());
+-    }
+-    int rmiPort = Integer.getInteger(IoTDBConstant.JMX_REMOTE_RMI_PORT, 0);
+-
+-    return JMXConnectorServerFactory.newJMXConnectorServer(
+-        new JMXServiceURL("rmi", null, rmiPort), env, ManagementFactory.getPlatformMBeanServer());
+-  }
+-
+   @Override
+   public ServiceType getID() {
+     return ServiceType.JMX_SERVICE;
+@@ -105,51 +91,15 @@ public ServiceType getID() {
+ 
+   @Override
+   public void start() throws StartupException {
+-    if (System.getProperty(IoTDBConstant.REMOTE_JMX_PORT_NAME) != null) {
+-      logger.warn(
+-          "JMX settings in conf/{}.sh(Unix or OS X, if you use Windows, check conf/{}.bat) have "
+-              + "been bypassed as the JMX connector server is "
+-              + "already initialized. Please refer to {}.sh/bat for JMX configuration info",
+-          IoTDBConstant.ENV_FILE_NAME, IoTDBConstant.ENV_FILE_NAME, IoTDBConstant.ENV_FILE_NAME);
+-      return;
+-    }
+-    System.setProperty(IoTDBConstant.SERVER_RMI_ID, "true");
+-    boolean localOnly = false;
+-    String jmxPort = System.getProperty(IoTDBConstant.IOTDB_REMOTE_JMX_PORT_NAME);
+-
++    String jmxPort = System.getProperty(IoTDBConstant.IOTDB_JMX_PORT);
+     if (jmxPort == null) {
+-      localOnly = true;
+-      jmxPort = System.getProperty(IoTDBConstant.IOTDB_LOCAL_JMX_PORT_NAME);
+-    }
+-
+-    if (jmxPort == null) {
+-      logger.warn("Failed to start {} because JMX port is undefined", this.getID().getName());
++      logger.warn("JMX port is undefined");
+       return;
+     }
+-    try {
+-      jmxConnectorServer = createJMXServer(localOnly);
+-      if (jmxConnectorServer == null) {
+-        return;
+-      }
+-      jmxConnectorServer.start();
+-      logger
+-          .info("{}: start {} successfully.", IoTDBConstant.GLOBAL_DB_NAME, this.getID().getName());
+-    } catch (IOException e) {
+-      throw new StartupException(this.getID().getName(), e.getMessage());
+-    }
+   }
+ 
+   @Override
+   public void stop() {
+-    if (jmxConnectorServer != null) {
+-      try {
+-        jmxConnectorServer.stop();
+-        logger.info("{}: close {} successfully", IoTDBConstant.GLOBAL_DB_NAME,
+-            this.getID().getName());
+-      } catch (IOException e) {
+-        logger.error("Failed to stop {} because of: ", this.getID().getName(), e);
+-      }
+-    }
+   }
+ 
+   private static class JMXServerHolder {
+diff --git a/server/src/main/java/org/apache/iotdb/db/service/StartupChecks.java b/server/src/main/java/org/apache/iotdb/db/service/StartupChecks.java
+index fe4e2a1f5944..c344c750cfcd 100644
+--- a/server/src/main/java/org/apache/iotdb/db/service/StartupChecks.java
++++ b/server/src/main/java/org/apache/iotdb/db/service/StartupChecks.java
+@@ -30,21 +30,14 @@ public class StartupChecks {
+ 
+   private static final Logger logger = LoggerFactory.getLogger(StartupChecks.class);
+   public static final StartupCheck checkJMXPort = () -> {
+-    String jmxPort = System.getProperty(IoTDBConstant.REMOTE_JMX_PORT_NAME);
++    String jmxPort = System.getProperty(IoTDBConstant.IOTDB_JMX_PORT);
+     if (jmxPort == null) {
+-      logger.warn("JMX is not enabled to receive remote connection. "
+-              + "Please check conf/{}.sh(Unix or OS X, if you use Windows, "
+-              + "check conf/{}.bat) for more info",
+-          IoTDBConstant.ENV_FILE_NAME, IoTDBConstant.ENV_FILE_NAME);
+-      jmxPort = System.getProperty(IoTDBConstant.IOTDB_LOCAL_JMX_PORT_NAME);
+       if (jmxPort == null) {
+         logger.warn("{} missing from {}.sh(Unix or OS X, if you use Windows,"
+                 + " check conf/{}.bat)",
+-            IoTDBConstant.IOTDB_LOCAL_JMX_PORT_NAME, IoTDBConstant.ENV_FILE_NAME,
++            IoTDBConstant.IOTDB_JMX_PORT, IoTDBConstant.ENV_FILE_NAME,
+             IoTDBConstant.ENV_FILE_NAME);
+       }
+-    } else {
+-      logger.info("JMX is enabled to receive remote connection on port {}", jmxPort);
+     }
+   };
+   public static final StartupCheck checkJDK = () -> {

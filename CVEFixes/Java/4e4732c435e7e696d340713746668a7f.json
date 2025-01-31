@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:plantuml:plantuml:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:35:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:36:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/plantuml/plantuml/commit/93e5964e5f35914f3f7b89de620c596795550083",
+        "version_end_excluding": {
+            "plantuml:plantuml": "1.2022.5",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "src/net/sourceforge/plantuml/SkinParam.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-1379"
+        ],
+        "CWE": [
+            "CWE-918"
+        ]
+    }
+}

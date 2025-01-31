@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/WordPress/WordPress/commit/8c82515ab62b88fb32d01c9778f0204b296f3568",
+        "version_end_excluding": {
+            "wordpress:wordpress": "unknown"
+        },
+        "path": {
+            "file_path": "wp-admin/includes/class-wp-upgrader.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-6897"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

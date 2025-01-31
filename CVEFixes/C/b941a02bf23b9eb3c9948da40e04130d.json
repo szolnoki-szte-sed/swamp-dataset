@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/php/php-src/commit/863d37ea66d5c960db08d6f4a2cbd2518f0f80d1",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "ext/gd/libgd/gd.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-9933"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

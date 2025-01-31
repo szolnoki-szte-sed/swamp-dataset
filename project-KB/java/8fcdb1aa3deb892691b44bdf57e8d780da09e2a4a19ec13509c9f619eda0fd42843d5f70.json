@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:cordova_file_transfer:*:*:*:*:*:android:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/cordova-plugin-file-transfer/commit/8fcdb1aa3deb892691b44bdf57e8d780da09e2a4",
+        "version_end_excluding": {
+            "apache:cordova_file_transfer": "unknown"
+        },
+        "path": {
+            "file_path": "src/android/FileTransfer.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5204"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

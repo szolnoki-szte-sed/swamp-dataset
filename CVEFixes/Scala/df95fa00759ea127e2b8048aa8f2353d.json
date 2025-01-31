@@ -1,0 +1,59 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone17:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone18:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone19:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone20:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone21:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone22:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:0.22.0:milestone1:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:0.22.0:milestone4:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:0.22.0:milestone2:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:0.22.0:milestone3:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:0.22.0:milestone5:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:0.22.0:milestone6:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:0.22.0:milestone7:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:0.22.0:milestone8:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:0.23.0:milestone1:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone1:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone10:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone11:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone12:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone13:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone14:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone15:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone16:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone2:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone3:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone4:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone5:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone6:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone7:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone8:*:*:*:*:*:*",
+            "cpe:2.3:a:typelevel:http4s:1.0.0:milestone9:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/http4s/http4s/commit/52e1890665410b4385e37b96bc49c5e3c708e4e9",
+        "version_end_excluding": {
+            "typelevel:http4s": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/main/scala/org/http4s/StaticFile.scala"
+        }
+    },
+    "programming_language": "scala",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32643"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

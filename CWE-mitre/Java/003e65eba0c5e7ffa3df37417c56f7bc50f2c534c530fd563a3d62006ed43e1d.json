@@ -1,0 +1,76 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:orchest:orchest:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ncftp_software:ncftp:3.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:info-zip:unzip:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ez_systems:httpbench:1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:myphpnuke:myphpnuke:1.8.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:edgewall_software:trac:0.7.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:suse_linux:6.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:metamail_corporation:metamail:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:newsphp:newsphp:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:astaware:searchdisc:3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:metaproducts:offline_explorer:1.0x:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fastream:fastream_ftp\\+\\+_server:2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cooolsoft:powerftp:2.03:*:*:*:*:*:*:*",
+            "cpe:2.3:a:hosting_controller:hosting_controller:1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:db4web:db4web:3.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:nexgen:nexgen_ftp_server:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:transsoft:broker_ftp_server:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "orchest:orchest": "unknown",
+            "ncftp_software:ncftp": "unknown",
+            "info-zip:unzip": "5.42",
+            "ez_systems:httpbench": "unknown",
+            "myphpnuke:myphpnuke": "unknown",
+            "edgewall_software:trac": "unknown",
+            "suse:suse_linux": "unknown",
+            "metamail_corporation:metamail": "2.7",
+            "newsphp:newsphp": "216",
+            "astaware:searchdisc": "unknown",
+            "metaproducts:offline_explorer": "unknown",
+            "fastream:fastream_ftp\\+\\+_server": "unknown",
+            "cooolsoft:powerftp": "unknown",
+            "hosting_controller:hosting_controller": "unknown",
+            "db4web:db4web": "unknown",
+            "nexgen:nexgen_ftp_server": "unknown",
+            "transsoft:broker_ftp_server": "5.9.5.0"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-31503",
+            "CVE-2002-1345",
+            "CVE-2001-1269",
+            "CVE-2002-1818",
+            "CVE-2002-1913",
+            "CVE-2005-2147",
+            "CVE-2000-0614",
+            "CVE-1999-1263",
+            "CVE-2003-0753",
+            "CVE-2002-1525",
+            "CVE-2001-0038",
+            "CVE-2001-0255",
+            "CVE-2001-0933",
+            "CVE-2002-0466",
+            "CVE-2002-1483",
+            "CVE-2004-2488",
+            "CVE-2001-0687"
+        ],
+        "CWE": [
+            "CWE-36"
+        ]
+    }
+}

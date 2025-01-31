@@ -1,0 +1,175 @@
+diff --git a/LICENSE b/LICENSE
+index c747d409671a..820819dd68e2 100644
+--- a/LICENSE
++++ b/LICENSE
+@@ -307,6 +307,13 @@ SOURCE/JAVA-CORE
+      which is available under a BSD-3-Clause License. For details, see licenses/src/porter-stemmer.BSD3.
+       * processing/src/test/java/org/apache/druid/query/extraction/JavaScriptExtractionFnTest.java
+ 
++SOURCE/EXTENSIONS/druid-basic-security
++    This product contains an LDAP string encoding function from OWASP ESAPI, copyright The OWASP Foundation
++     (https://github.com/ESAPI/esapi-java-legacy) which is available under the BSD-3-Clause License. For details, see
++     licenses/src/esapi.BSD3.
++      * extensions-core/druid-basic-security/src/main/java/org/apache/druid/security/basic/authentication/validator/LDAPCredentialsValidator.java
++
++
+ Public Domain
+ ================================
+ 
+diff --git a/extensions-core/druid-basic-security/src/main/java/org/apache/druid/security/basic/authentication/validator/LDAPCredentialsValidator.java b/extensions-core/druid-basic-security/src/main/java/org/apache/druid/security/basic/authentication/validator/LDAPCredentialsValidator.java
+index 9f75d37a409b..7a9bc0c02120 100644
+--- a/extensions-core/druid-basic-security/src/main/java/org/apache/druid/security/basic/authentication/validator/LDAPCredentialsValidator.java
++++ b/extensions-core/druid-basic-security/src/main/java/org/apache/druid/security/basic/authentication/validator/LDAPCredentialsValidator.java
+@@ -189,9 +189,10 @@ SearchResult getLdapUserObject(BasicAuthLDAPConfig ldapConfig, DirContext contex
+       SearchControls sc = new SearchControls();
+       sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
+       sc.setReturningAttributes(new String[] {ldapConfig.getUserAttribute(), "memberOf" });
++      String encodedUsername = encodeForLDAP(username, true);
+       NamingEnumeration<SearchResult> results = context.search(
+           ldapConfig.getBaseDn(),
+-          StringUtils.format(ldapConfig.getUserSearch(), username),
++          StringUtils.format(ldapConfig.getUserSearch(), encodedUsername),
+           sc);
+       try {
+         if (!results.hasMore()) {
+@@ -293,4 +294,48 @@ public LdapUserPrincipal put(String key, LdapUserPrincipal value)
+       }
+     }
+   }
++
++  /**
++   * This code is adapted from DefaultEncoder from version 2.2.0.0 of ESAPI (https://github.com/ESAPI/esapi-java-legacy)
++   */
++  public static String encodeForLDAP(String input, boolean encodeWildcards)
++  {
++    if (input == null) {
++      return null;
++    }
++    StringBuilder sb = new StringBuilder();
++    for (int i = 0; i < input.length(); i++) {
++      char c = input.charAt(i);
++
++      switch (c) {
++        case '\\':
++          sb.append("\\5c");
++          break;
++        case '/':
++          sb.append(("\\2f"));
++          break;
++        case '*':
++          if (encodeWildcards) {
++            sb.append("\\2a");
++          } else {
++            sb.append(c);
++          }
++
++          break;
++        case '(':
++          sb.append("\\28");
++          break;
++        case ')':
++          sb.append("\\29");
++          break;
++        case '\0':
++          sb.append("\\00");
++          break;
++        default:
++          sb.append(c);
++      }
++    }
++    return sb.toString();
++  }
++
+ }
+diff --git a/extensions-core/druid-basic-security/src/test/java/org/apache/druid/security/authentication/validator/LDAPCredentialsValidatorTest.java b/extensions-core/druid-basic-security/src/test/java/org/apache/druid/security/authentication/validator/LDAPCredentialsValidatorTest.java
+new file mode 100644
+index 000000000000..56aee168c961
+--- /dev/null
++++ b/extensions-core/druid-basic-security/src/test/java/org/apache/druid/security/authentication/validator/LDAPCredentialsValidatorTest.java
+@@ -0,0 +1,47 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++
++package org.apache.druid.security.authentication.validator;
++
++import org.apache.druid.security.basic.authentication.validator.LDAPCredentialsValidator;
++import org.junit.Assert;
++import org.junit.Test;
++
++public class LDAPCredentialsValidatorTest
++{
++  @Test
++  public void testEncodeForLDAP_noSpecialChars()
++  {
++    String input = "user1";
++    String encoded = LDAPCredentialsValidator.encodeForLDAP(input, true);
++    Assert.assertEquals(input, encoded);
++  }
++
++  @Test
++  public void testEncodeForLDAP_specialChars()
++  {
++    String input = "user1\\*()\0/user1";
++    String encodedWildcardTrue = LDAPCredentialsValidator.encodeForLDAP(input, true);
++    String encodedWildcardFalse = LDAPCredentialsValidator.encodeForLDAP(input, false);
++    String expectedWildcardTrue = "user1\\5c\\2a\\28\\29\\00\\2fuser1";
++    String expectedWildcardFalse = "user1\\5c*\\28\\29\\00\\2fuser1";
++    Assert.assertEquals(expectedWildcardTrue, encodedWildcardTrue);
++    Assert.assertEquals(expectedWildcardFalse, encodedWildcardFalse);
++  }
++}
+diff --git a/licenses.yaml b/licenses.yaml
+index 7af752619474..bcdaa8c5f0e2 100644
+--- a/licenses.yaml
++++ b/licenses.yaml
+@@ -146,6 +146,17 @@ source_paths:
+ 
+ ---
+ 
++name: LDAP string encoding function from OWASP ESAPI
++license_category: source
++module: extensions/druid-basic-security
++license_name: BSD-3-Clause License
++copyright: The OWASP Foundation (https://github.com/ESAPI/esapi-java-legacy)
++license_file_path: licenses/src/esapi.BSD3
++source_paths:
++  - extensions-core/druid-basic-security/src/main/java/org/apache/druid/security/basic/authentication/validator/LDAPCredentialsValidator.java
++
++---
++
+ name: AWS SDK for Java
+ license_category: binary
+ module: java-core
+diff --git a/licenses/src/esapi.BSD3 b/licenses/src/esapi.BSD3
+new file mode 100644
+index 000000000000..fdbcc850a22a
+--- /dev/null
++++ b/licenses/src/esapi.BSD3
+@@ -0,0 +1,11 @@
++The BSD License
++
++Copyright (c) 2007, The OWASP Foundation
++All rights reserved.
++
++Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
++
++Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
++Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
++Neither the name of the OWASP Foundation nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

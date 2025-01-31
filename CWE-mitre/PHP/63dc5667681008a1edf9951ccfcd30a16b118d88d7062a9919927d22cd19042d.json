@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:blackboard:academic_suite:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:edgewall:trac:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:bitrix24:bitrix_site_manager:6.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oauth2_proxy_project:oauth2_proxy:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "blackboard:academic_suite": "6.0.0.0",
+            "edgewall:trac": "unknown",
+            "bitrix24:bitrix_site_manager": "unknown",
+            "oauth2_proxy_project:oauth2_proxy": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2005-4206",
+            "CVE-2008-2951",
+            "CVE-2008-2052",
+            "CVE-2020-11053"
+        ],
+        "CWE": [
+            "CWE-601"
+        ]
+    }
+}

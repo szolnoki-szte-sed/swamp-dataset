@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:misp-project:misp:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/MISP/MISP/commit/ca6f4a783a6ba65532dc8767446bda44773ec627",
+        "version_end_excluding": {
+            "misp-project:misp": "unknown"
+        },
+        "path": {
+            "file_path": "app/View/Sightings/ajax/quickDeleteConfirmationForm.ctp"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-15216"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

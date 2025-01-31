@@ -1,0 +1,22 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/rabbitmq/rabbitmq-jms-client/commit/95ae7401c0f007d5c8e6618ab009c171ce633916",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "src/main/java/com/rabbitmq/jms/client/RMQMessageProducer.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-6194"
+        ],
+        "CWE": []
+    }
+}

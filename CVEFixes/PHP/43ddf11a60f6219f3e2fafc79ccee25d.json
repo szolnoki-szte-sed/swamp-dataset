@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:orchid:platform:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/orchidsoftware/platform/commit/03f9a113b1a70bc5075ce86a918707f0e7d82169",
+        "version_end_excluding": {
+            "orchid:platform": "9.4.4"
+        },
+        "path": {
+            "file_path": "src/Platform/Dashboard.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15263"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

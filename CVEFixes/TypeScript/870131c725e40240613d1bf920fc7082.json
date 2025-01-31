@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:swiperjs:swiper:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/nolimits4web/swiper/commit/9dad2739b7474f383474773d5ab898a0c29ac178",
+        "version_end_excluding": {
+            "swiperjs:swiper": "6.5.1"
+        },
+        "path": {
+            "file_path": "src/utils/utils.js"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23370"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

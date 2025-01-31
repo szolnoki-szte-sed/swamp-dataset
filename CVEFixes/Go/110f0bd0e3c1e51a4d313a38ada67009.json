@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:helm:helm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:helm:helm:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/helm/helm/commit/055dd41cbe53ce131ab0357524a7f6729e6e40dc",
+        "version_end_excluding": {
+            "helm:helm": "2.16.11"
+        },
+        "path": {
+            "file_path": "pkg/downloader/chart_downloader_test.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15185"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

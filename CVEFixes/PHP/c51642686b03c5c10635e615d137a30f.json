@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:activity_log_project:activity_log:*:*:*:*:*:wordpress:*:*"
+        ],
+        "fix_commit": "https://github.com/pojome/activity-log/commit/950c46b2290c991187ff3471640e9688b16908fb",
+        "version_end_excluding": {
+            "activity_log_project:activity_log": "2.4.1"
+        },
+        "path": {
+            "file_path": "hooks/class-aal-hook-posts.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-8729"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

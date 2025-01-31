@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bouncycastle:legion-of-the-bouncy-castle-java-crytography-api:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bcgit/bc-java/commit/9385b0ebd277724b167fe1d1456e3c112112be1f",
+        "version_end_excluding": {
+            "bouncycastle:legion-of-the-bouncy-castle-java-crytography-api": "unknown"
+        },
+        "path": {
+            "file_path": "prov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/ec/IESCipher.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-1000344"
+        ],
+        "CWE": [
+            "CWE-310"
+        ]
+    }
+}

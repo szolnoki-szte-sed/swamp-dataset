@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:facturascripts:facturascripts:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/neorazorx/facturascripts/commit/93fc65ced3847a8e0837561e9fdfa0dbace2cfcb",
+        "version_end_excluding": {
+            "facturascripts:facturascripts": "2022.09"
+        },
+        "path": {
+            "file_path": "Core/Translation/gl_ES.json"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-1988"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

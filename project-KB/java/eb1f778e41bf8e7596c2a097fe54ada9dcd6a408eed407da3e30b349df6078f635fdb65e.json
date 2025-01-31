@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:eclipse:kura:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/eclipse/kura/commit/eb1f778e41bf8e7596c2a097fe54ada9dcd6a408",
+        "version_end_excluding": {
+            "eclipse:kura": "unknown"
+        },
+        "path": {
+            "file_path": "kura/org.eclipse.kura.web2/src/main/java/org/eclipse/kura/web/server/servlet/SkinServlet.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Eclipse Public License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10242"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

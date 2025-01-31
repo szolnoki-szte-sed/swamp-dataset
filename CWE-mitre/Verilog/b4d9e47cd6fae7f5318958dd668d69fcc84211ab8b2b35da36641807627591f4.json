@@ -1,0 +1,46 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:h:amperecomputing:ampere_altra_max:-:*:*:*:*:*:*:*",
+            "cpe:2.3:h:ftsafe:k13:-:*:*:*:*:*:*:*",
+            "cpe:2.3:h:trezor:one:-:*:*:*:*:*:*:*",
+            "cpe:2.3:h:nordicsemi:nrf52840:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gnupg:gnupg:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:*:*:*:*:*:*:*:*",
+            "cpe:2.3:h:shiftcrypto:bitbox02:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "amperecomputing:ampere_altra_max": "unknown",
+            "ftsafe:k13": "unknown",
+            "trezor:one": "unknown",
+            "nordicsemi:nrf52840": "unknown",
+            "gnupg:gnupg": "1.4.15",
+            "xen:xen": "4.14.0",
+            "shiftcrypto:bitbox02": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "verilog",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-35888",
+            "CVE-2021-3011",
+            "CVE-2019-14353",
+            "CVE-2020-27211",
+            "CVE-2013-4576",
+            "CVE-2020-28368",
+            "CVE-2019-18673"
+        ],
+        "CWE": [
+            "CWE-1300"
+        ]
+    }
+}

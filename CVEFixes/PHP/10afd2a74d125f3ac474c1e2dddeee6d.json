@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bigtreecms:bigtree_cms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bigtreecms/BigTree-CMS/commit/59ebef5978f80e2fdc7b4db4a28b668c5a39fbc3",
+        "version_end_excluding": {
+            "bigtreecms:bigtree_cms": "unknown"
+        },
+        "path": {
+            "file_path": "core/admin/ajax/dashboard/check-module-integrity.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-10223"
+        ],
+        "CWE": [
+            "CWE-284"
+        ]
+    }
+}

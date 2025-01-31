@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal_software:spring_batch:4.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:spring_batch:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-batch/commit/8dc3bb7d3c3d0b1487e3ef3dcbdebda865d2b20e",
+        "version_end_excluding": {
+            "pivotal_software:spring_batch": "unknown"
+        },
+        "path": {
+            "file_path": "spring-batch-infrastructure/src/main/java/org/springframework/batch/item/xml/StaxEventItemReader.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-3774"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

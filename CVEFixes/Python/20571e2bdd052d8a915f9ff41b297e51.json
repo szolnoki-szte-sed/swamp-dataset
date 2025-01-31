@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:oniguruma_project:oniguruma:6.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:*:*:*:*:*:oniguruma-mod:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:oniguruma-mod:*:*"
+        ],
+        "fix_commit": "https://github.com/kkos/oniguruma/commit/166a6c3999bf06b4de0ab4ce6b088a468cc4029f",
+        "version_end_excluding": {
+            "oniguruma_project:oniguruma": "unknown",
+            "ruby-lang:ruby": "unknown",
+            "php:php": "unknown"
+        },
+        "path": {
+            "file_path": "src/gperf_unfold_key_conv.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-9225"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

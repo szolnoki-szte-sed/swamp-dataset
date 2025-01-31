@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:geode:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/geode/commit/4c2f9e85406cc8ce9b5da71f0231b9a4901f8e2c",
+        "version_end_excluding": {
+            "apache:geode": "unknown"
+        },
+        "path": {
+            "file_path": "geode-core/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccess.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-15694"
+        ],
+        "CWE": [
+            "CWE-88"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:xelerance:openswan:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/xelerance/Openswan/commit/0b460be9e287fd335c8ce58129c67bf06065ef51",
+        "version_end_excluding": {
+            "xelerance:openswan": "2.6.50.1"
+        },
+        "path": {
+            "file_path": "packaging/centos5/openswan.spec"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-15836"
+        ],
+        "CWE": [
+            "CWE-347"
+        ]
+    }
+}

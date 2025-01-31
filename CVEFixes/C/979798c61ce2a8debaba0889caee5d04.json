@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:htmldoc_project:htmldoc:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:htmldoc_project:htmldoc:1.9.12:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/michaelrsweet/htmldoc/commit/6e8a95561988500b5b5ae4861b3b0cbf4fba517f",
+        "version_end_excluding": {
+            "htmldoc_project:htmldoc": "unknown"
+        },
+        "path": {
+            "file_path": "htmldoc/ps-pdf.cxx"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23165"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

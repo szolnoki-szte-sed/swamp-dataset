@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:plack_project:plack:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/avar/Plack/commit/bc1731dbb53850c380875ad683cd87c8ec99eee3",
+        "version_end_excluding": {
+            "plack_project:plack": "unknown"
+        },
+        "path": {
+            "file_path": "lib/Plack/App/File.pm"
+        }
+    },
+    "programming_language": "perl",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-5269"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

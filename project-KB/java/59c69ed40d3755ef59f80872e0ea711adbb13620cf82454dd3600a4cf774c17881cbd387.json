@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:oracle:retail_customer_management_and_segmentation_foundation:18.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_integration:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:retail_customer_management_and_segmentation_foundation:17.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:retail_customer_management_and_segmentation_foundation:16.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-integration/commit/59c69ed40d3755ef59f80872e0ea711adbb13620",
+        "version_end_excluding": {
+            "vmware:spring_integration": "unknown"
+        },
+        "path": {
+            "file_path": "spring-integration-xml/src/main/java/org/springframework/integration/xml/splitter/XPathMessageSplitter.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-3772"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

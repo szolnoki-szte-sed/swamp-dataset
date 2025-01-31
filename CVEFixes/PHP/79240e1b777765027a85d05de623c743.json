@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:glpi-project:glpi:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/glpi-project/glpi/commit/5da9f99b2d81713b1e36016b47ce656a33648bc7",
+        "version_end_excluding": {
+            "glpi-project:glpi": "9.4.1"
+        },
+        "path": {
+            "file_path": "inc/user.class.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-13240"
+        ],
+        "CWE": [
+            "CWE-640"
+        ]
+    }
+}

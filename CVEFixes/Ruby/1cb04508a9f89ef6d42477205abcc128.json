@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:haml:haml:*:*:*:*:*:ruby:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/haml/haml/commit/18576ae6e9bdcb4303fdbe6b3199869d289d67c2",
+        "version_end_excluding": {
+            "haml:haml": "5.0.0",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "lib/haml/helpers.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-1002201"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

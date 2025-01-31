@@ -1,0 +1,115 @@
+diff --git a/spring-web/src/main/java/org/springframework/http/ContentDisposition.java b/spring-web/src/main/java/org/springframework/http/ContentDisposition.java
+index 4d480116c39c..c50ffc715a3c 100644
+--- a/spring-web/src/main/java/org/springframework/http/ContentDisposition.java
++++ b/spring-web/src/main/java/org/springframework/http/ContentDisposition.java
+@@ -222,7 +222,7 @@ public String toString() {
+ 		if (this.filename != null) {
+ 			if (this.charset == null || StandardCharsets.US_ASCII.equals(this.charset)) {
+ 				sb.append("; filename=\"");
+-				sb.append(this.filename).append('\"');
++				sb.append(escapeQuotationsInFilename(this.filename)).append('\"');
+ 			}
+ 			else {
+ 				sb.append("; filename*=");
+@@ -428,6 +428,23 @@ private static boolean isRFC5987AttrChar(byte c) {
+ 				c == '.' || c == '^' || c == '_' || c == '`' || c == '|' || c == '~';
+ 	}
+ 
++	private static String escapeQuotationsInFilename(String filename) {
++		if (filename.indexOf('"') == -1 && filename.indexOf('\\') == -1) {
++			return filename;
++		}
++		boolean escaped = false;
++		StringBuilder sb = new StringBuilder();
++		for (char c : filename.toCharArray()) {
++			sb.append((c == '"' && !escaped) ? "\\\"" : c);
++			escaped = (!escaped && c == '\\');
++		}
++		// Remove backslash at the end..
++		if (escaped) {
++			sb.deleteCharAt(sb.length() - 1);
++		}
++		return sb.toString();
++	}
++
+ 	/**
+ 	 * Encode the given header field param as describe in RFC 5987.
+ 	 * @param input the header field param
+@@ -437,13 +454,10 @@ private static boolean isRFC5987AttrChar(byte c) {
+ 	 * @see <a href="https://tools.ietf.org/html/rfc5987">RFC 5987</a>
+ 	 */
+ 	private static String encodeFilename(String input, Charset charset) {
+-		Assert.notNull(input, "Input String should not be null");
+-		Assert.notNull(charset, "Charset should not be null");
+-		if (StandardCharsets.US_ASCII.equals(charset)) {
+-			return input;
+-		}
+-		Assert.isTrue(UTF_8.equals(charset) || ISO_8859_1.equals(charset),
+-				"Charset should be UTF-8 or ISO-8859-1");
++		Assert.notNull(input, "`input` is required");
++		Assert.notNull(charset, "`charset` is required");
++		Assert.isTrue(!StandardCharsets.US_ASCII.equals(charset), "ASCII does not require encoding");
++		Assert.isTrue(UTF_8.equals(charset) || ISO_8859_1.equals(charset), "Only UTF-8 and ISO-8859-1 supported.");
+ 		byte[] source = input.getBytes(charset);
+ 		int len = source.length;
+ 		StringBuilder sb = new StringBuilder(len << 1);
+@@ -578,25 +592,13 @@ public Builder name(String name) {
+ 		@Override
+ 		public Builder filename(String filename) {
+ 			Assert.hasText(filename, "No filename");
+-			this.filename = escapeQuotationMarks(filename);
++			this.filename = filename;
+ 			return this;
+ 		}
+ 
+-		private static String escapeQuotationMarks(String filename) {
+-			if (filename.indexOf('"') == -1) {
+-				return filename;
+-			}
+-			boolean escaped = false;
+-			StringBuilder sb = new StringBuilder();
+-			for (char c : filename.toCharArray()) {
+-				sb.append((c == '"' && !escaped) ? "\\\"" : c);
+-				escaped = (!escaped && c == '\\');
+-			}
+-			return sb.toString();
+-		}
+-
+ 		@Override
+ 		public Builder filename(String filename, Charset charset) {
++			Assert.hasText(filename, "No filename");
+ 			this.filename = filename;
+ 			this.charset = charset;
+ 			return this;
+diff --git a/spring-web/src/test/java/org/springframework/http/ContentDispositionTests.java b/spring-web/src/test/java/org/springframework/http/ContentDispositionTests.java
+index c14753ab844f..c63492780787 100644
+--- a/spring-web/src/test/java/org/springframework/http/ContentDispositionTests.java
++++ b/spring-web/src/test/java/org/springframework/http/ContentDispositionTests.java
+@@ -222,10 +222,15 @@ public void formatWithEncodedFilenameUsingUsAscii() {
+ 	@Test // gh-24220
+ 	public void formatWithFilenameWithQuotes() {
+ 
+-		BiConsumer<String, String> tester = (input, output) ->
++		BiConsumer<String, String> tester = (input, output) -> {
++
+ 			assertThat(builder("form-data").filename(input).build().toString())
+ 					.isEqualTo("form-data; filename=\"" + output + "\"");
+ 
++			assertThat(builder("form-data").filename(input, StandardCharsets.US_ASCII).build().toString())
++					.isEqualTo("form-data; filename=\"" + output + "\"");
++		};
++
+ 		String filename = "\"foo.txt";
+ 		tester.accept(filename, "\\" + filename);
+ 
+@@ -243,6 +248,10 @@ public void formatWithFilenameWithQuotes() {
+ 
+ 		tester.accept("\"\"foo.txt", "\\\"\\\"foo.txt");
+ 		tester.accept("\"\"\"foo.txt", "\\\"\\\"\\\"foo.txt");
++
++		tester.accept("foo.txt\\", "foo.txt");
++		tester.accept("foo.txt\\\\", "foo.txt\\\\");
++		tester.accept("foo.txt\\\\\\", "foo.txt\\\\");
+ 	}
+ 
+ 	@Test

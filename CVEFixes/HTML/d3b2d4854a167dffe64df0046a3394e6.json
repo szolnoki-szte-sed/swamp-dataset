@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:calibre-web_project:calibre-web:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/janeczku/calibre-web/commit/50919d47212066c75f03ee7a5332ecf2d584b98e",
+        "version_end_excluding": {
+            "calibre-web_project:calibre-web": "unknown"
+        },
+        "path": {
+            "file_path": "cps/templates/http_error.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-25965"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

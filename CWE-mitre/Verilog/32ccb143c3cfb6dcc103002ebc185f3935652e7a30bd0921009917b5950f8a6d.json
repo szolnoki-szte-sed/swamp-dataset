@@ -1,0 +1,40 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:h:planex:cs-qr20:-:*:*:*:*:*:*:*",
+            "cpe:2.3:h:sonos:one:-:*:*:*:*:*:*:*",
+            "cpe:2.3:h:st:stm32f1:-:*:*:*:*:*:*:*",
+            "cpe:2.3:o:qualcomm:mdm9206_firmware:-:*:*:*:*:*:*:*",
+            "cpe:2.3:h:niscomed:m1000_multipara_patient_monitor:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "planex:cs-qr20": "unknown",
+            "sonos:one": "unknown",
+            "st:stm32f1": "unknown",
+            "qualcomm:mdm9206_firmware": "unknown",
+            "niscomed:m1000_multipara_patient_monitor": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "verilog",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-38399",
+            "CVE-2020-9285",
+            "CVE-2020-8004",
+            "CVE-2017-18293",
+            "CVE-2020-15483"
+        ],
+        "CWE": [
+            "CWE-1299"
+        ]
+    }
+}

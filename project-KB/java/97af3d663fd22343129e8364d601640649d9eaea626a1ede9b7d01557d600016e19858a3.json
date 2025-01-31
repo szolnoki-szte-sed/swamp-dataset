@@ -1,0 +1,47 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:eclipse:jetty:9.3.7:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.4:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.4:rc0:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.0:m1:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:o:microsoft:windows:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.0:m0:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.0:rc0:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.7:rc0:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.8:rc0:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.0:maintenance2:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/eclipse/jetty.project/commit/97af3d663fd22343129e8364d601640649d9eaea",
+        "version_end_excluding": {
+            "eclipse:jetty": "unknown"
+        },
+        "path": {
+            "file_path": "jetty-server/src/test/java/org/eclipse/jetty/server/handler/ContextHandlerGetResourceTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-4800"
+        ],
+        "CWE": [
+            "CWE-284"
+        ]
+    }
+}

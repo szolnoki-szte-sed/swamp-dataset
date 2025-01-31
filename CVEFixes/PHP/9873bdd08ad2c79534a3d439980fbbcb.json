@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/laravel/framework/commit/44c3feb604944599ad1c782a9942981c3991fa31",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "src/Illuminate/Filesystem/Filesystem.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-19316"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

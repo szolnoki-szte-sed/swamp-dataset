@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:radare:radare2:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/radareorg/radare2/commit/2b77b277d67ce061ee6ef839e7139ebc2103c1e3",
+        "version_end_excluding": {
+            "radare:radare2": "5.6.8"
+        },
+        "path": {
+            "file_path": "libr/bin/format/mach0/dyldcache.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-1244"
+        ],
+        "CWE": [
+            "CWE-122"
+        ]
+    }
+}

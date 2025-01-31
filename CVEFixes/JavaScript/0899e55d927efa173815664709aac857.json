@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:schine.games:mw-oauth2client:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Schine/MW-OAuth2Client/commit/6a4fe4500ddd72ad4e826d9d63b2d69512bd10d1",
+        "version_end_excluding": {
+            "schine.games:mw-oauth2client": "0.4"
+        },
+        "path": {
+            "file_path": "extension.json"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-15150"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

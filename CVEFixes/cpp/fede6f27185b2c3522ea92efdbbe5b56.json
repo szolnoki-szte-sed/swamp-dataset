@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/aawc/unrar/commit/0ff832d31470471803b175cfff4e40c1b08ee779",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "arccmt.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-20006"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

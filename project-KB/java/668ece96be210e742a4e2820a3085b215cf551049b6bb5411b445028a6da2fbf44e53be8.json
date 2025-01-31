@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:orientdb:orientdb:2.0.14:*:*:*:community:*:*:*",
+            "cpe:2.3:a:orientdb:orientdb:2.1.0:*:*:*:community:*:*:*"
+        ],
+        "fix_commit": "https://github.com/orientechnologies/orientdb/commit/668ece96be210e742a4e2820a3085b215cf55104",
+        "version_end_excluding": {
+            "orientdb:orientdb": "unknown"
+        },
+        "path": {
+            "file_path": "server/src/main/java/com/orientechnologies/orient/server/network/protocol/http/OHttpSessionManager.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-2913"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

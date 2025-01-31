@@ -1,0 +1,1 @@
+-If (Bus_transaction[14] == "1")Trusted = "1"ElseTrusted = "0"

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:lightbend:play_framework:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/playframework/playframework/commit/681d8ee3f785a6105b0595d8f10a8ee5718e6d7b",
+        "version_end_excluding": {
+            "lightbend:play_framework": "unknown"
+        },
+        "path": {
+            "file_path": "web/play-filters-helpers/src/main/java/play/filters/csrf/RequireCSRFCheckAction.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-12480"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:askbot:askbot:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ASKBOT/askbot-devel/commit/876e3662ff6b78cc6241338c15e3a0cb49edf4e2",
+        "version_end_excluding": {
+            "askbot:askbot": "unknown"
+        },
+        "path": {
+            "file_path": "askbot/media/style/style.css"
+        }
+    },
+    "programming_language": "css",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-2235"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:matrix:synapse:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/matrix-org/synapse/commit/e54746bdf7d5c831eabe4dcea76a7626f1de73df",
+        "version_end_excluding": {
+            "matrix:synapse": "1.27.0",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "synapse/config/consent_config.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21332"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/mruby/mruby/commit/97319697c8f9f6ff27b32589947e1918e3015503",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "src/gc.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-36401"
+        ],
+        "CWE": [
+            "CWE-415"
+        ]
+    }
+}

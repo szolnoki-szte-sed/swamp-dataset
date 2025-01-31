@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:jspwiki:2.11.0:milestone1-rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:jspwiki:2.11.0:milestone1-rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:jspwiki:2.11.0:milestone2-rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:jspwiki:2.11.0:-:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:jspwiki:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:jspwiki:2.11.0:milestone1-rc3:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:jspwiki:2.11.0:milestone2:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/jspwiki/commit/88d89d6523802c044cfcb7930cba40d8eeb21da2",
+        "version_end_excluding": {
+            "apache:jspwiki": "2.11.0"
+        },
+        "path": {
+            "file_path": "jspwiki-main/src/test/java/org/apache/wiki/WikiServletTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-0225"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

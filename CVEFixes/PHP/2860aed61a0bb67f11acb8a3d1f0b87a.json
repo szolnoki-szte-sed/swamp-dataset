@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:piwigo:piwigo:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Piwigo/Piwigo/commit/6ec3f2d0fae0437f0c2cc8c475a26fb6aeb0d4cb",
+        "version_end_excluding": {
+            "piwigo:piwigo": "unknown"
+        },
+        "path": {
+            "file_path": "action.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-5608"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

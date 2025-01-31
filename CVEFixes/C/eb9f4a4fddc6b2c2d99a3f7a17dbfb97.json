@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:linux4sam:at91bootstrap:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/linux4sam/at91bootstrap/commit/7753914c9a622c245f3a3cf2af5e24b6a9904213",
+        "version_end_excluding": {
+            "linux4sam:at91bootstrap": "3.9.2"
+        },
+        "path": {
+            "file_path": "driver/secure.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-11683"
+        ],
+        "CWE": [
+            "CWE-203"
+        ]
+    }
+}

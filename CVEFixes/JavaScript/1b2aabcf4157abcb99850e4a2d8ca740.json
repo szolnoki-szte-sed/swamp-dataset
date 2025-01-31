@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:putil-merge_project:putil-merge:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/panates/putil-merge/commit/476d00078dfb2827d7c9ee0f2392c81b864f7bc5",
+        "version_end_excluding": {
+            "putil-merge_project:putil-merge": "3.8.0"
+        },
+        "path": {
+            "file_path": "lib/merge.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23470"
+        ],
+        "CWE": [
+            "CWE-1321"
+        ]
+    }
+}

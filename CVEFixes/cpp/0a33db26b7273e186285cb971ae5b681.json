@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:inspircd:inspircd:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/inspircd/inspircd/commit/4350a11c663b0d75f8119743bffb7736d87abd4d",
+        "version_end_excluding": {
+            "inspircd:inspircd": "3.10.0"
+        },
+        "path": {
+            "file_path": "src/coremods/core_user/core_user.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-33586"
+        ],
+        "CWE": [
+            "CWE-732"
+        ]
+    }
+}

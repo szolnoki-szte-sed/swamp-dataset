@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ffmpeg:ffmpeg:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:20.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.04:*:*:*:esm:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FFmpeg/FFmpeg/commit/8df6884832ec413cf032dfaa45c23b1c7876670c",
+        "version_end_excluding": {
+            "ffmpeg:ffmpeg": "3.4.7",
+            "debian:debian_linux": "unknown",
+            "canonical:ubuntu_linux": "unknown"
+        },
+        "path": {
+            "file_path": "libavcodec/utils.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-17539"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

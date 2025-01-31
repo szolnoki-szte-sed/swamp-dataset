@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:netgate:pfsense:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pfsense/pfsense/commit/3c1e53dabe966f27c9097a5a923e77f49ae5fffa",
+        "version_end_excluding": {
+            "netgate:pfsense": "2.4.5"
+        },
+        "path": {
+            "file_path": "src/usr/local/www/system_usermanager_addprivs.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-11457"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

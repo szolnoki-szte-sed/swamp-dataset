@@ -1,0 +1,82 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:amazon:amazon_ssm_agent:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:trustport:antivirus:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:dovecot:dovecot:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:adobe:photoshop_elements:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:20.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:a:gnome:glib:2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:christophe.varoqui:multipath-tools:0.4.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:debian:nss-ldap:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:mac_os_x:10.4.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:checkpoint:vpn-1_secureclient:ngai_r56:*:*:*:*:*:*:*",
+            "cpe:2.3:o:microsoft:windows_xp:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:le-web:backintime:0.9.26:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wonderware:intouch:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ibm:lotus_domino:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ibm:db2_universal_database:7.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:iss:blackice_pc_protection:3.6cbd:*:*:*:*:*:*:*",
+            "cpe:2.3:o:microsoft:windows_nt:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:mysql:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "amazon:amazon_ssm_agent": "unknown",
+            "trustport:antivirus": "unknown",
+            "dovecot:dovecot": "unknown",
+            "adobe:photoshop_elements": "unknown",
+            "canonical:ubuntu_linux": "unknown",
+            "gnome:glib": "unknown",
+            "christophe.varoqui:multipath-tools": "unknown",
+            "debian:nss-ldap": "unknown",
+            "apple:mac_os_x": "unknown",
+            "checkpoint:vpn-1_secureclient": "unknown",
+            "microsoft:windows_xp": "unknown",
+            "linux:linux_kernel": "2.6.31.6",
+            "le-web:backintime": "unknown",
+            "wonderware:intouch": "unknown",
+            "ibm:lotus_domino": "unknown",
+            "ibm:db2_universal_database": "unknown",
+            "iss:blackice_pc_protection": "unknown",
+            "microsoft:windows_nt": "unknown",
+            "oracle:mysql": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-29527",
+            "CVE-2009-3482",
+            "CVE-2009-3897",
+            "CVE-2009-3489",
+            "CVE-2020-15708",
+            "CVE-2009-3289",
+            "CVE-2009-0115",
+            "CVE-2009-1073",
+            "CVE-2009-0141",
+            "CVE-2008-0662",
+            "CVE-2008-0322",
+            "CVE-2009-3939",
+            "CVE-2009-3611",
+            "CVE-2007-6033",
+            "CVE-2007-5544",
+            "CVE-2005-4868",
+            "CVE-2004-1714",
+            "CVE-2001-0006",
+            "CVE-2002-0969"
+        ],
+        "CWE": [
+            "CWE-732"
+        ]
+    }
+}

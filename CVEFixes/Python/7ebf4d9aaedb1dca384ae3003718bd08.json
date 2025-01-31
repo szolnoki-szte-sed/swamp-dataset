@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:horovod:horovod:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/horovod/horovod/commit/b96ecae4dc69fc0a83c7c2d3f1dde600c20a1b41",
+        "version_end_excluding": {
+            "horovod:horovod": "0.24.0"
+        },
+        "path": {
+            "file_path": "test/single/test_run.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0315"
+        ],
+        "CWE": [
+            "CWE-668"
+        ]
+    }
+}

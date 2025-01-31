@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mchange:c3p0:0.9.5.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/swaldman/c3p0/commit/7dfdda63f42759a5ec9b63d725b7412f74adb3e1",
+        "version_end_excluding": {
+            "mchange:c3p0": "unknown"
+        },
+        "path": {
+            "file_path": "src/java/com/mchange/v2/c3p0/cfg/C3P0ConfigXmlUtils.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20433"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

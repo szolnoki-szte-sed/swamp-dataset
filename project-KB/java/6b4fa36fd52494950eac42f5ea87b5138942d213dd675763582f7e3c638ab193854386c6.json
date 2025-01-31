@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wso2:api_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wso2:api_microgateway:2.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wso2:identity_server_as_key_manager:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/wso2/carbon-governance/commit/6b4fa36fd52494950eac42f5ea87b5138942d213",
+        "version_end_excluding": {
+            "wso2:api_manager": "unknown"
+        },
+        "path": {
+            "file_path": "components/governance/org.wso2.carbon.governance.lcm/src/main/java/org/wso2/carbon/governance/lcm/util/CommonUtil.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-13883"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

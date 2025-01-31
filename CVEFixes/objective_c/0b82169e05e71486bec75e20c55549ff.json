@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:imagemagick:imagemagick:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ImageMagick/ImageMagick/commit/9a069e0f2e027ec5138f998023cf9cb62c04889f",
+        "version_end_excluding": {
+            "imagemagick:imagemagick": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "MagickCore/profile.c"
+        }
+    },
+    "programming_language": "objective_c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-5506"
+        ],
+        "CWE": [
+            "CWE-415"
+        ]
+    }
+}

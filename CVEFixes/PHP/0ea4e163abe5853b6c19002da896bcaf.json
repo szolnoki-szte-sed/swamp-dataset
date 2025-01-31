@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:misp:misp:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/MISP/MISP/commit/bf4610c947c7dc372c4078f363d2dff6ae0703a8",
+        "version_end_excluding": {
+            "misp:misp": "2.4.129"
+        },
+        "path": {
+            "file_path": "app/Controller/AppController.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15711"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

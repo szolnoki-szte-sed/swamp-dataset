@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:libarchive:libarchive:3.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:42.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/libarchive/libarchive/commit/e37b620fe8f14535d737e89a4dcabaed4517bf1a",
+        "version_end_excluding": {
+            "libarchive:libarchive": "unknown",
+            "opensuse:leap": "unknown"
+        },
+        "path": {
+            "file_path": "tar/util.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-8687"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:querymen_project:querymen:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/diegohaz/querymen/commit/1987fefcb3b7508253a29502a008d5063a873cef",
+        "version_end_excluding": {
+            "querymen_project:querymen": "2.1.4"
+        },
+        "path": {
+            "file_path": "test/querymen-schema.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-7600"
+        ],
+        "CWE": [
+            "CWE-915"
+        ]
+    }
+}

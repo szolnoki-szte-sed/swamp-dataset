@@ -1,0 +1,88 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cloudbees:jenkins:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.404:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.403:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.402:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.401:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.408:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.407:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.406:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.405:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.431:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.418:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.414:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.415:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.437:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.434:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.435:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.430:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.432:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.419:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.417:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.412:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.413:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.400:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.433:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.416:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.409:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.436:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.421:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.420:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.425:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.411:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.426:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.429:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.428:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.423:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.427:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.422:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.424:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.410:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cloudbees:jenkins:1.466.2.1:-:enterprise:*:*:*:*:*",
+            "cpe:2.3:a:cloudbees:jenkins:1.466.1.2:-:enterprise:*:*:*:*:*",
+            "cpe:2.3:a:cloudbees:jenkins:1.424:-:lts:*:*:*:*:*",
+            "cpe:2.3:a:cloudbees:jenkins:1.400:-:lts:*:*:*:*:*",
+            "cpe:2.3:a:cloudbees:jenkins:1.447:-:lts:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.424.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.424.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.424.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.424.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.466.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.424.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.409.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.409.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.409.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.447.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.447.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.424.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cloudbees:jenkins:1.447.1.1:-:enterprise:*:*:*:*:*",
+            "cpe:2.3:a:cloudbees:jenkins:1.447.2.2:-:enterprise:*:*:*:*:*",
+            "cpe:2.3:a:cloudbees:jenkins:1.447.3.1:-:enterprise:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jenkinsci/jenkins/commit/a9aff088f327278a8873aef47fa8f80d3c5932fd",
+        "version_end_excluding": {
+            "cloudbees:jenkins": "unknown",
+            "jenkins:jenkins": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/main/java/hudson/DNSMultiCast.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-0158"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

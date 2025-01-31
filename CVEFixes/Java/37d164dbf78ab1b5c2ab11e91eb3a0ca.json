@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jenkins:jenkins:1.409.1:*:*:*:lts:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:1.409.2:*:*:*:lts:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jenkinsci/winstone/commit/410ed3001d51c689cf59085b7417466caa2ded7b",
+        "version_end_excluding": {
+            "jenkins:jenkins": "unknown"
+        },
+        "path": {
+            "file_path": "src/java/winstone/ErrorServlet.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-4344"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

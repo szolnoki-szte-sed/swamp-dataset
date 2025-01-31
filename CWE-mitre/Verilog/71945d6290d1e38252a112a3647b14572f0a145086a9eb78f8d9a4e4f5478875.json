@@ -1,0 +1,45 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:h:st:stm32f1:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:database_server:8.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:sap:sap_r_3:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:sap:sap_r_3:*:*:*:*:*:*:*:*",
+            "cpe:2.3:h:iomega:network_attached_storage:a300u:*:*:*:*:*:*:*",
+            "cpe:2.3:a:bindview:netrc:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cisco:secure_access_control_server:3.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "st:stm32f1": "unknown",
+            "oracle:database_server": "unknown",
+            "sap:sap_r_3": "unknown",
+            "iomega:network_attached_storage": "unknown",
+            "bindview:netrc": "unknown",
+            "cisco:secure_access_control_server": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "verilog",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-8004",
+            "CVE-2002-0567",
+            "CVE-2002-1578",
+            "CVE-2003-1035",
+            "CVE-2002-1863",
+            "CVE-2002-0066",
+            "CVE-2004-1461"
+        ],
+        "CWE": [
+            "CWE-420"
+        ]
+    }
+}

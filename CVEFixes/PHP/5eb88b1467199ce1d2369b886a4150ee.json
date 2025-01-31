@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fecmall_project:fecmall:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/fecshop/yii2_fecshop/commit/8fac6455882333cfe3d81c4121d523813e28e31a",
+        "version_end_excluding": {
+            "fecmall_project:fecmall": "unknown"
+        },
+        "path": {
+            "file_path": "app/appfront/theme/base/front/checkout/cart/index.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-22808"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

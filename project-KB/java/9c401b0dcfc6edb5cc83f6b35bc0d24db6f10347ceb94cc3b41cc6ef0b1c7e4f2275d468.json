@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:ignite:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/ignite/commit/9c401b0dcfc6edb5cc83f6b35bc0d24db6f10347",
+        "version_end_excluding": {
+            "apache:ignite": "unknown"
+        },
+        "path": {
+            "file_path": "modules/core/src/main/java/org/apache/ignite/IgniteSystemProperties.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-6805"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

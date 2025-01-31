@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jon_hedley:alienform2:1.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:info-zip:unzip:5.50:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "jon_hedley:alienform2": "unknown",
+            "info-zip:unzip": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2002-0934",
+            "CVE-2003-0282"
+        ],
+        "CWE": [
+            "CWE-181"
+        ]
+    }
+}

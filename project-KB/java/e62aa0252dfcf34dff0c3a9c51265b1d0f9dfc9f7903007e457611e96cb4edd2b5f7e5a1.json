@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:nifi:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/nifi/commit/e62aa0252dfcf34dff0c3a9c51265b1d0f9dfc9f",
+        "version_end_excluding": {
+            "apache:nifi": "unknown"
+        },
+        "path": {
+            "file_path": "nifi-commons/nifi-web-utils/src/main/java/org/apache/nifi/web/util/WebUtils.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-17193"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

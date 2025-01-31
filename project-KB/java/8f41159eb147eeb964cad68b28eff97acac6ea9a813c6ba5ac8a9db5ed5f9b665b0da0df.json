@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fhir:hapi_fhir:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jamesagnew/hapi-fhir/commit/8f41159eb147eeb964cad68b28eff97acac6ea9a",
+        "version_end_excluding": {
+            "fhir:hapi_fhir": "3.8.0"
+        },
+        "path": {
+            "file_path": "hapi-fhir-testpage-overlay/src/main/java/ca/uhn/fhir/to/BaseController.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-12741"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

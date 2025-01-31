@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:meetecho:janus:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/meetecho/janus-gateway/commit/f62bba6513ec840761f2434b93168106c7c65a3d",
+        "version_end_excluding": {
+            "meetecho:janus": "unknown"
+        },
+        "path": {
+            "file_path": "html/textroomtest.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-4124"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

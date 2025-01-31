@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:django-filter_project:django-filter:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:35:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/carltongibson/django-filter/commit/340cf7a23a2b3dcd7183f6a0d6c383e85b130d2b",
+        "version_end_excluding": {
+            "django-filter_project:django-filter": "2.4.0",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "django_filters/__init__.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15225"
+        ],
+        "CWE": [
+            "CWE-681"
+        ]
+    }
+}

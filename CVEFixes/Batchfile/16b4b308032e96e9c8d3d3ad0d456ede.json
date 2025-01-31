@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:uzbl:uzbl:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:uzbl:uzbl:2010.01.04:*:*:*:*:*:*:*",
+            "cpe:2.3:a:uzbl:uzbl:2009.12.22:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Dieterbe/uzbl/commit/9cc39cb5c9396be013b5dc2ba7e4b3eaa647e975",
+        "version_end_excluding": {
+            "uzbl:uzbl": "unknown"
+        },
+        "path": {
+            "file_path": "examples/config/config"
+        }
+    },
+    "programming_language": "batchfile",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2010-2809"
+        ],
+        "CWE": [
+            "CWE-94"
+        ]
+    }
+}

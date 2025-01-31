@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mirahezebots:channelmgnt:*:*:*:*:*:sopel:*:*"
+        ],
+        "fix_commit": "https://github.com/MirahezeBots/sopel-channelmgnt/commit/7c96d400358221e59135f0a0be0744f3fad73856",
+        "version_end_excluding": {
+            "mirahezebots:channelmgnt": "2.0.1"
+        },
+        "path": {
+            "file_path": "dev-requirements.txt"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21431"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

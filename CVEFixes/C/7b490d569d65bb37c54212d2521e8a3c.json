@@ -1,0 +1,38 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:5.14:rc6:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.17:rc5:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.17:rc4:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.17:rc1:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.17:rc2:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.17:rc3:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.17:-:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.17:rc6:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/7e78c597c3ebfd0cb329aa09a838734147e4f117",
+        "version_end_excluding": {
+            "linux:linux_kernel": "5.17",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "net/qrtr/qrtr.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3743"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

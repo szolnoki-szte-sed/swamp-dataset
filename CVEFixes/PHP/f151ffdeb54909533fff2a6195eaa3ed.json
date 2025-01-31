@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:librenms:librenms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/librenms/librenms/commit/e5bb6d80bc308fc56b9a01ffb76c34159995353c",
+        "version_end_excluding": {
+            "librenms:librenms": "1.65.1"
+        },
+        "path": {
+            "file_path": "routes/web.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15877"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

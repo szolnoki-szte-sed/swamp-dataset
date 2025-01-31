@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:oracle:communications_diameter_signaling_router:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:enterprise_manager_base_platform:13.4.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:enterprise_manager_base_platform:13.3.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:flexcube_private_banking:12.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:flexcube_private_banking:12.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/camel/commit/28104c45df424730006a90c52cafda8f7dbcd303",
+        "version_end_excluding": {
+            "apache:camel": "unknown"
+        },
+        "path": {
+            "file_path": "components/camel-netty/src/test/java/org/apache/camel/component/netty/ObjectSerializationTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-11973"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

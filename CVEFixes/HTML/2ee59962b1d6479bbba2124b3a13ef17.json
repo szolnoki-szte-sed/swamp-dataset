@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:publiccms:publiccms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/sanluan/PublicCMS/commit/d8d7626cf51e4968fb384e1637a3c0c9921f33e9",
+        "version_end_excluding": {
+            "publiccms:publiccms": "unknown"
+        },
+        "path": {
+            "file_path": "publiccms-parent/pom.xml"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-29784"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

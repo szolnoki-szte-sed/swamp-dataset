@@ -1,0 +1,67 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:enterprise_manager:3.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:firepass:7.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_local_traffic_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_access_policy_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_edge_gateway:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_global_traffic_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_link_controller:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_webaccelerator:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_wan_optimization_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:arx:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_access_policy_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_analytics:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_application_security_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_application_security_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_edge_gateway:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_global_traffic_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_link_controller:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_local_traffic_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_protocol_security_module:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_protocol_security_module:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_wan_optimization_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:big-ip_webaccelerator:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:enterprise_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:f5:firepass:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/6e5714eaf77d79ae1c8b47e3e040ff5411b717ec",
+        "version_end_excluding": {
+            "linux:linux_kernel": "3.1",
+            "redhat:enterprise_linux": "unknown",
+            "f5:enterprise_manager": "unknown",
+            "f5:firepass": "unknown",
+            "f5:big-ip_local_traffic_manager": "unknown",
+            "f5:big-ip_access_policy_manager": "unknown",
+            "f5:big-ip_edge_gateway": "unknown",
+            "f5:big-ip_global_traffic_manager": "unknown",
+            "f5:big-ip_link_controller": "unknown",
+            "f5:big-ip_webaccelerator": "unknown",
+            "f5:big-ip_wan_optimization_manager": "unknown",
+            "f5:arx": "unknown",
+            "f5:big-ip_analytics": "unknown",
+            "f5:big-ip_application_security_manager": "unknown",
+            "f5:big-ip_protocol_security_module": "unknown"
+        },
+        "path": {
+            "file_path": "net/core/Makefile"
+        }
+    },
+    "programming_language": "batchfile",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-3188"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

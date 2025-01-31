@@ -1,0 +1,39 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:element_software:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:active_iq_performance_analytics_services:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/7a9cdebdcc17e426fb5287e4a82db1dfe86339b2",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown",
+            "canonical:ubuntu_linux": "unknown",
+            "debian:debian_linux": "unknown",
+            "netapp:element_software": "unknown",
+            "netapp:active_iq_performance_analytics_services": "unknown"
+        },
+        "path": {
+            "file_path": "include/linux/mm_types.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-17182"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

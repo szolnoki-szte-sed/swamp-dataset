@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:ambari:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/ambari/commit/eaf8cc4cd2015456307ff3fcf98e49f2826fa270",
+        "version_end_excluding": {
+            "apache:ambari": "unknown"
+        },
+        "path": {
+            "file_path": "contrib/views/pig/src/main/java/org/apache/ambari/view/pig/PropertyValidator.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-0731"
+        ],
+        "CWE": [
+            "CWE-284"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:uri.js_project:uri.js:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/medialize/uri.js/commit/a8166fe02f3af6dc1b2b888dcbb807155aad9509",
+        "version_end_excluding": {
+            "uri.js_project:uri.js": "1.19.10"
+        },
+        "path": {
+            "file_path": "src/URI.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0868"
+        ],
+        "CWE": [
+            "CWE-601"
+        ]
+    }
+}

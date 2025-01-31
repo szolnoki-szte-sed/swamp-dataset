@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:http_server:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/httpd/commit/a6027e56924bb6227c1fdbf6f91e7e2438338be6",
+        "version_end_excluding": {
+            "apache:http_server": "unknown"
+        },
+        "path": {
+            "file_path": "docs/log-message-tags/next-number"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-3183"
+        ],
+        "CWE": [
+            "CWE-17"
+        ]
+    }
+}

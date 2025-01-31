@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:uimaj:3.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:uimaducc:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:uimafit:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:uimaj:3.0.0:alpha:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:uima-as:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:uimaj:3.0.0:alpha2:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:uimaj:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/uima-uimaj/commit/39909bf21fd694f4fb792d1de8adc72562ead25e",
+        "version_end_excluding": {
+            "apache:uimaj": "2.10.2"
+        },
+        "path": {
+            "file_path": "uimaj-core/src/test/java/org/apache/uima/util/XMLSerializerTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-15691"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

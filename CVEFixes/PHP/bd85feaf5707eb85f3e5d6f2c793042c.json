@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:verot_project:verot:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:verot_project:verot:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:getk2:k2:*:*:*:*:*:joomla\\!:*:*"
+        ],
+        "fix_commit": "https://github.com/getk2/k2/commit/d1344706c4b74c2ae7659b286b5a066117155124",
+        "version_end_excluding": {
+            "verot_project:verot": "2.0.4",
+            "getk2:k2": "unknown"
+        },
+        "path": {
+            "file_path": "media/k2/assets/vendors/verot/class.upload.php/src/class.upload.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-19576"
+        ],
+        "CWE": [
+            "CWE-434"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:erudika:scoold:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/erudika/scoold/commit/62a0e92e1486ddc17676a7ead2c07ff653d167ce",
+        "version_end_excluding": {
+            "erudika:scoold": "1.49.4"
+        },
+        "path": {
+            "file_path": "src/main/java/com/erudika/scoold/controllers/ProfileController.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-1543"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

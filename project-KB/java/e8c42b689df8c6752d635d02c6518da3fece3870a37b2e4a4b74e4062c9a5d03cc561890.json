@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:hibernate_validator:4.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:hibernate_validator:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:hibernate_validator:4.2.0:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:hibernate_validator:4.2.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:hibernate_validator:4.2.0:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:hibernate_validator:4.1.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/hibernate/hibernate-validator/commit/e8c42b689df8c6752d635d02c6518da3fece3870",
+        "version_end_excluding": {
+            "redhat:hibernate_validator": "4.3.2"
+        },
+        "path": {
+            "file_path": "engine/src/main/java/org/hibernate/validator/internal/util/ReflectionHelper.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-3558"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

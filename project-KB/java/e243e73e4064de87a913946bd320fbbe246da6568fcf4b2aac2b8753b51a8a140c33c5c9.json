@@ -1,0 +1,60 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:openrefine:openrefine:1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:3.0:beta:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.5:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:1.0:a1:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:1.0:b1:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.7:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:1.0:a3:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:1.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.6:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.5:rc3:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:3.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:1.0:a4:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.6:alpha1:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:1.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:1.0:a2:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:3.1:beta:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:1.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.6:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.6:alpha2:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.6:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.1:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.7:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:2.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:1.0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:1.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openrefine:openrefine:1.0.5:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/OpenRefine/OpenRefine/commit/e243e73e4064de87a913946bd320fbbe246da656",
+        "version_end_excluding": {
+            "openrefine:openrefine": "unknown"
+        },
+        "path": {
+            "file_path": "main/src/com/google/refine/importing/ImportingUtilities.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-19859"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

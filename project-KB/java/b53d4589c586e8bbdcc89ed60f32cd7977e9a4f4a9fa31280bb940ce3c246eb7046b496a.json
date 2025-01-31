@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:o:redhat:enterprise_linux:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:openshift_application_runtimes:-:*:*:*:text-only:*:*:*",
+            "cpe:2.3:a:netapp:oncommand_insight:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:-:*:*:*:text-only:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:undertow:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/undertow-io/undertow/commit/b53d4589c586e8bbdcc89ed60f32cd7977e9a4f4",
+        "version_end_excluding": {
+            "redhat:undertow": "2.1.1"
+        },
+        "path": {
+            "file_path": "core/src/main/java/io/undertow/server/protocol/ajp/AjpServerConnection.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-10705"
+        ],
+        "CWE": [
+            "CWE-770"
+        ]
+    }
+}

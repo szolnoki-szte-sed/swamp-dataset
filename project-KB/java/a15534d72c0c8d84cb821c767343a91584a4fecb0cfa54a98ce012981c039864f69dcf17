@@ -1,0 +1,22 @@
+diff --git a/jetty-server/src/main/java/org/eclipse/jetty/server/handler/DefaultHandler.java b/jetty-server/src/main/java/org/eclipse/jetty/server/handler/DefaultHandler.java
+index 6b8bc05d528a..aacd037cd76b 100644
+--- a/jetty-server/src/main/java/org/eclipse/jetty/server/handler/DefaultHandler.java
++++ b/jetty-server/src/main/java/org/eclipse/jetty/server/handler/DefaultHandler.java
+@@ -35,7 +35,7 @@
+ import org.eclipse.jetty.server.Server;
+ import org.eclipse.jetty.util.IO;
+ import org.eclipse.jetty.util.StringUtil;
+-import org.eclipse.jetty.util.UrlEncoded;
++import org.eclipse.jetty.util.URIUtil;
+ import org.eclipse.jetty.util.log.Log;
+ import org.eclipse.jetty.util.log.Logger;
+ import org.eclipse.jetty.util.resource.Resource;
+@@ -150,7 +150,7 @@ public void handle(String target, Request baseRequest, HttpServletRequest reques
+                 ContextHandler context = (ContextHandler)handlers[i];
+ 
+                 String contextPath = context.getContextPath();
+-                String href = UrlEncoded.encodeString(contextPath.substring(1), UTF_8);
++                String href = URIUtil.encodePath(contextPath);
+                 if (contextPath.length() > 1 && !contextPath.endsWith("/"))
+                 {
+                     href += '/';

@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:ambari:1.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:ambari:2.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:ambari:2.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:ambari:1.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:ambari:2.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:ambari:1.7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:ambari:1.5.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:ambari:1.6.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/ambari/commit/3ab123a109f6384f019db455f256520f4a8b85dd",
+        "version_end_excluding": {
+            "apache:ambari": "unknown"
+        },
+        "path": {
+            "file_path": "ambari-server/src/main/java/org/apache/ambari/server/configuration/Configuration.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-1775"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

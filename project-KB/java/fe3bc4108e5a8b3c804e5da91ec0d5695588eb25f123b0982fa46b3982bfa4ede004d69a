@@ -1,0 +1,112 @@
+diff --git a/config/src/main/java/org/apache/karaf/config/command/InstallCommand.java b/config/src/main/java/org/apache/karaf/config/command/InstallCommand.java
+index 9e56cb1e18c..ea552267654 100644
+--- a/config/src/main/java/org/apache/karaf/config/command/InstallCommand.java
++++ b/config/src/main/java/org/apache/karaf/config/command/InstallCommand.java
+@@ -45,6 +45,9 @@ public class InstallCommand implements Action {
+ 
+     @Override
+     public Object execute() throws Exception {
++        if (finalname.contains("..")) {
++            throw new IllegalArgumentException("For security reason, relative path is not allowed in config file final name");
++        }
+         File etcFolder = new File(System.getProperty("karaf.etc"));
+         File file = new File(etcFolder, finalname);
+         if (file.exists()) {
+diff --git a/config/src/main/java/org/apache/karaf/config/core/impl/ConfigMBeanImpl.java b/config/src/main/java/org/apache/karaf/config/core/impl/ConfigMBeanImpl.java
+index de142c82b3e..cdd2f3c1fb6 100644
+--- a/config/src/main/java/org/apache/karaf/config/core/impl/ConfigMBeanImpl.java
++++ b/config/src/main/java/org/apache/karaf/config/core/impl/ConfigMBeanImpl.java
+@@ -84,6 +84,9 @@ public void create(String pid) throws MBeanException {
+ 
+     @Override
+     public void install(String url, String finalname, boolean override) throws MBeanException {
++        if (finalname.contains("..")) {
++            throw new IllegalArgumentException("For security reason, relative path is not allowed in config file final name");
++        }
+         try {
+             File etcFolder = new File(System.getProperty("karaf.etc"));
+             File file = new File(etcFolder, finalname);
+diff --git a/config/src/test/java/org/apache/karaf/config/core/impl/ConfigMBeanImplTest.java b/config/src/test/java/org/apache/karaf/config/core/impl/ConfigMBeanImplTest.java
+new file mode 100644
+index 00000000000..4bdf08abf90
+--- /dev/null
++++ b/config/src/test/java/org/apache/karaf/config/core/impl/ConfigMBeanImplTest.java
+@@ -0,0 +1,55 @@
++/*
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *       http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.apache.karaf.config.core.impl;
++
++import org.junit.Assert;
++import org.junit.Test;
++
++import java.io.BufferedReader;
++import java.io.File;
++import java.io.FileReader;
++
++public class ConfigMBeanImplTest {
++
++    @Test(expected = IllegalArgumentException.class)
++    public void testInstallWithNonAuthorizePath() throws Exception {
++        System.setProperty("karaf.etc", ".");
++
++        ConfigMBeanImpl configMBean = new ConfigMBeanImpl();
++
++        configMBean.install("file:foo.cfg", "../test.cfg", false);
++    }
++
++    @Test
++    public void testInstall() throws Exception {
++        System.setProperty("karaf.etc", "./target/test-classes");
++
++        ConfigMBeanImpl configMBean = new ConfigMBeanImpl();
++
++        configMBean.install("file:./target/test-classes/test.cfg", "foo.cfg", true);
++
++        File output = new File("target/test-classes/foo.cfg");
++
++        Assert.assertTrue(output.exists());
++
++        StringBuilder builder = new StringBuilder();
++        BufferedReader reader = new BufferedReader(new FileReader(output));
++        String line = null;
++        while ((line = reader.readLine()) != null) {
++            builder.append(line).append("\n");
++        }
++        Assert.assertTrue(builder.toString().contains("foo=bar"));
++    }
++
++}
+diff --git a/config/src/test/resources/test.cfg b/config/src/test/resources/test.cfg
+new file mode 100644
+index 00000000000..80325b10963
+--- /dev/null
++++ b/config/src/test/resources/test.cfg
+@@ -0,0 +1,17 @@
++#
++#    Licensed to the Apache Software Foundation (ASF) under one or more
++#    contributor license agreements.  See the NOTICE file distributed with
++#    this work for additional information regarding copyright ownership.
++#    The ASF licenses this file to You under the Apache License, Version 2.0
++#    (the "License"); you may not use this file except in compliance with
++#    the License.  You may obtain a copy of the License at
++#
++#       http://www.apache.org/licenses/LICENSE-2.0
++#
++#    Unless required by applicable law or agreed to in writing, software
++#    distributed under the License is distributed on an "AS IS" BASIS,
++#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++#    See the License for the specific language governing permissions and
++#    limitations under the License.
++#
++foo=bar

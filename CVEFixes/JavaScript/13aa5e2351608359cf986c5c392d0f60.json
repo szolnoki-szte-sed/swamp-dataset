@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/WordPress/WordPress/commit/9092fd01e1f452f37c313d38b18f9fe6907541f9",
+        "version_end_excluding": {
+            "wordpress:wordpress": "unknown"
+        },
+        "path": {
+            "file_path": "wp-admin/js/tags-box.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-6818"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

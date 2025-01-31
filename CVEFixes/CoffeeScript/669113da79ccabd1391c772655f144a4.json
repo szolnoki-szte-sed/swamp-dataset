@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:linuxfoundation:backstage:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/backstage/backstage/commit/6968962c920508eae19a4c1c200fa2c8980a4006",
+        "version_end_excluding": {
+            "linuxfoundation:backstage": "0.15.9"
+        },
+        "path": {
+            "file_path": "plugins/scaffolder-backend/package.json"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41151"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

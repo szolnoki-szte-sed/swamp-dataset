@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:camel:2.16.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:camel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/camel/commit/4491c080cb6c8659fc05441e49307b7d4349aa56",
+        "version_end_excluding": {
+            "apache:camel": "unknown"
+        },
+        "path": {
+            "file_path": "components/camel-xstream/src/test/java/org/apache/camel/dataformat/xstream/XStreamDataFormatPermissionsTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5344"
+        ],
+        "CWE": [
+            "CWE-19"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:misp_project:misp:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/MISP/MISP/commit/3630a8b1e1cd99862867fe72ffa1ff51e4d9c09f",
+        "version_end_excluding": {
+            "misp_project:misp": "unknown"
+        },
+        "path": {
+            "file_path": "app/View/Organisations/ajax/landingpage.ctp"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-7215"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

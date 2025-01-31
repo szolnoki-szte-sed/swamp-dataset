@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:embedthis:goahead:3.3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:embedthis:goahead:3.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:embedthis:goahead:3.3.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:embedthis:goahead:3.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:embedthis:goahead:3.3.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:embedthis:goahead:3.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:embedthis:goahead:3.3.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:embedthis:goahead:3.3.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/embedthis/goahead/commit/eed4a7d177bf94a54c7b06ccce88507fbd76fb77",
+        "version_end_excluding": {
+            "embedthis:goahead": "unknown"
+        },
+        "path": {
+            "file_path": "test/security/dos.tst"
+        }
+    },
+    "programming_language": "scala",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-9707"
+        ],
+        "CWE": [
+            "CWE-17"
+        ]
+    }
+}

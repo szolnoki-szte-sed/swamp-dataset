@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fava_project:fava:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/beancount/fava/commit/ca9e3882c7b5fbf5273ba52340b9fea6a99f3711",
+        "version_end_excluding": {
+            "fava_project:fava": "1.22"
+        },
+        "path": {
+            "file_path": "src/fava/templates/errors.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2514"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:adminer:adminer:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/vrana/adminer/commit/ccd2374b0b12bd547417bf0dacdf153826c83351",
+        "version_end_excluding": {
+            "adminer:adminer": "4.7.9",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "adminer/drivers/clickhouse.inc.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21311"
+        ],
+        "CWE": [
+            "CWE-918"
+        ]
+    }
+}

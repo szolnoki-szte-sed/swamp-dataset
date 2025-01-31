@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:etherpad:ueberdb:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ether/ueberDB/commit/e8b58d03534ade8d83c2d1946a8350a23952531e",
+        "version_end_excluding": {
+            "etherpad:ueberdb": "1.4.8"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-22784"
+        ],
+        "CWE": [
+            "CWE-697"
+        ]
+    }
+}

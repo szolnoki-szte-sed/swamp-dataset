@@ -1,0 +1,90 @@
+diff --git a/jetty-util/src/main/java/org/eclipse/jetty/util/resource/Resource.java b/jetty-util/src/main/java/org/eclipse/jetty/util/resource/Resource.java
+index 13fe6253cf58..1ad9d3d625d2 100644
+--- a/jetty-util/src/main/java/org/eclipse/jetty/util/resource/Resource.java
++++ b/jetty-util/src/main/java/org/eclipse/jetty/util/resource/Resource.java
+@@ -30,7 +30,6 @@
+ import java.nio.channels.ReadableByteChannel;
+ import java.text.DateFormat;
+ import java.util.ArrayList;
+-import java.util.Arrays;
+ import java.util.Collection;
+ import java.util.Collections;
+ import java.util.Date;
+@@ -515,8 +514,8 @@ public String getListHTML(String base, boolean parent, String query) throws IOEx
+         if (base==null || !isDirectory())
+             return null;
+ 
+-        String[] ls = list();
+-        if (ls == null)
++        String[] rawListing = list();
++        if (rawListing == null)
+         {
+             return null;
+         }
+@@ -555,9 +554,9 @@ else if (paramO.equals("D"))
+ 
+         // Gather up entries
+         List<Resource> items = new ArrayList<>();
+-        for (int i=0 ; i< ls.length ; i++)
++        for (String l : rawListing)
+         {
+-            Resource item = addPath(ls[i]);
++            Resource item = addPath(l);
+             items.add(item);
+         }
+ 
+@@ -575,8 +574,6 @@ else if (sortColumn.equals("S"))
+             Collections.sort(items, ResourceCollators.byName(sortOrderAscending));
+         }
+ 
+-        Arrays.sort(ls);
+-
+         String decodedBase = URIUtil.decodePath(base);
+         String title = "Directory: " + deTag(decodedBase);
+ 
+diff --git a/jetty-util/src/main/java/org/eclipse/jetty/util/resource/ResourceCollators.java b/jetty-util/src/main/java/org/eclipse/jetty/util/resource/ResourceCollators.java
+index e73cd741adb2..e04065edb375 100644
+--- a/jetty-util/src/main/java/org/eclipse/jetty/util/resource/ResourceCollators.java
++++ b/jetty-util/src/main/java/org/eclipse/jetty/util/resource/ResourceCollators.java
+@@ -18,18 +18,22 @@
+ 
+ package org.eclipse.jetty.util.resource;
+ 
++import java.text.Collator;
+ import java.util.Collections;
+ import java.util.Comparator;
++import java.util.Locale;
+ 
+ public class ResourceCollators
+ {
+     private static Comparator<? super Resource> BY_NAME_ASCENDING =
+             new Comparator<Resource>()
+             {
++                private final Collator collator = Collator.getInstance(Locale.ENGLISH);
++
+                 @Override
+                 public int compare(Resource o1, Resource o2)
+                 {
+-                    return o1.getName().compareTo(o2.getName());
++                    return collator.compare(o1.getName(), o2.getName());
+                 }
+             };
+ 
+@@ -42,7 +46,7 @@ public int compare(Resource o1, Resource o2)
+                 @Override
+                 public int compare(Resource o1, Resource o2)
+                 {
+-                    return (int) (o1.lastModified() - o2.lastModified());
++                    return Long.compare(o1.lastModified(), o2.lastModified());
+                 }
+             };
+ 
+@@ -55,7 +59,7 @@ public int compare(Resource o1, Resource o2)
+                 @Override
+                 public int compare(Resource o1, Resource o2)
+                 {
+-                    return (int) (o1.length() - o2.length());
++                    return Long.compare(o1.length(), o2.length());
+                 }
+             };
+ 

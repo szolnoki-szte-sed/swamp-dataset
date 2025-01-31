@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/WordPress/WordPress/commit/288cd469396cfe7055972b457eb589cea51ce40e",
+        "version_end_excluding": {
+            "wordpress:wordpress": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "wp-includes/pluggable.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-6815"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

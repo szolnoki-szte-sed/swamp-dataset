@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:leszek_krupinski:l-forum:2.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phprojekt:phprojekt:2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:basilix:basilix_webmail:1.1.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "leszek_krupinski:l-forum": "unknown",
+            "phprojekt:phprojekt": "unknown",
+            "basilix:basilix_webmail": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2002-1460",
+            "CVE-2002-1759",
+            "CVE-2002-1710"
+        ],
+        "CWE": [
+            "CWE-616"
+        ]
+    }
+}

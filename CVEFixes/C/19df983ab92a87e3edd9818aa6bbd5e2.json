@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pcre:pcre2:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:36:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/PCRE2Project/pcre2/commit/50a51cb7e67268e6ad417eb07c9de9bfea5cc55a",
+        "version_end_excluding": {
+            "pcre:pcre2": "10.40",
+            "fedoraproject:fedora": "unknown",
+            "redhat:enterprise_linux": "unknown"
+        },
+        "path": {
+            "file_path": "src/pcre2_jit_compile.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-1586"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wso2:transport-http:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/wso2/transport-http/commit/4a4dc99c7b259646ee5e23b7aaa7c3a8bac959c1",
+        "version_end_excluding": {
+            "wso2:transport-http": "6.3.1"
+        },
+        "path": {
+            "file_path": "components/org.wso2.transport.http.netty/src/main/java/org/wso2/transport/http/netty/contractimpl/common/Util.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10797"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

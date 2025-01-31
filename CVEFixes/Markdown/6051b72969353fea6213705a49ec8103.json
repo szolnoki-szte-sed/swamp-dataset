@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sencha:connect:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/senchalabs/connect/commit/6d5dd30075d2bc4ee97afdbbe3d9d98d8d52d74b",
+        "version_end_excluding": {
+            "sencha:connect": "2.14.0"
+        },
+        "path": {
+            "file_path": "lib/index.js"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-3717"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

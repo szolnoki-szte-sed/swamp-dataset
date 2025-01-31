@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:5.18:rc1:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.18:rc2:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.18:rc3:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.18:rc4:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.18:rc5:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/d270453a0d9ec10bb8a802a142fb1b3601a83098",
+        "version_end_excluding": {
+            "linux:linux_kernel": "5.18"
+        },
+        "path": {
+            "file_path": "drivers/nfc/nfcmrvl/main.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-1734"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

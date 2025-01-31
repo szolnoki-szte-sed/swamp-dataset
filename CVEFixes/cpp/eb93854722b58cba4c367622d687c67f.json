@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ioquake3:ioquake3:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/JACoders/OpenJK/commit/8956a35e7b91c4a0dd1fa6db1d28c7f0efbab2d7",
+        "version_end_excluding": {
+            "ioquake3:ioquake3": "unknown"
+        },
+        "path": {
+            "file_path": "code/client/cl_main.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-6903"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

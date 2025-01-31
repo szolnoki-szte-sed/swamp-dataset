@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:shiro:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/shiro/commit/b90f91875e5e18c4805013c2fa0567b1700f5a96",
+        "version_end_excluding": {
+            "apache:shiro": "1.5.3"
+        },
+        "path": {
+            "file_path": "web/src/main/java/org/apache/shiro/web/util/WebUtils.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-11989"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

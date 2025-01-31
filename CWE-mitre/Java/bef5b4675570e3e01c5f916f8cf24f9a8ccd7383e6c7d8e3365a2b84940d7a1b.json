@@ -1,0 +1,87 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:h:skystream:emr5000:1.16:*:*:*:*:*:*:*",
+            "cpe:2.3:a:veritas:backup_exec:*:*:*:*:*:windows_server:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:golang:ssh:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apple:cups:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:skulltag:skulltag:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:videolabs:libmicrodns:0.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apple:cups:*:*:*:*:*:*:*:*",
+            "cpe:2.3:h:cisco:firewall_services_module:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ethereal:ethereal:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ethereal:ethereal:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:xchat:xchat:2.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:realnetworks:helix_universal_server:9.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:microsoft:windows_2000:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:nicolas_boullis:mah-jong:1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ethereal:ethereal:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:openbsd:openbsd:2.9:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown",
+            "skystream:emr5000": "unknown",
+            "veritas:backup_exec": "10.0",
+            "golang:ssh": "0.0.0-20201203163018-be400aefbc4c",
+            "apple:cups": "1.3.9",
+            "skulltag:skulltag": "unknown",
+            "videolabs:libmicrodns": "unknown",
+            "mit:kerberos_5": "1.6.3",
+            "cisco:firewall_services_module": "unknown",
+            "ethereal:ethereal": "0.9.3",
+            "xchat:xchat": "unknown",
+            "realnetworks:helix_universal_server": "unknown",
+            "microsoft:windows_2000": "unknown",
+            "nicolas_boullis:mah-jong": "unknown",
+            "openbsd:openbsd": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2005-3274",
+            "CVE-2002-1912",
+            "CVE-2005-0772",
+            "CVE-2009-4895",
+            "CVE-2020-29652",
+            "CVE-2009-2692",
+            "CVE-2009-3547",
+            "CVE-2009-3620",
+            "CVE-2009-2698",
+            "CVE-2009-0949",
+            "CVE-2008-3597",
+            "CVE-2020-6078",
+            "CVE-2008-0062",
+            "CVE-2008-5183",
+            "CVE-2004-0079",
+            "CVE-2004-0365",
+            "CVE-2003-1013",
+            "CVE-2003-1000",
+            "CVE-2004-0389",
+            "CVE-2004-0119",
+            "CVE-2004-0458",
+            "CVE-2002-0401",
+            "CVE-2001-1559"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:agtc:agtc_myshop:3.2b:*:*:*:*:*:*:*",
+            "cpe:2.3:a:teraway:filestream:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:matteoiammarrone:s-cms:1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:v3chat:v3_chat_profiles_dating_script:3.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:accscripts:acc_php_email:1.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "agtc:agtc_myshop": "unknown",
+            "teraway:filestream": "unknown",
+            "matteoiammarrone:s-cms": "unknown",
+            "v3chat:v3_chat_profiles_dating_script": "unknown",
+            "accscripts:acc_php_email": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2009-1549",
+            "CVE-2009-1619",
+            "CVE-2009-0864",
+            "CVE-2008-5784",
+            "CVE-2008-6291"
+        ],
+        "CWE": [
+            "CWE-807"
+        ]
+    }
+}

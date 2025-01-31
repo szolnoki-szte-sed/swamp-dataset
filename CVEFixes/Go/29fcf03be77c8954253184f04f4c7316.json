@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:weave:weave_gitops:0.8.1:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:weave:weave_gitops:0.8.1:rc3:*:*:*:*:*:*",
+            "cpe:2.3:a:weave:weave_gitops:0.8.1:rc4:*:*:*:*:*:*",
+            "cpe:2.3:a:weave:weave_gitops:0.8.1:rc5:*:*:*:*:*:*",
+            "cpe:2.3:a:weave:weave_gitops:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:weave:weave_gitops:0.8.1:rc1:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/weaveworks/weave-gitops/commit/567356f471353fb5c676c77f5abc2a04631d50ca",
+        "version_end_excluding": {
+            "weave:weave_gitops": "unknown"
+        },
+        "path": {
+            "file_path": "core/clustersmngr/factory.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-31098"
+        ],
+        "CWE": [
+            "CWE-532"
+        ]
+    }
+}

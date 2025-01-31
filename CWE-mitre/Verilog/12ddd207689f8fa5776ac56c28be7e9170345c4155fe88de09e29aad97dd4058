@@ -1,0 +1,6 @@
+-
+-				input clk, reset;
+-				input [31:0] data_in;
+-				input data_in_security_level;
+-				...
+-			      

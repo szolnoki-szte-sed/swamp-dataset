@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:igniterealtime:openfire:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/igniterealtime/Openfire/commit/e6a9db94f684056ced0d5e5a4291c89488fbeecc",
+        "version_end_excluding": {
+            "igniterealtime:openfire": "unknown"
+        },
+        "path": {
+            "file_path": "xmppserver/src/main/java/org/jivesoftware/util/GraphicsUtils.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-18394"
+        ],
+        "CWE": [
+            "CWE-918"
+        ]
+    }
+}

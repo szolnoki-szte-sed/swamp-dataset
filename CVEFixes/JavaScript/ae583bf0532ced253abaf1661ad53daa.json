@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:urijs_project:urijs:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/medialize/URI.js/commit/a1ad8bcbc39a4d136d7e252e76e957f3ece70839",
+        "version_end_excluding": {
+            "urijs_project:urijs": "1.19.6"
+        },
+        "path": {
+            "file_path": "src/URI.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-27516"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

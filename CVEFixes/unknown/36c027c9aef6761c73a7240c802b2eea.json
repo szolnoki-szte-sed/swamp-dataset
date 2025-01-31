@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:chatsecure:chatsecure:3.2.1:*:*:*:*:iphone_os:*:*",
+            "cpe:2.3:a:chatsecure:chatsecure:3.2.3:*:*:*:*:iphone_os:*:*",
+            "cpe:2.3:a:chatsecure:chatsecure:4.0.0:*:*:*:*:iphone_os:*:*",
+            "cpe:2.3:a:chatsecure:chatsecure:3.2.2:*:*:*:*:iphone_os:*:*",
+            "cpe:2.3:a:chatsecure:chatsecure:3.2.0:*:*:*:*:iphone_os:*:*",
+            "cpe:2.3:a:zom:zom:*:*:*:*:*:iphone_os:*:*"
+        ],
+        "fix_commit": "https://github.com/zom/Zom-iOS/commit/880051eaa8ba32d1b257c87a7d8798a93561bfd3",
+        "version_end_excluding": {
+            "chatsecure:chatsecure": "unknown",
+            "zom:zom": "unknown"
+        },
+        "path": {
+            "file_path": "ChatSecure"
+        }
+    },
+    "programming_language": "unknown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Mozilla Public License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-5590"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

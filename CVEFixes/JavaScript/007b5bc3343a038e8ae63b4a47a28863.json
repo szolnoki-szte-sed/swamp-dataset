@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:systeminformation:systeminformation:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/sebhildebrandt/systeminformation/commit/0be6fcd575c05687d1076d5cd6d75af2ebae5a46",
+        "version_end_excluding": {
+            "systeminformation:systeminformation": "5.6.4"
+        },
+        "path": {
+            "file_path": "lib/docker.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21388"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

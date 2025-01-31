@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:discourse:rails_multisite:*:*:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/discourse/rails_multisite/commit/c6785cdb5c9277dd2c5ac8d55180dd1ece440ed0",
+        "version_end_excluding": {
+            "discourse:rails_multisite": "4.0.0"
+        },
+        "path": {
+            "file_path": "lib/rails_multisite/version.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41263"
+        ],
+        "CWE": [
+            "CWE-327"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:libxsmm_project:libxsmm:1.10:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/hfp/libxsmm/commit/151481489192e6d1997f8bde52c5c425ea41741d",
+        "version_end_excluding": {
+            "libxsmm_project:libxsmm": "unknown"
+        },
+        "path": {
+            "file_path": "version.txt"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20541"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:showdoc:showdoc:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/star7th/showdoc/commit/c7f10033eba5f2b5a537f9af9ba2379138e67138",
+        "version_end_excluding": {
+            "showdoc:showdoc": "unknown"
+        },
+        "path": {
+            "file_path": "web/static/css/app.4f1cf04e7e22cc9f0a077251717b6092.css"
+        }
+    },
+    "programming_language": "css",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-4000"
+        ],
+        "CWE": [
+            "CWE-601"
+        ]
+    }
+}

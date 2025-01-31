@@ -1,0 +1,1 @@
+-//users/user[login/text()='john' or ''='' and password/text() = '' or ''='']/home_dir/text()

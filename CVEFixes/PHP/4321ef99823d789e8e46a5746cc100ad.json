@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:owncloud:owncloud:4.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:owncloud:owncloud:3.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:owncloud:owncloud:3.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:owncloud:owncloud:3.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:owncloud:owncloud:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:owncloud:owncloud:3.0.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/owncloud/core/commit/cc653a8a408adfb4d0cd532145668aacd85ad96c",
+        "version_end_excluding": {
+            "owncloud:owncloud": "unknown"
+        },
+        "path": {
+            "file_path": "apps/user_openid/settings.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-4396"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mit:kerberos:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/krb5/krb5/commit/5e6d1796106df8ba6bc1973ee0917c170d929086",
+        "version_end_excluding": {
+            "mit:kerberos": "5-1.17",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "src/lib/krb5/krb/s4u_creds.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20217"
+        ],
+        "CWE": [
+            "CWE-617"
+        ]
+    }
+}

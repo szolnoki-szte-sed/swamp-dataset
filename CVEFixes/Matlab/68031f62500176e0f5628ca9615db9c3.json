@@ -1,0 +1,48 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:vim:vim:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:35:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-005:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2022-001:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2022-002:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2020-001:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-001:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-002:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-003:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-004:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-006:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-007:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-008:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2022-003:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2022-004:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/vim/vim/commit/9c23f9bb5fe435b28245ba8ac65aa0ca6b902c04",
+        "version_end_excluding": {
+            "vim:vim": "8.2.3902",
+            "fedoraproject:fedora": "unknown",
+            "apple:macos": "unknown"
+        },
+        "path": {
+            "file_path": "src/proto/userfunc.pro"
+        }
+    },
+    "programming_language": "matlab",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Vim License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-4173"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

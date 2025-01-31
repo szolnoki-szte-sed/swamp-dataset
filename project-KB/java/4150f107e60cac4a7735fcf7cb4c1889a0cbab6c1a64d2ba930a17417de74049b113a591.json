@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:o:fedoraproject:fedora:23:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_advanced_message_queuing_protocol:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:24:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:22:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-amqp/commit/4150f107e60cac4a7735fcf7cb4c1889a0cbab6c",
+        "version_end_excluding": {
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "spring-amqp/src/test/java/org/springframework/amqp/support/converter/SimpleMessageConverterTests.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-2173"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

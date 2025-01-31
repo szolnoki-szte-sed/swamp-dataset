@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:aircrack-ng:aircrack-ng:*:beta2:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/aircrack-ng/aircrack-ng/commit/88702a3ce4c28a973bf69023cd0312f412f6193e",
+        "version_end_excluding": {
+            "aircrack-ng:aircrack-ng": "unknown"
+        },
+        "path": {
+            "file_path": "src/osdep/network.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-8324"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

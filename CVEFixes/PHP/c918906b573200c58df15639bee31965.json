@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:showdoc:showdoc:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/star7th/showdoc/commit/56e450c3adf75c707500d7231a78c9fc894c7f13",
+        "version_end_excluding": {
+            "showdoc:showdoc": "unknown"
+        },
+        "path": {
+            "file_path": "server/Application/Api/Model/AttachmentModel.class.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0956"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

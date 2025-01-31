@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jenkins:ssh_agent:*:*:*:*:*:jenkins:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "jenkins:ssh_agent": "1.15"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-1999036"
+        ],
+        "CWE": [
+            "CWE-538"
+        ]
+    }
+}

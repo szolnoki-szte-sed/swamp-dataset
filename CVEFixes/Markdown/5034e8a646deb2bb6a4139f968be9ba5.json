@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:htmldoc_project:htmldoc:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/michaelrsweet/htmldoc/commit/ba61a3ece382389ae4482c7027af8b32e8ab4cc8",
+        "version_end_excluding": {
+            "htmldoc_project:htmldoc": "unknown"
+        },
+        "path": {
+            "file_path": "CHANGES.md"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23206"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

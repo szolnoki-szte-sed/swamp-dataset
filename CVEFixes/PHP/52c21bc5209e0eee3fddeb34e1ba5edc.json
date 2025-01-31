@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:webidsupport:webid:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/renlok/WeBid/commit/256a5f9d3eafbc477dcf77c7682446cc4b449c7f",
+        "version_end_excluding": {
+            "webidsupport:webid": "unknown"
+        },
+        "path": {
+            "file_path": "active_auctions.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-1000867"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

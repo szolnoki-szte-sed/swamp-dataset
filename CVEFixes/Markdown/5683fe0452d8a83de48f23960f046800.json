@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:robocode_project:robocode:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:robocode_project:robocode:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/robo-code/robocode/commit/836c84635e982e74f2f2771b2c8640c3a34221bd",
+        "version_end_excluding": {
+            "robocode_project:robocode": "unknown"
+        },
+        "path": {
+            "file_path": "versions.md"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10648"
+        ],
+        "CWE": [
+            "CWE-862"
+        ]
+    }
+}

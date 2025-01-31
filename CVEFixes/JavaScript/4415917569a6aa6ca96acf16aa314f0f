@@ -1,0 +1,25 @@
+diff --git a/ChangeLog b/ChangeLog
+index 941a059ada2..94b41b5d264 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -4,6 +4,7 @@ phpMyAdmin - ChangeLog
+ 4.2.7.1 (2014-08-17)
+ - bug #4501 [security] XSS in table browse page
+ - bug #4502 [security] Self-XSS in enum value editor
++- bug #4503 [security] Self-XSSes in monitor
+ - bug #4505 [security] XSS in view operations page
+ 
+ 4.2.7.0 (2014-07-31)
+diff --git a/js/server_status_monitor.js b/js/server_status_monitor.js
+index c3a0c538937..f5465ed6f70 100644
+--- a/js/server_status_monitor.js
++++ b/js/server_status_monitor.js
+@@ -908,7 +908,7 @@ AJAX.registerOnload('server_status_monitor.js', function () {
+             label: $('#variableInput').val().replace(/_/g, " ")
+         };
+         newChart.series.push(newSeries);
+-        $('#seriesPreview').append('- ' + newSeries.label + str + '<br/>');
++        $('#seriesPreview').append('- ' + escapeHtml(newSeries.label + str) + '<br/>');
+         newChart.nodes.push(serie);
+         $('#variableInput').val('');
+         $('input[name="differentialValue"]').prop('checked', true);

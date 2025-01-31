@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bdew:bdlib:*:*:*:*:*:minecraft:*:*"
+        ],
+        "fix_commit": "https://github.com/bdew-minecraft/bdlib/commit/447210530ceec72fb3374efecb0930ed359d2297",
+        "version_end_excluding": {
+            "bdew:bdlib": "1.16.1.7"
+        },
+        "path": {
+            "file_path": "build.properties"
+        }
+    },
+    "programming_language": "batchfile",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-33806"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

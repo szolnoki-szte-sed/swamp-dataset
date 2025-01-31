@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:jboss_middleware_text-only_advisories:1.0:*:*:*:*:middleware:*:*",
+            "cpe:2.3:a:apache:aurora:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:fuse:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:shiro:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/shiro/commit/64d9f8341e1aa7ef1a29744e16ea7c578ca5deee",
+        "version_end_excluding": {
+            "apache:aurora": "0.18.1"
+        },
+        "path": {
+            "file_path": "web/src/test/java/org/apache/shiro/web/mgt/CookieRememberMeManagerTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-4437"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

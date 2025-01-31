@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:koala-framework:koala_framework:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/koala-framework/koala-framework/commit/59f81ea6bd8ef96c04a706a3ca453cd656284faa",
+        "version_end_excluding": {
+            "koala-framework:koala_framework": "2011-11-21"
+        },
+        "path": {
+            "file_path": "Kwf/Exception/Abstract.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 2-Clause \"Simplified\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-5018"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

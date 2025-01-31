@@ -1,0 +1,42 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jappix_project:jappix:1.1.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.1.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.1.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jappix_project:jappix:1.0.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jappix/jappix/commit/ea6de7c65b80880bdf85df47c1a8a5d3d68491af",
+        "version_end_excluding": {
+            "jappix_project:jappix": "unknown"
+        },
+        "path": {
+            "file_path": "VERSION"
+        }
+    },
+    "programming_language": "batchfile",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-5602"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

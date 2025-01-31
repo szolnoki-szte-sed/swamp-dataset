@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:turbovnc:turbovnc:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/TurboVNC/turbovnc/commit/cea98166008301e614e0d36776bf9435a536136e",
+        "version_end_excluding": {
+            "turbovnc:turbovnc": "2.2.3"
+        },
+        "path": {
+            "file_path": "unix/Xvnc/programs/Xserver/hw/vnc/auth.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-15683"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

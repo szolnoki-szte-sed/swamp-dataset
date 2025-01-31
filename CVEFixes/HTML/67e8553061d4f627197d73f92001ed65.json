@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:openapi-python-client_project:openapi-python-client:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/triaxtec/openapi-python-client/commit/f7a56aae32cba823a77a84a1f10400799b19c19a",
+        "version_end_excluding": {
+            "openapi-python-client_project:openapi-python-client": "0.5.3"
+        },
+        "path": {
+            "file_path": "openapi_python_client/templates/async_endpoint_module.pyi"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15142"
+        ],
+        "CWE": [
+            "CWE-94"
+        ]
+    }
+}

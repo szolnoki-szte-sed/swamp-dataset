@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:parity:browser:1.6.10:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/paritytech/parity/commit/53609f703e2f1af76441344ac3b72811c726a215",
+        "version_end_excluding": {
+            "parity:browser": "unknown"
+        },
+        "path": {
+            "file_path": "js/src/views/Web/web.js"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-18016"
+        ],
+        "CWE": [
+            "CWE-346"
+        ]
+    }
+}

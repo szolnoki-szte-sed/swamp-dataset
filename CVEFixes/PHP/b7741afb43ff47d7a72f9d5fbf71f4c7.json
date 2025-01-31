@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:fedoraproject:fedora:22:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:23:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:groupware:5.2.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:groupware:5.2.11:*:*:*:webmail:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/horde/horde/commit/11d74fa5a22fe626c5e5a010b703cd46a136f253",
+        "version_end_excluding": {
+            "fedoraproject:fedora": "unknown",
+            "horde:groupware": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "framework/Core/lib/Horde/Core/Ui/VarRenderer/Html.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-8807"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

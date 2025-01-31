@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:tigervnc:tigervnc:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/CendioOssman/tigervnc/commit/d61a767d6842b530ffb532ddd5a3d233119aad40",
+        "version_end_excluding": {
+            "tigervnc:tigervnc": "1.10.1"
+        },
+        "path": {
+            "file_path": "common/rdr/ZlibInStream.h"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-15691"
+        ],
+        "CWE": [
+            "CWE-672"
+        ]
+    }
+}

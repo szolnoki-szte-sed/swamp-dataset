@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:dotnetfoundation:piranha_cms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/PiranhaCMS/piranha.core/commit/543bc53c7dbd28c793ec960b57fb0e716c6b18d7",
+        "version_end_excluding": {
+            "dotnetfoundation:piranha_cms": "unknown"
+        },
+        "path": {
+            "file_path": "core/Piranha.Manager/assets/dist/js/piranha.pagelist.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-25977"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

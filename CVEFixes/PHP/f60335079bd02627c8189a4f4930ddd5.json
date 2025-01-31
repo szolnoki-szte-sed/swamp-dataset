@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:getgrav:grav:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/getgrav/grav/commit/6f2fa9311afb9ecd34030dec2aff7b39e9e7e735",
+        "version_end_excluding": {
+            "getgrav:grav": "1.7.28"
+        },
+        "path": {
+            "file_path": "system/src/Grav/Common/Security.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0268"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

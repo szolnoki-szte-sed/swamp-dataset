@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:yeswiki:yeswiki:4.1.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/yeswiki/yeswiki/commit/c9785f9a92744c3475f9676a0d8f95de24750094",
+        "version_end_excluding": {
+            "yeswiki:yeswiki": "unknown"
+        },
+        "path": {
+            "file_path": "actions/newtextsearch.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-43091"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

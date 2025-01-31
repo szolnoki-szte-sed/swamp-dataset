@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:nifi:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/nifi/commit/d7c29f46378379fb596e4d1e59d1a3c41063db5b",
+        "version_end_excluding": {
+            "apache:nifi": "unknown"
+        },
+        "path": {
+            "file_path": "nifi-commons/nifi-security-utils/src/main/java/org/apache/nifi/security/util/crypto/Argon2SecureHasher.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1942"
+        ],
+        "CWE": [
+            "CWE-532"
+        ]
+    }
+}

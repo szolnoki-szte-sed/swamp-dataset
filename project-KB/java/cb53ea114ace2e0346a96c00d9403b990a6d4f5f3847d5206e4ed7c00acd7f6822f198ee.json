@@ -1,0 +1,22 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/swagger-api/swagger-codegen/commit/cb53ea114ace2e0346a96c00d9403b990a6d4f5f",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/JavascriptClosureAngularClientCodegen.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-5641"
+        ],
+        "CWE": []
+    }
+}

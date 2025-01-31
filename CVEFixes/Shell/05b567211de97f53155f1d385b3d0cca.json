@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:qutebrowser:qutebrowser:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:qutebrowser:qutebrowser:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/qutebrowser/qutebrowser/commit/8f46ba3f6dc7b18375f7aa63c48a1fe461190430",
+        "version_end_excluding": {
+            "qutebrowser:qutebrowser": "unknown"
+        },
+        "path": {
+            "file_path": "misc/nsis/install.nsh"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41146"
+        ],
+        "CWE": [
+            "CWE-641"
+        ]
+    }
+}

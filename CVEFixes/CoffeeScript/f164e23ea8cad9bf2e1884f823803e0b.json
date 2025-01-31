@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:polrproject:polr:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cydrobolt/polr/commit/b1981709908caf6069b4a29dad3b6739c322c675",
+        "version_end_excluding": {
+            "polrproject:polr": "2.3.0"
+        },
+        "path": {
+            "file_path": "composer.json"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21276"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

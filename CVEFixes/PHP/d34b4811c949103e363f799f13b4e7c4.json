@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:adodb_project:adodb:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/adodb/adodb/commit/952de6c4273d9b1e91c2b838044f8c2111150c29",
+        "version_end_excluding": {
+            "adodb_project:adodb": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "drivers/adodb-postgres64.inc.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3850"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

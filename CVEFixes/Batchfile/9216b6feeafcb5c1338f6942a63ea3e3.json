@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pytorchlightning:pytorch_lightning:*:*:*:*:*:python:*:*"
+        ],
+        "fix_commit": "https://github.com/pytorchlightning/pytorch-lightning/commit/62f1e82e032eb16565e676d39e0db0cac7e34ace",
+        "version_end_excluding": {
+            "pytorchlightning:pytorch_lightning": "1.6.0"
+        },
+        "path": {
+            "file_path": "requirements.txt"
+        }
+    },
+    "programming_language": "batchfile",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-4118"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

@@ -1,0 +1,100 @@
+diff --git a/nifi-commons/nifi-security-utils/src/main/java/org/apache/nifi/security/util/crypto/Argon2SecureHasher.java b/nifi-commons/nifi-security-utils/src/main/java/org/apache/nifi/security/util/crypto/Argon2SecureHasher.java
+index c152759f9930..0697f3d3f597 100644
+--- a/nifi-commons/nifi-security-utils/src/main/java/org/apache/nifi/security/util/crypto/Argon2SecureHasher.java
++++ b/nifi-commons/nifi-security-utils/src/main/java/org/apache/nifi/security/util/crypto/Argon2SecureHasher.java
+@@ -42,7 +42,6 @@
+ public class Argon2SecureHasher implements SecureHasher {
+     private static final Logger logger = LoggerFactory.getLogger(Argon2SecureHasher.class);
+ 
+-    private static final int DEFAULT_SALT_LENGTH = 16;
+     private static final int DEFAULT_HASH_LENGTH = 32;
+     private static final int DEFAULT_PARALLELISM = 1;
+     private static final int DEFAULT_MEMORY = 1 << 12;
+@@ -74,7 +73,7 @@ public Argon2SecureHasher() {
+      * Instantiates an Argon2 secure hasher using the provided cost parameters. A unique
+      * {@link #DEFAULT_SALT_LENGTH} byte salt will be generated on every hash request.
+      *
+-     * @param hashLength  the output length in bytes ({@code 4 to 2^32 -1})
++     * @param hashLength  the output length in bytes ({@code 4 to 2^32 - 1})
+      * @param memory      the integer number of KB used ({@code 8p to 2^32 - 1})
+      * @param parallelism degree of parallelism ({@code 1 to 2^24 - 1})
+      * @param iterations  number of iterations ({@code 1 to 2^32 - 1})
+@@ -87,7 +86,7 @@ public Argon2SecureHasher(int hashLength, int memory, int parallelism, int itera
+      * Instantiates an Argon2 secure hasher using the provided cost parameters. A unique
+      * salt of the specified length will be generated on every hash request.
+      *
+-     * @param hashLength  the output length in bytes ({@code 4 to 2^32 -1})
++     * @param hashLength  the output length in bytes ({@code 4 to 2^32 - 1})
+      * @param memory      the integer number of KB used ({@code 8p to 2^32 - 1})
+      * @param parallelism degree of parallelism ({@code 1 to 2^24 - 1})
+      * @param iterations  number of iterations ({@code 1 to 2^32 - 1})
+@@ -137,7 +136,7 @@ byte[] getSalt() {
+     }
+ 
+     /**
+-     * Returns a String representation of {@code CHF(input)} in hex-encoded format.
++     * Returns a String representation of {@code Argon2(input)} in hex-encoded format.
+      *
+      * @param input the input
+      * @return the hex-encoded hash
+@@ -153,7 +152,7 @@ public String hashHex(String input) {
+     }
+ 
+     /**
+-     * Returns a String representation of {@code CHF(input)} in Base 64-encoded format.
++     * Returns a String representation of {@code Argon2(input)} in Base 64-encoded format.
+      *
+      * @param input the input
+      * @return the Base 64-encoded hash
+@@ -169,7 +168,7 @@ public String hashBase64(String input) {
+     }
+ 
+     /**
+-     * Returns a byte[] representation of {@code CHF(input)}.
++     * Returns a byte[] representation of {@code Argon2(input)}.
+      *
+      * @param input the input
+      * @return the hash
+diff --git a/nifi-commons/nifi-security-utils/src/test/resources/logback-test.xml b/nifi-commons/nifi-security-utils/src/test/resources/logback-test.xml
+index d8e72bd175f9..b5036d49a0ba 100644
+--- a/nifi-commons/nifi-security-utils/src/test/resources/logback-test.xml
++++ b/nifi-commons/nifi-security-utils/src/test/resources/logback-test.xml
+@@ -32,7 +32,7 @@
+     <logger name="org.apache.nifi" level="INFO"/>
+     <logger name="org.apache.nifi.security.util.crypto" level="DEBUG"/>
+ 
+-    <root level="DEBUG">
++    <root level="INFO">
+         <appender-ref ref="CONSOLE"/>
+     </root>
+ 
+diff --git a/nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-framework-core/src/main/java/org/apache/nifi/fingerprint/FingerprintFactory.java b/nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-framework-core/src/main/java/org/apache/nifi/fingerprint/FingerprintFactory.java
+index 15e1635b7ce0..dea010ad3d6d 100644
+--- a/nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-framework-core/src/main/java/org/apache/nifi/fingerprint/FingerprintFactory.java
++++ b/nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-framework-core/src/main/java/org/apache/nifi/fingerprint/FingerprintFactory.java
+@@ -342,7 +342,7 @@ private void addParameter(final StringBuilder builder, final Element parameterEl
+ 
+         // append value
+         if (isEncrypted(value)) {
+-            // propValue is non null, no need to use getValue
++            // Get a secure, deterministic, loggable representation of this value
+             builder.append(getLoggableRepresentationOfSensitiveValue(value));
+         } else {
+             builder.append(getValue(value, NO_VALUE));
+@@ -557,15 +557,12 @@ private StringBuilder addPropertyFingerprint(final StringBuilder builder, final
+      * @return a deterministic string value which represents this input but is safe to print in a log
+      */
+     private String getLoggableRepresentationOfSensitiveValue(String encryptedPropertyValue) {
+-        // TODO: Implement Scrypt or Argon2 secure hash of decrypted value
+-
+         // TODO: Use DI/IoC to inject this implementation in the constructor of the FingerprintFactory
+         // There is little initialization cost, so it doesn't make sense to cache this as a field
+         SecureHasher secureHasher = new Argon2SecureHasher();
+ 
+         // TODO: Extend {@link StringEncryptor} with secure hashing capability and inject?
+-        String hexEncodedHash = secureHasher.hashHex(decrypt(encryptedPropertyValue));
+-        return hexEncodedHash;
++        return secureHasher.hashHex(decrypt(encryptedPropertyValue));
+     }
+ 
+     private StringBuilder addPortFingerprint(final StringBuilder builder, final Element portElem) throws FingerprintException {

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:joinmastodon:mastodon:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mastodon/mastodon/commit/4d6d4b43c6186a13e67b92eaf70fe1b70ea24a09",
+        "version_end_excluding": {
+            "joinmastodon:mastodon": "3.5.0"
+        },
+        "path": {
+            "file_path": "public/embed.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0432"
+        ],
+        "CWE": [
+            "CWE-1321"
+        ]
+    }
+}

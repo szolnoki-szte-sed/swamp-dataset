@@ -1,0 +1,1471 @@
+diff --git a/samples/oauth2/tonr/pom.xml b/samples/oauth2/tonr/pom.xml
+index d20cf2bc0..ac428bd19 100644
+--- a/samples/oauth2/tonr/pom.xml
++++ b/samples/oauth2/tonr/pom.xml
+@@ -129,12 +129,6 @@
+ 			<groupId>${project.groupId}</groupId>
+ 			<artifactId>spring-security-oauth2</artifactId>
+ 			<version>${project.version}</version>
+-			<exclusions>
+-				<exclusion>
+-					<groupId>org.codehaus.jackson</groupId>
+-					<artifactId>jackson-mapper-asl</artifactId>
+-				</exclusion>
+-			</exclusions>
+ 		</dependency>
+ 
+ 		<dependency>
+diff --git a/spring-security-oauth2/pom.xml b/spring-security-oauth2/pom.xml
+index 8792eb992..ddd738d7f 100644
+--- a/spring-security-oauth2/pom.xml
++++ b/spring-security-oauth2/pom.xml
+@@ -13,7 +13,6 @@
+ 	<description>Module for providing OAuth2 support to Spring Security</description>
+ 
+ 	<properties>
+-		<jackson1.version>1.9.13</jackson1.version>
+ 		<jackson2.version>2.9.10</jackson2.version>
+ 		<servlet-api.version>3.0.1</servlet-api.version>
+ 		<spring.security.jwt.version>1.0.11.RELEASE</spring.security.jwt.version>
+@@ -150,12 +149,6 @@
+ 			<artifactId>commons-codec</artifactId>
+ 		</dependency>
+ 
+-		<dependency>
+-			<groupId>org.codehaus.jackson</groupId>
+-			<artifactId>jackson-mapper-asl</artifactId>
+-			<version>${jackson1.version}</version>
+-		</dependency>
+-
+ 		<dependency>
+         	<groupId>org.springframework.data</groupId>
+ 			<artifactId>spring-data-redis</artifactId>
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/DefaultOAuth2RefreshToken.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/DefaultOAuth2RefreshToken.java
+index c8df418d1..d3c1b4792 100644
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/DefaultOAuth2RefreshToken.java
++++ b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/DefaultOAuth2RefreshToken.java
+@@ -2,8 +2,8 @@
+ 
+ import java.io.Serializable;
+ 
+-import org.codehaus.jackson.annotate.JsonCreator;
+-import org.codehaus.jackson.annotate.JsonValue;
++import com.fasterxml.jackson.annotation.JsonCreator;
++import com.fasterxml.jackson.annotation.JsonValue;
+ 
+ /**
+  * An OAuth 2 refresh token.
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessToken.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessToken.java
+index 4176cf8b4..a756c154b 100644
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessToken.java
++++ b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessToken.java
+@@ -20,11 +20,8 @@
+  * @author Dave Syer
+  *
+  */
+-@org.codehaus.jackson.map.annotate.JsonSerialize(using = OAuth2AccessTokenJackson1Serializer.class)
+-@org.codehaus.jackson.map.annotate.JsonDeserialize(using = OAuth2AccessTokenJackson1Deserializer.class)
+ @com.fasterxml.jackson.databind.annotation.JsonSerialize(using = OAuth2AccessTokenJackson2Serializer.class)
+ @com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = OAuth2AccessTokenJackson2Deserializer.class)
+-
+ public interface OAuth2AccessToken {
+ 
+ 	public static String BEARER_TYPE = "Bearer";
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson1Deserializer.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson1Deserializer.java
+deleted file mode 100644
+index f5288bde7..000000000
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson1Deserializer.java
++++ /dev/null
+@@ -1,104 +0,0 @@
+-/*
+- * Copyright 2006-2010 the original author or authors.
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+- * the License. You may obtain a copy of the License at
+- *
+- * https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+- * specific language governing permissions and limitations under the License.
+- */
+-package org.springframework.security.oauth2.common;
+-
+-import java.io.IOException;
+-import java.util.Date;
+-import java.util.LinkedHashMap;
+-import java.util.Map;
+-import java.util.Set;
+-
+-import org.codehaus.jackson.JsonParseException;
+-import org.codehaus.jackson.JsonParser;
+-import org.codehaus.jackson.JsonProcessingException;
+-import org.codehaus.jackson.JsonToken;
+-import org.codehaus.jackson.map.DeserializationContext;
+-import org.codehaus.jackson.map.JsonDeserializer;
+-import org.codehaus.jackson.map.deser.StdDeserializer;
+-import org.springframework.security.oauth2.common.util.OAuth2Utils;
+-
+-/**
+- * <p>
+- * Provides the ability to deserialize JSON response into an {@link OAuth2AccessToken} with jackson by implementing
+- * {@link JsonDeserializer}.
+- * </p>
+- * <p>
+- * The expected format of the access token is defined by <a
+- * href="https://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-5.1">Successful Response</a>.
+- * </p>
+- *
+- * @author Rob Winch
+- * @see OAuth2AccessTokenJackson1Serializer
+- */
+-@SuppressWarnings("deprecation")
+-public final class OAuth2AccessTokenJackson1Deserializer extends StdDeserializer<OAuth2AccessToken> {
+-
+-	public OAuth2AccessTokenJackson1Deserializer() {
+-		super(OAuth2AccessToken.class);
+-	}
+-
+-	@Override
+-	public OAuth2AccessToken deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException,
+-			JsonProcessingException {
+-
+-		String tokenValue = null;
+-		String tokenType = null;
+-		String refreshToken = null;
+-		Long expiresIn = null;
+-		Set<String> scope = null;
+-		Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
+-
+-		// TODO What should occur if a parameter exists twice
+-		while (jp.nextToken() != JsonToken.END_OBJECT) {
+-			String name = jp.getCurrentName();
+-			jp.nextToken();
+-			if (OAuth2AccessToken.ACCESS_TOKEN.equals(name)) {
+-				tokenValue = jp.getText();
+-			}
+-			else if (OAuth2AccessToken.TOKEN_TYPE.equals(name)) {
+-				tokenType = jp.getText();
+-			}
+-			else if (OAuth2AccessToken.REFRESH_TOKEN.equals(name)) {
+-				refreshToken = jp.getText();
+-			}
+-			else if (OAuth2AccessToken.EXPIRES_IN.equals(name)) {
+-				try {
+-					expiresIn = jp.getLongValue();
+-				} catch (JsonParseException e) {
+-					expiresIn = Long.valueOf(jp.getText());
+-				}
+-			}
+-			else if (OAuth2AccessToken.SCOPE.equals(name)) {
+-				String text = jp.getText();
+-				scope = OAuth2Utils.parseParameterList(text);
+-			} else {
+-				additionalInformation.put(name, jp.readValueAs(Object.class));
+-			}
+-		}
+-
+-		// TODO What should occur if a required parameter (tokenValue or tokenType) is missing?
+-
+-		DefaultOAuth2AccessToken accessToken = new DefaultOAuth2AccessToken(tokenValue);
+-		accessToken.setTokenType(tokenType);
+-		if (expiresIn != null) {
+-			accessToken.setExpiration(new Date(System.currentTimeMillis() + (expiresIn * 1000)));
+-		}
+-		if (refreshToken != null) {
+-			accessToken.setRefreshToken(new DefaultOAuth2RefreshToken(refreshToken));
+-		}
+-		accessToken.setScope(scope);
+-		accessToken.setAdditionalInformation(additionalInformation);
+-
+-		return accessToken;
+-	}
+-}
+\ No newline at end of file
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson1Serializer.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson1Serializer.java
+deleted file mode 100644
+index 1fd3fe777..000000000
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson1Serializer.java
++++ /dev/null
+@@ -1,72 +0,0 @@
+-/*
+- * Copyright 2006-2010 the original author or authors.
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+- * the License. You may obtain a copy of the License at
+- *
+- * https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+- * specific language governing permissions and limitations under the License.
+- */
+-package org.springframework.security.oauth2.common;
+-
+-import java.io.IOException;
+-import java.util.Date;
+-import java.util.Map;
+-import java.util.Set;
+-
+-import org.codehaus.jackson.JsonGenerationException;
+-import org.codehaus.jackson.JsonGenerator;
+-import org.codehaus.jackson.map.JsonSerializer;
+-import org.codehaus.jackson.map.SerializerProvider;
+-import org.codehaus.jackson.map.ser.SerializerBase;
+-import org.springframework.util.Assert;
+-
+-/**
+- * Provides the ability to serialize an {@link OAuth2AccessToken} with jackson by implementing {@link JsonSerializer}.
+- * Refer to {@link OAuth2AccessTokenJackson1Deserializer} to learn more about the JSON format that is used.
+- * 
+- * @author Rob Winch
+- * @see OAuth2AccessTokenJackson1Deserializer
+- */
+-@SuppressWarnings("deprecation")
+-public final class OAuth2AccessTokenJackson1Serializer extends SerializerBase<OAuth2AccessToken> {
+-
+-	public OAuth2AccessTokenJackson1Serializer() {
+-		super(OAuth2AccessToken.class);
+-	}
+-
+-	@Override
+-	public void serialize(OAuth2AccessToken token, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+-			JsonGenerationException {
+-		jgen.writeStartObject();
+-		jgen.writeStringField(OAuth2AccessToken.ACCESS_TOKEN, token.getValue());
+-		jgen.writeStringField(OAuth2AccessToken.TOKEN_TYPE, token.getTokenType());
+-		OAuth2RefreshToken refreshToken = token.getRefreshToken();
+-		if (refreshToken != null) {
+-			jgen.writeStringField(OAuth2AccessToken.REFRESH_TOKEN, refreshToken.getValue());
+-		}
+-		Date expiration = token.getExpiration();
+-		if (expiration != null) {
+-			long now = System.currentTimeMillis();
+-			jgen.writeNumberField(OAuth2AccessToken.EXPIRES_IN, (expiration.getTime() - now) / 1000);
+-		}
+-		Set<String> scope = token.getScope();
+-		if (scope != null && !scope.isEmpty()) {
+-			StringBuffer scopes = new StringBuffer();
+-			for (String s : scope) {
+-				Assert.hasLength(s, "Scopes cannot be null or empty. Got " + scope + "");
+-				scopes.append(s);
+-				scopes.append(" ");
+-			}
+-			jgen.writeStringField(OAuth2AccessToken.SCOPE, scopes.substring(0, scopes.length() - 1));
+-		}
+-		Map<String, Object> additionalInformation = token.getAdditionalInformation();
+-		for (String key : additionalInformation.keySet()) {
+-			jgen.writeObjectField(key, additionalInformation.get(key));
+-		}
+-		jgen.writeEndObject();
+-	}
+-}
+\ No newline at end of file
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson2Serializer.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson2Serializer.java
+index 60632949b..e3a140955 100644
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson2Serializer.java
++++ b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson2Serializer.java
+@@ -26,7 +26,8 @@
+ 
+ /**
+  * Provides the ability to serialize an {@link org.springframework.security.oauth2.common.OAuth2AccessToken} with jackson2 by implementing {@link com.fasterxml.jackson.databind.JsonDeserializer}.
+- * Refer to {@link org.springframework.security.oauth2.common.OAuth2AccessTokenJackson1Deserializer} to learn more about the JSON format that is used.
++ *
++ * The expected format of the access token is defined by <a href="https://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-5.1">Successful Response</a>.
+  *
+  * @author Rob Winch
+  * @author Brian Clozel
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2RefreshToken.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2RefreshToken.java
+index 2caf151e7..a666b6494 100644
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2RefreshToken.java
++++ b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/OAuth2RefreshToken.java
+@@ -12,7 +12,7 @@
+  */
+ package org.springframework.security.oauth2.common;
+ 
+-import org.codehaus.jackson.annotate.JsonValue;
++import com.fasterxml.jackson.annotation.JsonValue;
+ 
+ /**
+  * @author Dave Syer
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/exceptions/OAuth2Exception.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/exceptions/OAuth2Exception.java
+index 17819a1e3..c3e8f9229 100644
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/exceptions/OAuth2Exception.java
++++ b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/exceptions/OAuth2Exception.java
+@@ -12,8 +12,6 @@
+  * @author Dave Syer
+  */
+ @SuppressWarnings("serial")
+-@org.codehaus.jackson.map.annotate.JsonSerialize(using = OAuth2ExceptionJackson1Serializer.class)
+-@org.codehaus.jackson.map.annotate.JsonDeserialize(using = OAuth2ExceptionJackson1Deserializer.class)
+ @com.fasterxml.jackson.databind.annotation.JsonSerialize(using = OAuth2ExceptionJackson2Serializer.class)
+ @com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = OAuth2ExceptionJackson2Deserializer.class)
+ public class OAuth2Exception extends RuntimeException {
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/exceptions/OAuth2ExceptionJackson1Deserializer.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/exceptions/OAuth2ExceptionJackson1Deserializer.java
+deleted file mode 100644
+index a32e4e521..000000000
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/exceptions/OAuth2ExceptionJackson1Deserializer.java
++++ /dev/null
+@@ -1,130 +0,0 @@
+-/*
+- * Copyright 2006-2011 the original author or authors.
+- * 
+- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+- * the License. You may obtain a copy of the License at
+- * 
+- * https://www.apache.org/licenses/LICENSE-2.0
+- * 
+- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+- * specific language governing permissions and limitations under the License.
+- */
+-package org.springframework.security.oauth2.common.exceptions;
+-
+-import java.io.IOException;
+-import java.util.HashMap;
+-import java.util.List;
+-import java.util.Map;
+-import java.util.Set;
+-
+-import org.codehaus.jackson.JsonParser;
+-import org.codehaus.jackson.JsonProcessingException;
+-import org.codehaus.jackson.JsonToken;
+-import org.codehaus.jackson.map.DeserializationContext;
+-import org.codehaus.jackson.map.JsonDeserializer;
+-import org.springframework.security.oauth2.common.util.OAuth2Utils;
+-
+-/**
+- * @author Dave Syer
+- * 
+- */
+-public class OAuth2ExceptionJackson1Deserializer extends JsonDeserializer<OAuth2Exception> {
+-
+-	@Override
+-	public OAuth2Exception deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException,
+-			JsonProcessingException {
+-
+-		JsonToken t = jp.getCurrentToken();
+-		if (t == JsonToken.START_OBJECT) {
+-			t = jp.nextToken();
+-		}
+-		Map<String, Object> errorParams = new HashMap<String, Object>();
+-		for (; t == JsonToken.FIELD_NAME; t = jp.nextToken()) {
+-			// Must point to field name
+-			String fieldName = jp.getCurrentName();
+-			// And then the value...
+-			t = jp.nextToken();
+-			// Note: must handle null explicitly here; value deserializers won't
+-			Object value;
+-			if (t == JsonToken.VALUE_NULL) {
+-				value = null;
+-			}
+-			// Some servers might send back complex content
+-			else if (t == JsonToken.START_ARRAY) {
+-				value = jp.readValueAs(List.class);
+-			}
+-			else if (t == JsonToken.START_OBJECT) {
+-				value = jp.readValueAs(Map.class);
+-			}
+-			else {
+-				value = jp.getText();
+-			}
+-			errorParams.put(fieldName, value);
+-		}
+-
+-		Object errorCode = errorParams.get("error");
+-		String errorMessage = errorParams.containsKey("error_description") ? errorParams.get("error_description")
+-				.toString() : null;
+-		if (errorMessage == null) {
+-			errorMessage = errorCode == null ? "OAuth Error" : errorCode.toString();
+-		}
+-
+-		OAuth2Exception ex;
+-		if ("invalid_client".equals(errorCode)) {
+-			ex = new InvalidClientException(errorMessage);
+-		}
+-		else if ("unauthorized_client".equals(errorCode)) {
+-			ex = new UnauthorizedClientException(errorMessage);
+-		}
+-		else if ("invalid_grant".equals(errorCode)) {
+-			if (errorMessage.toLowerCase().contains("redirect") && errorMessage.toLowerCase().contains("match")) {
+-				ex = new RedirectMismatchException(errorMessage);
+-			}
+-			else {
+-				ex = new InvalidGrantException(errorMessage);
+-			}
+-		}
+-		else if ("invalid_scope".equals(errorCode)) {
+-			ex = new InvalidScopeException(errorMessage);
+-		}
+-		else if ("invalid_token".equals(errorCode)) {
+-			ex = new InvalidTokenException(errorMessage);
+-		}
+-		else if ("invalid_request".equals(errorCode)) {
+-			ex = new InvalidRequestException(errorMessage);
+-		}
+-		else if ("redirect_uri_mismatch".equals(errorCode)) {
+-			ex = new RedirectMismatchException(errorMessage);
+-		}
+-		else if ("unsupported_grant_type".equals(errorCode)) {
+-			ex = new UnsupportedGrantTypeException(errorMessage);
+-		}
+-		else if ("unsupported_response_type".equals(errorCode)) {
+-			ex = new UnsupportedResponseTypeException(errorMessage);
+-		}
+-		else if ("access_denied".equals(errorCode)) {
+-			ex = new UserDeniedAuthorizationException(errorMessage);
+-		}
+-		else if ("insufficient_scope".equals(errorCode)) {
+-			ex = new InsufficientScopeException(errorMessage, OAuth2Utils.parseParameterList((String) errorParams
+-					.get("scope")));
+-		}
+-		else {
+-			ex = new OAuth2Exception(errorMessage);
+-		}
+-
+-		Set<Map.Entry<String, Object>> entries = errorParams.entrySet();
+-		for (Map.Entry<String, Object> entry : entries) {
+-			String key = entry.getKey();
+-			if (!"error".equals(key) && !"error_description".equals(key)) {
+-				Object value = entry.getValue();
+-				ex.addAdditionalInformation(key, value == null ? null : value.toString());
+-			}
+-		}
+-
+-		return ex;
+-
+-	}
+-
+-}
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/exceptions/OAuth2ExceptionJackson1Serializer.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/exceptions/OAuth2ExceptionJackson1Serializer.java
+deleted file mode 100644
+index 6ebeb13a6..000000000
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/exceptions/OAuth2ExceptionJackson1Serializer.java
++++ /dev/null
+@@ -1,45 +0,0 @@
+-/*
+- * Copyright 2006-2011 the original author or authors.
+- * 
+- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+- * the License. You may obtain a copy of the License at
+- * 
+- * https://www.apache.org/licenses/LICENSE-2.0
+- * 
+- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+- * specific language governing permissions and limitations under the License.
+- */
+-package org.springframework.security.oauth2.common.exceptions;
+-
+-import java.io.IOException;
+-import java.util.Map.Entry;
+-
+-import org.codehaus.jackson.JsonGenerator;
+-import org.codehaus.jackson.JsonProcessingException;
+-import org.codehaus.jackson.map.JsonSerializer;
+-import org.codehaus.jackson.map.SerializerProvider;
+-
+-/**
+- * @author Dave Syer
+- *
+- */
+-public class OAuth2ExceptionJackson1Serializer extends JsonSerializer<OAuth2Exception> {
+-
+-	@Override
+-	public void serialize(OAuth2Exception value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+-			JsonProcessingException {
+-        jgen.writeStartObject();
+-		jgen.writeStringField("error", value.getOAuth2ErrorCode());
+-		jgen.writeStringField("error_description", value.getMessage());
+-		if (value.getAdditionalInformation()!=null) {
+-			for (Entry<String, String> entry : value.getAdditionalInformation().entrySet()) {
+-				String key = entry.getKey();
+-				String add = entry.getValue();
+-				jgen.writeStringField(key, add);				
+-			}
+-		}
+-        jgen.writeEndObject();
+-	}
+-
+-}
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JacksonJsonParser.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JacksonJsonParser.java
+deleted file mode 100644
+index a79502e52..000000000
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JacksonJsonParser.java
++++ /dev/null
+@@ -1,49 +0,0 @@
+-/*
+- * Copyright 2013-2014 the original author or authors.
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+- * the License. You may obtain a copy of the License at
+- *
+- * https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+- * specific language governing permissions and limitations under the License.
+- */
+-
+-package org.springframework.security.oauth2.common.util;
+-
+-import java.util.Map;
+-
+-import org.codehaus.jackson.map.ObjectMapper;
+-
+-/**
+- * @author Dave Syer
+- *
+- */
+-public class JacksonJsonParser implements JsonParser {
+-	
+-	private ObjectMapper mapper = new ObjectMapper();
+-
+-	@SuppressWarnings("unchecked")
+-	@Override
+-	public Map<String, Object> parseMap(String json) {
+-		try {
+-			return mapper.readValue(json, Map.class);
+-		}
+-		catch (Exception e) {
+-			throw new IllegalArgumentException("Cannot parse json", e);
+-		}
+-	}
+-
+-	@Override
+-	public String formatMap(Map<String, ?> map) {
+-		try {
+-			return mapper.writeValueAsString(map);
+-		}
+-		catch (Exception e) {
+-			throw new IllegalArgumentException("Cannot format json", e);
+-		}
+-	}
+-
+-}
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JsonDateDeserializer.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JsonDateDeserializer.java
+index c17125c7d..07e516aca 100644
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JsonDateDeserializer.java
++++ b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JsonDateDeserializer.java
+@@ -1,28 +1,31 @@
+ /*
+- * Cloud Foundry 2012.02.03 Beta
+- * Copyright (c) [2009-2012] VMware, Inc. All Rights Reserved.
++ * Copyright 2002-2019 the original author or authors.
+  *
+- * This product is licensed to you under the Apache License, Version 2.0 (the "License").
+- * You may not use this product except in compliance with the License.
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
+  *
+- * This product includes a number of subcomponents with
+- * separate copyright notices and license terms. Your use of these
+- * subcomponents is subject to the terms and conditions of the
+- * subcomponent's license, as noted in the LICENSE file.
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
+  */
+-package org.springframework.security.oauth2.common.util;
+ 
+-import org.codehaus.jackson.JsonParseException;
+-import org.codehaus.jackson.JsonParser;
+-import org.codehaus.jackson.JsonProcessingException;
+-import org.codehaus.jackson.map.DeserializationContext;
+-import org.codehaus.jackson.map.JsonDeserializer;
++package org.springframework.security.oauth2.common.util;
+ 
+ import java.io.IOException;
+ import java.text.ParseException;
+ import java.text.SimpleDateFormat;
+ import java.util.Date;
+ 
++import com.fasterxml.jackson.core.JsonParseException;
++import com.fasterxml.jackson.core.JsonProcessingException;
++import com.fasterxml.jackson.databind.DeserializationContext;
++import com.fasterxml.jackson.databind.JsonDeserializer;
++
+ /**
+  * JSON deserializer for Jackson to handle regular date instances as timestamps in ISO format.
+  * 
+@@ -34,7 +37,7 @@ public class JsonDateDeserializer extends JsonDeserializer<Date> {
+     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+  
+ 	@Override
+-	public Date deserialize(JsonParser parser, DeserializationContext context) throws IOException, JsonProcessingException {
++	public Date deserialize(com.fasterxml.jackson.core.JsonParser parser, DeserializationContext context) throws IOException, JsonProcessingException {
+ 		try {
+ 			synchronized (dateFormat) {				
+ 				return dateFormat.parse(parser.getText());
+@@ -44,5 +47,4 @@ public Date deserialize(JsonParser parser, DeserializationContext context) throw
+ 			throw new JsonParseException("Could not parse date", parser.getCurrentLocation(), e);
+ 		}
+ 	}
+- 
+ }
+\ No newline at end of file
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JsonDateSerializer.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JsonDateSerializer.java
+index d4df5c793..a8c88b7e1 100644
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JsonDateSerializer.java
++++ b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JsonDateSerializer.java
+@@ -1,26 +1,30 @@
+ /*
+- * Cloud Foundry 2012.02.03 Beta
+- * Copyright (c) [2009-2012] VMware, Inc. All Rights Reserved.
++ * Copyright 2002-2019 the original author or authors.
+  *
+- * This product is licensed to you under the Apache License, Version 2.0 (the "License").
+- * You may not use this product except in compliance with the License.
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
+  *
+- * This product includes a number of subcomponents with
+- * separate copyright notices and license terms. Your use of these
+- * subcomponents is subject to the terms and conditions of the
+- * subcomponent's license, as noted in the LICENSE file.
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
+  */
+-package org.springframework.security.oauth2.common.util;
+ 
+-import org.codehaus.jackson.JsonGenerator;
+-import org.codehaus.jackson.JsonProcessingException;
+-import org.codehaus.jackson.map.JsonSerializer;
+-import org.codehaus.jackson.map.SerializerProvider;
++package org.springframework.security.oauth2.common.util;
+ 
+ import java.io.IOException;
+ import java.text.SimpleDateFormat;
+ import java.util.Date;
+ 
++import com.fasterxml.jackson.core.JsonGenerator;
++import com.fasterxml.jackson.core.JsonProcessingException;
++import com.fasterxml.jackson.databind.JsonSerializer;
++import com.fasterxml.jackson.databind.SerializerProvider;
++
+ /**
+  * JSON serializer for Jackson to handle regular date instances as timestamps in ISO format.
+  * 
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JsonParserFactory.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JsonParserFactory.java
+index 2ec9aa2da..ad3e574c5 100644
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JsonParserFactory.java
++++ b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/common/util/JsonParserFactory.java
+@@ -25,10 +25,7 @@ public static JsonParser create() {
+ 		if (ClassUtils.isPresent("com.fasterxml.jackson.databind.ObjectMapper", null)) {
+ 			return new Jackson2JsonParser();
+ 		}
+-		if (ClassUtils.isPresent("org.codehaus.jackson.map.ObjectMapper", null)) {
+-			return new JacksonJsonParser();
+-		}
+-		throw new IllegalStateException("No Jackson parser found. Please add Jackson to your classpath.");
++		throw new IllegalStateException("No Jackson 2 parser found. Please add Jackson 2 to your classpath.");
+ 	}
+ 
+ }
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/approval/Approval.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/approval/Approval.java
+index 27bbf8262..22a368284 100644
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/approval/Approval.java
++++ b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/approval/Approval.java
+@@ -19,9 +19,10 @@
+ import java.util.Calendar;
+ import java.util.Date;
+ 
+-import org.codehaus.jackson.annotate.JsonIgnore;
+-import org.codehaus.jackson.map.annotate.JsonDeserialize;
+-import org.codehaus.jackson.map.annotate.JsonSerialize;
++import com.fasterxml.jackson.annotation.JsonIgnore;
++import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
++import com.fasterxml.jackson.databind.annotation.JsonSerialize;
++
+ import org.springframework.security.oauth2.common.util.JsonDateDeserializer;
+ import org.springframework.security.oauth2.common.util.JsonDateSerializer;
+ 
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/BaseClientDetails.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/BaseClientDetails.java
+index 0dccf8230..97995b88b 100644
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/BaseClientDetails.java
++++ b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/BaseClientDetails.java
+@@ -24,59 +24,43 @@
+  * @author Dave Syer
+  */
+ @SuppressWarnings("serial")
+-@org.codehaus.jackson.map.annotate.JsonSerialize(include = org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_DEFAULT)
+-@org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
+ @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT)
+ @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
+ public class BaseClientDetails implements ClientDetails {
+ 
+-	@org.codehaus.jackson.annotate.JsonProperty("client_id")
+ 	@com.fasterxml.jackson.annotation.JsonProperty("client_id")
+ 	private String clientId;
+ 
+-	@org.codehaus.jackson.annotate.JsonProperty("client_secret")
+ 	@com.fasterxml.jackson.annotation.JsonProperty("client_secret")
+ 	private String clientSecret;
+ 
+-	@org.codehaus.jackson.map.annotate.JsonDeserialize(using = JacksonArrayOrStringDeserializer.class)
+ 	@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = Jackson2ArrayOrStringDeserializer.class)
+ 	private Set<String> scope = Collections.emptySet();
+ 
+-	@org.codehaus.jackson.annotate.JsonProperty("resource_ids")
+-	@org.codehaus.jackson.map.annotate.JsonDeserialize(using = JacksonArrayOrStringDeserializer.class)
+ 	@com.fasterxml.jackson.annotation.JsonProperty("resource_ids")
+ 	@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = Jackson2ArrayOrStringDeserializer.class)
+ 	private Set<String> resourceIds = Collections.emptySet();
+ 
+-	@org.codehaus.jackson.annotate.JsonProperty("authorized_grant_types")
+-	@org.codehaus.jackson.map.annotate.JsonDeserialize(using = JacksonArrayOrStringDeserializer.class)
+ 	@com.fasterxml.jackson.annotation.JsonProperty("authorized_grant_types")
+ 	@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = Jackson2ArrayOrStringDeserializer.class)
+ 	private Set<String> authorizedGrantTypes = Collections.emptySet();
+ 
+-	@org.codehaus.jackson.annotate.JsonProperty("redirect_uri")
+-	@org.codehaus.jackson.map.annotate.JsonDeserialize(using = JacksonArrayOrStringDeserializer.class)
+ 	@com.fasterxml.jackson.annotation.JsonProperty("redirect_uri")
+ 	@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = Jackson2ArrayOrStringDeserializer.class)
+ 	private Set<String> registeredRedirectUris;
+ 
+-	@org.codehaus.jackson.annotate.JsonProperty("autoapprove")
+-	@org.codehaus.jackson.map.annotate.JsonDeserialize(using = JacksonArrayOrStringDeserializer.class)
+ 	@com.fasterxml.jackson.annotation.JsonProperty("autoapprove")
+ 	@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = Jackson2ArrayOrStringDeserializer.class)
+ 	private Set<String> autoApproveScopes;
+ 
+ 	private List<GrantedAuthority> authorities = Collections.emptyList();
+ 
+-	@org.codehaus.jackson.annotate.JsonProperty("access_token_validity")
+ 	@com.fasterxml.jackson.annotation.JsonProperty("access_token_validity")
+ 	private Integer accessTokenValiditySeconds;
+ 
+-	@org.codehaus.jackson.annotate.JsonProperty("refresh_token_validity")
+ 	@com.fasterxml.jackson.annotation.JsonProperty("refresh_token_validity")
+ 	private Integer refreshTokenValiditySeconds;
+ 
+-	@org.codehaus.jackson.annotate.JsonIgnore
+ 	@com.fasterxml.jackson.annotation.JsonIgnore
+ 	private Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
+ 
+@@ -142,7 +126,6 @@ public BaseClientDetails(String clientId, String resourceIds,
+ 		}
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonIgnore
+ 	@com.fasterxml.jackson.annotation.JsonIgnore
+ 	public String getClientId() {
+ 		return clientId;
+@@ -169,19 +152,16 @@ public boolean isAutoApprove(String scope) {
+ 		return false;
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonIgnore
+ 	@com.fasterxml.jackson.annotation.JsonIgnore
+ 	public Set<String> getAutoApproveScopes() {
+ 		return autoApproveScopes;
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonIgnore
+ 	@com.fasterxml.jackson.annotation.JsonIgnore
+ 	public boolean isSecretRequired() {
+ 		return this.clientSecret != null;
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonIgnore
+ 	@com.fasterxml.jackson.annotation.JsonIgnore
+ 	public String getClientSecret() {
+ 		return clientSecret;
+@@ -191,7 +171,6 @@ public void setClientSecret(String clientSecret) {
+ 		this.clientSecret = clientSecret;
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonIgnore
+ 	@com.fasterxml.jackson.annotation.JsonIgnore
+ 	public boolean isScoped() {
+ 		return this.scope != null && !this.scope.isEmpty();
+@@ -206,7 +185,6 @@ public void setScope(Collection<String> scope) {
+ 				: new LinkedHashSet<String>(scope);
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonIgnore
+ 	@com.fasterxml.jackson.annotation.JsonIgnore
+ 	public Set<String> getResourceIds() {
+ 		return resourceIds;
+@@ -217,7 +195,6 @@ public void setResourceIds(Collection<String> resourceIds) {
+ 				.<String> emptySet() : new LinkedHashSet<String>(resourceIds);
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonIgnore
+ 	@com.fasterxml.jackson.annotation.JsonIgnore
+ 	public Set<String> getAuthorizedGrantTypes() {
+ 		return authorizedGrantTypes;
+@@ -228,7 +205,6 @@ public void setAuthorizedGrantTypes(Collection<String> authorizedGrantTypes) {
+ 				authorizedGrantTypes);
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonIgnore
+ 	@com.fasterxml.jackson.annotation.JsonIgnore
+ 	public Set<String> getRegisteredRedirectUri() {
+ 		return registeredRedirectUris;
+@@ -239,15 +215,12 @@ public void setRegisteredRedirectUri(Set<String> registeredRedirectUris) {
+ 				: new LinkedHashSet<String>(registeredRedirectUris);
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonProperty("authorities")
+ 	@com.fasterxml.jackson.annotation.JsonProperty("authorities")
+ 	private List<String> getAuthoritiesAsStrings() {
+ 		return new ArrayList<String>(
+ 				AuthorityUtils.authorityListToSet(authorities));
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonProperty("authorities")
+-	@org.codehaus.jackson.map.annotate.JsonDeserialize(using = JacksonArrayOrStringDeserializer.class)
+ 	@com.fasterxml.jackson.annotation.JsonProperty("authorities")
+ 	@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = Jackson2ArrayOrStringDeserializer.class)
+ 	private void setAuthoritiesAsStrings(Set<String> values) {
+@@ -255,20 +228,17 @@ private void setAuthoritiesAsStrings(Set<String> values) {
+ 				.toArray(new String[values.size()])));
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonIgnore
+ 	@com.fasterxml.jackson.annotation.JsonIgnore
+ 	public Collection<GrantedAuthority> getAuthorities() {
+ 		return authorities;
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonIgnore
+ 	@com.fasterxml.jackson.annotation.JsonIgnore
+ 	public void setAuthorities(
+ 			Collection<? extends GrantedAuthority> authorities) {
+ 		this.authorities = new ArrayList<GrantedAuthority>(authorities);
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonIgnore
+ 	@com.fasterxml.jackson.annotation.JsonIgnore
+ 	public Integer getAccessTokenValiditySeconds() {
+ 		return accessTokenValiditySeconds;
+@@ -278,7 +248,6 @@ public void setAccessTokenValiditySeconds(Integer accessTokenValiditySeconds) {
+ 		this.accessTokenValiditySeconds = accessTokenValiditySeconds;
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonIgnore
+ 	@com.fasterxml.jackson.annotation.JsonIgnore
+ 	public Integer getRefreshTokenValiditySeconds() {
+ 		return refreshTokenValiditySeconds;
+@@ -294,13 +263,11 @@ public void setAdditionalInformation(Map<String, ?> additionalInformation) {
+ 				additionalInformation);
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonAnyGetter
+ 	@com.fasterxml.jackson.annotation.JsonAnyGetter
+ 	public Map<String, Object> getAdditionalInformation() {
+ 		return Collections.unmodifiableMap(this.additionalInformation);
+ 	}
+ 
+-	@org.codehaus.jackson.annotate.JsonAnySetter
+ 	@com.fasterxml.jackson.annotation.JsonAnySetter
+ 	public void addAdditionalInformation(String key, Object value) {
+ 		this.additionalInformation.put(key, value);
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/JacksonArrayOrStringDeserializer.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/JacksonArrayOrStringDeserializer.java
+deleted file mode 100644
+index 18677562a..000000000
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/JacksonArrayOrStringDeserializer.java
++++ /dev/null
+@@ -1,41 +0,0 @@
+-package org.springframework.security.oauth2.provider.client;
+-
+-import java.io.IOException;
+-import java.util.Arrays;
+-import java.util.LinkedHashSet;
+-import java.util.Set;
+-
+-import org.codehaus.jackson.JsonParser;
+-import org.codehaus.jackson.JsonProcessingException;
+-import org.codehaus.jackson.JsonToken;
+-import org.codehaus.jackson.map.DeserializationContext;
+-import org.codehaus.jackson.map.deser.std.StdDeserializer;
+-import org.codehaus.jackson.map.type.SimpleType;
+-import org.codehaus.jackson.type.JavaType;
+-import org.codehaus.jackson.type.TypeReference;
+-import org.springframework.util.StringUtils;
+-
+-public class JacksonArrayOrStringDeserializer extends StdDeserializer<Set<String>> {
+-
+-	public JacksonArrayOrStringDeserializer() {
+-		super(Set.class);
+-	}
+-
+-	@Override
+-	public JavaType getValueType() {
+-		return SimpleType.construct(String.class);
+-	}
+-
+-	@Override
+-	public Set<String> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException,
+-			JsonProcessingException {
+-		JsonToken token = jp.getCurrentToken();
+-		if (token.isScalarValue()) {
+-			String list = jp.getText();
+-			list = list.replaceAll("\\s+", ",");
+-			return new LinkedHashSet<String>(Arrays.asList(StringUtils.commaDelimitedListToStringArray(list)));
+-		}
+-		return jp.readValueAs(new TypeReference<Set<String>>() {
+-		});
+-	}
+-}
+\ No newline at end of file
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/JdbcClientDetailsService.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/JdbcClientDetailsService.java
+index d4a4ef465..49244d5d1 100644
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/JdbcClientDetailsService.java
++++ b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/JdbcClientDetailsService.java
+@@ -23,11 +23,12 @@
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
+-
+ import javax.sql.DataSource;
+ 
++import com.fasterxml.jackson.databind.ObjectMapper;
+ import org.apache.commons.logging.Log;
+ import org.apache.commons.logging.LogFactory;
++
+ import org.springframework.dao.DuplicateKeyException;
+ import org.springframework.dao.EmptyResultDataAccessException;
+ import org.springframework.jdbc.core.JdbcTemplate;
+@@ -287,29 +288,12 @@ interface JsonMapper {
+ 	}
+ 
+ 	private static JsonMapper createJsonMapper() {
+-		if (ClassUtils.isPresent("org.codehaus.jackson.map.ObjectMapper", null)) {
+-			return new JacksonMapper();
+-		}
+-		else if (ClassUtils.isPresent("com.fasterxml.jackson.databind.ObjectMapper", null)) {
++		if (ClassUtils.isPresent("com.fasterxml.jackson.databind.ObjectMapper", null)) {
+ 			return new Jackson2Mapper();
+ 		}
+ 		return new NotSupportedJsonMapper();
+ 	}
+ 
+-	private static class JacksonMapper implements JsonMapper {
+-		private org.codehaus.jackson.map.ObjectMapper mapper = new org.codehaus.jackson.map.ObjectMapper();
+-
+-		@Override
+-		public String write(Object input) throws Exception {
+-			return mapper.writeValueAsString(input);
+-		}
+-
+-		@Override
+-		public <T> T read(String input, Class<T> type) throws Exception {
+-			return mapper.readValue(input, type);
+-		}
+-	}
+-
+ 	private static class Jackson2Mapper implements JsonMapper {
+ 		private com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+ 
+@@ -328,13 +312,13 @@ private static class NotSupportedJsonMapper implements JsonMapper {
+ 		@Override
+ 		public String write(Object input) throws Exception {
+ 			throw new UnsupportedOperationException(
+-					"Neither Jackson 1 nor 2 is available so JSON conversion cannot be done");
++					"Jackson 2 is not available so JSON conversion cannot be done");
+ 		}
+ 
+ 		@Override
+ 		public <T> T read(String input, Class<T> type) throws Exception {
+ 			throw new UnsupportedOperationException(
+-					"Neither Jackson 1 nor 2 is available so JSON conversion cannot be done");
++					"Jackson 2 is not available so JSON conversion cannot be done");
+ 		}
+ 	}
+ 
+diff --git a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/OAuth2AccessTokenSupportTests.java b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/OAuth2AccessTokenSupportTests.java
+index 3a0430d3d..c5a0c66af 100644
+--- a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/OAuth2AccessTokenSupportTests.java
++++ b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/OAuth2AccessTokenSupportTests.java
+@@ -16,8 +16,6 @@
+ 
+ package org.springframework.security.oauth2.client.token;
+ 
+-import static org.junit.Assert.assertEquals;
+-
+ import java.io.ByteArrayInputStream;
+ import java.io.ByteArrayOutputStream;
+ import java.io.IOException;
+@@ -26,9 +24,10 @@
+ import java.net.URI;
+ import java.util.Arrays;
+ 
+-import org.codehaus.jackson.map.ObjectMapper;
++import com.fasterxml.jackson.databind.ObjectMapper;
+ import org.junit.Before;
+ import org.junit.Test;
++
+ import org.springframework.http.HttpHeaders;
+ import org.springframework.http.HttpMethod;
+ import org.springframework.http.HttpStatus;
+@@ -45,6 +44,8 @@
+ import org.springframework.util.LinkedMultiValueMap;
+ import org.springframework.util.MultiValueMap;
+ 
++import static org.junit.Assert.assertEquals;
++
+ /**
+  * @author Dave Syer
+  * 
+diff --git a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/grant/code/AuthorizationCodeAccessTokenProviderWithConversionTests.java b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/grant/code/AuthorizationCodeAccessTokenProviderWithConversionTests.java
+index c4593439d..61a645551 100644
+--- a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/grant/code/AuthorizationCodeAccessTokenProviderWithConversionTests.java
++++ b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/grant/code/AuthorizationCodeAccessTokenProviderWithConversionTests.java
+@@ -12,9 +12,6 @@
+  */
+ package org.springframework.security.oauth2.client.token.grant.code;
+ 
+-import static org.hamcrest.CoreMatchers.instanceOf;
+-import static org.junit.Assert.assertEquals;
+-
+ import java.io.ByteArrayInputStream;
+ import java.io.ByteArrayOutputStream;
+ import java.io.IOException;
+@@ -23,13 +20,14 @@
+ import java.net.URI;
+ import java.net.URISyntaxException;
+ 
+-import org.codehaus.jackson.map.ObjectMapper;
++import com.fasterxml.jackson.databind.ObjectMapper;
+ import org.hamcrest.Description;
+ import org.hamcrest.Matcher;
+ import org.hamcrest.TypeSafeMatcher;
+ import org.junit.Rule;
+ import org.junit.Test;
+ import org.junit.rules.ExpectedException;
++
+ import org.springframework.http.HttpHeaders;
+ import org.springframework.http.HttpMethod;
+ import org.springframework.http.HttpStatus;
+@@ -44,6 +42,9 @@
+ import org.springframework.security.oauth2.common.OAuth2AccessToken;
+ import org.springframework.security.oauth2.common.exceptions.InvalidClientException;
+ 
++import static org.hamcrest.CoreMatchers.instanceOf;
++import static org.junit.Assert.assertEquals;
++
+ /**
+  * @author Dave Syer
+  * 
+diff --git a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/JsonSerializationTests.java b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/JsonSerializationTests.java
+index 15168df0b..c51fcc367 100644
+--- a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/JsonSerializationTests.java
++++ b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/JsonSerializationTests.java
+@@ -16,16 +16,17 @@
+ 
+ package org.springframework.security.oauth2.common;
+ 
+-import static org.junit.Assert.assertEquals;
+-import static org.junit.Assert.assertTrue;
+-
+ import java.util.Date;
+ 
+-import org.codehaus.jackson.map.ObjectMapper;
++import com.fasterxml.jackson.databind.ObjectMapper;
+ import org.junit.Test;
++
+ import org.springframework.security.oauth2.common.exceptions.InvalidClientException;
+ import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
+ 
++import static org.junit.Assert.assertEquals;
++import static org.junit.Assert.assertTrue;
++
+ /**
+  * @author Dave Syer
+  * 
+diff --git a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson1DeserializerTests.java b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson1DeserializerTests.java
+deleted file mode 100644
+index ff855f5d3..000000000
+--- a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson1DeserializerTests.java
++++ /dev/null
+@@ -1,125 +0,0 @@
+-/*
+- * Copyright 2011 the original author or authors.
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+- * the License. You may obtain a copy of the License at
+- *
+- * https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+- * specific language governing permissions and limitations under the License.
+- */
+-package org.springframework.security.oauth2.common;
+-
+-import static org.junit.Assert.assertEquals;
+-import static org.junit.Assert.assertNull;
+-
+-import java.io.IOException;
+-import java.util.Date;
+-import java.util.HashSet;
+-
+-import org.codehaus.jackson.JsonGenerationException;
+-import org.codehaus.jackson.map.JsonMappingException;
+-import org.codehaus.jackson.map.ObjectMapper;
+-import org.junit.Before;
+-import org.junit.Test;
+-import org.powermock.core.classloader.annotations.PrepareForTest;
+-
+-/**
+- * Tests deserialization of an {@link OAuth2AccessToken} using jackson.
+- *
+- * @author Rob Winch
+- */
+-@PrepareForTest(OAuth2AccessTokenJackson1Deserializer.class)
+-public class OAuth2AccessTokenJackson1DeserializerTests extends BaseOAuth2AccessTokenJacksonTest {
+-
+-    protected ObjectMapper mapper;
+-
+-    @Before
+-    public void createObjectMapper() {
+-        mapper = new ObjectMapper();
+-    }
+-
+-	@Test
+-	public void readValueNoRefresh() throws JsonGenerationException, JsonMappingException, IOException {
+-		accessToken.setRefreshToken(null);
+-		accessToken.setScope(null);
+-		OAuth2AccessToken actual = mapper.readValue(ACCESS_TOKEN_NOREFRESH, OAuth2AccessToken.class);
+-		assertTokenEquals(accessToken,actual);
+-	}
+-
+-	@Test
+-	public void readValueWithRefresh() throws JsonGenerationException, JsonMappingException, IOException {
+-		accessToken.setScope(null);
+-		OAuth2AccessToken actual = mapper.readValue(ACCESS_TOKEN_NOSCOPE, OAuth2AccessToken.class);
+-		assertTokenEquals(accessToken,actual);
+-	}
+-
+-	@Test
+-	public void readValueWithSingleScopes() throws JsonGenerationException, JsonMappingException, IOException {
+-		accessToken.getScope().remove(accessToken.getScope().iterator().next());
+-		OAuth2AccessToken actual = mapper.readValue(ACCESS_TOKEN_SINGLESCOPE, OAuth2AccessToken.class);
+-		assertTokenEquals(accessToken,actual);
+-	}
+-
+-	@Test
+-	public void readValueWithEmptyStringScope() throws JsonGenerationException, JsonMappingException, IOException {
+-		accessToken.setScope(new HashSet<String>());
+-		OAuth2AccessToken actual = mapper.readValue(ACCESS_TOKEN_EMPTYSCOPE, OAuth2AccessToken.class);
+-		assertTokenEquals(accessToken, actual);
+-	}
+-
+-	@Test
+-	public void readValueWithBrokenExpiresIn() throws JsonGenerationException, JsonMappingException, IOException {
+-		accessToken.setScope(new HashSet<String>());
+-		OAuth2AccessToken actual = mapper.readValue(ACCESS_TOKEN_BROKENEXPIRES, OAuth2AccessToken.class);
+-		assertTokenEquals(accessToken, actual);
+-	}
+-
+-	@Test
+-	public void readValueWithMultiScopes() throws Exception {
+-		OAuth2AccessToken actual = mapper.readValue(ACCESS_TOKEN_MULTISCOPE, OAuth2AccessToken.class);
+-		assertTokenEquals(accessToken,actual);
+-	}
+-
+-	@Test
+-	public void readValueWithMac() throws Exception {
+-		accessToken.setTokenType("mac");
+-		String encodedToken = ACCESS_TOKEN_MULTISCOPE.replace("bearer", accessToken.getTokenType());
+-		OAuth2AccessToken actual = mapper.readValue(encodedToken, OAuth2AccessToken.class);
+-		assertTokenEquals(accessToken,actual);
+-	}
+-
+-	@Test
+-	public void readValueWithAdditionalInformation() throws Exception {
+-		OAuth2AccessToken actual = mapper.readValue(ACCESS_TOKEN_ADDITIONAL_INFO, OAuth2AccessToken.class);
+-		accessToken.setAdditionalInformation(additionalInformation);
+-		accessToken.setRefreshToken(null);
+-		accessToken.setScope(null);
+-		accessToken.setExpiration(null);
+-		assertTokenEquals(accessToken,actual);
+-	}
+-
+-	private static void assertTokenEquals(OAuth2AccessToken expected, OAuth2AccessToken actual) {
+-		assertEquals(expected.getTokenType(), actual.getTokenType());
+-		assertEquals(expected.getValue(), actual.getValue());
+-
+-		OAuth2RefreshToken expectedRefreshToken = expected.getRefreshToken();
+-		if (expectedRefreshToken == null) {
+-			assertNull(actual.getRefreshToken());
+-		}
+-		else {
+-			assertEquals(expectedRefreshToken.getValue(), actual.getRefreshToken().getValue());
+-		}
+-		assertEquals(expected.getScope(), actual.getScope());
+-		Date expectedExpiration = expected.getExpiration();
+-		if (expectedExpiration == null) {
+-			assertNull(actual.getExpiration());
+-		}
+-		else {
+-			assertEquals(expectedExpiration.getTime(), actual.getExpiration().getTime());
+-		}
+-		assertEquals(expected.getAdditionalInformation(), actual.getAdditionalInformation());
+-	}
+-}
+\ No newline at end of file
+diff --git a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson1SerializerTests.java b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson1SerializerTests.java
+deleted file mode 100644
+index 609c2fa3c..000000000
+--- a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/OAuth2AccessTokenJackson1SerializerTests.java
++++ /dev/null
+@@ -1,118 +0,0 @@
+-package org.springframework.security.oauth2.common;
+-
+-import static org.junit.Assert.assertEquals;
+-
+-import java.io.IOException;
+-
+-import org.codehaus.jackson.JsonGenerationException;
+-import org.codehaus.jackson.map.JsonMappingException;
+-import org.codehaus.jackson.map.ObjectMapper;
+-import org.junit.Before;
+-import org.junit.Test;
+-import org.powermock.core.classloader.annotations.PrepareForTest;
+-
+-/**
+- * Tests serialization of an {@link OAuth2AccessToken} using jackson.
+- * 
+- * @author Rob Winch
+- */
+-@PrepareForTest(OAuth2AccessTokenJackson1Serializer.class)
+-public class OAuth2AccessTokenJackson1SerializerTests extends BaseOAuth2AccessTokenJacksonTest {
+-
+-    protected ObjectMapper mapper;
+-
+-    @Before
+-    public void createObjectMapper() {
+-        mapper = new ObjectMapper();
+-    }
+-
+-	@Test
+-	public void writeValueAsStringNoRefresh() throws JsonGenerationException, JsonMappingException, IOException {
+-		accessToken.setRefreshToken(null);
+-		accessToken.setScope(null);
+-		String encodedAccessToken = mapper.writeValueAsString(accessToken);
+-		assertEquals(BaseOAuth2AccessTokenJacksonTest.ACCESS_TOKEN_NOREFRESH, encodedAccessToken);
+-	}
+-
+-	@Test
+-	public void writeValueAsStringWithRefresh() throws JsonGenerationException, JsonMappingException, IOException {
+-		accessToken.setScope(null);
+-		String encodedAccessToken = mapper.writeValueAsString(accessToken);
+-		assertEquals(BaseOAuth2AccessTokenJacksonTest.ACCESS_TOKEN_NOSCOPE, encodedAccessToken);
+-	}
+-
+-	@Test
+-	public void writeValueAsStringWithEmptyScope() throws JsonGenerationException, JsonMappingException, IOException {
+-		accessToken.getScope().clear();
+-		String encodedAccessToken = mapper.writeValueAsString(accessToken);
+-		assertEquals(BaseOAuth2AccessTokenJacksonTest.ACCESS_TOKEN_NOSCOPE, encodedAccessToken);
+-	}
+-
+-	@Test
+-	public void writeValueAsStringWithSingleScopes() throws JsonGenerationException, JsonMappingException, IOException {
+-		accessToken.getScope().remove(accessToken.getScope().iterator().next());
+-		String encodedAccessToken = mapper.writeValueAsString(accessToken);
+-		assertEquals(BaseOAuth2AccessTokenJacksonTest.ACCESS_TOKEN_SINGLESCOPE, encodedAccessToken);
+-	}
+-
+-	@Test
+-	public void writeValueAsStringWithNullScope() throws JsonGenerationException, JsonMappingException, IOException {
+-		thrown.expect(JsonMappingException.class);
+-		thrown.expectMessage("Scopes cannot be null or empty. Got [null]");
+-
+-		accessToken.getScope().clear();
+-		try {
+-			accessToken.getScope().add(null);
+-		}
+-		catch (NullPointerException e) {
+-			// short circuit NPE from Java 7 (which is correct but only relevant for this test)
+-			throw new JsonMappingException("Scopes cannot be null or empty. Got [null]");
+-		}
+-		mapper.writeValueAsString(accessToken);
+-	}
+-
+-	@Test
+-	public void writeValueAsStringWithEmptyStringScope() throws JsonGenerationException, JsonMappingException,
+-			IOException {
+-		thrown.expect(JsonMappingException.class);
+-		thrown.expectMessage("Scopes cannot be null or empty. Got []");
+-
+-		accessToken.getScope().clear();
+-		accessToken.getScope().add("");
+-		mapper.writeValueAsString(accessToken);
+-	}
+-
+-	@Test
+-	public void writeValueAsStringWithQuoteInScope() throws JsonGenerationException, JsonMappingException, IOException {
+-		accessToken.getScope().add("\"");
+-		String encodedAccessToken = mapper.writeValueAsString(accessToken);
+-		assertEquals(
+-				"{\"access_token\":\"token-value\",\"token_type\":\"bearer\",\"refresh_token\":\"refresh-value\",\"expires_in\":10,\"scope\":\"\\\" read write\"}",
+-				encodedAccessToken);
+-	}
+-
+-	@Test
+-	public void writeValueAsStringWithMultiScopes() throws JsonGenerationException, JsonMappingException, IOException {
+-		String encodedAccessToken = mapper.writeValueAsString(accessToken);
+-		assertEquals(ACCESS_TOKEN_MULTISCOPE, encodedAccessToken);
+-	}
+-
+-	@Test
+-	public void writeValueAsStringWithMac() throws Exception {
+-		accessToken.setTokenType("mac");
+-		String expectedEncodedAccessToken = ACCESS_TOKEN_MULTISCOPE.replace("bearer", accessToken.getTokenType());
+-		String encodedAccessToken = mapper.writeValueAsString(accessToken);
+-		assertEquals(expectedEncodedAccessToken, encodedAccessToken);
+-	}
+-
+-	@Test
+-	public void writeValueWithAdditionalInformation() throws JsonGenerationException, JsonMappingException, IOException {
+-		accessToken.setRefreshToken(null);
+-		accessToken.setScope(null);
+-		accessToken.setExpiration(null);
+-		accessToken.setAdditionalInformation(additionalInformation);
+-		String encodedAccessToken = mapper.writeValueAsString(accessToken);
+-		assertEquals(BaseOAuth2AccessTokenJacksonTest.ACCESS_TOKEN_ADDITIONAL_INFO, encodedAccessToken);
+-	}
+-
+-}
+\ No newline at end of file
+diff --git a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/exception/OAuth2ExceptionDeserializerTests.java b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/exception/OAuth2ExceptionDeserializerTests.java
+index 573e38fc7..5fe77127e 100644
+--- a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/exception/OAuth2ExceptionDeserializerTests.java
++++ b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/exception/OAuth2ExceptionDeserializerTests.java
+@@ -12,12 +12,23 @@
+  */
+ package org.springframework.security.oauth2.common.exception;
+ 
+-import static org.junit.Assert.assertEquals;
+-
+-import org.codehaus.jackson.map.ObjectMapper;
++import com.fasterxml.jackson.databind.ObjectMapper;
+ import org.junit.BeforeClass;
+ import org.junit.Test;
+-import org.springframework.security.oauth2.common.exceptions.*;
++
++import org.springframework.security.oauth2.common.exceptions.InsufficientScopeException;
++import org.springframework.security.oauth2.common.exceptions.InvalidClientException;
++import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
++import org.springframework.security.oauth2.common.exceptions.InvalidRequestException;
++import org.springframework.security.oauth2.common.exceptions.InvalidScopeException;
++import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
++import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
++import org.springframework.security.oauth2.common.exceptions.RedirectMismatchException;
++import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
++import org.springframework.security.oauth2.common.exceptions.UnsupportedGrantTypeException;
++import org.springframework.security.oauth2.common.exceptions.UserDeniedAuthorizationException;
++
++import static org.junit.Assert.assertEquals;
+ 
+ /**
+  *
+diff --git a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/exception/OAuth2ExceptionSerializerTests.java b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/exception/OAuth2ExceptionSerializerTests.java
+index 0e88364ea..59ed4f755 100644
+--- a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/exception/OAuth2ExceptionSerializerTests.java
++++ b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/common/exception/OAuth2ExceptionSerializerTests.java
+@@ -12,13 +12,23 @@
+  */
+ package org.springframework.security.oauth2.common.exception;
+ 
+-import static org.junit.Assert.assertEquals;
+-
+-import org.codehaus.jackson.map.ObjectMapper;
++import com.fasterxml.jackson.databind.ObjectMapper;
+ import org.junit.After;
+ import org.junit.BeforeClass;
+ import org.junit.Test;
+-import org.springframework.security.oauth2.common.exceptions.*;
++
++import org.springframework.security.oauth2.common.exceptions.InvalidClientException;
++import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
++import org.springframework.security.oauth2.common.exceptions.InvalidRequestException;
++import org.springframework.security.oauth2.common.exceptions.InvalidScopeException;
++import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
++import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
++import org.springframework.security.oauth2.common.exceptions.RedirectMismatchException;
++import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
++import org.springframework.security.oauth2.common.exceptions.UnsupportedGrantTypeException;
++import org.springframework.security.oauth2.common.exceptions.UserDeniedAuthorizationException;
++
++import static org.junit.Assert.assertEquals;
+ 
+ /**
+  *
+diff --git a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/provider/OAuth2AuthenticationTests.java b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/provider/OAuth2AuthenticationTests.java
+index 068d68ac3..e2c0aadbd 100644
+--- a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/provider/OAuth2AuthenticationTests.java
++++ b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/provider/OAuth2AuthenticationTests.java
+@@ -1,14 +1,11 @@
+ package org.springframework.security.oauth2.provider;
+ 
+-import static org.junit.Assert.assertEquals;
+-import static org.junit.Assert.assertNull;
+-import static org.junit.Assert.assertTrue;
+-
+ import java.util.Arrays;
+ import java.util.Collections;
+ 
+-import org.codehaus.jackson.map.ObjectMapper;
++import com.fasterxml.jackson.databind.ObjectMapper;
+ import org.junit.Test;
++
+ import org.springframework.mock.web.MockHttpServletRequest;
+ import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+ import org.springframework.security.core.authority.SimpleGrantedAuthority;
+@@ -16,6 +13,10 @@
+ import org.springframework.test.annotation.Rollback;
+ import org.springframework.util.SerializationUtils;
+ 
++import static org.junit.Assert.assertEquals;
++import static org.junit.Assert.assertNull;
++import static org.junit.Assert.assertTrue;
++
+ public class OAuth2AuthenticationTests {
+ 
+ 	private OAuth2Request request = RequestTokenFactory.createOAuth2Request(null, "id", null, false,
+diff --git a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/provider/client/BaseClientDetailsTests.java b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/provider/client/BaseClientDetailsTests.java
+index 6e215a8cf..9ab738793 100644
+--- a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/provider/client/BaseClientDetailsTests.java
++++ b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/provider/client/BaseClientDetailsTests.java
+@@ -16,18 +16,18 @@
+ 
+ package org.springframework.security.oauth2.provider.client;
+ 
+-import static org.junit.Assert.assertEquals;
+-import static org.junit.Assert.assertFalse;
+-import static org.junit.Assert.assertTrue;
+-
+ import java.util.Collections;
+ import java.util.TreeSet;
+ 
+-import org.codehaus.jackson.map.ObjectMapper;
++import com.fasterxml.jackson.databind.ObjectMapper;
+ import org.junit.Test;
+-import org.springframework.security.oauth2.provider.client.BaseClientDetails;
++
+ import org.springframework.util.StringUtils;
+ 
++import static org.junit.Assert.assertEquals;
++import static org.junit.Assert.assertFalse;
++import static org.junit.Assert.assertTrue;
++
+ /**
+  * @author Dave Syer
+  * 

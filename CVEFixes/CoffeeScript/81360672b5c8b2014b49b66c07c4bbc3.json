@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:tastyigniter:tastyigniter:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/tastyigniter/tastyigniter/commit/992d4ce6444805c3132e3635a01b6fd222063554",
+        "version_end_excluding": {
+            "tastyigniter:tastyigniter": "3.3.0"
+        },
+        "path": {
+            "file_path": "app/main/formwidgets/components/component.blade.php"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0602"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

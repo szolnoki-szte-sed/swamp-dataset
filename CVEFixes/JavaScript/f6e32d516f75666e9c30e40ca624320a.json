@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:misp:misp:2.4.122:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/MISP/MISP/commit/e24a9eb44c1306adb02c1508e8f266ac6b95b4ed",
+        "version_end_excluding": {
+            "misp:misp": "unknown"
+        },
+        "path": {
+            "file_path": "app/webroot/js/misp.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-10247"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

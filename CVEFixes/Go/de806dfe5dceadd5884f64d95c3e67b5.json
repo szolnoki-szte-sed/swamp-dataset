@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:helm:helm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:helm:helm:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/helm/helm/commit/809e2d999e2c33e20e77f6bff30652d79c287542",
+        "version_end_excluding": {
+            "helm:helm": "2.16.11"
+        },
+        "path": {
+            "file_path": "cmd/helm/load_plugins.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15186"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:trudesk_project:trudesk:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/polonel/trudesk/commit/83fd5a89319ba2c2f5934722e39b08aba9b3a4ac",
+        "version_end_excluding": {
+            "trudesk_project:trudesk": "1.2.4"
+        },
+        "path": {
+            "file_path": "src/public/js/angularjs/controllers/profile.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2023"
+        ],
+        "CWE": [
+            "CWE-269"
+        ]
+    }
+}

@@ -1,0 +1,50 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gnu:bash:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:patch1:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:patch2:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:patch3:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:patch4:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:patch5:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:patch6:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:patch7:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:patch8:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:patch9:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:patch10:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:patch11:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:bash:5.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:solidfire:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:hci_management_node:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:oncommand_unified_manager:*:*:*:*:*:vmware_vsphere:*:*",
+            "cpe:2.3:a:oracle:communications_cloud_native_core_policy:1.14.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bminor/bash/commit/951bdaad7a18cc0dc1036bba86b18b90874d39ff",
+        "version_end_excluding": {
+            "gnu:bash": "unknown",
+            "netapp:solidfire": "unknown",
+            "netapp:hci_management_node": "unknown",
+            "netapp:oncommand_unified_manager": "unknown",
+            "oracle:communications_cloud_native_core_policy": "unknown"
+        },
+        "path": {
+            "file_path": "builtins/help.def"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-18276"
+        ],
+        "CWE": [
+            "CWE-273"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:net-snmp:net-snmp:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/net-snmp/net-snmp/commit/4fd9a450444a434a993bc72f7c3486ccce41f602",
+        "version_end_excluding": {
+            "net-snmp:net-snmp": "unknown"
+        },
+        "path": {
+            "file_path": ".gitignore"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15861"
+        ],
+        "CWE": [
+            "CWE-59"
+        ]
+    }
+}

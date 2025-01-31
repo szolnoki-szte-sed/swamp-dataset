@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:needrestart_project:needrestart:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:11.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/liske/needrestart/commit/e6e58136e1e3c92296e2e810cb8372a5fe0dbd30",
+        "version_end_excluding": {
+            "needrestart_project:needrestart": "3.6",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "perl/lib/NeedRestart/Interp/Perl.pm"
+        }
+    },
+    "programming_language": "perl",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-30688"
+        ],
+        "CWE": [
+            "CWE-269"
+        ]
+    }
+}

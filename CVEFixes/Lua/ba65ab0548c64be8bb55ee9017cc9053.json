@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:syntastic_project:syntastic:*:*:*:*:*:vim:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/vim-syntastic/syntastic/commit/6d7c0b394e001233dd09ec473fbea2002c72632f",
+        "version_end_excluding": {
+            "syntastic_project:syntastic": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "autoload/syntastic/c.vim"
+        }
+    },
+    "programming_language": "lua",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Do What The F*ck You Want To Public License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-11319"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

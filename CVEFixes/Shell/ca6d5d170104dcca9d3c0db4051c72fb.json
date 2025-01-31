@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:alkacon:opencms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/alkacon/mercury-template/commit/800945f5d02346c633c7aef9f5d596d7dedc8fb5",
+        "version_end_excluding": {
+            "alkacon:opencms": "11.0.2"
+        },
+        "path": {
+            "file_path": "alkacon.mercury.template/resources/system/modules/alkacon.mercury.template/formatters/navigation/side.jsp"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-25968"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

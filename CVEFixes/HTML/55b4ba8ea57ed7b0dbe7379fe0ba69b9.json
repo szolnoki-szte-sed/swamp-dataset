@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:revive-adserver:revive_adserver:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/revive-adserver/revive-adserver/commit/ecbe822b48ef4ff61c2c6357c0c94199a81946f4",
+        "version_end_excluding": {
+            "revive-adserver:revive_adserver": "unknown"
+        },
+        "path": {
+            "file_path": "lib/templates/admin/layout/links-container.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-9457"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

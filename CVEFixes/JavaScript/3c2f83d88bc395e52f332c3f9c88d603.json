@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ssri_project:ssri:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/zkat/ssri/commit/d0ebcdc22cb5c8f47f89716d08b3518b2485d65d",
+        "version_end_excluding": {
+            "ssri_project:ssri": "5.2.2"
+        },
+        "path": {
+            "file_path": "index.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-7651"
+        ],
+        "CWE": [
+            "CWE-400"
+        ]
+    }
+}

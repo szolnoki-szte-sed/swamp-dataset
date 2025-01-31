@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:ansible:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ansible/ansible/commit/8ed6350e65c82292a631f08845dfaacffe7f07f5",
+        "version_end_excluding": {
+            "redhat:ansible": "unknown"
+        },
+        "path": {
+            "file_path": "lib/ansible/inventory/script.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-3498"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

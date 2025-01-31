@@ -1,0 +1,134 @@
+diff --git a/commons/src/main/java/org/infinispan/commons/util/ReflectionUtil.java b/commons/src/main/java/org/infinispan/commons/util/ReflectionUtil.java
+index f43d0b763e61..6e96fbf3696d 100644
+--- a/commons/src/main/java/org/infinispan/commons/util/ReflectionUtil.java
++++ b/commons/src/main/java/org/infinispan/commons/util/ReflectionUtil.java
+@@ -180,26 +180,36 @@ private static Field findFieldRecursively(Class<?> c, String fieldName) {
+     * @param parameters parameters
+     */
+    public static Object invokeAccessibly(Object instance, Method method, Object[] parameters) {
++      method.setAccessible(true);
++      return invokeMethod(instance, method, parameters);
++   }
++
++   public static Object invokeMethod(Object instance, Method method, Object[] parameters) {
+       try {
+-         method.setAccessible(true);
+          return method.invoke(instance, parameters);
+       } catch (InvocationTargetException e) {
+          Throwable cause = e.getCause() != null ? e.getCause() : e;
+-         throw new CacheException("Unable to invoke method " + method + " on object of type " + (instance == null ? "null" : instance.getClass().getSimpleName()) +
++         throw new CacheException("Unable to invoke method " + method + " on object of type " + (instance == null ? "null" : instance
++                                                                                                                                .getClass().getSimpleName()) +
+                                   (parameters != null ? " with parameters " + Arrays.asList(parameters) : ""), cause);
+       } catch (Exception e) {
+-         throw new CacheException("Unable to invoke method " + method + " on object of type " + (instance == null ? "null" : instance.getClass().getSimpleName()) +
++         throw new CacheException("Unable to invoke method " + method + " on object of type " + (instance == null ? "null" : instance
++                                                                                                                                .getClass().getSimpleName()) +
+                                   (parameters != null ? " with parameters " + Arrays.asList(parameters) : ""), e);
+       }
+    }
+ 
+    public static void setAccessibly(Object instance, Field field, Object value) {
++      field.setAccessible(true);
++      setField(instance, field, value);
++   }
++
++   public static void setField(Object instance, Field field, Object value) {
+       try {
+-         field.setAccessible(true);
+          field.set(instance, value);
+       } catch (Exception e) {
+          throw new CacheException("Unable to set field " + field.getName() + " on object of type " +
+-               (instance == null ? "null" : instance.getClass().getName()) + " to " + value, e);
++                                  (instance == null ? "null" : instance.getClass().getName()) + " to " + value, e);
+       }
+    }
+ 
+@@ -302,7 +312,6 @@ public static Object getValue(Object instance, String fieldName) {
+     * @param ann   annotation to search for.  Must be a class-level annotation.
+     * @return the annotation instance, or null
+     */
+-   @SuppressWarnings("unchecked")
+    public static <T extends Annotation> T getAnnotation(Class<?> clazz, Class<T> ann) {
+       while (true) {
+          // first check class
+diff --git a/core/src/main/java/org/infinispan/distribution/group/impl/GroupManagerImpl.java b/core/src/main/java/org/infinispan/distribution/group/impl/GroupManagerImpl.java
+index 09e4f72d597d..143f814a9d50 100644
+--- a/core/src/main/java/org/infinispan/distribution/group/impl/GroupManagerImpl.java
++++ b/core/src/main/java/org/infinispan/distribution/group/impl/GroupManagerImpl.java
+@@ -1,6 +1,6 @@
+ package org.infinispan.distribution.group.impl;
+ 
+-import static org.infinispan.commons.util.ReflectionUtil.invokeAccessibly;
++import static org.infinispan.commons.util.ReflectionUtil.invokeMethod;
+ 
+ import java.lang.reflect.Method;
+ import java.security.AccessController;
+@@ -87,12 +87,15 @@ private static class GroupMetadataImpl implements GroupMetadata {
+ 
+       @Override
+       public Object getGroup(Object instance) {
+-         Object object;
+          if (System.getSecurityManager() == null) {
+-            return invokeAccessibly(instance, method, Util.EMPTY_OBJECT_ARRAY);
++            method.setAccessible(true);
+          } else {
+-            return AccessController.doPrivileged((PrivilegedAction<Object>) () -> invokeAccessibly(instance, method, Util.EMPTY_OBJECT_ARRAY));
++            AccessController.doPrivileged((PrivilegedAction<List<Method>>) () -> {
++               method.setAccessible(true);
++               return null;
++            });
+          }
++         return invokeMethod(instance, method, Util.EMPTY_OBJECT_ARRAY);
+       }
+    }
+ 
+diff --git a/core/src/main/java/org/infinispan/factories/impl/SecurityActions.java b/core/src/main/java/org/infinispan/factories/impl/SecurityActions.java
+new file mode 100644
+index 000000000000..8de0f57094d6
+--- /dev/null
++++ b/core/src/main/java/org/infinispan/factories/impl/SecurityActions.java
+@@ -0,0 +1,43 @@
++package org.infinispan.factories.impl;
++
++import java.lang.reflect.AccessibleObject;
++import java.security.AccessController;
++import java.security.PrivilegedAction;
++
++import org.infinispan.security.Security;
++import org.infinispan.util.logging.Log;
++import org.infinispan.util.logging.LogFactory;
++
++/**
++ * SecurityActions for the org.infinispan.factories package.
++ * <p>
++ * Do not move. Do not change class and method visibility to avoid being called from other
++ * {@link java.security.CodeSource}s, thus granting privilege escalation to external code.
++ *
++ * @author Dan Berindei
++ * @since 9.4
++ */
++final class SecurityActions {
++   private static final Log log = LogFactory.getLog(SecurityActions.class);
++
++   static <T> void doPrivileged(PrivilegedAction<T> runnable) {
++      if (System.getSecurityManager() != null) {
++         AccessController.doPrivileged((PrivilegedAction<Void>) () -> {
++            runnable.run();
++            return null;
++         });
++      } else {
++         Security.doPrivileged((PrivilegedAction<Void>) () -> {
++            runnable.run();
++            return null;
++         });
++      }
++   }
++
++   static void setAccessible(AccessibleObject member) {
++      doPrivileged(() -> {
++         member.setAccessible(true);
++         return null;
++      });
++   }
++}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:soruly:whatanime.ga:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/soruly/whatanime.ga/commit/c334dd8499a681587dd4199e90b0aa0eba814c1d",
+        "version_end_excluding": {
+            "soruly:whatanime.ga": "unknown"
+        },
+        "path": {
+            "file_path": "index.php"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-6390"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

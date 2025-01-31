@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:clustered_data_ontap:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/php/php-src/commit/4cc0286f2f3780abc6084bcdae5dce595daa3c12",
+        "version_end_excluding": {
+            "php:php": "7.0.15",
+            "netapp:clustered_data_ontap": "unknown"
+        },
+        "path": {
+            "file_path": "Zend/zend_hash.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-5340"
+        ],
+        "CWE": [
+            "CWE-190"
+        ]
+    }
+}

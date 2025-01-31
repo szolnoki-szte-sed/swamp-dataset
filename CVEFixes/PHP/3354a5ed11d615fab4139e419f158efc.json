@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:1up:oneupuploaderbundle:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:1up:oneupuploaderbundle:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/1up-lab/OneupUploaderBundle/commit/a6011449b716f163fe1ae323053077e59212350c",
+        "version_end_excluding": {
+            "1up:oneupuploaderbundle": "1.9.3"
+        },
+        "path": {
+            "file_path": "Controller/PluploadController.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-5237"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

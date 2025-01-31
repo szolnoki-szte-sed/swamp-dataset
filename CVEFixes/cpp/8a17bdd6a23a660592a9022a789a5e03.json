@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:opensc_project:opensc:0.20.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:opensc_project:opensc:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:opensc_project:opensc:0.20.0:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:opensc_project:opensc:0.20.0:rc3:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:31:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/OpenSC/OpenSC/commit/c3f23b836e5a1766c36617fe1da30d22f7b63de2",
+        "version_end_excluding": {
+            "opensc_project:opensc": "unknown",
+            "debian:debian_linux": "unknown",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "src/libopensc/card-setcos.c"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v2.1"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-19479"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:openrefine:openrefine:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/OpenRefine/OpenRefine/commit/6a0d7d56e4ffb420316ce7849fde881344fbf881",
+        "version_end_excluding": {
+            "openrefine:openrefine": "unknown"
+        },
+        "path": {
+            "file_path": "main/src/com/google/refine/importers/XmlImporter.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20157"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

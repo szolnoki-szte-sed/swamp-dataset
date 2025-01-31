@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pimcore:pimcore:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pimcore/pimcore/commit/adae3be64427466bf0df15ceaea2ac30da93752c",
+        "version_end_excluding": {
+            "pimcore:pimcore": "10.3.5"
+        },
+        "path": {
+            "file_path": "bundles/AdminBundle/Controller/Admin/RecyclebinController.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-1339"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

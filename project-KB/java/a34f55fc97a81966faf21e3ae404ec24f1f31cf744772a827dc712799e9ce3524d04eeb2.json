@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cloudfoundry:user_account_and_authentication:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cloudfoundry/uaa/commit/a34f55fc97a81966faf21e3ae404ec24f1f31cf7",
+        "version_end_excluding": {
+            "cloudfoundry:user_account_and_authentication": "74.0.0"
+        },
+        "path": {
+            "file_path": "server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/UserIdConversionEndpoints.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-11274"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

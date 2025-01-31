@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:anuko:time_tracker:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/anuko/timetracker/commit/0e2d6563e2d969209c502a1eae4ddd8e87b73299",
+        "version_end_excluding": {
+            "anuko:time_tracker": "1.20.0.5642"
+        },
+        "path": {
+            "file_path": "initialize.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24707"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

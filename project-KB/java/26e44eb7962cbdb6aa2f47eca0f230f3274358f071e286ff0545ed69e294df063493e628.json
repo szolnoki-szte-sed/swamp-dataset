@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:primetek:primefaces:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/primefaces/primefaces/commit/26e44eb7962cbdb6aa2f47eca0f230f3274358f0",
+        "version_end_excluding": {
+            "primetek:primefaces": "unknown"
+        },
+        "path": {
+            "file_path": "src/main/java/org/primefaces/util/DynamicResourceBuilder.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-1000486"
+        ],
+        "CWE": [
+            "CWE-326"
+        ]
+    }
+}

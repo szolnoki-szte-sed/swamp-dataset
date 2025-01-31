@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phoronix-media:phoronix_test_suite:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:35:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/phoronix-test-suite/phoronix-test-suite/commit/4f18296a1862fe54a4c58701a1f5ec6bd62a4d94",
+        "version_end_excluding": {
+            "phoronix-media:phoronix_test_suite": "10.8.0",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "pts-core/objects/pts_strings.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0196"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

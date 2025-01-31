@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/94f9cd81436c85d8c3a318ba92e236ede73752fc",
+        "version_end_excluding": {
+            "linux:linux_kernel": "4.4"
+        },
+        "path": {
+            "file_path": "net/netfilter/nf_nat_redirect.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-8787"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

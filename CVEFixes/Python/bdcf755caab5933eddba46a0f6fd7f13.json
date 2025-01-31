@@ -1,0 +1,50 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:lxml:lxml:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:35:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:11.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:solidfire:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:solidfire_enterprise_sds:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:http_server:12.2.1.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:http_server:12.2.1.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:zfs_storage_appliance_kit:8.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_cloud_native_core_binding_support_function:22.1.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_cloud_native_core_policy:22.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_cloud_native_core_network_exposure_function:22.1.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/lxml/lxml/commit/a3eacbc0dcf1de1c822ec29fb7d090a4b1712a9c",
+        "version_end_excluding": {
+            "lxml:lxml": "4.6.5",
+            "fedoraproject:fedora": "unknown",
+            "debian:debian_linux": "unknown",
+            "netapp:solidfire": "unknown",
+            "netapp:solidfire_enterprise_sds": "unknown",
+            "oracle:http_server": "unknown",
+            "oracle:zfs_storage_appliance_kit": "unknown",
+            "oracle:communications_cloud_native_core_binding_support_function": "unknown",
+            "oracle:communications_cloud_native_core_policy": "unknown",
+            "oracle:communications_cloud_native_core_network_exposure_function": "unknown"
+        },
+        "path": {
+            "file_path": "src/lxml/__init__.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-43818"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

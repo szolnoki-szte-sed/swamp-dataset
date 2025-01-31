@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:namelessmc:nameless:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/namelessmc/nameless/commit/469bebc17855720e43f0c8209c88a57d2b55f6de",
+        "version_end_excluding": {
+            "namelessmc:nameless": "2.0.2"
+        },
+        "path": {
+            "file_path": "modules/Core/hooks/DeleteUserHook.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2820"
+        ],
+        "CWE": [
+            "CWE-613"
+        ]
+    }
+}

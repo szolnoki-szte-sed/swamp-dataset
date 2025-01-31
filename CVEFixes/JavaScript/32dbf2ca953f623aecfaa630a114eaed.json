@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:netdisco:netdisco:2.042010:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/netdisco/netdisco/commit/deb9b62c7f839f5e41aa4d620bcdac5f9321a8a3",
+        "version_end_excluding": {
+            "netdisco:netdisco": "unknown"
+        },
+        "path": {
+            "file_path": "share/views/ajax/admintask/userlog.tt"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-15810"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

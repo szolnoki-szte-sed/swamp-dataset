@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:prisma:graphql-playground-middleware-hapi:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:prisma:graphql-playground-middleware-lambda:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:prisma:graphql-playground-middleware-koa:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:prisma:graphql-playground-middleware-express:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:prisma:graphql-playground-html:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/prisma-labs/graphql-playground/commit/bf1883db538c97b076801a60677733816cb3cfb7",
+        "version_end_excluding": {
+            "prisma:graphql-playground-middleware-hapi": "1.6.13",
+            "prisma:graphql-playground-middleware-lambda": "1.7.17",
+            "prisma:graphql-playground-middleware-koa": "1.6.15",
+            "prisma:graphql-playground-middleware-express": "1.7.16",
+            "prisma:graphql-playground-html": "1.6.22"
+        },
+        "path": {
+            "file_path": "scripts/build.sh"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-4038"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

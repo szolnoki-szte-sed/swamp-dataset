@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:swagger:swagger-codegen:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:swagger:swagger-parser:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/swagger-api/swagger-parser/commit/4c6584306b40de9b2dfa9065c3a438cd918534af",
+        "version_end_excluding": {
+            "swagger:swagger-codegen": "unknown"
+        },
+        "path": {
+            "file_path": "modules/swagger-parser/src/main/java/io/swagger/parser/util/DeserializationUtils.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-1000207"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

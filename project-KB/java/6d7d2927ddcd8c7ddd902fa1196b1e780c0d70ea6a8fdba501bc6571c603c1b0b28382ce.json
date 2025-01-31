@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal_software:spring_batch:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-batch/commit/6d7d2927ddcd8c7ddd902fa1196b1e780c0d70ea",
+        "version_end_excluding": {
+            "pivotal_software:spring_batch": "unknown"
+        },
+        "path": {
+            "file_path": "spring-batch-core/src/main/java/org/springframework/batch/core/repository/dao/Jackson2ExecutionContextStringSerializer.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-5411"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

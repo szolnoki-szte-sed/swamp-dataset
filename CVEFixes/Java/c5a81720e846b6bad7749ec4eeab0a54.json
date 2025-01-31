@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ballerina:swan_lake:alpha2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ballerina:swan_lake:alpha3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ballerina:swan_lake:alpha1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ballerina:ballerina:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ballerina-platform/ballerina-lang/commit/4609ffee1744ecd16aac09303b1783bf0a525816",
+        "version_end_excluding": {
+            "ballerina:swan_lake": "unknown",
+            "ballerina:ballerina": "1.2.14"
+        },
+        "path": {
+            "file_path": "misc/openapi-ballerina/modules/openapi-to-ballerina-generator/src/main/java/org/ballerinalang/openapi/CodeGenerator.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32700"
+        ],
+        "CWE": [
+            "CWE-306"
+        ]
+    }
+}

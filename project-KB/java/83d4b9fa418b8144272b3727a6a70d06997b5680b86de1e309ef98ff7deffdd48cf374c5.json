@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cloudfoundry:uaa_release:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cloudfoundry/uaa/commit/83d4b9fa418b8144272b3727a6a70d06997b5680",
+        "version_end_excluding": {
+            "cloudfoundry:uaa_release": "71.0"
+        },
+        "path": {
+            "file_path": "server/src/test/java/org/cloudfoundry/identity/uaa/oauth/AntPathRedirectResolverTests.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-3788"
+        ],
+        "CWE": [
+            "CWE-601"
+        ]
+    }
+}

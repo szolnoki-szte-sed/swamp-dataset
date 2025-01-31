@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:miniupnp_project:miniupnp:1.9:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:12.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:13.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/miniupnp/miniupnp/commit/3a87aa2f10bd7f1408e1849bdb59c41dd63a9fe9",
+        "version_end_excluding": {
+            "miniupnp_project:miniupnp": "unknown",
+            "opensuse:opensuse": "unknown"
+        },
+        "path": {
+            "file_path": "miniupnpc/miniwget.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-3985"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

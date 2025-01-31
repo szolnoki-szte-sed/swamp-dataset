@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ory:fosite:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ory/fosite/commit/03dd55813f5521985f7dd64277b7ba0cf1441319",
+        "version_end_excluding": {
+            "ory:fosite": "0.34.0"
+        },
+        "path": {
+            "file_path": ".golangci.yml"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15223"
+        ],
+        "CWE": [
+            "CWE-755"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:androidsvg_project:androidsvg:1.2.2:-:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/BigBadaboom/androidsvg/commit/44e4fbf1d0f6db295df34601972741d4cf706cbd",
+        "version_end_excluding": {
+            "androidsvg_project:androidsvg": "unknown"
+        },
+        "path": {
+            "file_path": "androidsvg/src/main/java/com/caverock/androidsvg/SVGParser.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-1000498"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

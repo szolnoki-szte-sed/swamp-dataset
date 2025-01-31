@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ffmpeg:ffmpeg:2.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ffmpeg:ffmpeg:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FFmpeg/FFmpeg/commit/e1182fac1afba92a4975917823a5f644bee7e6e8",
+        "version_end_excluding": {
+            "ffmpeg:ffmpeg": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "libavcodec/mpeg4videoenc.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-12458"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

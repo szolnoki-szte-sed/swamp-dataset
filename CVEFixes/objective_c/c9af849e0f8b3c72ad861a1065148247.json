@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:imagemagick:imagemagick:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ImageMagick/ImageMagick/commit/30eec879c8b446b0ea9a3bb0da1a441cc8482bc4",
+        "version_end_excluding": {
+            "imagemagick:imagemagick": "unknown"
+        },
+        "path": {
+            "file_path": "coders/psd.c"
+        }
+    },
+    "programming_language": "objective_c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-7521"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

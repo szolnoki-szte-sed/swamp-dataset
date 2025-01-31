@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/60b7ed54a41b550d50caf7f2418db4a7e75b5bdc",
+        "version_end_excluding": {
+            "linux:linux_kernel": "5.12.13"
+        },
+        "path": {
+            "file_path": "arch/powerpc/perf/core-book3s.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-38200"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

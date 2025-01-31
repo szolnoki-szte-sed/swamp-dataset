@@ -1,0 +1,38 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:codemirror:codemirror:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:application_express:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:essbase:21.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:enterprise_manager_express_user_interface:19c:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:hyperion_data_relationship_management:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:spatial_studio:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/codemirror/CodeMirror/commit/55d0333907117c9231ffdf555ae8824705993bbb",
+        "version_end_excluding": {
+            "codemirror:codemirror": "5.58.2",
+            "oracle:application_express": "20.2",
+            "oracle:essbase": "unknown",
+            "oracle:enterprise_manager_express_user_interface": "unknown",
+            "oracle:hyperion_data_relationship_management": "11.2.9.0",
+            "oracle:spatial_studio": "19.1.0"
+        },
+        "path": {
+            "file_path": "mode/javascript/javascript.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-7760"
+        ],
+        "CWE": [
+            "CWE-400"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:openpowerfoundation:skiboot:2.6:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/open-power/skiboot/commit/5be38b672c1410e2f10acd3ad2eecfdc81d5daf7",
+        "version_end_excluding": {
+            "openpowerfoundation:skiboot": "unknown"
+        },
+        "path": {
+            "file_path": "libstb/secvar/backend/edk2-compat-process.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-36357"
+        ],
+        "CWE": [
+            "CWE-681"
+        ]
+    }
+}

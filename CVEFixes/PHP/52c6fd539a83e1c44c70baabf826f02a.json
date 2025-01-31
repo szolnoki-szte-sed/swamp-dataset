@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:intelmq_manager_project:intelmq_manager:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/certtools/intelmq-manager/commit/b9a2ac43a4f99d764b827108f6a99dc4a9faa013",
+        "version_end_excluding": {
+            "intelmq_manager_project:intelmq_manager": "2.1.1"
+        },
+        "path": {
+            "file_path": "intelmq-manager/php/controller.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-11016"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

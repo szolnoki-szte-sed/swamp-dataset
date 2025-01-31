@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:x11vnc_project:x11vnc:0.9.16:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:32:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:33:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/LibVNC/x11vnc/commit/69eeb9f7baa14ca03b16c9de821f9876def7a36a",
+        "version_end_excluding": {
+            "x11vnc_project:x11vnc": "unknown",
+            "fedoraproject:fedora": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "src/scan.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-29074"
+        ],
+        "CWE": [
+            "CWE-732"
+        ]
+    }
+}

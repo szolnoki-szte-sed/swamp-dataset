@@ -1,0 +1,41 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:linuxfoundation:containerd:1.5.0:-:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:containerd:1.5.0:beta0:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:containerd:1.5.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:containerd:1.5.0:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:containerd:1.5.0:beta3:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:containerd:1.5.0:beta4:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:containerd:1.5.0:rc0:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:containerd:1.5.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:containerd:1.5.0:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:containerd:1.5.0:rc3:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxfoundation:containerd:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:35:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/dweomer/containerd/commit/f7f08f0e34fb97392b0d382e58916d6865100299",
+        "version_end_excluding": {
+            "linuxfoundation:containerd": "1.5.9",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "pkg/cri/server/container_create_linux.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-43816"
+        ],
+        "CWE": [
+            "CWE-281"
+        ]
+    }
+}

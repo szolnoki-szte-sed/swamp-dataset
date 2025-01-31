@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:nextauth.js:next-auth:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:nextauth.js:next-auth:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/nextauthjs/next-auth/commit/afb1fcdae3cc30445038ef588e491d139b916003",
+        "version_end_excluding": {
+            "nextauth.js:next-auth": "3.29.10"
+        },
+        "path": {
+            "file_path": "packages/next-auth/tests/getServerSession.test.ts"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "ISC License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-35924"
+        ],
+        "CWE": [
+            "CWE-863"
+        ]
+    }
+}

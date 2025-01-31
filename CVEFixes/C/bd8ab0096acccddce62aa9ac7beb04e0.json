@@ -1,0 +1,44 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:php:php:7.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.13:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.14:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:7.0.9:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/php/php-src/commit/1cda0d7c2ffb62d8331c64e703131d9cabdc03ea",
+        "version_end_excluding": {
+            "php:php": "unknown"
+        },
+        "path": {
+            "file_path": "ext/exif/exif.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-10158"
+        ],
+        "CWE": [
+            "CWE-189"
+        ]
+    }
+}

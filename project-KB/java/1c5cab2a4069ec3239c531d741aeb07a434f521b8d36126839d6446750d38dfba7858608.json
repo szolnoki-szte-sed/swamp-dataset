@@ -1,0 +1,61 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:vmware:spring_framework:3.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.0:m1:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.2.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.0.m1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.0:m4:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.0:rc3:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.0:m2:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:4.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.0.0:milestone2:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.1.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:4.0.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:3.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:4.0.0:milestone1:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.0:m3:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.0:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:spring_framework:3.0.0.m2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-framework/commit/1c5cab2a4069ec3239c531d741aeb07a434f521b",
+        "version_end_excluding": {
+            "springsource:spring_framework": "unknown"
+        },
+        "path": {
+            "file_path": "spring-web/src/test/java/org/springframework/http/converter/xml/Jaxb2CollectionHttpMessageConverterTests.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-0054"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

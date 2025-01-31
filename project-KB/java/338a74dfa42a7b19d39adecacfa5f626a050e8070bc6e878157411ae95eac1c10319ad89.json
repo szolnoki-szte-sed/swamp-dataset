@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:jboss_a-mq:6.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_a-mq:6.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_fuse:6.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/activemq/commit/338a74dfa42a7b19d39adecacfa5f626a050e807",
+        "version_end_excluding": {
+            "apache:activemq": "5.14.5"
+        },
+        "path": {
+            "file_path": "activemq-client/src/main/java/org/apache/activemq/ActiveMQConnection.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-7559"
+        ],
+        "CWE": [
+            "CWE-20",
+            "CWE-306"
+        ]
+    }
+}

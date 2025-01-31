@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:testlink:testlink:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/TestLinkOpenSourceTRMS/testlink-code/commit/942c406fcee5d376235a264cb8a79300a0002d20",
+        "version_end_excluding": {
+            "testlink:testlink": "unknown"
+        },
+        "path": {
+            "file_path": "lib/plan/planUpdateTC.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-20107"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

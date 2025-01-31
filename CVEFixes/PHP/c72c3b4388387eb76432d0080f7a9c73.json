@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:notrinos:notrinoserp:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/notrinos/notrinoserp/commit/e61e76b44c6a2b28a4a648a06ef34f65c376ec1e",
+        "version_end_excluding": {
+            "notrinos:notrinoserp": "0.7"
+        },
+        "path": {
+            "file_path": "admin/users.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2927"
+        ],
+        "CWE": [
+            "CWE-521"
+        ]
+    }
+}

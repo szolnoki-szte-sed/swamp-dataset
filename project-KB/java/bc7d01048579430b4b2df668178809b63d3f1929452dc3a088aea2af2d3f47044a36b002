@@ -1,0 +1,284 @@
+diff --git a/spring-web/src/main/java/org/springframework/web/cors/CorsUtils.java b/spring-web/src/main/java/org/springframework/web/cors/CorsUtils.java
+index d24594cef060..eec489d6cc27 100644
+--- a/spring-web/src/main/java/org/springframework/web/cors/CorsUtils.java
++++ b/spring-web/src/main/java/org/springframework/web/cors/CorsUtils.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2002-2019 the original author or authors.
++ * Copyright 2002-2020 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -66,12 +66,12 @@ else if ("https".equals(scheme) || "wss".equals(scheme)) {
+ 	}
+ 
+ 	/**
+-	 * Returns {@code true} if the request is a valid CORS pre-flight one.
+-	 * To be used in combination with {@link #isCorsRequest(HttpServletRequest)} since
+-	 * regular CORS checks are not invoked here for performance reasons.
++	 * Returns {@code true} if the request is a valid CORS pre-flight one by checking {code OPTIONS} method with
++	 * {@code Origin} and {@code Access-Control-Request-Method} headers presence.
+ 	 */
+ 	public static boolean isPreFlightRequest(HttpServletRequest request) {
+ 		return (HttpMethod.OPTIONS.matches(request.getMethod()) &&
++				request.getHeader(HttpHeaders.ORIGIN) != null &&
+ 				request.getHeader(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD) != null);
+ 	}
+ 
+diff --git a/spring-web/src/main/java/org/springframework/web/cors/reactive/CorsUtils.java b/spring-web/src/main/java/org/springframework/web/cors/reactive/CorsUtils.java
+index 006f32f684c3..a9f52082a5fe 100644
+--- a/spring-web/src/main/java/org/springframework/web/cors/reactive/CorsUtils.java
++++ b/spring-web/src/main/java/org/springframework/web/cors/reactive/CorsUtils.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2002-2019 the original author or authors.
++ * Copyright 2002-2020 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -45,12 +45,14 @@ public static boolean isCorsRequest(ServerHttpRequest request) {
+ 	}
+ 
+ 	/**
+-	 * Returns {@code true} if the request is a valid CORS pre-flight one.
+-	 * To be used in combination with {@link #isCorsRequest(ServerHttpRequest)} since
+-	 * regular CORS checks are not invoked here for performance reasons.
++	 * Returns {@code true} if the request is a valid CORS pre-flight one by checking {code OPTIONS} method with
++	 * {@code Origin} and {@code Access-Control-Request-Method} headers presence.
+ 	 */
+ 	public static boolean isPreFlightRequest(ServerHttpRequest request) {
+-		return (request.getMethod() == HttpMethod.OPTIONS && request.getHeaders().containsKey(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD));
++		HttpHeaders headers = request.getHeaders();
++		return (request.getMethod() == HttpMethod.OPTIONS
++				&& headers.containsKey(HttpHeaders.ORIGIN)
++				&& headers.containsKey(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD));
+ 	}
+ 
+ 	/**
+diff --git a/spring-webflux/src/main/java/org/springframework/web/reactive/handler/AbstractHandlerMapping.java b/spring-webflux/src/main/java/org/springframework/web/reactive/handler/AbstractHandlerMapping.java
+index 848249f976db..b3311348a67f 100644
+--- a/spring-webflux/src/main/java/org/springframework/web/reactive/handler/AbstractHandlerMapping.java
++++ b/spring-webflux/src/main/java/org/springframework/web/reactive/handler/AbstractHandlerMapping.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2002-2019 the original author or authors.
++ * Copyright 2002-2020 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -182,8 +182,8 @@ public Mono<Object> getHandler(ServerWebExchange exchange) {
+ 			if (logger.isDebugEnabled()) {
+ 				logger.debug(exchange.getLogPrefix() + "Mapped to " + handler);
+ 			}
+-			if (hasCorsConfigurationSource(handler)) {
+-				ServerHttpRequest request = exchange.getRequest();
++			ServerHttpRequest request = exchange.getRequest();
++			if (hasCorsConfigurationSource(handler) || CorsUtils.isPreFlightRequest(request)) {
+ 				CorsConfiguration config = (this.corsConfigurationSource != null ? this.corsConfigurationSource.getCorsConfiguration(exchange) : null);
+ 				CorsConfiguration handlerConfig = getCorsConfiguration(handler, exchange);
+ 				config = (config != null ? config.combine(handlerConfig) : handlerConfig);
+diff --git a/spring-webflux/src/main/java/org/springframework/web/reactive/result/method/AbstractHandlerMethodMapping.java b/spring-webflux/src/main/java/org/springframework/web/reactive/result/method/AbstractHandlerMethodMapping.java
+index bc7b46e41643..c7a65fc6236d 100644
+--- a/spring-webflux/src/main/java/org/springframework/web/reactive/result/method/AbstractHandlerMethodMapping.java
++++ b/spring-webflux/src/main/java/org/springframework/web/reactive/result/method/AbstractHandlerMethodMapping.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2002-2019 the original author or authors.
++ * Copyright 2002-2020 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -374,8 +374,7 @@ protected HandlerMethod handleNoMatch(Set<T> mappings, ServerWebExchange exchang
+ 	@Override
+ 	protected boolean hasCorsConfigurationSource(Object handler) {
+ 		return super.hasCorsConfigurationSource(handler) ||
+-				(handler instanceof HandlerMethod && this.mappingRegistry.getCorsConfiguration((HandlerMethod) handler) != null) ||
+-				handler.equals(PREFLIGHT_AMBIGUOUS_MATCH);
++				(handler instanceof HandlerMethod && this.mappingRegistry.getCorsConfiguration((HandlerMethod) handler) != null);
+ 	}
+ 
+ 	@Override
+diff --git a/spring-webflux/src/test/java/org/springframework/web/reactive/handler/CorsUrlHandlerMappingTests.java b/spring-webflux/src/test/java/org/springframework/web/reactive/handler/CorsUrlHandlerMappingTests.java
+index b9385f0b9ceb..634233264552 100644
+--- a/spring-webflux/src/test/java/org/springframework/web/reactive/handler/CorsUrlHandlerMappingTests.java
++++ b/spring-webflux/src/test/java/org/springframework/web/reactive/handler/CorsUrlHandlerMappingTests.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2002-2019 the original author or authors.
++ * Copyright 2002-2020 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -70,7 +70,7 @@ public void preflightRequestWithoutCorsConfigurationProvider() throws Exception
+ 		Object actual = this.handlerMapping.getHandler(exchange).block();
+ 
+ 		assertThat(actual).isNotNull();
+-		assertThat(actual).isSameAs(this.welcomeController);
++		assertThat(actual).isNotSameAs(this.welcomeController);
+ 	}
+ 
+ 	@Test
+diff --git a/spring-webflux/src/test/java/org/springframework/web/reactive/result/method/annotation/CrossOriginAnnotationIntegrationTests.java b/spring-webflux/src/test/java/org/springframework/web/reactive/result/method/annotation/CrossOriginAnnotationIntegrationTests.java
+index f89c653109f9..93d08ce936c0 100644
+--- a/spring-webflux/src/test/java/org/springframework/web/reactive/result/method/annotation/CrossOriginAnnotationIntegrationTests.java
++++ b/spring-webflux/src/test/java/org/springframework/web/reactive/result/method/annotation/CrossOriginAnnotationIntegrationTests.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2002-2019 the original author or authors.
++ * Copyright 2002-2020 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -35,11 +35,13 @@
+ import org.springframework.web.bind.annotation.RequestMapping;
+ import org.springframework.web.bind.annotation.RequestMethod;
+ import org.springframework.web.bind.annotation.RestController;
++import org.springframework.web.client.HttpClientErrorException;
+ import org.springframework.web.client.RestTemplate;
+ import org.springframework.web.reactive.config.EnableWebFlux;
+ import org.springframework.web.testfixture.http.server.reactive.bootstrap.HttpServer;
+ 
+ import static org.assertj.core.api.Assertions.assertThat;
++import static org.assertj.core.api.Assertions.fail;
+ 
+ /**
+  * Integration tests with {@code @CrossOrigin} and {@code @RequestMapping}
+@@ -89,6 +91,28 @@ void actualGetRequestWithoutAnnotation(HttpServer httpServer) throws Exception {
+ 		assertThat(entity.getBody()).isEqualTo("no");
+ 	}
+ 
++	@ParameterizedHttpServerTest
++	void optionsRequestWithAccessControlRequestMethod(HttpServer httpServer) throws Exception {
++		startServer(httpServer);
++		this.headers.clear();
++		this.headers.add(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "GET");
++		ResponseEntity<String> entity = performOptions("/no", this.headers, String.class);
++		assertThat(entity.getBody()).isNull();
++	}
++
++	@ParameterizedHttpServerTest
++	void preflightRequestWithoutAnnotation(HttpServer httpServer) throws Exception {
++		startServer(httpServer);
++		this.headers.add(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "GET");
++		try {
++			performOptions("/no", this.headers, Void.class);
++			fail("Preflight request without CORS configuration should fail");
++		}
++		catch (HttpClientErrorException ex) {
++			assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
++		}
++	}
++
+ 	@ParameterizedHttpServerTest
+ 	void actualPostRequestWithoutAnnotation(HttpServer httpServer) throws Exception {
+ 		startServer(httpServer);
+diff --git a/spring-webmvc/src/main/java/org/springframework/web/servlet/handler/AbstractHandlerMapping.java b/spring-webmvc/src/main/java/org/springframework/web/servlet/handler/AbstractHandlerMapping.java
+index df7096c5239b..beee0ce55d3b 100644
+--- a/spring-webmvc/src/main/java/org/springframework/web/servlet/handler/AbstractHandlerMapping.java
++++ b/spring-webmvc/src/main/java/org/springframework/web/servlet/handler/AbstractHandlerMapping.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2002-2019 the original author or authors.
++ * Copyright 2002-2020 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -414,7 +414,7 @@ else if (logger.isDebugEnabled() && !request.getDispatcherType().equals(Dispatch
+ 			logger.debug("Mapped to " + executionChain.getHandler());
+ 		}
+ 
+-		if (hasCorsConfigurationSource(handler)) {
++		if (hasCorsConfigurationSource(handler) || CorsUtils.isPreFlightRequest(request)) {
+ 			CorsConfiguration config = (this.corsConfigurationSource != null ? this.corsConfigurationSource.getCorsConfiguration(request) : null);
+ 			CorsConfiguration handlerConfig = getCorsConfiguration(handler, request);
+ 			config = (config != null ? config.combine(handlerConfig) : handlerConfig);
+diff --git a/spring-webmvc/src/main/java/org/springframework/web/servlet/handler/AbstractHandlerMethodMapping.java b/spring-webmvc/src/main/java/org/springframework/web/servlet/handler/AbstractHandlerMethodMapping.java
+index 5a1c7ece0442..0fbfc988c1be 100644
+--- a/spring-webmvc/src/main/java/org/springframework/web/servlet/handler/AbstractHandlerMethodMapping.java
++++ b/spring-webmvc/src/main/java/org/springframework/web/servlet/handler/AbstractHandlerMethodMapping.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2002-2019 the original author or authors.
++ * Copyright 2002-2020 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -458,8 +458,7 @@ protected HandlerMethod handleNoMatch(Set<T> mappings, String lookupPath, HttpSe
+ 	@Override
+ 	protected boolean hasCorsConfigurationSource(Object handler) {
+ 		return super.hasCorsConfigurationSource(handler) ||
+-				(handler instanceof HandlerMethod && this.mappingRegistry.getCorsConfiguration((HandlerMethod) handler) != null) ||
+-				handler.equals(PREFLIGHT_AMBIGUOUS_MATCH);
++				(handler instanceof HandlerMethod && this.mappingRegistry.getCorsConfiguration((HandlerMethod) handler) != null);
+ 	}
+ 
+ 	@Override
+diff --git a/spring-webmvc/src/test/java/org/springframework/web/servlet/handler/CorsAbstractHandlerMappingTests.java b/spring-webmvc/src/test/java/org/springframework/web/servlet/handler/CorsAbstractHandlerMappingTests.java
+index e3dc67c9ebfd..5a37e119c9d8 100644
+--- a/spring-webmvc/src/test/java/org/springframework/web/servlet/handler/CorsAbstractHandlerMappingTests.java
++++ b/spring-webmvc/src/test/java/org/springframework/web/servlet/handler/CorsAbstractHandlerMappingTests.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2002-2019 the original author or authors.
++ * Copyright 2002-2020 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -86,7 +86,8 @@ void preflightRequestWithoutCorsConfigurationProvider() throws Exception {
+ 		HandlerExecutionChain chain = this.handlerMapping.getHandler(this.request);
+ 
+ 		assertThat(chain).isNotNull();
+-		assertThat(chain.getHandler()).isInstanceOf(SimpleHandler.class);
++		assertThat(chain.getHandler()).isNotNull();
++		assertThat(chain.getHandler().getClass().getSimpleName()).isEqualTo("PreFlightHandler");
+ 	}
+ 
+ 	@Test
+diff --git a/spring-webmvc/src/test/java/org/springframework/web/servlet/mvc/method/annotation/CrossOriginTests.java b/spring-webmvc/src/test/java/org/springframework/web/servlet/mvc/method/annotation/CrossOriginTests.java
+index 5934fa43d495..e135d7f76f92 100644
+--- a/spring-webmvc/src/test/java/org/springframework/web/servlet/mvc/method/annotation/CrossOriginTests.java
++++ b/spring-webmvc/src/test/java/org/springframework/web/servlet/mvc/method/annotation/CrossOriginTests.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2002-2019 the original author or authors.
++ * Copyright 2002-2020 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -69,6 +69,10 @@ public class CrossOriginTests {
+ 
+ 	private final MockHttpServletRequest request = new MockHttpServletRequest();
+ 
++	private final String optionsHandler = "org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping$HttpOptionsHandler#handle()";
++
++	private final String corsPreflightHandler = "org.springframework.web.servlet.handler.AbstractHandlerMapping$PreFlightHandler";
++
+ 
+ 	@BeforeEach
+ 	@SuppressWarnings("resource")
+@@ -96,6 +100,25 @@ public void noAnnotationWithoutOrigin() throws Exception {
+ 		assertThat(getCorsConfiguration(chain, false)).isNull();
+ 	}
+ 
++	@Test
++	public void noAnnotationWithAccessControlRequestMethod() throws Exception {
++		this.handlerMapping.registerHandler(new MethodLevelController());
++		MockHttpServletRequest request = new MockHttpServletRequest("OPTIONS", "/no");
++		request.addHeader(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "GET");
++		HandlerExecutionChain chain = this.handlerMapping.getHandler(request);
++		assertThat(chain.getHandler().toString()).isEqualTo(optionsHandler);
++	}
++
++	@Test
++	public void noAnnotationWithPreflightRequest() throws Exception {
++		this.handlerMapping.registerHandler(new MethodLevelController());
++		MockHttpServletRequest request = new MockHttpServletRequest("OPTIONS", "/no");
++		request.addHeader(HttpHeaders.ORIGIN, "https://domain.com/");
++		request.addHeader(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "GET");
++		HandlerExecutionChain chain = this.handlerMapping.getHandler(request);
++		assertThat(chain.getHandler().getClass().getName()).isEqualTo(corsPreflightHandler);
++	}
++
+ 	@Test  // SPR-12931
+ 	public void noAnnotationWithOrigin() throws Exception {
+ 		this.handlerMapping.registerHandler(new MethodLevelController());

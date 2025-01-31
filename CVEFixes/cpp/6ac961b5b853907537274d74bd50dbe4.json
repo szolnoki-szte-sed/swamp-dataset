@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wesnoth:battle_for_wesnoth:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wesnoth:battle_for_wesnoth:1.13.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:22:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:21:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/wesnoth/wesnoth/commit/b2738ffb2fdd2550ececb74f76f75583c43c8b59",
+        "version_end_excluding": {
+            "wesnoth:battle_for_wesnoth": "unknown",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "src/filesystem.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5070"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

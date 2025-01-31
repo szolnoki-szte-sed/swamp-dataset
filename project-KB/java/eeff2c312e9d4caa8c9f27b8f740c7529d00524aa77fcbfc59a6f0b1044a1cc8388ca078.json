@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fasterxml:jackson-dataformat-xml:2.8.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fasterxml:jackson-dataformat-xml:2.8.0:-:*:*:*:*:*:*",
+            "cpe:2.3:a:fasterxml:jackson-dataformat-xml:2.8.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:fasterxml:jackson-dataformat-xml:2.8.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fasterxml:jackson-dataformat-xml:2.8.0:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:fasterxml:jackson-dataformat-xml:2.8.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fasterxml:jackson-dataformat-xml:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FasterXML/jackson-dataformat-xml/commit/eeff2c312e9d4caa8c9f27b8f740c7529d00524a",
+        "version_end_excluding": {
+            "fasterxml:jackson-dataformat-xml": "2.7.8"
+        },
+        "path": {
+            "file_path": "src/test/java/com/fasterxml/jackson/dataformat/xml/failing/SupportDTDDefaultsTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-7051"
+        ],
+        "CWE": [
+            "CWE-611",
+            "CWE-918"
+        ]
+    }
+}

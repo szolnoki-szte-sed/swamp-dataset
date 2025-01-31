@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:airsonic_project:airsonic:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/airsonic/airsonic/commit/1a88f46c18066f61e11c6a95dccd3801ec4aec55",
+        "version_end_excluding": {
+            "airsonic_project:airsonic": "10.1.2"
+        },
+        "path": {
+            "file_path": "airsonic-main/src/main/java/org/airsonic/player/ajax/LyricsService.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20222"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

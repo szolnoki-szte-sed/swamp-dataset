@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:frappe:erpnext:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/frappe/frappe/commit/497ea861f481c6a3c52fe2aed9d0df1b6c99e9d7",
+        "version_end_excluding": {
+            "frappe:erpnext": "13.1.0"
+        },
+        "path": {
+            "file_path": "frappe/public/js/frappe/form/controls/button.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-23057"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

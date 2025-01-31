@@ -1,0 +1,79 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sickrage:sickrage:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:shuup:shuup:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:ipados:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:cisco:firepower_threat_defense:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:metinfo:metinfo:5.3.17:*:*:*:*:*:*:*",
+            "cpe:2.3:a:splunk:splunk:6.1:*:*:*:enterprise:*:*:*",
+            "cpe:2.3:a:awstats:awstats:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:blackboard:blackboard:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oneorzero:oneorzero_helpdesk:1.6.4.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpweather:phpweather:2.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpmyid:phpmyid:0.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:icewarp:merak_mail_server:9.3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:h:barracuda_networks:barracuda_im_firewall:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mediawiki:mediawiki:1.13.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fantastic_guestbook_project:fantastic_guestbook:2.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cjguestbook_project:cjguestbook:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:georgecurrums:open_guestbook:0.5:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "sickrage:sickrage": "unknown",
+            "shuup:shuup": "2.10.8",
+            "apple:ipados": "unknown",
+            "cisco:firepower_threat_defense": "unknown",
+            "phpmyadmin:phpmyadmin": "unknown",
+            "metinfo:metinfo": "unknown",
+            "splunk:splunk": "unknown",
+            "awstats:awstats": "6.8",
+            "blackboard:blackboard": "unknown",
+            "oneorzero:oneorzero_helpdesk": "unknown",
+            "phpweather:phpweather": "unknown",
+            "phpmyid:phpmyid": "unknown",
+            "icewarp:merak_mail_server": "unknown",
+            "barracuda_networks:barracuda_im_firewall": "3.0.01.008",
+            "mediawiki:mediawiki": "unknown",
+            "fantastic_guestbook_project:fantastic_guestbook": "unknown",
+            "cjguestbook_project:cjguestbook": "1.3",
+            "georgecurrums:open_guestbook": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "asp_net",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-25926",
+            "CVE-2021-25963",
+            "CVE-2021-1879",
+            "CVE-2020-3580",
+            "CVE-2014-8958",
+            "CVE-2017-9764",
+            "CVE-2014-5198",
+            "CVE-2008-5080",
+            "CVE-2006-4308",
+            "CVE-2007-5727",
+            "CVE-2008-5770",
+            "CVE-2008-4730",
+            "CVE-2008-5734",
+            "CVE-2008-0971",
+            "CVE-2008-5249",
+            "CVE-2006-3568",
+            "CVE-2006-3211",
+            "CVE-2006-3295"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

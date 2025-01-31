@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:libmobi_project:libmobi:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bfabiszewski/libmobi/commit/c0699c8693c47f14a2e57dec7292e862ac7adf9c",
+        "version_end_excluding": {
+            "libmobi_project:libmobi": "0.11"
+        },
+        "path": {
+            "file_path": "src/util.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2279"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

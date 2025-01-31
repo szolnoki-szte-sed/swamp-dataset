@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:onedev_project:onedev:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/theonedev/onedev/commit/9637fc8fa461c5777282a0021c3deb1e7a48f137",
+        "version_end_excluding": {
+            "onedev_project:onedev": "4.0.3"
+        },
+        "path": {
+            "file_path": "server-plugin/server-plugin-buildspec-node/pom.xml"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21243"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

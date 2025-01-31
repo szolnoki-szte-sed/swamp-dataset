@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:6.4.19:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_instant_messaging_server:10.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_billing_and_revenue_management:12.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_billing_and_revenue_management:7.5:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FasterXML/jackson-databind/commit/6799f8f10cc78e9af6d443ed6982d00a13f2e7d2",
+        "version_end_excluding": {
+            "fasterxml:jackson-databind": "2.7.9.3"
+        },
+        "path": {
+            "file_path": "src/test/java/com/fasterxml/jackson/databind/interop/IllegalTypesCheckTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-7489"
+        ],
+        "CWE": [
+            "CWE-184",
+            "CWE-502"
+        ]
+    }
+}

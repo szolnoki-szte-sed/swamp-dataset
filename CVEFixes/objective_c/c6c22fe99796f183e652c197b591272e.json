@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:imagemagick:imagemagick:7.0.3-2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ImageMagick/ImageMagick/commit/90406972f108c4da71f998601b06abdc2ac6f06e",
+        "version_end_excluding": {
+            "imagemagick:imagemagick": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "MagickCore/attribute.c"
+        }
+    },
+    "programming_language": "objective_c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-7906"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:otrs:open_ticket_request_system:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:otrs:open_ticket_request_system:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:otrs:open_ticket_request_system:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/OTRS/otrs/commit/a4a1a01f84fac7ab032570ee50b660e2ebb15c01",
+        "version_end_excluding": {
+            "otrs:open_ticket_request_system": "4.0.32",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "var/httpd/htdocs/js/Core.Agent.Admin.SupportDataCollector.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-16587"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

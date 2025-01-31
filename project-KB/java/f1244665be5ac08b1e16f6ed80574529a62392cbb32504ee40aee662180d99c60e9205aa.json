@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:eclipse:openj9:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/eclipse/openj9/commit/f1244665be5ac08b1e16f6ed80574529a62392cb",
+        "version_end_excluding": {
+            "eclipse:openj9": "0.15.0"
+        },
+        "path": {
+            "file_path": "jcl/src/java.base/share/classes/java/lang/String.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-11772"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

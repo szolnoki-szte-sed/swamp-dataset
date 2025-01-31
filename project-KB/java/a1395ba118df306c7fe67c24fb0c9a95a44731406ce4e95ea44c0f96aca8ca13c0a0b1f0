@@ -1,0 +1,84 @@
+diff --git a/quartz-core/src/main/java/org/quartz/xml/XMLSchedulingDataProcessor.java b/quartz-core/src/main/java/org/quartz/xml/XMLSchedulingDataProcessor.java
+index 9daccc120..8790cff95 100644
+--- a/quartz-core/src/main/java/org/quartz/xml/XMLSchedulingDataProcessor.java
++++ b/quartz-core/src/main/java/org/quartz/xml/XMLSchedulingDataProcessor.java
+@@ -197,6 +197,13 @@ protected void initDocumentParser() throws ParserConfigurationException  {
+         
+         docBuilderFactory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource", resolveSchemaSource());
+         
++        docBuilderFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        docBuilderFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
++        docBuilderFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
++        docBuilderFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        docBuilderFactory.setXIncludeAware(false);
++        docBuilderFactory.setExpandEntityReferences(false);
++
+         docBuilder = docBuilderFactory.newDocumentBuilder();
+         
+         docBuilder.setErrorHandler(this);
+diff --git a/quartz-core/src/test/java/org/quartz/xml/XMLSchedulingDataProcessorTest.java b/quartz-core/src/test/java/org/quartz/xml/XMLSchedulingDataProcessorTest.java
+index ac4e6c84c..799330eba 100755
+--- a/quartz-core/src/test/java/org/quartz/xml/XMLSchedulingDataProcessorTest.java
++++ b/quartz-core/src/test/java/org/quartz/xml/XMLSchedulingDataProcessorTest.java
+@@ -23,6 +23,7 @@
+ import org.quartz.impl.matchers.GroupMatcher;
+ import org.quartz.simpl.CascadingClassLoadHelper;
+ import org.quartz.spi.ClassLoadHelper;
++import org.xml.sax.SAXParseException;
+ 
+ /**
+  * Unit test for XMLSchedulingDataProcessor.
+@@ -105,6 +106,31 @@ private void copyResourceToFile(String resName, File file) throws IOException {
+     }
+   }
+   
++  public void testXmlParserConfiguration() throws Exception {
++    Scheduler scheduler = null;
++    try {
++      StdSchedulerFactory factory = new StdSchedulerFactory("org/quartz/xml/quartz-test.properties");
++      scheduler = factory.getScheduler();
++      ClassLoadHelper clhelper = new CascadingClassLoadHelper();
++      clhelper.initialize();
++      XMLSchedulingDataProcessor processor = new XMLSchedulingDataProcessor(clhelper);
++      processor.processFileAndScheduleJobs("org/quartz/xml/bad-job-config.xml", scheduler);
++
++
++      final JobKey jobKey = scheduler.getJobKeys(GroupMatcher.jobGroupEquals("native")).iterator().next();
++      final JobDetail jobDetail = scheduler.getJobDetail(jobKey);
++      final String description = jobDetail.getDescription();
++
++
++      fail("Expected parser configuration to block DOCTYPE. The following was injected into the job description field: " + description);
++    } catch (SAXParseException e) {
++      assertTrue(e.getMessage().contains("DOCTYPE is disallowed"));
++    } finally {
++      if (scheduler != null)
++        scheduler.shutdown();
++    }
++  }
++
+   /** QTZ-187 */
+   public void testDirectivesNoOverwriteWithIgnoreDups() throws Exception {
+     Scheduler scheduler = null;
+diff --git a/quartz-core/src/test/resources/org/quartz/xml/bad-job-config.xml b/quartz-core/src/test/resources/org/quartz/xml/bad-job-config.xml
+new file mode 100755
+index 000000000..9aeb56736
+--- /dev/null
++++ b/quartz-core/src/test/resources/org/quartz/xml/bad-job-config.xml
+@@ -0,0 +1,15 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!DOCTYPE foo [<!ELEMENT foo ANY >
++		<!ENTITY xxe SYSTEM "/" >]>
++<job-scheduling-data xmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.quartz-scheduler.org/xml/JobSchedulingData http://www.quartz-scheduler.org/xml/job_scheduling_data_2_0.xsd" version="2.0">
++	<schedule>
++		<job>
++			<name>xxe</name>
++			<group>native</group>
++			<description>&xxe;</description>
++			<job-class>org.quartz.xml.XMLSchedulingDataProcessorTest$MyJob</job-class>
++			<durability>true</durability>
++			<recover>false</recover>
++		</job>
++	</schedule>
++</job-scheduling-data>
+\ No newline at end of file

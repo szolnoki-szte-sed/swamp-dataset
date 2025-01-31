@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:dynmap_project:dynmap:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:dynmap_project:dynmap:3.0:alpha1:*:*:*:*:*:*",
+            "cpe:2.3:a:dynmap_project:dynmap:3.0:alpha2:*:*:*:*:*:*",
+            "cpe:2.3:a:dynmap_project:dynmap:3.0:alpha3:*:*:*:*:*:*",
+            "cpe:2.3:a:dynmap_project:dynmap:3.0:rc3:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/webbukkit/dynmap/commit/641f142cd3ccdcbfb04eda3059be22dd9ed93783",
+        "version_end_excluding": {
+            "dynmap_project:dynmap": "3.0"
+        },
+        "path": {
+            "file_path": "DynmapCore/src/main/java/org/dynmap/servlet/MapStorageResourceHandler.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-12395"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

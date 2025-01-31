@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bminor/glibc/commit/2864e767053317538feafa815046fff89e5a16be",
+        "version_end_excluding": {
+            "gnu:glibc": "2.2"
+        },
+        "path": {
+            "file_path": "posix/Makefile"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-1999-0199"
+        ],
+        "CWE": [
+            "CWE-252"
+        ]
+    }
+}

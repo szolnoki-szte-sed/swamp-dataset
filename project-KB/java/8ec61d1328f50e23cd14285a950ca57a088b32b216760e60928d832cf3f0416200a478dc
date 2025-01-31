@@ -1,0 +1,60 @@
+diff --git a/weixin-java-common/src/main/java/me/chanjar/weixin/common/util/crypto/WxCryptUtil.java b/weixin-java-common/src/main/java/me/chanjar/weixin/common/util/crypto/WxCryptUtil.java
+index cded0c9846..8124148110 100755
+--- a/weixin-java-common/src/main/java/me/chanjar/weixin/common/util/crypto/WxCryptUtil.java
++++ b/weixin-java-common/src/main/java/me/chanjar/weixin/common/util/crypto/WxCryptUtil.java
+@@ -39,6 +39,7 @@ protected DocumentBuilder initialValue() {
+       try {
+         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+         factory.setExpandEntityReferences(false);
++        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         return factory.newDocumentBuilder();
+       } catch (ParserConfigurationException exc) {
+         throw new IllegalArgumentException(exc);
+diff --git a/weixin-java-common/src/test/java/me/chanjar/weixin/common/util/crypto/WxCryptUtilTest.java b/weixin-java-common/src/test/java/me/chanjar/weixin/common/util/crypto/WxCryptUtilTest.java
+index 06f9d7ba28..82cfa9d2d6 100755
+--- a/weixin-java-common/src/test/java/me/chanjar/weixin/common/util/crypto/WxCryptUtilTest.java
++++ b/weixin-java-common/src/test/java/me/chanjar/weixin/common/util/crypto/WxCryptUtilTest.java
+@@ -40,6 +40,7 @@ public void testNormal() throws ParserConfigurationException, SAXException, IOEx
+ 
+     DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+     documentBuilderFactory.setExpandEntityReferences(false);
++    documentBuilderFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+     DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+     Document document = documentBuilder.parse(new InputSource(new StringReader(encryptedXml)));
+ 
+@@ -83,6 +84,8 @@ public void testValidateSignatureError() throws ParserConfigurationException, SA
+       String afterEncrpt = pc.encrypt(this.replyMsg);
+       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+       dbf.setExpandEntityReferences(false);
++      dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++
+       DocumentBuilder db = dbf.newDocumentBuilder();
+       StringReader sr = new StringReader(afterEncrpt);
+       InputSource is = new InputSource(sr);
+diff --git a/weixin-java-pay/src/main/java/com/github/binarywang/wxpay/bean/result/BaseWxPayResult.java b/weixin-java-pay/src/main/java/com/github/binarywang/wxpay/bean/result/BaseWxPayResult.java
+index b0233ded4d..5a1ea64e83 100644
+--- a/weixin-java-pay/src/main/java/com/github/binarywang/wxpay/bean/result/BaseWxPayResult.java
++++ b/weixin-java-pay/src/main/java/com/github/binarywang/wxpay/bean/result/BaseWxPayResult.java
+@@ -189,6 +189,7 @@ private Document getXmlDoc() {
+     try {
+       final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+       factory.setExpandEntityReferences(false);
++      factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+       this.xmlDoc = factory.newDocumentBuilder()
+         .parse(new ByteArrayInputStream(this.xmlString.getBytes(StandardCharsets.UTF_8)));
+       return xmlDoc;
+diff --git a/weixin-java-pay/src/test/java/com/github/binarywang/wxpay/bean/result/BaseWxPayResultTest.java b/weixin-java-pay/src/test/java/com/github/binarywang/wxpay/bean/result/BaseWxPayResultTest.java
+index 83fcc5f365..6b70d5542f 100644
+--- a/weixin-java-pay/src/test/java/com/github/binarywang/wxpay/bean/result/BaseWxPayResultTest.java
++++ b/weixin-java-pay/src/test/java/com/github/binarywang/wxpay/bean/result/BaseWxPayResultTest.java
+@@ -75,7 +75,9 @@ public void testToMap() throws Exception {
+   @Test(expectedExceptions = {RuntimeException.class})
+   public void testToMap_with_empty_xmlString() {
+     WxPayOrderQueryResult result = new WxPayOrderQueryResult();
+-    result.setXmlString(" ");
++    result.setXmlString( "<?xml version=\"1.0\" ?><!DOCTYPE doc " +
++      "[<!ENTITY win SYSTEM \"file:///C:/Users/user/Documents/testdata2.txt\">]" +
++      "><doc>&win;</doc>");
+     Map<String, String> map = result.toMap();
+     System.out.println(map);
+   }

@@ -1,0 +1,39 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:fedoraproject:fedora:25:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:24:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:23:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse_project:leap:42.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:42.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:13.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:13.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jasper_project:jasper:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mdadams/jasper/commit/df5d2867e8004e51e18b89865bc4aa69229227b3",
+        "version_end_excluding": {
+            "fedoraproject:fedora": "unknown",
+            "opensuse_project:leap": "unknown",
+            "opensuse:leap": "unknown",
+            "opensuse:opensuse": "unknown",
+            "jasper_project:jasper": "unknown"
+        },
+        "path": {
+            "file_path": "src/libjasper/mif/mif_cod.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5221"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

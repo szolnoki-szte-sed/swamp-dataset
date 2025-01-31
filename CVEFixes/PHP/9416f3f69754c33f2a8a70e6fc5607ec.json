@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:tecnick:tcpdf:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:limesurvey:limesurvey:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/tecnickcom/TCPDF/commit/1861e33fe05f653b67d070f7c106463e7a5c26ed",
+        "version_end_excluding": {
+            "tecnick:tcpdf": "6.2.22",
+            "limesurvey:limesurvey": "3.16.0"
+        },
+        "path": {
+            "file_path": "composer.json"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-17057"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

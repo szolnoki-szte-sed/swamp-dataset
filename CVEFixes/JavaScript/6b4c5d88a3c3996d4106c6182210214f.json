@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:linuxfoundation:dojox:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:linuxfoundation:dojox:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:linuxfoundation:dojox:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:linuxfoundation:dojox:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:linuxfoundation:dojox:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:linuxfoundation:dojox:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/dojo/dojox/commit/47d1b302b5b23d94e875b77b9b9a8c4f5622c9da",
+        "version_end_excluding": {
+            "linuxfoundation:dojox": "1.16.2"
+        },
+        "path": {
+            "file_path": "jq.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-5259"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

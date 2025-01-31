@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/c7084edc3f6d67750f50d4183134c4fb5712a5c8",
+        "version_end_excluding": {
+            "linux:linux_kernel": "5.0.8"
+        },
+        "path": {
+            "file_path": "drivers/char/Kconfig"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-11486"
+        ],
+        "CWE": [
+            "CWE-362"
+        ]
+    }
+}

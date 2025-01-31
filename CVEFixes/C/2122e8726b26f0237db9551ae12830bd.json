@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:idsoftware:tech_1:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:doom_vanille_project:doom_vanille:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/AXDOOMER/doom-vanille/commit/8a6d9a02fa991a91ff90ccdc73b5ceabaa6cb9ec",
+        "version_end_excluding": {
+            "idsoftware:tech_1": "unknown",
+            "doom_vanille_project:doom_vanille": "671"
+        },
+        "path": {
+            "file_path": "m_misc.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15007"
+        ],
+        "CWE": [
+            "CWE-120"
+        ]
+    }
+}

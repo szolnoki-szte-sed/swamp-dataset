@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gpac:gpac:1.0.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/gpac/gpac/commit/00194f5fe462123f70b0bae7987317b52898b868",
+        "version_end_excluding": {
+            "gpac:gpac": "unknown"
+        },
+        "path": {
+            "file_path": "src/media_tools/media_export.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v2.1"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32438"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

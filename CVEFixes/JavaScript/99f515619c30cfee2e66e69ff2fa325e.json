@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:scandipwa:magento-scripts:1.5.2:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:scandipwa:magento-scripts:1.5.1:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/scandipwa/create-magento-app/commit/89115db7031e181eb8fb4ec2822bc6cab88e7071",
+        "version_end_excluding": {
+            "scandipwa:magento-scripts": "unknown"
+        },
+        "path": {
+            "file_path": "build-packages/magento-scripts/lib/commands/logs.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Open Software License 3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32684"
+        ],
+        "CWE": [
+            "CWE-670"
+        ]
+    }
+}

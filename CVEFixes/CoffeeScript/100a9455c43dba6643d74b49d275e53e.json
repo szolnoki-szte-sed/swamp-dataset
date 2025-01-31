@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:aws-lambda-multipart-parser_project:aws-lambda-multipart-parser:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/myshenin/aws-lambda-multipart-parser/commit/56ccb03af4dddebc2b2defb348b6558783d5757e",
+        "version_end_excluding": {
+            "aws-lambda-multipart-parser_project:aws-lambda-multipart-parser": "unknown"
+        },
+        "path": {
+            "file_path": "index.js"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-7560"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

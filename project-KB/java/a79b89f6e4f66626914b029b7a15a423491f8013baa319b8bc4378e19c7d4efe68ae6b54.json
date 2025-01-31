@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal_software:cloud_foundry_elastic_runtime:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:cloud_foundry_uaa:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cloudfoundry:cf-release:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cloudfoundry/uaa/commit/a79b89f6e4f66626914b029b7a15a423491f8013",
+        "version_end_excluding": {
+            "cloudfoundry:cf-release": "unknown"
+        },
+        "path": {
+            "file_path": "uaa/src/test/java/org/cloudfoundry/identity/uaa/login/ResetPasswordControllerMockMvcTests.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-3189"
+        ],
+        "CWE": [
+            "CWE-640"
+        ]
+    }
+}

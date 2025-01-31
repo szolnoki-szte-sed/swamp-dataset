@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:github:codeql_action:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/github/codeql-action/commit/58defc0652e935f6f2ffc70a82828b98d75476fb",
+        "version_end_excluding": {
+            "github:codeql_action": "20210304"
+        },
+        "path": {
+            "file_path": "src/api-client.ts"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32638"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

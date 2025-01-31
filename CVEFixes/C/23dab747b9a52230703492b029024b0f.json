@@ -1,0 +1,61 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:ubuntu:ubuntu:12.04:*:lts:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.1.5:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:3.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:3.3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:3.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:3.4.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:3.4.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:3.4.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.1.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.1.6.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.4.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.4.1:-:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:3.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:3.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:xen:xen:4.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/af6fc858a35b90e89ea7a7ee58e66628c55c776b",
+        "version_end_excluding": {
+            "ubuntu:ubuntu": "unknown",
+            "xen:xen": "unknown",
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "drivers/xen/xen-pciback/conf_space.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-2150"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:struts:2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:struts:2.0.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:struts:2.0.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:struts:2.0.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:struts:2.0.6:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/struts/commit/dae026a0f0511f83852053bae9d5a622e7f80486",
+        "version_end_excluding": {
+            "apache:struts": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/main/java/org/apache/struts2/components/UIBean.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2008-6682"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mit:kerberos_5:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:26:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:27:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_desktop:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_workstation:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server:7.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/krb5/krb5/commit/e1caf6fb74981da62039846931ebdffed71309d1",
+        "version_end_excluding": {
+            "mit:kerberos_5": "unknown",
+            "fedoraproject:fedora": "unknown",
+            "debian:debian_linux": "unknown",
+            "redhat:enterprise_linux_desktop": "unknown",
+            "redhat:enterprise_linux_workstation": "unknown",
+            "redhat:enterprise_linux_server": "unknown"
+        },
+        "path": {
+            "file_path": "src/plugins/kdb/ldap/libkdb_ldap/kdb_ldap.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-5729"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

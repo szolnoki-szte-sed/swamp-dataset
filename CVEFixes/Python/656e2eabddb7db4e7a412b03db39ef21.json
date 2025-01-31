@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:netflix:security_monkey:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Netflix/security_monkey/commit/3b4da13efabb05970c80f464a50d3c1c12262466",
+        "version_end_excluding": {
+            "netflix:security_monkey": "unknown"
+        },
+        "path": {
+            "file_path": "security_monkey/views/__init__.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-7266"
+        ],
+        "CWE": [
+            "CWE-601"
+        ]
+    }
+}

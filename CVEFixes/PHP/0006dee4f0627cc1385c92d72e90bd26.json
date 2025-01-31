@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:hestiacp:control_panel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vestacp:control_panel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/serghey-rodin/vesta/commit/c3c4de43d6701560f604ca7996f717b08e3d7d1d",
+        "version_end_excluding": {
+            "hestiacp:control_panel": "1.1.1",
+            "vestacp:control_panel": "unknown"
+        },
+        "path": {
+            "file_path": "web/reset/index.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-10966"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

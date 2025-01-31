@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:totaljs:total.js_cms:12.0.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/totaljs/cms/commit/75205f93009db3cf8c0b0f4f1fc8ab82d70da8ad",
+        "version_end_excluding": {
+            "totaljs:total.js_cms": "unknown"
+        },
+        "path": {
+            "file_path": "themes/admin/public/ui.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10260"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

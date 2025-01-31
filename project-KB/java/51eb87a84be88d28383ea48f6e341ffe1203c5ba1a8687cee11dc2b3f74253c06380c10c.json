@@ -1,0 +1,47 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:activemq:5.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:5.4.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:5.3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:4.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:5.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:5.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:5.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:5.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:4.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:5.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:4.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:4.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:4.0:m4:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:5.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:5.5.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:5.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:4.0:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:activemq:5.3.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/activemq/commit/51eb87a84be88d28383ea48f6e341ffe1203c5ba",
+        "version_end_excluding": {
+            "apache:activemq": "unknown"
+        },
+        "path": {
+            "file_path": "activemq-web/src/main/java/org/apache/activemq/web/PortfolioPublishServlet.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-6092"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

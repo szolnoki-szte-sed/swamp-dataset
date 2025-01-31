@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fishshell:fish:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:19:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/fish-shell/fish-shell/commit/3225d7e169a9edb2f470c26989e7bc8e0d0355ce",
+        "version_end_excluding": {
+            "fishshell:fish": "2.1.1",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "env.cpp"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-3219"
+        ],
+        "CWE": [
+            "CWE-59"
+        ]
+    }
+}

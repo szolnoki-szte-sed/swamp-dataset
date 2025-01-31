@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:flatcore:flatcore:1.4.6:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/flatCore/flatCore-CMS/commit/f1b42b338693a9c240182e76ef2131057f2c2a87",
+        "version_end_excluding": {
+            "flatcore:flatcore": "unknown"
+        },
+        "path": {
+            "file_path": "acp/core/list.themes.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-9451"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

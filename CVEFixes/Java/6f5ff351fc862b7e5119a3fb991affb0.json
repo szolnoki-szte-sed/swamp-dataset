@@ -1,0 +1,60 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:quarkus:quarkus:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_trade_finance_process_management:14.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_credit_facilities_process_management:14.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_corporate_lending_process_management:14.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:nosql_database:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_trade_finance_process_management:14.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_credit_facilities_process_management:14.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_credit_facilities_process_management:14.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_corporate_lending_process_management:14.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_corporate_lending_process_management:14.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_trade_finance_process_management:14.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_brm_-_elastic_charging_engine:12.0.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_design_studio:7.4.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_messaging_server:8.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:snapcenter:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:active_iq_unified_manager:-:*:*:*:*:linux:*:*",
+            "cpe:2.3:a:netapp:active_iq_unified_manager:-:*:*:*:*:windows:*:*",
+            "cpe:2.3:a:netapp:cloud_secure_agent:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/netty/netty/commit/c735357bf29d07856ad171c6611a2e1a0e0000ec",
+        "version_end_excluding": {
+            "netty:netty": "4.1.59",
+            "debian:debian_linux": "unknown",
+            "quarkus:quarkus": "unknown",
+            "oracle:banking_trade_finance_process_management": "unknown",
+            "oracle:banking_credit_facilities_process_management": "unknown",
+            "oracle:banking_corporate_lending_process_management": "unknown",
+            "oracle:nosql_database": "20.3",
+            "oracle:communications_brm_-_elastic_charging_engine": "unknown",
+            "oracle:communications_design_studio": "unknown",
+            "oracle:communications_messaging_server": "unknown",
+            "netapp:snapcenter": "unknown",
+            "netapp:active_iq_unified_manager": "unknown",
+            "netapp:cloud_secure_agent": "unknown"
+        },
+        "path": {
+            "file_path": "buffer/src/test/java/io/netty/buffer/ReadOnlyDirectByteBufferBufTest.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21290"
+        ],
+        "CWE": [
+            "CWE-378"
+        ]
+    }
+}

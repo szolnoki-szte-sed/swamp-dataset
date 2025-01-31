@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:w3edge:total_cache:*:*:*:*:*:wordpress:*:*"
+        ],
+        "fix_commit": "https://github.com/wp-plugins/w3-total-cache/commit/9a1cc9f70558282e135eb3120d271448c75b28dd",
+        "version_end_excluding": {
+            "w3edge:total_cache": "unknown"
+        },
+        "path": {
+            "file_path": "inc/define.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-9414"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

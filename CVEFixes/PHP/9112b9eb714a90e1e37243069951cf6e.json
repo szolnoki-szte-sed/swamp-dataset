@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mantisbt:mantisbt:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mantisbt/mantisbt/commit/221cf323f16a9738a5b27aaba94758f11281d85c",
+        "version_end_excluding": {
+            "mantisbt:mantisbt": "2.24.3"
+        },
+        "path": {
+            "file_path": "core/cfdefs/cfdef_standard.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-25288"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

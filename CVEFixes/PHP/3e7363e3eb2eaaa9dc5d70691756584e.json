@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:geeklog_project:geeklog:2.1.1:*:*:*:ivywe:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ivywe/geeklog-ivywe/commit/beba390fd86bd991414ebf73e3482966d7115654",
+        "version_end_excluding": {
+            "geeklog_project:geeklog": "unknown"
+        },
+        "path": {
+            "file_path": "public_html/layout/bento/header.thtml"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-4849"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

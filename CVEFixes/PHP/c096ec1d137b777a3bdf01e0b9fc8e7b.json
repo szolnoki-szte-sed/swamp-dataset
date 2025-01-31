@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:enhancesoft:osticket:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/osTicket/osTicket/commit/6c724ea3fe352d10d457d334dc054ef81917fde1",
+        "version_end_excluding": {
+            "enhancesoft:osticket": "1.12.6"
+        },
+        "path": {
+            "file_path": "scp/queues.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-22609"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

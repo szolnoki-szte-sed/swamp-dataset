@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:backpackforlaravel:backpack\\\\crud:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Laravel-Backpack/CRUD/commit/8b6bd0a2d489a4690f6b1d7ace67e2f07f5f0cc6",
+        "version_end_excluding": {
+            "backpackforlaravel:backpack\\\\crud": "3.4.9"
+        },
+        "path": {
+            "file_path": "src/resources/views/columns/select.blade.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20962"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

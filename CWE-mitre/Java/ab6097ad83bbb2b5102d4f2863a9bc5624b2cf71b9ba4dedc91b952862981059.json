@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phprank:phprank:1.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:symfony:twig:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:audiogalaxy:audiogalaxy:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ipswitch:imail:2006:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "phprank:phprank": "unknown",
+            "symfony:twig": "2.7.4",
+            "audiogalaxy:audiogalaxy": "unknown",
+            "ipswitch:imail": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2002-1800",
+            "CVE-2001-1537",
+            "CVE-2001-1536",
+            "CVE-2005-2160"
+        ],
+        "CWE": [
+            "CWE-315"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:chevereto:chevereto:*:*:*:*:free:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Chevereto/Chevereto-Free/commit/159daeab6adfe828bd06e6e74f5b647bf9b1bb70",
+        "version_end_excluding": {
+            "chevereto:chevereto": "1.0.13"
+        },
+        "path": {
+            "file_path": "app/app.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-12030"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

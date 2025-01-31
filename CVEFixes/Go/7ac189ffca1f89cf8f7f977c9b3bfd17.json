@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:crypto:evmos:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:crypto:ethermint:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:crypto:ethermint:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:crypto:cronos:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/crypto-org-chain/cronos/commit/150ef237b37ac28c8136e1c0f494932860b9ebe8",
+        "version_end_excluding": {
+            "crypto:evmos": "unknown",
+            "crypto:ethermint": "0.7.3",
+            "crypto:cronos": "0.6.5"
+        },
+        "path": {
+            "file_path": "go.mod"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-43839"
+        ],
+        "CWE": [
+            "CWE-670"
+        ]
+    }
+}

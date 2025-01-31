@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal_software:cloud_foundry_elastic_runtime:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:cloud_foundry_uaa:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cloudfoundry:cf-release:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cloudfoundry/uaa/commit/9730cd6a3bbb481ee4e400b51952b537589c469d",
+        "version_end_excluding": {
+            "cloudfoundry:cf-release": "216"
+        },
+        "path": {
+            "file_path": "common/src/main/java/org/cloudfoundry/identity/uaa/authentication/SessionResetFilter.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5171"
+        ],
+        "CWE": [
+            "CWE-613"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:microweber:microweber:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/microweber/microweber/commit/de6d17b52d261902653fbdd2ecefcaac82e54256",
+        "version_end_excluding": {
+            "microweber:microweber": "1.2.11"
+        },
+        "path": {
+            "file_path": ".github/workflows/build-and-upload.yml"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0929"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

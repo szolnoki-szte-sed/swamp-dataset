@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:xfce:thunar:1.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:xfce:thunar:1.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:11.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/xfce-mirror/thunar/commit/03dd312e157d4fa8a11d5fa402706ae5b05806fa",
+        "version_end_excluding": {
+            "xfce:thunar": "unknown",
+            "opensuse:opensuse": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "thunar/thunar-transfer-job.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-1588"
+        ],
+        "CWE": [
+            "CWE-134"
+        ]
+    }
+}

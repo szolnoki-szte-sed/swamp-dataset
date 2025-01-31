@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jsish:jsish:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pcmacdon/jsish/commit/430ea27accd4d4ffddc946c9402e7c9064835a18",
+        "version_end_excluding": {
+            "jsish:jsish": "3.0.7"
+        },
+        "path": {
+            "file_path": "src/jsiOptions.c"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-22873"
+        ],
+        "CWE": [
+            "CWE-120"
+        ]
+    }
+}

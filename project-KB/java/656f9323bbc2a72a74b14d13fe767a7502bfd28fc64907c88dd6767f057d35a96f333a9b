@@ -1,0 +1,441 @@
+diff --git a/src/main/java/reactor/netty/http/client/HttpClientConnect.java b/src/main/java/reactor/netty/http/client/HttpClientConnect.java
+index 6683531c25..904cea6405 100644
+--- a/src/main/java/reactor/netty/http/client/HttpClientConnect.java
++++ b/src/main/java/reactor/netty/http/client/HttpClientConnect.java
+@@ -59,8 +59,6 @@
+ import io.netty.handler.logging.LogLevel;
+ import io.netty.handler.ssl.ApplicationProtocolNames;
+ import io.netty.handler.ssl.ApplicationProtocolNegotiationHandler;
+-import io.netty.handler.ssl.JdkSslContext;
+-import io.netty.handler.ssl.SslContext;
+ import io.netty.util.AsciiString;
+ import io.netty.util.AttributeKey;
+ import io.netty.util.concurrent.Future;
+@@ -126,13 +124,15 @@ public Mono<? extends Connection> connect(Bootstrap b) {
+ 			SslProvider ssl = SslProvider.findSslSupport(b);
+ 
+ 			if (b.config()
+-			     .group() == null) {
++				 .group() == null) {
+ 
+ 				LoopResources loops = HttpResources.get();
+ 
+ 				EventLoopGroup elg = loops.onClient(LoopResources.DEFAULT_NATIVE);
+ 
+-				Integer maxConnections = (Integer) b.config().attrs().get(AttributeKey.valueOf("maxConnections"));
++				Integer maxConnections = (Integer) b.config()
++				                                    .attrs()
++				                                    .get(AttributeKey.valueOf("maxConnections"));
+ 
+ 				if (maxConnections != null && maxConnections != -1 && elg instanceof Supplier) {
+ 					EventLoopGroup delegate = (EventLoopGroup) ((Supplier) elg).get();
+@@ -206,7 +206,7 @@ static final class MonoHttpConnect extends Mono<Connection> {
+ 		MonoHttpConnect(Bootstrap bootstrap,
+ 				HttpClientConfiguration configuration,
+ 				TcpClient tcpClient,
+-				@Nullable SslProvider               sslProvider) {
++				@Nullable SslProvider sslProvider) {
+ 			this.bootstrap = bootstrap;
+ 			this.configuration = configuration;
+ 			this.sslProvider = sslProvider;
+@@ -218,18 +218,18 @@ static final class MonoHttpConnect extends Mono<Connection> {
+ 		public void subscribe(CoreSubscriber<? super Connection> actual) {
+ 			final Bootstrap b = bootstrap.clone();
+ 
+-			HttpClientHandler handler = new HttpClientHandler(configuration, b.config()
+-			                                                                  .remoteAddress(), sslProvider, proxyProvider);
++			HttpClientHandler handler =
++					new HttpClientHandler(configuration, b.config().remoteAddress(), sslProvider, proxyProvider);
+ 
+ 			b.remoteAddress(handler);
+ 
+ 			if (sslProvider != null) {
+ 				if ((configuration.protocols & HttpClientConfiguration.h2c) == HttpClientConfiguration.h2c) {
+-					Operators.error(actual, new IllegalArgumentException("Configured" +
+-							" H2 Clear-Text protocol " +
++					Operators.error(actual, new IllegalArgumentException("Configured " +
++							"H2 Clear-Text protocol " +
+ 							"with TLS. Use the non clear-text h2 protocol via " +
+-							"HttpClient#protocol or disable TLS" +
+-							" via HttpClient#tcpConfiguration(tcp -> tcp.noSSL())"));
++							"HttpClient#protocol or disable TLS " +
++							"via HttpClient#tcpConfiguration(tcp -> tcp.noSSL())"));
+ 					return;
+ 				}
+ 				if ((configuration.protocols & HttpClientConfiguration.h11) == HttpClientConfiguration.h11) {
+@@ -251,7 +251,8 @@ public void subscribe(CoreSubscriber<? super Connection> actual) {
+ 			else {
+ 				if ((configuration.protocols & HttpClientConfiguration.h2) == HttpClientConfiguration.h2) {
+ 					Operators.error(actual, new IllegalArgumentException(
+-							"Configured H2 protocol without TLS. Use" + " a clear-text " + "h2 protocol via HttpClient#protocol or configure TLS" + " via HttpClient#secure"));
++							"Configured H2 protocol without TLS. Use a clear-text " +
++							"h2 protocol via HttpClient#protocol or configure TLS via HttpClient#secure"));
+ 					return;
+ 				}
+ //				if ((configuration.protocols & HttpClientConfiguration.h11orH2c) == HttpClientConfiguration.h11orH2c) {
+@@ -291,11 +292,11 @@ public void subscribe(CoreSubscriber<? super Connection> actual) {
+ 			Mono.<Connection>create(sink -> {
+ 				Bootstrap finalBootstrap;
+ 				//append secure handler if needed
+-				if (handler.activeURI.isSecure()) {
++				if (handler.toURI.isSecure()) {
+ 					if (sslProvider == null) {
+ 						if ((configuration.protocols & HttpClientConfiguration.h2c) == HttpClientConfiguration.h2c) {
+ 							sink.error(new IllegalArgumentException("Configured H2 " +
+-									"Clear-Text" + " protocol" + " without TLS while " +
++									"Clear-Text protocol without TLS while " +
+ 									"trying to redirect to a secure address."));
+ 							return;
+ 						}
+@@ -430,11 +431,10 @@ public void onStateChange(Connection connection, State newState) {
+ 			if (newState == ConnectionObserver.State.CONFIGURED
+ 					&& HttpClientOperations.class == connection.getClass()) {
+ 				if (log.isDebugEnabled()) {
+-					log.debug(format(connection.channel(), "Handler is being applied: {}"),
+-							handler);
++					log.debug(format(connection.channel(), "Handler is being applied: {}"), handler);
+ 				}
+ 
+-				Mono.defer(() -> Mono.fromDirect(handler.requestWithBody((HttpClientOperations)connection)))
++				Mono.defer(() -> Mono.fromDirect(handler.requestWithBody((HttpClientOperations) connection)))
+ 				    .subscribe(connection.disposeSubscriber());
+ 			}
+ 		}
+@@ -443,28 +443,26 @@ public void onStateChange(Connection connection, State newState) {
+ 	static final class HttpClientHandler extends SocketAddress
+ 			implements Predicate<Throwable>, Supplier<SocketAddress> {
+ 
+-		final HttpMethod         method;
+-		final HttpHeaders        defaultHeaders;
++		final HttpMethod              method;
++		final HttpHeaders             defaultHeaders;
+ 		final BiFunction<? super HttpClientRequest, ? super NettyOutbound, ? extends Publisher<Void>>
+-		                         handler;
+-		final boolean            compress;
+-		final Boolean            chunkedTransfer;
+-		final UriEndpointFactory uriEndpointFactory;
+-		final String             websocketProtocols;
+-		final int                maxFramePayloadLength;
+-
+-		final ClientCookieEncoder cookieEncoder;
+-		final ClientCookieDecoder cookieDecoder;
+-
+-		final BiPredicate<HttpClientRequest, HttpClientResponse> followRedirectPredicate;
+-
++		                              handler;
++		final boolean                 compress;
++		final Boolean                 chunkedTransfer;
++		final UriEndpointFactory      uriEndpointFactory;
++		final String                  websocketProtocols;
++		final int                     maxFramePayloadLength;
++		final ClientCookieEncoder     cookieEncoder;
++		final ClientCookieDecoder     cookieDecoder;
++		final BiPredicate<HttpClientRequest, HttpClientResponse>
++		                              followRedirectPredicate;
+ 		final HttpResponseDecoderSpec decoder;
++		final ProxyProvider           proxyProvider;
+ 
+-		final ProxyProvider proxyProvider;
+-
+-		volatile UriEndpoint        activeURI;
++		volatile UriEndpoint        toURI;
++		volatile UriEndpoint        fromURI;
+ 		volatile Supplier<String>[] redirectedFrom;
+-		volatile boolean retried;
++		volatile boolean            retried;
+ 
+ 		@SuppressWarnings("unchecked")
+ 		HttpClientHandler(HttpClientConfiguration configuration, @Nullable SocketAddress address,
+@@ -486,8 +484,7 @@ static final class HttpClientHandler extends SocketAddress
+ 				else {
+ 					this.defaultHeaders = defaultHeaders;
+ 				}
+-				this.defaultHeaders.set(HttpHeaderNames.ACCEPT_ENCODING,
+-				                        HttpHeaderValues.GZIP);
++				this.defaultHeaders.set(HttpHeaderNames.ACCEPT_ENCODING, HttpHeaderValues.GZIP);
+ 			}
+ 			else {
+ 				this.defaultHeaders = defaultHeaders;
+@@ -520,12 +517,12 @@ static final class HttpClientHandler extends SocketAddress
+ 			this.websocketProtocols = configuration.websocketSubprotocols;
+ 			this.maxFramePayloadLength = configuration.websocketMaxFramePayloadLength;
+ 			this.handler = configuration.body;
+-			this.activeURI = uriEndpointFactory.createUriEndpoint(uri, configuration.websocketSubprotocols != null);
++			this.toURI = uriEndpointFactory.createUriEndpoint(uri, configuration.websocketSubprotocols != null);
+ 		}
+ 
+ 		@Override
+ 		public SocketAddress get() {
+-			SocketAddress address = activeURI.getRemoteAddress();
++			SocketAddress address = toURI.getRemoteAddress();
+ 			if (proxyProvider != null && !proxyProvider.shouldProxy(address) &&
+ 					address instanceof InetSocketAddress) {
+ 				address = InetSocketAddressUtil.replaceWithResolved((InetSocketAddress) address);
+@@ -536,7 +533,7 @@ public SocketAddress get() {
+ 
+ 		Publisher<Void> requestWithBody(HttpClientOperations ch) {
+ 			try {
+-				UriEndpoint uri = activeURI;
++				UriEndpoint uri = toURI;
+ 				HttpHeaders headers = ch.getNettyRequest()
+ 				                        .setUri(uri.getPathAndQuery())
+ 				                        .setMethod(method)
+@@ -551,6 +548,14 @@ Publisher<Void> requestWithBody(HttpClientOperations ch) {
+ 					headers.set(HttpHeaderNames.USER_AGENT, USER_AGENT);
+ 				}
+ 
++				if (fromURI != null && !toURI.equals(fromURI)) {
++					headers.remove(HttpHeaderNames.HOST)
++					       .remove(HttpHeaderNames.EXPECT)
++					       .remove(HttpHeaderNames.COOKIE)
++					       .remove(HttpHeaderNames.AUTHORIZATION)
++					       .remove(HttpHeaderNames.PROXY_AUTHORIZATION);
++				}
++
+ 				SocketAddress remoteAddress = uri.getRemoteAddress();
+ 				if (!headers.contains(HttpHeaderNames.HOST) && remoteAddress instanceof InetSocketAddress) {
+ 					headers.set(HttpHeaderNames.HOST,
+@@ -614,14 +619,23 @@ static String resolveHostHeaderValue(@Nullable InetSocketAddress remoteAddress)
+ 
+ 		void redirect(String to) {
+ 			Supplier<String>[] redirectedFrom = this.redirectedFrom;
+-			UriEndpoint from = activeURI;
++			UriEndpoint from = toURI;
+ 			if (to.startsWith("/")) {
+-				activeURI = uriEndpointFactory.createUriEndpoint(to, from.isWs(),
+-						() -> URI_ADDRESS_MAPPER.apply(from.host, from.port));
++				SocketAddress address = from.getRemoteAddress();
++				if (address instanceof InetSocketAddress) {
++					InetSocketAddress inetSocketAddress = (InetSocketAddress) address;
++					toURI = uriEndpointFactory.createUriEndpoint(to, from.isWs(),
++							() -> URI_ADDRESS_MAPPER.apply(inetSocketAddress.getHostString(), inetSocketAddress.getPort()));
++				}
++				else {
++					toURI = uriEndpointFactory.createUriEndpoint(to, from.isWs(),
++							() -> URI_ADDRESS_MAPPER.apply(from.host, from.port));
++				}
+ 			}
+ 			else {
+-				activeURI = uriEndpointFactory.createUriEndpoint(to, from.isWs());
++				toURI = uriEndpointFactory.createUriEndpoint(to, from.isWs());
+ 			}
++			fromURI = from;
+ 			this.redirectedFrom = addToRedirectedFromArray(redirectedFrom, from);
+ 		}
+ 
+@@ -633,8 +647,7 @@ static Supplier<String>[] addToRedirectedFromArray(@Nullable Supplier<String>[]
+ 				return new Supplier[]{fromUrlSupplier};
+ 			}
+ 			else {
+-				Supplier<String>[] newRedirectedFrom =
+-						new Supplier[redirectedFrom.length + 1];
++				Supplier<String>[] newRedirectedFrom = new Supplier[redirectedFrom.length + 1];
+ 				System.arraycopy(redirectedFrom,
+ 						0,
+ 						newRedirectedFrom,
+@@ -661,7 +674,7 @@ public boolean test(Throwable throwable) {
+ 			}
+ 			if (AbortedException.isConnectionReset(throwable) && !retried) {
+ 				retried = true;
+-				redirect(activeURI.toString());
++				redirect(toURI.toString());
+ 				return true;
+ 			}
+ 			return false;
+@@ -669,13 +682,12 @@ public boolean test(Throwable throwable) {
+ 
+ 		@Override
+ 		public String toString() {
+-			return "{" + "uri=" + activeURI + ", method=" + method + '}';
++			return "{" + "uri=" + toURI + ", method=" + method + '}';
+ 		}
+ 	}
+ 
+ 
+-	static final class Http1Initializer
+-			implements BiConsumer<ConnectionObserver, Channel>  {
++	static final class Http1Initializer implements BiConsumer<ConnectionObserver, Channel> {
+ 
+ 		final HttpResponseDecoderSpec decoder;
+ 		final boolean compress;
+@@ -702,8 +714,8 @@ public void accept(ConnectionObserver listener, Channel channel) {
+ 			if (compress) {
+ 				channel.pipeline()
+ 				       .addAfter(NettyPipeline.HttpCodec,
+-						       NettyPipeline.HttpDecompressor,
+-						       new HttpContentDecompressor());
++				                 NettyPipeline.HttpDecompressor,
++				                 new HttpContentDecompressor());
+ 			}
+ 		}
+ 
+@@ -755,8 +767,8 @@ public int hashCode() {
+ 	@ChannelHandler.Sharable
+ 	static final class HttpClientInitializer
+ 			extends ChannelInboundHandlerAdapter
+-			implements BiConsumer<ConnectionObserver, Channel>, ChannelOperations
+-			.OnSetup, GenericFutureListener<Future<Http2StreamChannel>> {
++			implements BiConsumer<ConnectionObserver, Channel>, ChannelOperations.OnSetup,
++			GenericFutureListener<Future<Http2StreamChannel>> {
+ 		final HttpClientHandler handler;
+ 		final DirectProcessor<Void> upgraded;
+ 
+@@ -783,7 +795,7 @@ public void channelActive(ChannelHandlerContext ctx) {
+ 
+ 		@Override
+ 		public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
+-			if(evt == HttpClientUpgradeHandler.UpgradeEvent.UPGRADE_SUCCESSFUL) {
++			if (evt == HttpClientUpgradeHandler.UpgradeEvent.UPGRADE_SUCCESSFUL) {
+ 				//upgraded to h2, read the next streams/settings from server
+ 
+ 				ctx.channel()
+@@ -828,13 +840,13 @@ public void accept(ConnectionObserver listener, Channel channel) {
+ 						                    handler.decoder.parseHttpAfterConnectRequest);
+ 
+ 				final Http2Connection connection = new DefaultHttp2Connection(false);
+-				HttpToHttp2ConnectionHandlerBuilder h2HandlerBuilder = new
+-						HttpToHttp2ConnectionHandlerBuilder()
+-						.frameListener(new InboundHttp2ToHttpAdapterBuilder(connection)
+-										.maxContentLength(65536)
+-										.propagateSettings(true)
+-										.build())
+-						.connection(connection);
++				HttpToHttp2ConnectionHandlerBuilder h2HandlerBuilder =
++						new HttpToHttp2ConnectionHandlerBuilder()
++						        .frameListener(new InboundHttp2ToHttpAdapterBuilder(connection)
++						                               .maxContentLength(65536)
++						                               .propagateSettings(true)
++						                               .build())
++						        .connection(connection);
+ 
+ 				if (p.get(NettyPipeline.LoggingHandler) != null) {
+ 					h2HandlerBuilder.frameLogger(new Http2FrameLogger(LogLevel.DEBUG, HttpClient.class));
+@@ -920,7 +932,8 @@ static void openStream(Channel ch, ConnectionObserver listener,
+ 				new Http2StreamChannelBootstrap(ch).handler(new ChannelInitializer() {
+ 					@Override
+ 					protected void initChannel(Channel ch) {
+-						ch.pipeline().addLast(new Http2StreamFrameToHttpObjectCodec(false));
++						ch.pipeline()
++						  .addLast(new Http2StreamFrameToHttpObjectCodec(false));
+ 						ChannelOperations.addReactiveBridge(ch,
+ 								(conn, l, msg) -> new HttpClientOperations(conn, l,
+ 										initializer.handler.cookieEncoder,
+@@ -944,7 +957,6 @@ static final class Http2StreamInitializer extends ChannelInitializer<Channel> {
+ 
+ 		@Override
+ 		protected void initChannel(Channel ch) {
+-			System.out.println("test");
+ 			// TODO handle server pushes
+ 		}
+ 	}
+diff --git a/src/main/java/reactor/netty/http/client/UriEndpoint.java b/src/main/java/reactor/netty/http/client/UriEndpoint.java
+index 7b482717b2..1bf9424764 100644
+--- a/src/main/java/reactor/netty/http/client/UriEndpoint.java
++++ b/src/main/java/reactor/netty/http/client/UriEndpoint.java
+@@ -30,9 +30,7 @@ final class UriEndpoint {
+ 	final Supplier<SocketAddress> remoteAddress;
+ 	final String pathAndQuery;
+ 
+-	UriEndpoint(String scheme, String host, int port,
+-			Supplier<SocketAddress> remoteAddress,
+-			String pathAndQuery) {
++	UriEndpoint(String scheme, String host, int port, Supplier<SocketAddress> remoteAddress, String pathAndQuery) {
+ 		this.host = host;
+ 		this.port = port;
+ 		this.scheme = Objects.requireNonNull(scheme, "scheme");
+@@ -41,8 +39,7 @@ final class UriEndpoint {
+ 	}
+ 
+ 	boolean isWs() {
+-		return HttpClient.WS_SCHEME.equals(scheme)
+-				|| HttpClient.WSS_SCHEME.equals(scheme);
++		return HttpClient.WS_SCHEME.equals(scheme) || HttpClient.WSS_SCHEME.equals(scheme);
+ 	}
+ 
+ 	boolean isSecure() {
+@@ -50,8 +47,7 @@ boolean isSecure() {
+ 	}
+ 
+ 	static boolean isSecureScheme(String scheme) {
+-		return HttpClient.HTTPS_SCHEME.equals(scheme)
+-				|| HttpClient.WSS_SCHEME.equals(scheme);
++		return HttpClient.HTTPS_SCHEME.equals(scheme) || HttpClient.WSS_SCHEME.equals(scheme);
+ 	}
+ 
+ 	String getPathAndQuery() {
+@@ -74,13 +70,11 @@ String toExternalForm() {
+ 		return sb.toString();
+ 	}
+ 
+-	@SuppressWarnings("unchecked")
+-	static String toSocketAddressStringWithoutDefaultPort(
+-			SocketAddress address, boolean secure) {
++	static String toSocketAddressStringWithoutDefaultPort(SocketAddress address, boolean secure) {
+ 		if (!(address instanceof InetSocketAddress)) {
+ 			throw new IllegalStateException("Only support InetSocketAddress representation");
+ 		}
+-		String addressString = NetUtil.toSocketAddressString((InetSocketAddress)address);
++		String addressString = NetUtil.toSocketAddressString((InetSocketAddress) address);
+ 		if (secure) {
+ 			if (addressString.endsWith(":443")) {
+ 				addressString = addressString.substring(0, addressString.length() - 4);
+@@ -98,4 +92,21 @@ static String toSocketAddressStringWithoutDefaultPort(
+ 	public String toString() {
+ 		return toExternalForm();
+ 	}
++
++	@Override
++	public boolean equals(Object o) {
++		if (this == o) {
++			return true;
++		}
++		if (o == null || getClass() != o.getClass()) {
++			return false;
++		}
++		UriEndpoint that = (UriEndpoint) o;
++		return getRemoteAddress().equals(that.getRemoteAddress());
++	}
++
++	@Override
++	public int hashCode() {
++		return Objects.hash(getRemoteAddress());
++	}
+ }
+diff --git a/src/main/java/reactor/netty/http/client/UriEndpointFactory.java b/src/main/java/reactor/netty/http/client/UriEndpointFactory.java
+index cc3ee140a2..f7fd3dcddb 100644
+--- a/src/main/java/reactor/netty/http/client/UriEndpointFactory.java
++++ b/src/main/java/reactor/netty/http/client/UriEndpointFactory.java
+@@ -42,7 +42,6 @@ final class UriEndpointFactory {
+ 
+ 	UriEndpoint createUriEndpoint(String url, boolean isWs) {
+ 		return createUriEndpoint(url, isWs, connectAddress);
+-
+ 	}
+ 
+ 	UriEndpoint createUriEndpoint(String url, boolean isWs, Supplier<SocketAddress> connectAddress) {
+@@ -61,12 +60,12 @@ UriEndpoint createUriEndpoint(String url, boolean isWs, Supplier<SocketAddress>
+ 				int port = portString != null ? Integer.parseInt(portString)
+ 						: (UriEndpoint.isSecureScheme(scheme) ? 443 : 80);
+ 				String pathAndQuery = cleanPathAndQuery(matcher.group(4));
+-				return new UriEndpoint(scheme,
+-						host, port, () -> inetSocketAddressFunction.apply(host, port),
++				return new UriEndpoint(scheme, host, port,
++						() -> inetSocketAddressFunction.apply(host, port),
+ 						pathAndQuery);
+ 			}
+ 			else {
+-				throw new IllegalArgumentException("Unable to parse url '" + url + "'");
++				throw new IllegalArgumentException("Unable to parse url [" + url + "]");
+ 			}
+ 		}
+ 	}
+@@ -84,7 +83,8 @@ String cleanPathAndQuery(@Nullable String pathAndQuery) {
+ 		}
+ 		if (pathAndQuery.length() == 0) {
+ 			pathAndQuery = "/";
+-		} else if (pathAndQuery.charAt(0) == '?') {
++		}
++		else if (pathAndQuery.charAt(0) == '?') {
+ 			pathAndQuery = "/" + pathAndQuery;
+ 		}
+ 		return pathAndQuery;

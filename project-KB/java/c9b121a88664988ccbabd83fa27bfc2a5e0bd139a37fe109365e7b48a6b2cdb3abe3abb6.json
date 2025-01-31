@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:o:fedoraproject:fedora:23:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:22:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:xstream_project:xstream:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/x-stream/xstream/commit/c9b121a88664988ccbabd83fa27bfc2a5e0bd139",
+        "version_end_excluding": {
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "xstream/src/java/com/thoughtworks/xstream/io/xml/SjsxpDriver.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-3674"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

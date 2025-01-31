@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:oracle:primavera_unifier:16.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:primavera_unifier:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:primavera_unifier:18.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:primavera_unifier:16.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:primavera_unifier:19.12:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/lucene-solr/commit/128360856d50d7b39473644e6c1c21ba11766195",
+        "version_end_excluding": {
+            "apache:solr": "7.7.3"
+        },
+        "path": {
+            "file_path": "solr/contrib/velocity/src/test/org/apache/solr/velocity/VelocityResponseWriterTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-17558"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

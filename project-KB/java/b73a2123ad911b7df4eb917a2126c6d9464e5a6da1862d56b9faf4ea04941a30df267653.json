@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:kaptcha_project:kaptcha:2.3.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/penggle/kaptcha/commit/b73a2123ad911b7df4eb917a2126c6d9464e5a6d",
+        "version_end_excluding": {
+            "kaptcha_project:kaptcha": "unknown"
+        },
+        "path": {
+            "file_path": "src/main/java/com/google/code/kaptcha/impl/ShadowGimpy.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-18531"
+        ],
+        "CWE": [
+            "CWE-330"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bigtreecms:bigtree_cms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bigtreecms/BigTree-CMS/commit/8cf4212ea40e1b843e1aecf4b24681b0964ec04c",
+        "version_end_excluding": {
+            "bigtreecms:bigtree_cms": "unknown"
+        },
+        "path": {
+            "file_path": "core/inc/bigtree/apis/storage.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-7695"
+        ],
+        "CWE": [
+            "CWE-434"
+        ]
+    }
+}

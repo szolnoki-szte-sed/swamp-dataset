@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:irrelon:\\@irrelon\\/path:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:a:irrelon:irrelon-path:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/Irrelon/irrelon-path/commit/8a126b160c1a854ae511659c111413ad9910ebe3",
+        "version_end_excluding": {
+            "irrelon:\\@irrelon\\/path": "4.7.0",
+            "irrelon:irrelon-path": "4.7.0"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-7708"
+        ],
+        "CWE": [
+            "CWE-915"
+        ]
+    }
+}

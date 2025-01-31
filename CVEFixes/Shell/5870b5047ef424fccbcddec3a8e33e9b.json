@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:glances_project:glances:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/nicolargo/glances/commit/9d6051be4a42f692392049fdbfc85d5dfa458b32",
+        "version_end_excluding": {
+            "glances_project:glances": "3.2.1"
+        },
+        "path": {
+            "file_path": "optional-requirements.txt"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23418"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

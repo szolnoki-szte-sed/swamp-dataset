@@ -1,0 +1,294 @@
+diff --git a/jetty-server/src/main/java/org/eclipse/jetty/server/HttpConnection.java b/jetty-server/src/main/java/org/eclipse/jetty/server/HttpConnection.java
+index b23c5cd0c948..b274d6168c27 100644
+--- a/jetty-server/src/main/java/org/eclipse/jetty/server/HttpConnection.java
++++ b/jetty-server/src/main/java/org/eclipse/jetty/server/HttpConnection.java
+@@ -72,7 +72,6 @@ public class HttpConnection extends AbstractConnection implements Runnable, Http
+     private final HttpParser _parser;
+     private final AtomicInteger _contentBufferReferences = new AtomicInteger();
+     private volatile ByteBuffer _requestBuffer = null;
+-    private volatile ByteBuffer _chunk = null;
+     private final BlockingReadCallback _blockingReadCallback = new BlockingReadCallback();
+     private final AsyncReadCallback _asyncReadCallback = new AsyncReadCallback();
+     private final SendCallback _sendCallback = new SendCallback();
+@@ -442,11 +441,6 @@ else if (_parser.inContentState() && _generator.isPersistent())
+                 _parser.close();
+         }
+ 
+-        // Not in a race here with onFillable, because it has given up control before calling handle.
+-        // in a slight race with #completed, but not sure what to do with that anyway.
+-        if (_chunk != null)
+-            _bufferPool.release(_chunk);
+-        _chunk = null;
+         _generator.reset();
+ 
+         // if we are not called from the onfillable thread, schedule completion
+@@ -693,6 +687,7 @@ private class SendCallback extends IteratingCallback
+         private boolean _lastContent;
+         private Callback _callback;
+         private ByteBuffer _header;
++        private ByteBuffer _chunk;
+         private boolean _shutdownOut;
+ 
+         private SendCallback()
+@@ -737,10 +732,9 @@ public Action process() throws Exception
+             if (_callback == null)
+                 throw new IllegalStateException();
+ 
+-            ByteBuffer chunk = _chunk;
+             while (true)
+             {
+-                HttpGenerator.Result result = _generator.generateResponse(_info, _head, _header, chunk, _content, _lastContent);
++                HttpGenerator.Result result = _generator.generateResponse(_info, _head, _header, _chunk, _content, _lastContent);
+                 if (LOG.isDebugEnabled())
+                     LOG.debug("generate: {} for {} ({},{},{})@{}",
+                         result,
+@@ -763,23 +757,21 @@ public Action process() throws Exception
+ 
+                     case HEADER_OVERFLOW:
+                     {
+-                        int capacity = _header.capacity();
+-                        _bufferPool.release(_header);
+-                        if (capacity >= _config.getResponseHeaderSize())
++                        if (_header.capacity() >= _config.getResponseHeaderSize())
+                             throw new BadMessageException(INTERNAL_SERVER_ERROR_500, "Response header too large");
++                        releaseHeader();
+                         _header = _bufferPool.acquire(_config.getResponseHeaderSize(), HEADER_BUFFER_DIRECT);
+                         continue;
+                     }
+                     case NEED_CHUNK:
+                     {
+-                        chunk = _chunk = _bufferPool.acquire(HttpGenerator.CHUNK_SIZE, CHUNK_BUFFER_DIRECT);
++                        _chunk = _bufferPool.acquire(HttpGenerator.CHUNK_SIZE, CHUNK_BUFFER_DIRECT);
+                         continue;
+                     }
+                     case NEED_CHUNK_TRAILER:
+                     {
+-                        if (_chunk != null)
+-                            _bufferPool.release(_chunk);
+-                        chunk = _chunk = _bufferPool.acquire(_config.getResponseHeaderSize(), CHUNK_BUFFER_DIRECT);
++                        releaseChunk();
++                        _chunk = _bufferPool.acquire(_config.getResponseHeaderSize(), CHUNK_BUFFER_DIRECT);
+                         continue;
+                     }
+                     case FLUSH:
+@@ -787,7 +779,7 @@ public Action process() throws Exception
+                         // Don't write the chunk or the content if this is a HEAD response, or any other type of response that should have no content
+                         if (_head || _generator.isNoContent())
+                         {
+-                            BufferUtil.clear(chunk);
++                            BufferUtil.clear(_chunk);
+                             BufferUtil.clear(_content);
+                         }
+ 
+@@ -798,10 +790,10 @@ public Action process() throws Exception
+                             gatherWrite += 4;
+                             bytes += _header.remaining();
+                         }
+-                        if (BufferUtil.hasContent(chunk))
++                        if (BufferUtil.hasContent(_chunk))
+                         {
+                             gatherWrite += 2;
+-                            bytes += chunk.remaining();
++                            bytes += _chunk.remaining();
+                         }
+                         if (BufferUtil.hasContent(_content))
+                         {
+@@ -812,10 +804,10 @@ public Action process() throws Exception
+                         switch (gatherWrite)
+                         {
+                             case 7:
+-                                getEndPoint().write(this, _header, chunk, _content);
++                                getEndPoint().write(this, _header, _chunk, _content);
+                                 break;
+                             case 6:
+-                                getEndPoint().write(this, _header, chunk);
++                                getEndPoint().write(this, _header, _chunk);
+                                 break;
+                             case 5:
+                                 getEndPoint().write(this, _header, _content);
+@@ -824,10 +816,10 @@ public Action process() throws Exception
+                                 getEndPoint().write(this, _header);
+                                 break;
+                             case 3:
+-                                getEndPoint().write(this, chunk, _content);
++                                getEndPoint().write(this, _chunk, _content);
+                                 break;
+                             case 2:
+-                                getEndPoint().write(this, chunk);
++                                getEndPoint().write(this, _chunk);
+                                 break;
+                             case 1:
+                                 getEndPoint().write(this, _content);
+@@ -871,10 +863,23 @@ private Callback release()
+             _callback = null;
+             _info = null;
+             _content = null;
++            releaseHeader();
++            releaseChunk();
++            return complete;
++        }
++
++        private void releaseHeader()
++        {
+             if (_header != null)
+                 _bufferPool.release(_header);
+             _header = null;
+-            return complete;
++        }
++
++        private void releaseChunk()
++        {
++            if (_chunk != null)
++                _bufferPool.release(_chunk);
++            _chunk = null;
+         }
+ 
+         @Override
+diff --git a/jetty-server/src/test/java/org/eclipse/jetty/server/LargeHeaderTest.java b/jetty-server/src/test/java/org/eclipse/jetty/server/LargeHeaderTest.java
+new file mode 100644
+index 000000000000..3a67f065d6fd
+--- /dev/null
++++ b/jetty-server/src/test/java/org/eclipse/jetty/server/LargeHeaderTest.java
+@@ -0,0 +1,142 @@
++//
++//  ========================================================================
++//  Copyright (c) 1995-2020 Mort Bay Consulting Pty Ltd and others.
++//  ------------------------------------------------------------------------
++//  All rights reserved. This program and the accompanying materials
++//  are made available under the terms of the Eclipse Public License v1.0
++//  and Apache License v2.0 which accompanies this distribution.
++//
++//      The Eclipse Public License is available at
++//      http://www.eclipse.org/legal/epl-v10.html
++//
++//      The Apache License v2.0 is available at
++//      http://www.opensource.org/licenses/apache2.0.php
++//
++//  You may elect to redistribute this code under either of these licenses.
++//  ========================================================================
++//
++
++package org.eclipse.jetty.server;
++
++import java.io.IOException;
++import java.io.InputStream;
++import java.io.OutputStream;
++import java.io.PrintWriter;
++import java.net.Socket;
++import java.util.Arrays;
++import java.util.concurrent.ExecutorService;
++import java.util.concurrent.Executors;
++import java.util.concurrent.TimeUnit;
++import javax.servlet.http.HttpServletRequest;
++import javax.servlet.http.HttpServletResponse;
++
++import org.eclipse.jetty.http.HttpHeader;
++import org.eclipse.jetty.http.HttpTester;
++import org.eclipse.jetty.http.MimeTypes;
++import org.eclipse.jetty.server.handler.AbstractHandler;
++import org.eclipse.jetty.server.handler.ErrorHandler;
++import org.eclipse.jetty.util.IO;
++import org.eclipse.jetty.util.component.LifeCycle;
++import org.eclipse.jetty.util.log.Log;
++import org.eclipse.jetty.util.log.Logger;
++import org.junit.jupiter.api.AfterEach;
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++
++import static java.nio.charset.StandardCharsets.UTF_8;
++import static org.hamcrest.MatcherAssert.assertThat;
++import static org.hamcrest.Matchers.is;
++
++public class LargeHeaderTest
++{
++    private Server server;
++
++    @BeforeEach
++    public void setup() throws Exception
++    {
++        server = new Server();
++
++        HttpConfiguration config = new HttpConfiguration();
++        HttpConnectionFactory http = new HttpConnectionFactory(config);
++
++        ServerConnector connector = new ServerConnector(server, http);
++        connector.setPort(0);
++        connector.setIdleTimeout(5000);
++        server.addConnector(connector);
++
++        server.setErrorHandler(new ErrorHandler());
++
++        server.setHandler(new AbstractHandler()
++        {
++            final String largeHeaderValue;
++
++            {
++                byte[] bytes = new byte[8 * 1024];
++                Arrays.fill(bytes, (byte)'X');
++                largeHeaderValue = "LargeHeaderOver8k-" + new String(bytes, UTF_8) + "_Z_";
++            }
++
++            @Override
++            public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException
++            {
++                response.setHeader(HttpHeader.CONTENT_TYPE.toString(), MimeTypes.Type.TEXT_HTML.toString());
++                response.setHeader("LongStr", largeHeaderValue);
++                PrintWriter writer = response.getWriter();
++                writer.write("<html><h1>FOO</h1></html>");
++                writer.flush();
++                response.flushBuffer();
++                baseRequest.setHandled(true);
++            }
++        });
++        server.start();
++    }
++
++    @AfterEach
++    public void teardown()
++    {
++        LifeCycle.stop(server);
++    }
++
++    @Test
++    public void testLargeHeader() throws Throwable
++    {
++        final Logger CLIENTLOG = Log.getLogger(LargeHeaderTest.class).getLogger(".client");
++        ExecutorService executorService = Executors.newFixedThreadPool(8);
++
++        int localPort = server.getURI().getPort();
++        String rawRequest = "GET / HTTP/1.1\r\n" +
++            "Host: localhost:" + localPort + "\r\n" +
++            "\r\n";
++
++        Throwable issues = new Throwable();
++
++        for (int i = 0; i < 500; ++i)
++        {
++            executorService.submit(() ->
++            {
++                try (Socket client = new Socket("localhost", localPort);
++                     OutputStream output = client.getOutputStream();
++                     InputStream input = client.getInputStream())
++                {
++                    output.write(rawRequest.getBytes(UTF_8));
++                    output.flush();
++
++                    String rawResponse = IO.toString(input, UTF_8);
++                    HttpTester.Response response = HttpTester.parseResponse(rawResponse);
++                    assertThat(response.getStatus(), is(500));
++                }
++                catch (Throwable t)
++                {
++                    CLIENTLOG.warn("Client Issue", t);
++                    issues.addSuppressed(t);
++                }
++            });
++        }
++
++        executorService.awaitTermination(5, TimeUnit.SECONDS);
++        if (issues.getSuppressed().length > 0)
++        {
++            throw issues;
++        }
++    }
++}

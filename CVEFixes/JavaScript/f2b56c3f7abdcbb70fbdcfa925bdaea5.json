@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:talkyard:talkyard:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/debiki/talkyard/commit/b0310df019887f3464895529c773bc7d85ddcf34",
+        "version_end_excluding": {
+            "talkyard:talkyard": "0.2021.35"
+        },
+        "path": {
+            "file_path": "client/app-head/head-bundle.ts"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-25981"
+        ],
+        "CWE": [
+            "CWE-613"
+        ]
+    }
+}

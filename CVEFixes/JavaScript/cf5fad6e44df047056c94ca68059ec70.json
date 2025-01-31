@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mathjs:math.js:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/josdejong/mathjs/commit/8d2d48d81b3c233fb64eb2ec1d7a9e1cf6a55a90",
+        "version_end_excluding": {
+            "mathjs:math.js": "unknown"
+        },
+        "path": {
+            "file_path": "lib/expression/parse.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-1001002"
+        ],
+        "CWE": [
+            "CWE-94"
+        ]
+    }
+}

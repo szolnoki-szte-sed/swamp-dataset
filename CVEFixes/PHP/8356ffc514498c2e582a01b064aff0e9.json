@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:simplemachines:simple_machines_forum:2.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/SimpleMachines/SMF2.1/commit/19e560b9f3e8fc6d7d9d60c1ff617b5ed5c08008",
+        "version_end_excluding": {
+            "simplemachines:simple_machines_forum": "unknown"
+        },
+        "path": {
+            "file_path": "Sources/Subs-Auth.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-5727"
+        ],
+        "CWE": [
+            "CWE-94"
+        ]
+    }
+}

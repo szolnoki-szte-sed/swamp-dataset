@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:cordova:*:*:*:*:*:android:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/cordova-android/commit/032ea8a8d386d8bcffc5de7fd3e4202478effb7d",
+        "version_end_excluding": {
+            "apache:cordova": "unknown"
+        },
+        "path": {
+            "file_path": "framework/src/org/apache/cordova/CordovaBridge.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-8320"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

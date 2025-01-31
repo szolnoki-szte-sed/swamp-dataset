@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:zblogcn:z-blogphp:1.6.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/zblogcn/zblogphp/commit/a67607fc984f976d6b36b8870dffaabd9d6c9d5e",
+        "version_end_excluding": {
+            "zblogcn:z-blogphp": "unknown"
+        },
+        "path": {
+            "file_path": "zb_system/function/lib/zblogphp.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-23352"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

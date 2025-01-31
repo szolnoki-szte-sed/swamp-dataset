@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cloudfoundry:uaa_release:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cloudfoundry/uaa/commit/daeedbe499453b06856556f5e9f7e80d2d1ceb03",
+        "version_end_excluding": {
+            "cloudfoundry:uaa_release": "70.0"
+        },
+        "path": {
+            "file_path": "server/src/test/java/org/cloudfoundry/identity/uaa/security/ScimUserSelfUpdateAllowedTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-3775"
+        ],
+        "CWE": [
+            "CWE-287",
+            "CWE-290"
+        ]
+    }
+}

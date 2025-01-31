@@ -1,0 +1,120 @@
+diff --git a/server/src/main/java/com/linecorp/centraldogma/server/internal/storage/repository/git/GitRepository.java b/server/src/main/java/com/linecorp/centraldogma/server/internal/storage/repository/git/GitRepository.java
+index 32e25563e..b2848eaf6 100644
+--- a/server/src/main/java/com/linecorp/centraldogma/server/internal/storage/repository/git/GitRepository.java
++++ b/server/src/main/java/com/linecorp/centraldogma/server/internal/storage/repository/git/GitRepository.java
+@@ -531,11 +531,12 @@ private Map<String, Entry<?>> blockingFind(
+             }
+ 
+             return Util.unsafeCast(result);
+-        } catch (CentralDogmaException e) {
++        } catch (CentralDogmaException | IllegalArgumentException e) {
+             throw e;
+         } catch (Exception e) {
+             throw new StorageException(
+-                    "failed to get data from " + jGitRepository + " at " + pathPattern + " for " + revision, e);
++                    "failed to get data from '" + parent.name() + '/' + name + "' at " + pathPattern +
++                    " for " + revision, e);
+         } finally {
+             readUnlock();
+         }
+@@ -617,7 +618,7 @@ private List<Commit> blockingHistory(Revision from, Revision to, String pathPatt
+             throw e;
+         } catch (Exception e) {
+             throw new StorageException(
+-                    "failed to retrieve the history: " + jGitRepository +
++                    "failed to retrieve the history: " + parent.name() + '/' + name +
+                     " (" + pathPattern + ", " + from + ".." + to + ')', e);
+         } finally {
+             readUnlock();
+@@ -949,7 +950,7 @@ private CommitResult commit0(@Nullable Revision prevRevision, Revision nextRevis
+         } catch (CentralDogmaException | IllegalArgumentException e) {
+             throw e;
+         } catch (Exception e) {
+-            throw new StorageException("failed to push at " + jGitRepository, e);
++            throw new StorageException("failed to push at '" + parent.name() + '/' + name + '\'', e);
+         }
+     }
+ 
+@@ -1453,7 +1454,7 @@ private Revision uncachedHeadRevision() {
+             throw new StorageException("failed to get the current revision", e);
+         }
+ 
+-        throw new StorageException("failed to determine the HEAD: " + jGitRepository.getDirectory());
++        throw new StorageException("failed to determine the HEAD: " + parent.name() + '/' + name);
+     }
+ 
+     private RevTree toTree(RevWalk revWalk, Revision revision) {
+diff --git a/server/src/main/resources/webapp/scripts/components/util/notification-util.service.js b/server/src/main/resources/webapp/scripts/components/util/notification-util.service.js
+index e265368aa..6147ed7b4 100644
+--- a/server/src/main/resources/webapp/scripts/components/util/notification-util.service.js
++++ b/server/src/main/resources/webapp/scripts/components/util/notification-util.service.js
+@@ -28,7 +28,7 @@ angular.module('CentralDogmaAdmin')
+                    if (typeof arg === 'object' &&
+                        typeof arg.status === 'number' && typeof arg.statusText === 'string') {
+                      if (StringUtil.isNotEmpty(arg.message)) {
+-                       Notification.error(arg.message);
++                       Notification.error(StringUtil.escapeHtml(arg.message));
+                      } else {
+                        var message = arg.status + ' ' + arg.statusText;
+                        if (arg.status === 401) {
+diff --git a/server/src/main/resources/webapp/scripts/components/util/string-util.service.js b/server/src/main/resources/webapp/scripts/components/util/string-util.service.js
+index 219fadf11..be68cac7e 100644
+--- a/server/src/main/resources/webapp/scripts/components/util/string-util.service.js
++++ b/server/src/main/resources/webapp/scripts/components/util/string-util.service.js
+@@ -91,6 +91,14 @@ angular.module('CentralDogmaAdmin')
+                      result += '/';
+                    }
+                    return result;
++                 },
++                 escapeHtml: function(unsafe) {
++                   return unsafe
++                     .replace(/&/g, "&amp;")
++                     .replace(/</g, "&lt;")
++                     .replace(/>/g, "&gt;")
++                     .replace(/"/g, "&quot;")
++                     .replace(/'/g, "&#039;");
+                  }
+                };
+              });
+diff --git a/server/src/test/java/com/linecorp/centraldogma/server/internal/storage/repository/git/GitRepositoryTest.java b/server/src/test/java/com/linecorp/centraldogma/server/internal/storage/repository/git/GitRepositoryTest.java
+index f8260c634..ffb19c84d 100644
+--- a/server/src/test/java/com/linecorp/centraldogma/server/internal/storage/repository/git/GitRepositoryTest.java
++++ b/server/src/test/java/com/linecorp/centraldogma/server/internal/storage/repository/git/GitRepositoryTest.java
+@@ -938,6 +938,14 @@ public void testFindNone() {
+         assertThat(repo.find(HEAD, "non-existent").join()).isEmpty();
+     }
+ 
++    @Test
++    public void testFind_invalidPathPattern() {
++        final String pattern = "a'\"><img src=1 onerror=alert(document.domain)>";
++        assertThatThrownBy(() -> repo.find(HEAD, pattern).join())
++                .isInstanceOf(CompletionException.class)
++                .hasCauseInstanceOf(IllegalArgumentException.class);
++    }
++
+     /**
+      * when the target path or revision is not valid, return an empty map.
+      */
+diff --git a/site/src/sphinx/known-issues.rst b/site/src/sphinx/known-issues.rst
+index 98d45fa5f..adc153181 100644
+--- a/site/src/sphinx/known-issues.rst
++++ b/site/src/sphinx/known-issues.rst
+@@ -17,3 +17,18 @@ Known issues
+   - Consider enforcing network-level access control over Thrift calls.
+   - Note that the Thrift RPC layer is left only for backward compatibility, and will be removed in the future,
+     in favor of the REST API.
++
++Previously known issues
++-----------------------
++- DOM based, Cross-site Scripting (XSS) was found in Central Dogma.
++  An attacker could exploit this by convincing an authenticated user to visit a specifically crafted URL on a CentralDogma server,
++  allowing for the execution of arbitrary scripts on the client-side browser, resulting to perform unauthorized actions.
++
++  - This issue affects: Central Dogma artifacts from 0.17.0 to 0.40.1.
++  - The impact: Attacker is able to have victim execute arbitrary JavaScript code in the browser.
++  - The component: Notification feature
++  - The attack vector: Victim must open a specifically crafted URL.
++  - The fixed version: 0.41.0 and later.
++  - Please check `CVE-2019-6002 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-6002>`_ to get more information.
++  - If you found security bugs, please let us know  `dl_oss_dev@linecorp.com <mailto:dl_oss_dev@linecorp.com>`_ or
++    send `Slack DM <https://join.slack.com/t/central-dogma/shared_invite/enQtNjA5NDk5MTExODQzLWRlZTZmZDljNDY3OTBmN2Y1NDAwMGUzMTMzNmFlOTYzNzYyNDNmNmM5YTk3YmExM2M4NGRkOTY2NTE1MDJhODY>`_ to maintainer.

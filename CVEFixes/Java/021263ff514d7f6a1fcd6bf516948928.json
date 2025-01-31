@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ballcat:codegen:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ballcat-projects/ballcat-codegen/commit/84a7cb38daf0295b93aba21d562ec627e4eb463b",
+        "version_end_excluding": {
+            "ballcat:codegen": "1.0.0"
+        },
+        "path": {
+            "file_path": "ballcat-codegen-backend/src/main/java/com/hccake/ballcat/codegen/exception/TemplateRenderException.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24881"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

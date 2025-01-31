@@ -1,0 +1,1225 @@
+diff --git a/src/main/java/org/cryptacular/CiphertextHeader.java b/src/main/java/org/cryptacular/CiphertextHeader.java
+index 93623c92..d43bf9a9 100644
+--- a/src/main/java/org/cryptacular/CiphertextHeader.java
++++ b/src/main/java/org/cryptacular/CiphertextHeader.java
+@@ -34,18 +34,26 @@
+  * decrypt outstanding data which will be subsequently re-encrypted with a new key.</p>
+  *
+  * @author  Middleware Services
++ *
++ * @deprecated Superseded by {@link CiphertextHeaderV2}
+  */
++@Deprecated
+ public class CiphertextHeader
+ {
++  /** Maximum nonce length in bytes. */
++  protected static final int MAX_NONCE_LEN = 255;
++
++  /** Maximum key name length in bytes. */
++  protected static final int MAX_KEYNAME_LEN = 500;
+ 
+   /** Header nonce field value. */
+-  private final byte[] nonce;
++  protected final byte[] nonce;
+ 
+   /** Header key name field value. */
+-  private String keyName;
++  protected final String keyName;
+ 
+   /** Header length in bytes. */
+-  private int length;
++  protected final int length;
+ 
+ 
+   /**
+@@ -67,12 +75,17 @@ public CiphertextHeader(final byte[] nonce)
+    */
+   public CiphertextHeader(final byte[] nonce, final String keyName)
+   {
+-    this.nonce = nonce;
+-    this.length = 8 + nonce.length;
++    if (nonce.length > MAX_NONCE_LEN) {
++      throw new IllegalArgumentException("Nonce exceeds size limit in bytes (" + MAX_NONCE_LEN + ")");
++    }
+     if (keyName != null) {
+-      this.length += 4 + keyName.getBytes().length;
+-      this.keyName = keyName;
++      if (ByteUtil.toBytes(keyName).length > MAX_KEYNAME_LEN) {
++        throw new IllegalArgumentException("Key name exceeds size limit in bytes (" + MAX_KEYNAME_LEN + ")");
++      }
+     }
++    this.nonce = nonce;
++    this.keyName = keyName;
++    length = computeLength();
+   }
+ 
+   /**
+@@ -127,6 +140,19 @@ public byte[] encode()
+   }
+ 
+ 
++  /**
++   * @return  Length of this header encoded as bytes.
++   */
++  protected int computeLength()
++  {
++    int len = 8 + nonce.length;
++    if (keyName != null) {
++      len += 4 + keyName.getBytes().length;
++    }
++    return len;
++  }
++
++
+   /**
+    * Creates a header from encrypted data containing a cleartext header prepended to the start.
+    *
+@@ -143,17 +169,20 @@ public static CiphertextHeader decode(final byte[] data) throws EncodingExceptio
+ 
+     final int length = bb.getInt();
+     if (length < 0) {
+-      throw new EncodingException("Invalid ciphertext header length: " + length);
++      throw new EncodingException("Bad ciphertext header");
+     }
+ 
+     final byte[] nonce;
+     int nonceLen = 0;
+     try {
+       nonceLen = bb.getInt();
++      if (nonceLen > MAX_NONCE_LEN) {
++        throw new EncodingException("Bad ciphertext header: maximum nonce length exceeded");
++      }
+       nonce = new byte[nonceLen];
+       bb.get(nonce);
+     } catch (IndexOutOfBoundsException | BufferUnderflowException e) {
+-      throw new EncodingException("Invalid nonce length: " + nonceLen);
++      throw new EncodingException("Bad ciphertext header");
+     }
+ 
+     String keyName = null;
+@@ -162,11 +191,14 @@ public static CiphertextHeader decode(final byte[] data) throws EncodingExceptio
+       int keyLen = 0;
+       try {
+         keyLen = bb.getInt();
++        if (keyLen > MAX_KEYNAME_LEN) {
++          throw new EncodingException("Bad ciphertext header: maximum key length exceeded");
++        }
+         b = new byte[keyLen];
+         bb.get(b);
+         keyName = new String(b);
+       } catch (IndexOutOfBoundsException | BufferUnderflowException e) {
+-        throw new EncodingException("Invalid key length: " + keyLen);
++        throw new EncodingException("Bad ciphertext header");
+       }
+     }
+ 
+@@ -188,17 +220,20 @@ public static CiphertextHeader decode(final InputStream input) throws EncodingEx
+   {
+     final int length = ByteUtil.readInt(input);
+     if (length < 0) {
+-      throw new EncodingException("Invalid ciphertext header length: " + length);
++      throw new EncodingException("Bad ciphertext header");
+     }
+ 
+     final byte[] nonce;
+     int nonceLen = 0;
+     try {
+       nonceLen = ByteUtil.readInt(input);
++      if (nonceLen > MAX_NONCE_LEN) {
++        throw new EncodingException("Bad ciphertext header: maximum nonce size exceeded");
++      }
+       nonce = new byte[nonceLen];
+       input.read(nonce);
+     } catch (ArrayIndexOutOfBoundsException e) {
+-      throw new EncodingException("Invalid nonce length: " + nonceLen);
++      throw new EncodingException("Bad ciphertext header");
+     } catch (IOException e) {
+       throw new StreamException(e);
+     }
+@@ -209,10 +244,13 @@ public static CiphertextHeader decode(final InputStream input) throws EncodingEx
+       int keyLen = 0;
+       try {
+         keyLen = ByteUtil.readInt(input);
++        if (keyLen > MAX_KEYNAME_LEN) {
++          throw new EncodingException("Bad ciphertext header: maximum key length exceeded");
++        }
+         b = new byte[keyLen];
+         input.read(b);
+       } catch (ArrayIndexOutOfBoundsException e) {
+-        throw new EncodingException("Invalid key length: " + keyLen);
++        throw new EncodingException("Bad ciphertext header");
+       } catch (IOException e) {
+         throw new StreamException(e);
+       }
+@@ -221,4 +259,5 @@ public static CiphertextHeader decode(final InputStream input) throws EncodingEx
+ 
+     return new CiphertextHeader(nonce, keyName);
+   }
++
+ }
+diff --git a/src/main/java/org/cryptacular/CiphertextHeaderV2.java b/src/main/java/org/cryptacular/CiphertextHeaderV2.java
+new file mode 100644
+index 00000000..23d039e8
+--- /dev/null
++++ b/src/main/java/org/cryptacular/CiphertextHeaderV2.java
+@@ -0,0 +1,309 @@
++/* See LICENSE for licensing and NOTICE for copyright. */
++package org.cryptacular;
++
++import java.io.ByteArrayOutputStream;
++import java.io.IOException;
++import java.io.InputStream;
++import java.nio.BufferUnderflowException;
++import java.nio.ByteBuffer;
++import java.nio.ByteOrder;
++import java.util.function.BiConsumer;
++import java.util.function.Function;
++import javax.crypto.SecretKey;
++import org.bouncycastle.crypto.digests.SHA256Digest;
++import org.bouncycastle.crypto.macs.HMac;
++import org.cryptacular.util.ByteUtil;
++
++/**
++ * Cleartext header prepended to ciphertext providing data required for decryption.
++ *
++ * <p>Data format:</p>
++ *
++ * <pre>
++     +---------+---------+---+----------+-------+------+
++     | Version | KeyName | 0 | NonceLen | Nonce | HMAC |
++     +---------+---------+---+----------+-------+------+
++     |                                                 |
++     +--- 4 ---+--- x ---+ 1 +--- 1 ----+-- y --+- 32 -+
++ * </pre>
++ *
++ * <p>Where fields are defined as follows:</p>
++ *
++ * <ul>
++ *   <li>Version - Header version format as a negative number (4-byte integer). Current version is -2.</li>
++ *   <li>KeyName - Symbolic key name encoded as UTF-8 bytes (variable length)</li>
++ *   <li>0 - Null byte signifying the end of the symbolic key name</li>
++ *   <li>NonceLen - Nonce length in bytes (1-byte unsigned integer)</li>
++ *   <li>Nonce - Nonce bytes (variable length)</li>
++ *   <li>HMAC - HMAC-256 over preceding fields (32 bytes)</li>
++ * </ul>
++ *
++ * <p>The last two fields provide support for multiple keys at the encryption provider. A common case for multiple
++ * keys is key rotation; by tagging encrypted data with a key name, an old key may be retrieved by name to decrypt
++ * outstanding data which will be subsequently re-encrypted with a new key.</p>
++ *
++ * @author  Middleware Services
++ */
++public class CiphertextHeaderV2 extends CiphertextHeader
++{
++  /** Header version format. */
++  private static final int VERSION = -2;
++
++  /** Size of HMAC algorithm output in bytes. */
++  private static final int HMAC_SIZE = 32;
++
++  /** Function to resolve a key from a symbolic key name. */
++  private Function<String, SecretKey> keyLookup;
++
++
++  /**
++   * Creates a new instance with a nonce and named key.
++   *
++   * @param  nonce  Nonce bytes.
++   * @param  keyName  Key name.
++   */
++  public CiphertextHeaderV2(final byte[] nonce, final String keyName)
++  {
++    super(nonce, keyName);
++    if (keyName == null || keyName.isEmpty()) {
++      throw new IllegalArgumentException("Key name is required");
++    }
++  }
++
++
++  /**
++   * Sets the function to resolve keys from {@link #keyName}.
++   *
++   * @param  keyLookup  Key lookup function.
++   */
++  public void setKeyLookup(final Function<String, SecretKey> keyLookup)
++  {
++    this.keyLookup = keyLookup;
++  }
++
++
++  @Override
++  public byte[] encode()
++  {
++    final SecretKey key = keyLookup != null ? keyLookup.apply(keyName) : null;
++    if (key == null) {
++      throw new IllegalStateException("Could not resolve secret key to generate header HMAC");
++    }
++    return encode(key);
++  }
++
++
++  /**
++   * Encodes the header into bytes.
++   *
++   * @param  hmacKey  Key used to generate header HMAC.
++   *
++   * @return  Byte representation of header.
++   */
++  public byte[] encode(final SecretKey hmacKey)
++  {
++    if (hmacKey == null) {
++      throw new IllegalArgumentException("Secret key cannot be null");
++    }
++    final ByteBuffer bb = ByteBuffer.allocate(length);
++    bb.order(ByteOrder.BIG_ENDIAN);
++    bb.putInt(VERSION);
++    bb.put(ByteUtil.toBytes(keyName));
++    bb.put((byte) 0);
++    bb.put(ByteUtil.toUnsignedByte(nonce.length));
++    bb.put(nonce);
++    bb.put(hmac(bb.array(), 0, bb.limit() - HMAC_SIZE));
++    return bb.array();
++  }
++
++
++  /**
++   * @return  Length of this header encoded as bytes.
++   */
++  protected int computeLength()
++  {
++    return 4 + ByteUtil.toBytes(keyName).length + 2 + nonce.length + HMAC_SIZE;
++  }
++
++
++  /**
++   * Creates a header from encrypted data containing a cleartext header prepended to the start.
++   *
++   * @param  data  Encrypted data with prepended header data.
++   * @param  keyLookup  Function used to look up the secret key from the symbolic key name in the header.
++   *
++   * @return  Decoded header.
++   *
++   * @throws  EncodingException  when ciphertext header cannot be decoded.
++   */
++  public static CiphertextHeaderV2 decode(final byte[] data, final Function<String, SecretKey> keyLookup)
++      throws EncodingException
++  {
++    final ByteBuffer bb = ByteBuffer.wrap(data).order(ByteOrder.BIG_ENDIAN);
++    return decodeInternal(
++      ByteBuffer.wrap(data).order(ByteOrder.BIG_ENDIAN),
++      keyLookup,
++      ByteBuffer -> bb.getInt(),
++      ByteBuffer -> bb.get(),
++      (ByteBuffer, output) -> bb.get(output));
++  }
++
++
++  /**
++   * Creates a header from encrypted data containing a cleartext header prepended to the start.
++   *
++   * @param  input  Input stream that is positioned at the start of ciphertext header data.
++   * @param  keyLookup  Function used to look up the secret key from the symbolic key name in the header.
++   *
++   * @return  Decoded header.
++   *
++   * @throws  EncodingException  when ciphertext header cannot be decoded.
++   * @throws  StreamException  on stream IO errors.
++   */
++  public static CiphertextHeaderV2 decode(final InputStream input, final Function<String, SecretKey> keyLookup)
++      throws EncodingException, StreamException
++  {
++    return decodeInternal(
++      input, keyLookup, ByteUtil::readInt, CiphertextHeaderV2::readByte, CiphertextHeaderV2::readInto);
++  }
++
++
++  /**
++   * Internal header decoding routine.
++   *
++   * @param  <T>  Type of input source.
++   * @param  source  Source of header data (input stream or byte buffer).
++   * @param  keyLookup  Function to look up key from symbolic key name in header.
++   * @param  readIntFn  Function that produces a 4-byte integer from the input source.
++   * @param  readByteFn  Function that produces a byte from the input source.
++   * @param  readBytesConsumer  Function that fills a byte array from the input source.
++   *
++   * @return  Decoded header.
++   */
++  private static <T> CiphertextHeaderV2 decodeInternal(
++      final T source,
++      final Function<String, SecretKey> keyLookup,
++      final Function<T, Integer> readIntFn,
++      final Function<T, Byte> readByteFn,
++      final BiConsumer<T, byte[]> readBytesConsumer)
++  {
++    final SecretKey key;
++    final String keyName;
++    final byte[] nonce;
++    final byte[] hmac;
++    try {
++      final int version = readIntFn.apply(source);
++      if (version != VERSION) {
++        throw new EncodingException("Unsupported ciphertext header version");
++      }
++      final ByteArrayOutputStream out = new ByteArrayOutputStream(100);
++      byte b = 0;
++      int count = 0;
++      while ((b = readByteFn.apply(source)) != 0) {
++        out.write(b);
++        if (out.size() > MAX_KEYNAME_LEN) {
++          throw new EncodingException("Bad ciphertext header: maximum nonce length exceeded");
++        }
++        count++;
++      }
++      keyName = ByteUtil.toString(out.toByteArray(), 0, count);
++      key = keyLookup.apply(keyName);
++      if (key == null) {
++        throw new IllegalStateException("Symbolic key name mentioned in header was not found");
++      }
++      final int nonceLen = ByteUtil.toInt(readByteFn.apply(source));
++      nonce = new byte[nonceLen];
++      readBytesConsumer.accept(source, nonce);
++      hmac = new byte[HMAC_SIZE];
++      readBytesConsumer.accept(source, hmac);
++    } catch (IndexOutOfBoundsException | BufferUnderflowException e) {
++      throw new EncodingException("Bad ciphertext header");
++    }
++    final CiphertextHeaderV2 header = new CiphertextHeaderV2(nonce, keyName);
++    final byte[] encoded = header.encode(key);
++    if (!arraysEqual(hmac, 0, encoded, encoded.length - HMAC_SIZE, HMAC_SIZE)) {
++      throw new EncodingException("Ciphertext header HMAC verification failed");
++    }
++    header.setKeyLookup(keyLookup);
++    return header;
++  }
++
++
++  /**
++   * Generates an HMAC-256 over the given input byte array.
++   *
++   * @param  input  Input bytes.
++   * @param  offset  Starting position in input byte array.
++   * @param  length  Number of bytes in input to consume.
++   *
++   * @return  HMAC as byte array.
++   */
++  private static byte[] hmac(final byte[] input, final int offset, final int length)
++  {
++    final HMac hmac = new HMac(new SHA256Digest());
++    final byte[] output = new byte[HMAC_SIZE];
++    hmac.update(input, offset, length);
++    hmac.doFinal(output, 0);
++    return output;
++  }
++
++
++  /**
++   * Read <code>output.length</code> bytes from the input stream into the output buffer.
++   *
++   * @param  input  Input stream.
++   * @param  output  Output buffer.
++   *
++   * @throws  StreamException  on stream IO errors.
++   */
++  private static void readInto(final InputStream input, final byte[] output)
++  {
++    try {
++      input.read(output);
++    } catch (IOException e) {
++      throw new StreamException(e);
++    }
++  }
++
++
++  /**
++   * Read a single byte from the input stream.
++   *
++   * @param  input  Input stream.
++   *
++   * @return  Byte read from input stream.
++   */
++  private static byte readByte(final InputStream input)
++  {
++    try {
++      return (byte) input.read();
++    } catch (IOException e) {
++      throw new StreamException(e);
++    }
++  }
++
++
++  /**
++   * Determines if two byte array ranges are equal bytewise.
++   *
++   * @param  a  First array to compare.
++   * @param  aOff  Offset into first array.
++   * @param  b  Second array to compare.
++   * @param  bOff  Offset into second array.
++   * @param  length  Number of bytes to compare.
++   *
++   * @return  True if every byte in the given range is equal, false otherwise.
++   */
++  private static boolean arraysEqual(final byte[] a, final int aOff, final byte[] b, final int bOff, final int length)
++  {
++    if (length + aOff > a.length || length + bOff > b.length) {
++      return false;
++    }
++    for (int i = 0; i < length; i++) {
++      if (a[i + aOff] != b[i + bOff]) {
++        return false;
++      }
++    }
++    return true;
++  }
++}
+diff --git a/src/main/java/org/cryptacular/bean/AbstractBlockCipherBean.java b/src/main/java/org/cryptacular/bean/AbstractBlockCipherBean.java
+index 0cd6542f..0d06b326 100644
+--- a/src/main/java/org/cryptacular/bean/AbstractBlockCipherBean.java
++++ b/src/main/java/org/cryptacular/bean/AbstractBlockCipherBean.java
+@@ -45,12 +45,12 @@ public AbstractBlockCipherBean(
+   protected byte[] process(final CiphertextHeader header, final boolean mode, final byte[] input)
+   {
+     final BlockCipherAdapter cipher = newCipher(header, mode);
+-    final byte[] headerBytes = header.encode();
+     int outOff;
+     final int inOff;
+     final int length;
+     final byte[] output;
+     if (mode) {
++      final byte[] headerBytes = header.encode();
+       final int outSize = headerBytes.length + cipher.getOutputSize(input.length);
+       output = new byte[outSize];
+       System.arraycopy(headerBytes, 0, output, 0, headerBytes.length);
+@@ -58,12 +58,12 @@ protected byte[] process(final CiphertextHeader header, final boolean mode, fina
+       outOff = headerBytes.length;
+       length = input.length;
+     } else {
+-      length = input.length - headerBytes.length;
++      outOff = 0;
++      inOff = header.getLength();
++      length = input.length - inOff;
+ 
+       final int outSize = cipher.getOutputSize(length);
+       output = new byte[outSize];
+-      inOff = headerBytes.length;
+-      outOff = 0;
+     }
+     outOff += cipher.processBytes(input, inOff, length, output, outOff);
+     outOff += cipher.doFinal(output, outOff);
+@@ -85,7 +85,7 @@ protected void process(
+   {
+     final BlockCipherAdapter cipher = newCipher(header, mode);
+     final int outSize = cipher.getOutputSize(StreamUtil.CHUNK_SIZE);
+-    final byte[] outBuf = new byte[outSize > StreamUtil.CHUNK_SIZE ? outSize : StreamUtil.CHUNK_SIZE];
++    final byte[] outBuf = new byte[Math.max(outSize, StreamUtil.CHUNK_SIZE)];
+     StreamUtil.pipeAll(
+       input,
+       output,
+diff --git a/src/main/java/org/cryptacular/bean/AbstractCipherBean.java b/src/main/java/org/cryptacular/bean/AbstractCipherBean.java
+index f82a259a..fd737633 100644
+--- a/src/main/java/org/cryptacular/bean/AbstractCipherBean.java
++++ b/src/main/java/org/cryptacular/bean/AbstractCipherBean.java
+@@ -8,14 +8,16 @@
+ import java.security.KeyStore;
+ import javax.crypto.SecretKey;
+ import org.cryptacular.CiphertextHeader;
++import org.cryptacular.CiphertextHeaderV2;
+ import org.cryptacular.CryptoException;
+ import org.cryptacular.EncodingException;
+ import org.cryptacular.StreamException;
+ import org.cryptacular.generator.Nonce;
++import org.cryptacular.util.CipherUtil;
+ 
+ /**
+  * Base class for all cipher beans. The base class assumes all ciphertext output will contain a prepended {@link
+- * CiphertextHeader} containing metadata that facilitates decryption.
++ * CiphertextHeaderV2} containing metadata that facilitates decryption.
+  *
+  * @author  Middleware Services
+  */
+@@ -128,14 +130,14 @@ public void setNonce(final Nonce nonce)
+   @Override
+   public byte[] encrypt(final byte[] input) throws CryptoException
+   {
+-    return process(new CiphertextHeader(nonce.generate(), keyAlias), true, input);
++    return process(header(), true, input);
+   }
+ 
+ 
+   @Override
+   public void encrypt(final InputStream input, final OutputStream output) throws CryptoException, StreamException
+   {
+-    final CiphertextHeader header = new CiphertextHeader(nonce.generate(), keyAlias);
++    final CiphertextHeaderV2 header = header();
+     try {
+       output.write(header.encode());
+     } catch (IOException e) {
+@@ -148,11 +150,7 @@ public void encrypt(final InputStream input, final OutputStream output) throws C
+   @Override
+   public byte[] decrypt(final byte[] input) throws CryptoException, EncodingException
+   {
+-    final CiphertextHeader header = CiphertextHeader.decode(input);
+-    if (header.getKeyName() == null) {
+-      throw new CryptoException("Ciphertext header does not contain required key");
+-    }
+-    return process(header, false, input);
++    return process(CipherUtil.decodeHeader(input, this::lookupKey), false, input);
+   }
+ 
+ 
+@@ -160,11 +158,7 @@ public byte[] decrypt(final byte[] input) throws CryptoException, EncodingExcept
+   public void decrypt(final InputStream input, final OutputStream output)
+       throws CryptoException, EncodingException, StreamException
+   {
+-    final CiphertextHeader header = CiphertextHeader.decode(input);
+-    if (header.getKeyName() == null) {
+-      throw new CryptoException("Ciphertext header does not contain required key");
+-    }
+-    process(header, false, input, output);
++    process(CipherUtil.decodeHeader(input, this::lookupKey), false, input, output);
+   }
+ 
+ 
+@@ -211,4 +205,15 @@ protected SecretKey lookupKey(final String alias)
+    * @param  output  Stream that receives output of cipher.
+    */
+   protected abstract void process(CiphertextHeader header, boolean mode, InputStream input, OutputStream output);
++
++
++  /**
++   * @return  New ciphertext header for a pending encryption or decryption operation performed by this instance.
++   */
++  private CiphertextHeaderV2 header()
++  {
++    final CiphertextHeaderV2 header = new CiphertextHeaderV2(nonce.generate(), keyAlias);
++    header.setKeyLookup(this::lookupKey);
++    return header;
++  }
+ }
+diff --git a/src/main/java/org/cryptacular/util/ByteUtil.java b/src/main/java/org/cryptacular/util/ByteUtil.java
+index 541fbf70..21636396 100644
+--- a/src/main/java/org/cryptacular/util/ByteUtil.java
++++ b/src/main/java/org/cryptacular/util/ByteUtil.java
+@@ -31,7 +31,7 @@ private ByteUtil() {}
+    *
+    * @param  data  4-byte array in big-endian format.
+    *
+-   * @return  Long integer value.
++   * @return  Integer value.
+    */
+   public static int toInt(final byte[] data)
+   {
+@@ -39,6 +39,19 @@ public static int toInt(final byte[] data)
+   }
+ 
+ 
++  /**
++   * Converts an unsigned byte into an integer.
++   *
++   * @param  unsigned  Unsigned byte.
++   *
++   * @return  Integer value.
++   */
++  public static int toInt(final byte unsigned)
++  {
++    return 0x000000FF & unsigned;
++  }
++
++
+   /**
+    * Reads 4-bytes from the input stream and converts to a 32-bit integer.
+    *
+@@ -175,6 +188,21 @@ public static String toString(final byte[] bytes)
+   }
+ 
+ 
++  /**
++   * Converts a portion of a byte array into a string in the UTF-8 character set.
++   *
++   * @param  bytes  Byte array to convert.
++   * @param  offset  Offset into byte array where string content begins.
++   * @param  length  Total number of bytes to convert.
++   *
++   * @return  UTF-8 string representation of bytes.
++   */
++  public static String toString(final byte[] bytes, final int offset, final int length)
++  {
++    return new String(bytes, offset, length, DEFAULT_CHARSET);
++  }
++
++
+   /**
+    * Converts a byte buffer into a string in the UTF-8 character set.
+    *
+@@ -226,6 +254,19 @@ public static byte[] toBytes(final String s)
+   }
+ 
+ 
++  /**
++   * Converts an integer into an unsigned byte. All bits above 1 byte are truncated.
++   *
++   * @param  b  Integer value.
++   *
++   * @return  Unsigned byte as a byte.
++   */
++  public static byte toUnsignedByte(final int b)
++  {
++    return (byte) (0x000000FF & b);
++  }
++
++
+   /**
+    * Converts a byte buffer into a byte array.
+    *
+@@ -244,4 +285,6 @@ public static byte[] toArray(final ByteBuffer buffer)
+     buffer.get(array);
+     return array;
+   }
++
++
+ }
+diff --git a/src/main/java/org/cryptacular/util/CipherUtil.java b/src/main/java/org/cryptacular/util/CipherUtil.java
+index d4600392..40ef4d1e 100644
+--- a/src/main/java/org/cryptacular/util/CipherUtil.java
++++ b/src/main/java/org/cryptacular/util/CipherUtil.java
+@@ -4,6 +4,7 @@
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.io.OutputStream;
++import java.util.function.Function;
+ import javax.crypto.SecretKey;
+ import org.bouncycastle.crypto.BlockCipher;
+ import org.bouncycastle.crypto.modes.AEADBlockCipher;
+@@ -13,6 +14,7 @@
+ import org.bouncycastle.crypto.params.KeyParameter;
+ import org.bouncycastle.crypto.params.ParametersWithIV;
+ import org.cryptacular.CiphertextHeader;
++import org.cryptacular.CiphertextHeaderV2;
+ import org.cryptacular.CryptoException;
+ import org.cryptacular.EncodingException;
+ import org.cryptacular.StreamException;
+@@ -37,15 +39,15 @@ private CipherUtil() {}
+ 
+ 
+   /**
+-   * Encrypts data using an AEAD cipher. A {@link CiphertextHeader} is prepended to the resulting ciphertext and used as
+-   * AAD (Additional Authenticated Data) passed to the AEAD cipher.
++   * Encrypts data using an AEAD cipher. A {@link CiphertextHeaderV2} is prepended to the resulting ciphertext and
++   * used as AAD (Additional Authenticated Data) passed to the AEAD cipher.
+    *
+    * @param  cipher  AEAD cipher.
+    * @param  key  Encryption key.
+    * @param  nonce  Nonce generator.
+    * @param  data  Plaintext data to be encrypted.
+    *
+-   * @return  Concatenation of encoded {@link CiphertextHeader} and encrypted data that completely fills the returned
++   * @return  Concatenation of encoded {@link CiphertextHeaderV2} and encrypted data that completely fills the returned
+    *          byte array.
+    *
+    * @throws  CryptoException  on encryption errors.
+@@ -54,22 +56,22 @@ public static byte[] encrypt(final AEADBlockCipher cipher, final SecretKey key,
+     throws CryptoException
+   {
+     final byte[] iv = nonce.generate();
+-    final byte[] header = new CiphertextHeader(iv).encode();
++    final byte[] header = new CiphertextHeaderV2(iv, "1").encode(key);
+     cipher.init(true, new AEADParameters(new KeyParameter(key.getEncoded()), MAC_SIZE_BITS, iv, header));
+     return encrypt(new AEADBlockCipherAdapter(cipher), header, data);
+   }
+ 
+ 
+   /**
+-   * Encrypts data using an AEAD cipher. A {@link CiphertextHeader} is prepended to the resulting ciphertext and used as
+-   * AAD (Additional Authenticated Data) passed to the AEAD cipher.
++   * Encrypts data using an AEAD cipher. A {@link CiphertextHeaderV2} is prepended to the resulting ciphertext and used
++   * as AAD (Additional Authenticated Data) passed to the AEAD cipher.
+    *
+    * @param  cipher  AEAD cipher.
+    * @param  key  Encryption key.
+    * @param  nonce  Nonce generator.
+    * @param  input  Input stream containing plaintext data.
+-   * @param  output  Output stream that receives a {@link CiphertextHeader} followed by ciphertext data produced by the
+-   *                 AEAD cipher in encryption mode.
++   * @param  output  Output stream that receives a {@link CiphertextHeaderV2} followed by ciphertext data produced by
++   *                 the AEAD cipher in encryption mode.
+    *
+    * @throws  CryptoException  on encryption errors.
+    * @throws  StreamException  on IO errors.
+@@ -83,7 +85,7 @@ public static void encrypt(
+     throws CryptoException, StreamException
+   {
+     final byte[] iv = nonce.generate();
+-    final byte[] header = new CiphertextHeader(iv).encode();
++    final byte[] header = new CiphertextHeaderV2(iv, "1").encode(key);
+     cipher.init(true, new AEADParameters(new KeyParameter(key.getEncoded()), MAC_SIZE_BITS, iv, header));
+     writeHeader(header, output);
+     process(new AEADBlockCipherAdapter(cipher), input, output);
+@@ -95,7 +97,7 @@ public static void encrypt(
+    *
+    * @param  cipher  AEAD cipher.
+    * @param  key  Encryption key.
+-   * @param  data  Ciphertext data containing a prepended {@link CiphertextHeader}. The header is treated as AAD input
++   * @param  data  Ciphertext data containing a prepended {@link CiphertextHeaderV2}. The header is treated as AAD input
+    *               to the cipher that is verified during decryption.
+    *
+    * @return  Decrypted data that completely fills the returned byte array.
+@@ -106,7 +108,7 @@ public static void encrypt(
+   public static byte[] decrypt(final AEADBlockCipher cipher, final SecretKey key, final byte[] data)
+       throws CryptoException, EncodingException
+   {
+-    final CiphertextHeader header = CiphertextHeader.decode(data);
++    final CiphertextHeader header = decodeHeader(data, String -> key);
+     final byte[] nonce = header.getNonce();
+     final byte[] hbytes = header.encode();
+     cipher.init(false, new AEADParameters(new KeyParameter(key.getEncoded()), MAC_SIZE_BITS, nonce, hbytes));
+@@ -119,7 +121,7 @@ public static byte[] decrypt(final AEADBlockCipher cipher, final SecretKey key,
+    *
+    * @param  cipher  AEAD cipher.
+    * @param  key  Encryption key.
+-   * @param  input  Input stream containing a {@link CiphertextHeader} followed by ciphertext data. The header is
++   * @param  input  Input stream containing a {@link CiphertextHeaderV2} followed by ciphertext data. The header is
+    *                treated as AAD input to the cipher that is verified during decryption.
+    * @param  output  Output stream that receives plaintext produced by block cipher in decryption mode.
+    *
+@@ -134,7 +136,7 @@ public static void decrypt(
+     final OutputStream output)
+     throws CryptoException, EncodingException, StreamException
+   {
+-    final CiphertextHeader header = CiphertextHeader.decode(input);
++    final CiphertextHeader header = decodeHeader(input, String -> key);
+     final byte[] nonce = header.getNonce();
+     final byte[] hbytes = header.encode();
+     cipher.init(false, new AEADParameters(new KeyParameter(key.getEncoded()), MAC_SIZE_BITS, nonce, hbytes));
+@@ -143,7 +145,7 @@ public static void decrypt(
+ 
+ 
+   /**
+-   * Encrypts data using the given block cipher with PKCS5 padding. A {@link CiphertextHeader} is prepended to the
++   * Encrypts data using the given block cipher with PKCS5 padding. A {@link CiphertextHeaderV2} is prepended to the
+    * resulting ciphertext.
+    *
+    * @param  cipher  Block cipher.
+@@ -152,7 +154,7 @@ public static void decrypt(
+    *                cipher block size.
+    * @param  data  Plaintext data to be encrypted.
+    *
+-   * @return  Concatenation of encoded {@link CiphertextHeader} and encrypted data that completely fills the returned
++   * @return  Concatenation of encoded {@link CiphertextHeaderV2} and encrypted data that completely fills the returned
+    *          byte array.
+    *
+    * @throws  CryptoException  on encryption errors.
+@@ -161,7 +163,7 @@ public static byte[] encrypt(final BlockCipher cipher, final SecretKey key, fina
+     throws CryptoException
+   {
+     final byte[] iv = nonce.generate();
+-    final byte[] header = new CiphertextHeader(iv).encode();
++    final byte[] header = new CiphertextHeaderV2(iv, "1").encode(key);
+     final PaddedBufferedBlockCipher padded = new PaddedBufferedBlockCipher(cipher, new PKCS7Padding());
+     padded.init(true, new ParametersWithIV(new KeyParameter(key.getEncoded()), iv));
+     return encrypt(new BufferedBlockCipherAdapter(padded), header, data);
+@@ -191,7 +193,7 @@ public static void encrypt(
+     throws CryptoException, StreamException
+   {
+     final byte[] iv = nonce.generate();
+-    final byte[] header = new CiphertextHeader(iv).encode();
++    final byte[] header = new CiphertextHeaderV2(iv, "1").encode(key);
+     final PaddedBufferedBlockCipher padded = new PaddedBufferedBlockCipher(cipher, new PKCS7Padding());
+     padded.init(true, new ParametersWithIV(new KeyParameter(key.getEncoded()), iv));
+     writeHeader(header, output);
+@@ -214,7 +216,7 @@ public static void encrypt(
+   public static byte[] decrypt(final BlockCipher cipher, final SecretKey key, final byte[] data)
+     throws CryptoException, EncodingException
+   {
+-    final CiphertextHeader header = CiphertextHeader.decode(data);
++    final CiphertextHeader header = decodeHeader(data, String -> key);
+     final PaddedBufferedBlockCipher padded = new PaddedBufferedBlockCipher(cipher, new PKCS7Padding());
+     padded.init(false, new ParametersWithIV(new KeyParameter(key.getEncoded()), header.getNonce()));
+     return decrypt(new BufferedBlockCipherAdapter(padded), data, header.getLength());
+@@ -240,13 +242,62 @@ public static void decrypt(
+     final OutputStream output)
+     throws CryptoException, EncodingException, StreamException
+   {
+-    final CiphertextHeader header = CiphertextHeader.decode(input);
++    final CiphertextHeader header = decodeHeader(input, String -> key);
+     final PaddedBufferedBlockCipher padded = new PaddedBufferedBlockCipher(cipher, new PKCS7Padding());
+     padded.init(false, new ParametersWithIV(new KeyParameter(key.getEncoded()), header.getNonce()));
+     process(new BufferedBlockCipherAdapter(padded), input, output);
+   }
+ 
+ 
++  /**
++   * Decodes the ciphertext header at the start of the given byte array.
++   * Supports both original (deprecated) and v2 formats.
++   *
++   * @param  data  Ciphertext data with prepended header.
++   * @param  keyLookup  Decryption key lookup function.
++   *
++   * @return  Ciphertext header instance.
++   */
++  public static CiphertextHeader decodeHeader(final byte[] data, final Function<String, SecretKey> keyLookup)
++  {
++    try {
++      return CiphertextHeaderV2.decode(data, keyLookup);
++    } catch (EncodingException e) {
++      return CiphertextHeader.decode(data);
++    }
++  }
++
++
++  /**
++   * Decodes the ciphertext header at the start of the given input stream.
++   * Supports both original (deprecated) and v2 formats.
++   *
++   * @param  in  Ciphertext stream that is positioned at the start of the ciphertext header.
++   * @param  keyLookup  Decryption key lookup function.
++   *
++   * @return  Ciphertext header instance.
++   */
++  public static CiphertextHeader decodeHeader(final InputStream in, final Function<String, SecretKey> keyLookup)
++  {
++    CiphertextHeader header;
++    try {
++      // Mark the stream start position so we can try again with old format header
++      if (in.markSupported()) {
++        in.mark(4);
++      }
++      header = CiphertextHeaderV2.decode(in, keyLookup);
++    } catch (EncodingException e) {
++      try {
++        in.reset();
++      } catch (IOException ioe) {
++        throw new StreamException("Stream error trying to process old header format: " + ioe.getMessage());
++      }
++      header = CiphertextHeader.decode(in);
++    }
++    return header;
++  }
++
++
+   /**
+    * Encrypts the given data.
+    *
+diff --git a/src/test/java/org/cryptacular/CiphertextHeaderTest.java b/src/test/java/org/cryptacular/CiphertextHeaderTest.java
+new file mode 100644
+index 00000000..51abfaea
+--- /dev/null
++++ b/src/test/java/org/cryptacular/CiphertextHeaderTest.java
+@@ -0,0 +1,55 @@
++/* See LICENSE for licensing and NOTICE for copyright. */
++package org.cryptacular;
++
++import java.util.Arrays;
++import org.cryptacular.util.CodecUtil;
++import org.testng.annotations.Test;
++import static org.testng.Assert.assertEquals;
++
++/**
++ * Unit test for {@link CiphertextHeader}.
++ *
++ * @author Middleware Services
++ */
++public class CiphertextHeaderTest
++{
++
++  @Test(
++      expectedExceptions = IllegalArgumentException.class,
++      expectedExceptionsMessageRegExp = "Nonce exceeds size limit in bytes.*")
++  public void testNonceLimitConstructor()
++  {
++    new CiphertextHeader(new byte[256], "key2");
++  }
++
++  @Test
++  public void testEncodeDecodeSuccess()
++  {
++    final byte[] nonce = new byte[255];
++    Arrays.fill(nonce, (byte) 7);
++    final CiphertextHeader expected = new CiphertextHeader(nonce, "aleph");
++    final byte[] encoded = expected.encode();
++    assertEquals(expected.getLength(), encoded.length);
++    final CiphertextHeader actual = CiphertextHeader.decode(encoded);
++    assertEquals(expected.getNonce(), actual.getNonce());
++    assertEquals(expected.getKeyName(), actual.getKeyName());
++    assertEquals(expected.getLength(), actual.getLength());
++  }
++
++  @Test(
++    expectedExceptions = EncodingException.class,
++    expectedExceptionsMessageRegExp = "Bad ciphertext header: maximum nonce length exceeded")
++  public void testDecodeFailNonceLengthExceeded()
++  {
++    // https://github.com/vt-middleware/cryptacular/issues/52
++    CiphertextHeader.decode(CodecUtil.hex("000000347ffffffd"));
++  }
++
++  @Test(
++      expectedExceptions = EncodingException.class,
++      expectedExceptionsMessageRegExp = "Bad ciphertext header: maximum key length exceeded")
++  public void testDecodeFailKeyLengthExceeded()
++  {
++    CiphertextHeader.decode(CodecUtil.hex("000000F300000004DEADBEEF00FFFFFF"));
++  }
++}
+diff --git a/src/test/java/org/cryptacular/CiphertextHeaderV2Test.java b/src/test/java/org/cryptacular/CiphertextHeaderV2Test.java
+new file mode 100644
+index 00000000..7313d358
+--- /dev/null
++++ b/src/test/java/org/cryptacular/CiphertextHeaderV2Test.java
+@@ -0,0 +1,67 @@
++/* See LICENSE for licensing and NOTICE for copyright. */
++package org.cryptacular;
++
++import java.util.Arrays;
++import javax.crypto.SecretKey;
++import javax.crypto.spec.SecretKeySpec;
++import org.cryptacular.generator.sp80038a.RBGNonce;
++import org.testng.annotations.Test;
++import static org.testng.Assert.assertEquals;
++
++/**
++ * Unit test for {@link CiphertextHeaderV2}.
++ *
++ * @author Middleware Services
++ */
++public class CiphertextHeaderV2Test
++{
++  /** Test HMAC key. */
++  private final SecretKey key = new SecretKeySpec(new RBGNonce().generate(), "AES");
++
++  @Test(
++      expectedExceptions = IllegalArgumentException.class,
++      expectedExceptionsMessageRegExp = "Nonce exceeds size limit in bytes.*")
++  public void testNonceLimitConstructor()
++  {
++    new CiphertextHeaderV2(new byte[256], "key2");
++  }
++
++  @Test
++  public void testEncodeDecodeSuccess()
++  {
++    final byte[] nonce = new byte[255];
++    Arrays.fill(nonce, (byte) 7);
++    final CiphertextHeaderV2 expected = new CiphertextHeaderV2(nonce, "aleph");
++    expected.setKeyLookup(this::getKey);
++    final byte[] encoded = expected.encode();
++    assertEquals(expected.getLength(), encoded.length);
++    final CiphertextHeaderV2 actual = CiphertextHeaderV2.decode(encoded, this::getKey);
++    assertEquals(expected.getNonce(), actual.getNonce());
++    assertEquals(expected.getKeyName(), actual.getKeyName());
++    assertEquals(expected.getLength(), actual.getLength());
++  }
++
++  @Test(
++      expectedExceptions = EncodingException.class,
++      expectedExceptionsMessageRegExp = "Ciphertext header HMAC verification failed")
++  public void testEncodeDecodeFailBadHMAC()
++  {
++    final byte[] nonce = new byte[16];
++    Arrays.fill(nonce, (byte) 3);
++    final CiphertextHeaderV2 expected = new CiphertextHeaderV2(nonce, "aleph");
++    // Tamper with computed HMAC
++    final byte[] encoded = expected.encode(key);
++    final int index = encoded.length - 3;
++    final byte b = encoded[index];
++    encoded[index] = (byte) (b + 1);
++    CiphertextHeaderV2.decode(encoded, this::getKey);
++  }
++
++  private SecretKey getKey(final String alias)
++  {
++    if ("aleph".equals(alias)) {
++      return key;
++    }
++    return null;
++  }
++}
+diff --git a/src/test/java/org/cryptacular/bean/AEADBlockCipherBeanTest.java b/src/test/java/org/cryptacular/bean/AEADBlockCipherBeanTest.java
+index fde2c977..a26f341b 100644
+--- a/src/test/java/org/cryptacular/bean/AEADBlockCipherBeanTest.java
++++ b/src/test/java/org/cryptacular/bean/AEADBlockCipherBeanTest.java
+@@ -5,12 +5,12 @@
+ import java.io.ByteArrayOutputStream;
+ import java.io.File;
+ import java.security.KeyStore;
+-import javax.crypto.SecretKey;
+ import org.cryptacular.FailListener;
+ import org.cryptacular.generator.sp80038d.CounterNonce;
+ import org.cryptacular.io.FileResource;
+ import org.cryptacular.spec.AEADBlockCipherSpec;
+ import org.cryptacular.util.ByteUtil;
++import org.cryptacular.util.CodecUtil;
+ import org.cryptacular.util.StreamUtil;
+ import org.testng.annotations.DataProvider;
+ import org.testng.annotations.Listeners;
+@@ -25,6 +25,7 @@
+ @Listeners(FailListener.class)
+ public class AEADBlockCipherBeanTest
+ {
++
+   @DataProvider(name = "test-arrays")
+   public Object[][] getTestArrays()
+   {
+@@ -78,14 +79,7 @@ public Object[][] getTestStreams()
+   public void testEncryptDecryptArray(final String input, final String cipherSpecString)
+     throws Exception
+   {
+-    final AEADBlockCipherBean cipherBean = new AEADBlockCipherBean();
+-    final AEADBlockCipherSpec cipherSpec = AEADBlockCipherSpec.parse(cipherSpecString);
+-    cipherBean.setNonce(new CounterNonce("vtmw", System.nanoTime()));
+-    cipherBean.setKeyAlias("vtcrypt");
+-    cipherBean.setKeyPassword("vtcrypt");
+-    cipherBean.setKeyStore(getTestKeyStore());
+-    cipherBean.setBlockCipherSpec(cipherSpec);
+-
++    final AEADBlockCipherBean cipherBean = newCipherBean(AEADBlockCipherSpec.parse(cipherSpecString));
+     final byte[] ciphertext = cipherBean.encrypt(ByteUtil.toBytes(input));
+     assertEquals(ByteUtil.toString(cipherBean.decrypt(ciphertext)), input);
+   }
+@@ -95,14 +89,7 @@ public void testEncryptDecryptArray(final String input, final String cipherSpecS
+   public void testEncryptDecryptStream(final String path, final String cipherSpecString)
+     throws Exception
+   {
+-    final AEADBlockCipherBean cipherBean = new AEADBlockCipherBean();
+-    final AEADBlockCipherSpec cipherSpec = AEADBlockCipherSpec.parse(cipherSpecString);
+-    cipherBean.setNonce(new CounterNonce("vtmw", System.nanoTime()));
+-    cipherBean.setKeyAlias("vtcrypt");
+-    cipherBean.setKeyPassword("vtcrypt");
+-    cipherBean.setKeyStore(getTestKeyStore());
+-    cipherBean.setBlockCipherSpec(cipherSpec);
+-
++    final AEADBlockCipherBean cipherBean = newCipherBean(AEADBlockCipherSpec.parse(cipherSpecString));
+     final ByteArrayOutputStream tempOut = new ByteArrayOutputStream(8192);
+     cipherBean.encrypt(StreamUtil.makeStream(new File(path)), tempOut);
+ 
+@@ -113,6 +100,34 @@ public void testEncryptDecryptStream(final String path, final String cipherSpecS
+   }
+ 
+ 
++  @Test
++  public void testDecryptArrayBackwardCompatibleHeader()
++  {
++    final AEADBlockCipherBean cipherBean = newCipherBean(new AEADBlockCipherSpec("Twofish", "OCB"));
++    final String expected = "Have you passed through this night?";
++    final String v1CiphertextHex =
++        "0000001f0000000c76746d770002ba17043672d900000007767463727970745a38dee735266e3f5f7aafec8d1c9ed8a0830a2ff9" +
++        "c3a46c25f89e69b6eb39dbb82fd13da50e32b2544a73f1a4476677b377e6";
++    final byte[] plaintext = cipherBean.decrypt(CodecUtil.hex(v1CiphertextHex));
++    assertEquals(expected, ByteUtil.toString(plaintext));
++  }
++
++
++  @Test
++  public void testDecryptStreamBackwardCompatibleHeader()
++  {
++    final AEADBlockCipherBean cipherBean = newCipherBean(new AEADBlockCipherSpec("Twofish", "OCB"));
++    final String expected = "Have you passed through this night?";
++    final String v1CiphertextHex =
++      "0000001f0000000c76746d770002ba17043672d900000007767463727970745a38dee735266e3f5f7aafec8d1c9ed8a0830a2ff9" +
++        "c3a46c25f89e69b6eb39dbb82fd13da50e32b2544a73f1a4476677b377e6";
++    final ByteArrayInputStream in = new ByteArrayInputStream(CodecUtil.hex(v1CiphertextHex));
++    final ByteArrayOutputStream out = new ByteArrayOutputStream();
++    cipherBean.decrypt(in, out);
++    assertEquals(expected, ByteUtil.toString(out.toByteArray()));
++  }
++
++
+   private static KeyStore getTestKeyStore()
+   {
+     final KeyStoreFactoryBean bean = new KeyStoreFactoryBean();
+@@ -122,12 +137,15 @@ private static KeyStore getTestKeyStore()
+     return bean.newInstance();
+   }
+ 
+-  private static SecretKey getTestKey()
++
++  private static AEADBlockCipherBean newCipherBean(final AEADBlockCipherSpec cipherSpec)
+   {
+-    final KeyStoreBasedKeyFactoryBean<SecretKey> secretKeyFactoryBean = new KeyStoreBasedKeyFactoryBean<>();
+-    secretKeyFactoryBean.setKeyStore(getTestKeyStore());
+-    secretKeyFactoryBean.setPassword("vtcrypt");
+-    secretKeyFactoryBean.setAlias("vtcrypt");
+-    return secretKeyFactoryBean.newInstance();
++    final AEADBlockCipherBean cipherBean = new AEADBlockCipherBean();
++    cipherBean.setNonce(new CounterNonce("vtmw", System.nanoTime()));
++    cipherBean.setKeyAlias("vtcrypt");
++    cipherBean.setKeyPassword("vtcrypt");
++    cipherBean.setKeyStore(getTestKeyStore());
++    cipherBean.setBlockCipherSpec(cipherSpec);
++    return cipherBean;
+   }
+ }
+diff --git a/src/test/java/org/cryptacular/util/CipherUtilTest.java b/src/test/java/org/cryptacular/util/CipherUtilTest.java
+index f2cd7dea..886ce54d 100644
+--- a/src/test/java/org/cryptacular/util/CipherUtilTest.java
++++ b/src/test/java/org/cryptacular/util/CipherUtilTest.java
+@@ -17,11 +17,14 @@
+ import org.bouncycastle.crypto.modes.OCBBlockCipher;
+ import org.bouncycastle.crypto.modes.OFBBlockCipher;
+ import org.cryptacular.FailListener;
++import org.cryptacular.bean.KeyStoreBasedKeyFactoryBean;
++import org.cryptacular.bean.KeyStoreFactoryBean;
+ import org.cryptacular.generator.Nonce;
+ import org.cryptacular.generator.SecretKeyGenerator;
+ import org.cryptacular.generator.sp80038a.LongCounterNonce;
+ import org.cryptacular.generator.sp80038a.RBGNonce;
+ import org.cryptacular.generator.sp80038d.CounterNonce;
++import org.cryptacular.io.FileResource;
+ import org.testng.annotations.DataProvider;
+ import org.testng.annotations.Listeners;
+ import org.testng.annotations.Test;
+@@ -35,6 +38,22 @@
+ @Listeners(FailListener.class)
+ public class CipherUtilTest
+ {
++  /** Static key derived from keystore on resource classpath. */
++  private static final SecretKey STATIC_KEY;
++
++  static
++  {
++    final KeyStoreFactoryBean keyStoreFactory = new KeyStoreFactoryBean();
++    keyStoreFactory.setPassword("vtcrypt");
++    keyStoreFactory.setResource(new FileResource(new File("src/test/resources/keystores/cipher-bean.jceks")));
++    keyStoreFactory.setType("JCEKS");
++    final KeyStoreBasedKeyFactoryBean<SecretKey> keyFactory = new KeyStoreBasedKeyFactoryBean<>();
++    keyFactory.setKeyStore(keyStoreFactory.newInstance());
++    keyFactory.setAlias("vtcrypt");
++    keyFactory.setPassword("vtcrypt");
++    STATIC_KEY = keyFactory.newInstance();
++  }
++
+   @DataProvider(name = "block-cipher")
+   public Object[][] getBlockCipherData()
+   {
+@@ -165,4 +184,32 @@ public void testAeadBlockCipherEncryptDecryptStream(final String path)
+     CipherUtil.decrypt(cipher, key, tempIn, actual);
+     assertEquals(new String(actual.toByteArray()), expected);
+   }
++
++
++  @Test
++  public void testDecryptArrayBackwardCompatibleHeader()
++  {
++    final AEADBlockCipher cipher = new OCBBlockCipher(new TwofishEngine(), new TwofishEngine());
++    final String expected = "Have you passed through this night?";
++    final String v1CiphertextHex =
++      "0000001f0000000c76746d770002ba17043672d900000007767463727970745a38dee735266e3f5f7aafec8d1c9ed8a0830a2ff9" +
++        "c3a46c25f89e69b6eb39dbb82fd13da50e32b2544a73f1a4476677b377e6";
++    final byte[] plaintext = CipherUtil.decrypt(cipher, STATIC_KEY, CodecUtil.hex(v1CiphertextHex));
++    assertEquals(expected, ByteUtil.toString(plaintext));
++  }
++
++
++  @Test
++  public void testDecryptStreamBackwardCompatibleHeader()
++  {
++    final AEADBlockCipher cipher = new OCBBlockCipher(new TwofishEngine(), new TwofishEngine());
++    final String expected = "Have you passed through this night?";
++    final String v1CiphertextHex =
++      "0000001f0000000c76746d770002ba17043672d900000007767463727970745a38dee735266e3f5f7aafec8d1c9ed8a0830a2ff9" +
++        "c3a46c25f89e69b6eb39dbb82fd13da50e32b2544a73f1a4476677b377e6";
++    final ByteArrayInputStream in = new ByteArrayInputStream(CodecUtil.hex(v1CiphertextHex));
++    final ByteArrayOutputStream out = new ByteArrayOutputStream();
++    CipherUtil.decrypt(cipher, STATIC_KEY, in, out);
++    assertEquals(expected, ByteUtil.toString(out.toByteArray()));
++  }
+ }

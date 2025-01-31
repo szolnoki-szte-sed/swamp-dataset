@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fork-cms:fork_cms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/forkcms/forkcms/commit/995220182068518e89019a265d113518f6566407",
+        "version_end_excluding": {
+            "fork-cms:fork_cms": "unknown"
+        },
+        "path": {
+            "file_path": "backend/modules/error/actions/index.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-1188"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

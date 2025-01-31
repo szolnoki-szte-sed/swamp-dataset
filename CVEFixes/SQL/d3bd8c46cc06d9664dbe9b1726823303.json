@@ -1,0 +1,38 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sqlite:sqlite:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:siemens:sinec_infrastructure_network_services:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:tenable:tenable.sc:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:mysql_workbench:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:cloud_backup:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:ontap_select_deploy_administration_utility:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/sqlite/sqlite/commit/926f796e8feec15f3836aa0a060ed906f8ae04d3",
+        "version_end_excluding": {
+            "sqlite:sqlite": "unknown",
+            "siemens:sinec_infrastructure_network_services": "1.0.1.1",
+            "tenable:tenable.sc": "5.19.0",
+            "oracle:mysql_workbench": "unknown",
+            "netapp:cloud_backup": "unknown",
+            "netapp:ontap_select_deploy_administration_utility": "unknown"
+        },
+        "path": {
+            "file_path": "manifest.uuid"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-19646"
+        ],
+        "CWE": [
+            "CWE-754"
+        ]
+    }
+}

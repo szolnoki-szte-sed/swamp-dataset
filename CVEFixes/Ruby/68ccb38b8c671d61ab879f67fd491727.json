@@ -1,0 +1,38 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:canonical:ubuntu_linux:13.04:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:12.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:12.04:-:lts:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:12.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:11.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:12.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:perlmonks:module\\:\\:signature:*:*:*:*:*:perl:*:*",
+            "cpe:2.3:a:perlmonks:module\\:\\:signature:0.70:*:*:*:*:perl:*:*",
+            "cpe:2.3:a:perlmonks:module\\:\\:signature:0.71:*:*:*:*:perl:*:*"
+        ],
+        "fix_commit": "https://github.com/audreyt/module-signature/commit/cbd06b392a73c63159dc5c20ff5b3c8fc88c4896",
+        "version_end_excluding": {
+            "canonical:ubuntu_linux": "unknown",
+            "opensuse:opensuse": "unknown",
+            "perlmonks:module\\": "unknown"
+        },
+        "path": {
+            "file_path": "META.yml"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-2145"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

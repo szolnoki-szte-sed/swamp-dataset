@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:uberfire:0.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:uberfire:0.3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:uberfire:0.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:uberfire:0.3.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/uberfire/uberfire/commit/21ec50eb150ab976be060848d6dd0e97ec6c8246",
+        "version_end_excluding": {
+            "redhat:uberfire": "unknown"
+        },
+        "path": {
+            "file_path": "uberfire-security/uberfire-security-server/src/main/java/org/uberfire/security/server/URLResourceManager.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-8114"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

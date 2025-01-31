@@ -1,0 +1,47 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mongodb:mongodb:1.8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mongodb:mongodb:2.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mongodb:mongodb:2.4.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mongodb:mongodb:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mongodb:mongodb:1.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mongodb:mongodb:2.4.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mongodb:mongodb:2.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mongodb:mongodb:1.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mongodb:mongodb:2.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mongodb:mongodb:2.4.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mongodb:mongodb:2.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mongodb:mongodb:1.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mongodb:mongodb:2.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mongodb:mongodb:2.4.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:13.04:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:12.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:12.04:-:lts:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:12.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mongodb/mongo-python-driver/commit/a060c15ef87e0f0e72974c7c0e57fe811bbd06a2",
+        "version_end_excluding": {
+            "mongodb:mongodb": "unknown",
+            "canonical:ubuntu_linux": "unknown",
+            "opensuse:opensuse": "unknown"
+        },
+        "path": {
+            "file_path": "bson/__init__.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-2132"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

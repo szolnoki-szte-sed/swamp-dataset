@@ -1,0 +1,17 @@
+diff --git a/apps/yang/web/src/main/java/org/onosproject/yang/web/YangWebResource.java b/apps/yang/web/src/main/java/org/onosproject/yang/web/YangWebResource.java
+index 907e0178272..26535d006d7 100644
+--- a/apps/yang/web/src/main/java/org/onosproject/yang/web/YangWebResource.java
++++ b/apps/yang/web/src/main/java/org/onosproject/yang/web/YangWebResource.java
+@@ -87,10 +87,10 @@ public Response upload(@QueryParam("modelId") @DefaultValue("org.onosproject.mod
+      */
+     public static String getValidModelId(String id) throws
+             IllegalArgumentException {
+-        // checking weather modelId contains the alphanumeric character or not.
++        // checking whether modelId contains the alphanumeric character or not.
+         if (id.matches(".*[A-Za-z0-9].*")) {
+             // replacing special characters with '_'
+-            id = id.replaceAll("[\\s\\/:*?\"\\[\\]<>|$@!#%&(){}';.,-]", "_");
++            id = id.replaceAll("[\\s\\/:*?\"\\[\\]<>|$@!#%&(){}'`;.,-]", "_");
+             // remove leading and trailing underscore
+             id = id.replaceAll("^_+|_+$", "");
+             // replacing the consecutive underscores '_' to single _

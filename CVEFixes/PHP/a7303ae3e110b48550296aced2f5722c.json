@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:octobercms:october:1.0.426:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/octobercms/october/commit/4a6e0e1e0e2c3facebc17e0db38c5b4d4cb05bd0",
+        "version_end_excluding": {
+            "octobercms:october": "unknown"
+        },
+        "path": {
+            "file_path": "config/cms.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-16244"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

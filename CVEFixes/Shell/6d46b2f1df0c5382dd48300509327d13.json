@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mod_auth_openidc_project:mod_auth_openidc:*:*:*:*:*:apache:*:*"
+        ],
+        "fix_commit": "https://github.com/zmartzone/mod_auth_openidc/commit/5c15dfb08106c2451c2c44ce7ace6813c216ba75",
+        "version_end_excluding": {
+            "mod_auth_openidc_project:mod_auth_openidc": "2.4.0.1"
+        },
+        "path": {
+            "file_path": "configure.ac"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-14857"
+        ],
+        "CWE": [
+            "CWE-601"
+        ]
+    }
+}

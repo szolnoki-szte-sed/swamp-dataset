@@ -1,0 +1,65 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:roundcube:webmail:0.5.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.5.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.1:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.1:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.1:beta:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.3:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.5:rc:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.8.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.2:stable:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.1:stable:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.3:beta:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.5:beta:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.5.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.7.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.1:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.4.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.8.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.8.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.2:alpha:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.5.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.2:beta:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.3:stable:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.4:beta:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.7.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:0.7.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/roundcube/roundcubemail/commit/74cd0a9b62f11bc07c5a1d3ba0098b54883eb0ba",
+        "version_end_excluding": {
+            "roundcube:webmail": "unknown"
+        },
+        "path": {
+            "file_path": "program/lib/washtml.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-6121"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:humhub:humhub:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:humhub:humhub:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/humhub/humhub/commit/f88991dfe56a05870df165ac89a2755dd4c1ffa1",
+        "version_end_excluding": {
+            "humhub:humhub": "1.10.5"
+        },
+        "path": {
+            "file_path": "protected/humhub/modules/space/widgets/FollowButton.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-31133"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

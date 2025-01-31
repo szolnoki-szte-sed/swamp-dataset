@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:libgit2:libgit2:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/libgit2/libgit2/commit/64c612cc3e25eff5fb02c59ef5a66ba7a14751e4",
+        "version_end_excluding": {
+            "libgit2:libgit2": "0.28.4",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "src/checkout.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-12279"
+        ],
+        "CWE": [
+            "CWE-706"
+        ]
+    }
+}

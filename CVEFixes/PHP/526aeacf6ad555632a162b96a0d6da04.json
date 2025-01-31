@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:merethis:centreon:2.5.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:merethis:centreon_enterprise_server:2.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/centreon/centreon/commit/cc2109804dd69057cb209037113796ec5ffdce90",
+        "version_end_excluding": {
+            "merethis:centreon": "unknown",
+            "merethis:centreon_enterprise_server": "unknown"
+        },
+        "path": {
+            "file_path": "www/include/Administration/corePerformance/getStats.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-3828"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

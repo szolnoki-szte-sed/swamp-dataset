@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:owncloud:owncloud:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:nextcloud:nextcloud_server:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:owncloud:owncloud:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/nextcloud/gallery/commit/f9ef505c1d60c9041e251682e0f6b3daad952d58",
+        "version_end_excluding": {
+            "owncloud:owncloud": "9.0.6",
+            "nextcloud:nextcloud_server": "10.0.1"
+        },
+        "path": {
+            "file_path": "js/galleryview.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-9466"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:siemens:cerberus_dms:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:indirmax.org:ozzywork_galeri:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:securekit:securekit_steganography:1.7.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:camouflage:camouflage:1.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:perforce:perforce_client:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "siemens:cerberus_dms": "unknown",
+            "indirmax.org:ozzywork_galeri": "2.0",
+            "securekit:securekit_steganography": "unknown",
+            "camouflage:camouflage": "unknown",
+            "perforce:perforce_client": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "perl",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-33139",
+            "CVE-2006-6994",
+            "CVE-2007-0163",
+            "CVE-2007-0164",
+            "CVE-2007-0100"
+        ],
+        "CWE": [
+            "CWE-602"
+        ]
+    }
+}

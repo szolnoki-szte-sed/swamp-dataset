@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.6.0:rc2:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.6.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.6.0:rc0:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.5.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/tensorflow/tensorflow/commit/15691e456c7dc9bd6be203b09765b063bf4a380c",
+        "version_end_excluding": {
+            "google:tensorflow": "unknown"
+        },
+        "path": {
+            "file_path": "tensorflow/lite/kernels/internal/optimized/optimized_ops.h"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-37688"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

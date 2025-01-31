@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:net-ldap_project:net-ldap:*:*:*:*:*:ruby:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ruby-ldap/ruby-net-ldap/commit/b412ca05f6b430eaa1ce97ac95885b4cf187b04a",
+        "version_end_excluding": {
+            "net-ldap_project:net-ldap": "0.16.2",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "lib/net/ldap/password.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-0083"
+        ],
+        "CWE": [
+            "CWE-916"
+        ]
+    }
+}

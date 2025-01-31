@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:xkbcommon:xkbcommon:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*"
+        ],
+        "fix_commit": "https://github.com/xkbcommon/libxkbcommon/commit/842e4351c2c97de6051cab6ce36b4a81e709a0e1",
+        "version_end_excluding": {
+            "xkbcommon:xkbcommon": "0.8.1",
+            "canonical:ubuntu_linux": "unknown"
+        },
+        "path": {
+            "file_path": "src/compose/parser.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-15856"
+        ],
+        "CWE": [
+            "CWE-835"
+        ]
+    }
+}

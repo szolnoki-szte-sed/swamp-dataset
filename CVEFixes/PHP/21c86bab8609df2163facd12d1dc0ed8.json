@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:livehelperchat:live_helper_chat:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/livehelperchat/livehelperchat/commit/fbed8728be59040a7218610e72f6eceb5f8bc152",
+        "version_end_excluding": {
+            "livehelperchat:live_helper_chat": "3.91"
+        },
+        "path": {
+            "file_path": "lhc_web/design/defaulttheme/tpl/lhuser/forgotpasswordsent.tpl.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0083"
+        ],
+        "CWE": [
+            "CWE-209"
+        ]
+    }
+}

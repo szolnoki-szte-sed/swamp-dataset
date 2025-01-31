@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal_software:cloud_foundry_uaa:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cloudfoundry:cf-deployment:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cloudfoundry/uaa/commit/157febfdebfd63708233b492f3271ceb1bd1eafc",
+        "version_end_excluding": {
+            "cloudfoundry:cf-deployment": "12.2.0"
+        },
+        "path": {
+            "file_path": "server/src/main/java/org/cloudfoundry/identity/uaa/scim/ScimUserProvisioning.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-11282"
+        ],
+        "CWE": [
+            "CWE-74",
+            "CWE-200"
+        ]
+    }
+}

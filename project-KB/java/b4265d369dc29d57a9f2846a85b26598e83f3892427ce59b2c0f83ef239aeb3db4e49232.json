@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:struts:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/struts/commit/b4265d369dc29d57a9f2846a85b26598e83f3892",
+        "version_end_excluding": {
+            "apache:struts": "2.2.3.1"
+        },
+        "path": {
+            "file_path": "xwork-core/src/test/java/com/opensymphony/xwork2/interceptor/ConversionErrorInterceptorTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-0391"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

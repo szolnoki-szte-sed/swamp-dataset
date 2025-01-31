@@ -1,0 +1,58 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:microsoft:windows_7:-:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:mac_os_x:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:comodo:comodo_internet_security:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:opera:opera_browser:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:mac_os_x:10.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:freeradius:freeradius:2.1.11:*:*:*:*:*:*:*",
+            "cpe:2.3:o:cisco:ios:15.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:debian:advanced_package_tool:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ruby-lang:ruby:1.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ibm:websphere_application_server:6.0.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:mac_os_x:10.3.9:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:mac_os_x:10.4:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "microsoft:windows_7": "unknown",
+            "apple:mac_os_x": "unknown",
+            "comodo:comodo_internet_security": "5.0.163652.1142",
+            "opera:opera_browser": "unknown",
+            "freeradius:freeradius": "unknown",
+            "cisco:ios": "unknown",
+            "debian:advanced_package_tool": "0.7.20",
+            "ruby-lang:ruby": "unknown",
+            "ibm:websphere_application_server": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-2014",
+            "CVE-2011-0199",
+            "CVE-2010-5185",
+            "CVE-2009-3046",
+            "CVE-2009-0161",
+            "CVE-2011-2701",
+            "CVE-2011-0935",
+            "CVE-2009-1358",
+            "CVE-2009-0642",
+            "CVE-2008-4679",
+            "CVE-2006-4410",
+            "CVE-2006-4409"
+        ],
+        "CWE": [
+            "CWE-299"
+        ]
+    }
+}

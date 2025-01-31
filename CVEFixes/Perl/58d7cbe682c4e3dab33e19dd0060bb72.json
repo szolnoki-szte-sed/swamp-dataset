@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:zonemaster:zonemaster_web_gui:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/dotse/zonemaster-gui/commit/568e8db44930fda4563c1e708a2440909fd8e5fe",
+        "version_end_excluding": {
+            "zonemaster:zonemaster_web_gui": "1.0.11"
+        },
+        "path": {
+            "file_path": "lib/Zonemaster/GUI/Dancer/Export.pm"
+        }
+    },
+    "programming_language": "perl",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-7652"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

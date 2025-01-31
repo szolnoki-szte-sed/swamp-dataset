@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:silverstripe:silverstripe:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/silverstripe/silverstripe-installer/commit/c25478bef75cc5482852e80a1fa6f1f0e6460e39",
+        "version_end_excluding": {
+            "silverstripe:silverstripe": "unknown"
+        },
+        "path": {
+            "file_path": "assets/.htaccess"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-14498"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

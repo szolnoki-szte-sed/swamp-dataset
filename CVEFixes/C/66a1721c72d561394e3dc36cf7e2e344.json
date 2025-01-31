@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:canonical:ubuntu_linux:12.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/942080643bce061c3dd9d5718d3b745dcb39a8bc",
+        "version_end_excluding": {
+            "canonical:ubuntu_linux": "unknown",
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "fs/ecryptfs/crypto.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-9683"
+        ],
+        "CWE": [
+            "CWE-189"
+        ]
+    }
+}

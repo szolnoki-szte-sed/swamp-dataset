@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:activemq_artemis:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:oncommand_workflow_automation:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/activemq-artemis/commit/ed7fee6d9cd94177dae30f2440e8bd07ddb5522a",
+        "version_end_excluding": {
+            "apache:activemq_artemis": "unknown"
+        },
+        "path": {
+            "file_path": "artemis-cli/src/test/java/org/apache/activemq/cli/test/ArtemisTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-10727"
+        ],
+        "CWE": [
+            "CWE-312",
+            "CWE-522"
+        ]
+    }
+}

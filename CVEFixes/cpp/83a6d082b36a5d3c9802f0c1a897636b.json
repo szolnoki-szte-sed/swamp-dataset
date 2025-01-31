@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:espruino:espruino:2.11.251:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/espruino/Espruino/commit/e069be2ecc5060ef47391716e4de94999595b260",
+        "version_end_excluding": {
+            "espruino:espruino": "unknown"
+        },
+        "path": {
+            "file_path": "src/jsparse.h"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-25044"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

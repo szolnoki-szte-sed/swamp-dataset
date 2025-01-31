@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:miraheze:globalnewfiles:*:*:*:*:*:mediawiki:*:*"
+        ],
+        "fix_commit": "https://github.com/miraheze/GlobalNewFiles/commit/cee254e1b158cdb0ddbea716b1d3edc31fa4fb5d",
+        "version_end_excluding": {
+            "miraheze:globalnewfiles": "2021-09-01"
+        },
+        "path": {
+            "file_path": "includes/GlobalNewFilesHooks.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-39186"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

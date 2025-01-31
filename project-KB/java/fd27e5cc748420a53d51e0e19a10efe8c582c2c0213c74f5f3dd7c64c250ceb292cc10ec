@@ -1,0 +1,40 @@
+diff --git a/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ActionNamesAction.java b/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ActionNamesAction.java
+index fe2ab8663f..8a34bced13 100644
+--- a/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ActionNamesAction.java
++++ b/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ActionNamesAction.java
+@@ -54,11 +54,11 @@ public Set<String> getActionNames() {
+     }
+ 
+     public String getNamespace() {
+-        return namespace;
++        return StringEscapeUtils.escapeHtml4(namespace);
+     }
+ 
+     public void setNamespace(String namespace) {
+-        this.namespace = StringEscapeUtils.escapeEcmaScript(namespace);
++        this.namespace = namespace;
+     }
+ 
+     @Inject(StrutsConstants.STRUTS_ACTION_EXTENSION)
+diff --git a/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ShowConfigAction.java b/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ShowConfigAction.java
+index 1c84215170..1b3b93209b 100644
+--- a/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ShowConfigAction.java
++++ b/plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ShowConfigAction.java
+@@ -64,7 +64,7 @@ public Set<String> getActionNames() {
+     }
+ 
+     public String getNamespace() {
+-        return namespace;
++        return StringEscapeUtils.escapeHtml4(namespace);
+     }
+     
+     @Inject
+@@ -82,7 +82,7 @@ public String stripPackage(Class clazz) {
+     }
+ 
+     public void setNamespace(String namespace) {
+-        this.namespace = StringEscapeUtils.escapeEcmaScript(namespace);
++        this.namespace = namespace;
+     }
+ 
+     public String getActionName() {

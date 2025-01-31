@@ -1,0 +1,41 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:orbeon:forms:2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:orbeon:forms:2.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:orbeon:forms:3.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:orbeon:forms:2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:orbeon:forms:2.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:orbeon:forms:2.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:orbeon:forms:1.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:orbeon:forms:3.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:orbeon:forms:2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:orbeon:forms:3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:orbeon:forms:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:orbeon:forms:2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:orbeon:forms:3.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:orbeon:forms:3.7.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/orbeon/orbeon-forms/commit/aba6681660f65af7f1676434da68c10298c30200",
+        "version_end_excluding": {
+            "orbeon:forms": "unknown"
+        },
+        "path": {
+            "file_path": "src/java/org/orbeon/oxf/xml/xerces/XercesSAXParserFactoryImpl.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "GNU Lesser General Public License v2.1"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2010-3260"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

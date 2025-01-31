@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bookstackapp:bookstack:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bookstackapp/bookstack/commit/64937ab826b56d086af9ecea532510d37520ebc8",
+        "version_end_excluding": {
+            "bookstackapp:bookstack": "21.10.1"
+        },
+        "path": {
+            "file_path": "app/Uploads/ImageRepo.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3906"
+        ],
+        "CWE": [
+            "CWE-434"
+        ]
+    }
+}

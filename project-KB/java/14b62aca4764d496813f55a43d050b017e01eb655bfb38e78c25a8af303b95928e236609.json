@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:o:fedoraproject:fedora:32:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql_jdbc_driver:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:quarkus:quarkus:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:steelstore_cloud_integrated_storage:-:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:11.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pgjdbc/pgjdbc/commit/14b62aca4764d496813f55a43d050b017e01eb65",
+        "version_end_excluding": {
+            "postgresql:postgresql_jdbc_driver": "42.2.13"
+        },
+        "path": {
+            "file_path": "pgjdbc/src/main/java/org/postgresql/xml/PGXmlFactoryFactory.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "BSD 2-Clause \"Simplified\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-13692"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

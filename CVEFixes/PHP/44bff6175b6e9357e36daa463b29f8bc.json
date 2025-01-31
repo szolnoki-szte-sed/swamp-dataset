@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:shopware:shopware:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/shopware/shopware/commit/7875855005648fba7b39371a70816afae2e07daf",
+        "version_end_excluding": {
+            "shopware:shopware": "5.7.14"
+        },
+        "path": {
+            "file_path": "engine/Shopware/Models/Newsletter/ContainerType/Article.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-31148"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

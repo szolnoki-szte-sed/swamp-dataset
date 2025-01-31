@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal_software:spring_framework:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-framework/commit/3f68cd633f03370d33c2603a6496e81273782601",
+        "version_end_excluding": {
+            "pivotal_software:spring_framework": "unknown"
+        },
+        "path": {
+            "file_path": "spring-webmvc/src/test/java/org/springframework/web/servlet/resource/ResourceHttpRequestHandlerTests.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-3625"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mayan-edms:mayan_edms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://gitlab.com/mayan-edms/mayan-edms/commit/9ebe80595afe4fdd1e2c74358d6a9421f4ce130e",
+        "version_end_excluding": {
+            "mayan-edms:mayan_edms": "3.0.2"
+        },
+        "path": {
+            "file_path": "mayan/apps/appearance/templates/appearance/base_plain.html"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-16405"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

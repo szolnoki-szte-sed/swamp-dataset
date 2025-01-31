@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:nim-lang:docutils:*:*:*:*:*:nim:*:*",
+            "cpe:2.3:a:nim-lang:nimforum:*:*:*:*:*:nim:*:*"
+        ],
+        "fix_commit": "https://github.com/nim-lang/Nim/commit/cb894c7094fb49014f85815a9dafc38b5dda743e",
+        "version_end_excluding": {
+            "nim-lang:docutils": "1.6.2",
+            "nim-lang:nimforum": "2.2.0"
+        },
+        "path": {
+            "file_path": "compiler/docgen.nim"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-23602"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

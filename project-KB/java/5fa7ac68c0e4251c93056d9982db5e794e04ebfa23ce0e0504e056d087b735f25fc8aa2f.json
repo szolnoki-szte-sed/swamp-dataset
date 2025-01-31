@@ -1,0 +1,45 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:o:redhat:enterprise_linux:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:openshift_application_runtimes:-:*:*:*:text-only:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:active_iq_unified_manager:-:*:*:*:*:vmware_vsphere:*:*",
+            "cpe:2.3:a:redhat:jboss_data_grid:-:*:*:*:text-only:*:*:*",
+            "cpe:2.3:a:redhat:single_sign-on:-:*:*:*:text-only:*:*:*",
+            "cpe:2.3:a:netapp:active_iq_unified_manager:-:*:*:*:*:windows:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:-:*:*:*:text-only:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:single_sign-on:7.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:single_sign-on:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:active_iq_unified_manager:-:*:*:*:*:linux:*:*",
+            "cpe:2.3:a:redhat:undertow:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:openshift_application_runtimes:1.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/undertow-io/undertow/commit/5fa7ac68c0e4251c93056d9982db5e794e04ebfa",
+        "version_end_excluding": {
+            "redhat:undertow": "2.0.23"
+        },
+        "path": {
+            "file_path": "servlet/src/main/java/io/undertow/servlet/core/DeploymentManagerImpl.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10184"
+        ],
+        "CWE": [
+            "CWE-862"
+        ]
+    }
+}

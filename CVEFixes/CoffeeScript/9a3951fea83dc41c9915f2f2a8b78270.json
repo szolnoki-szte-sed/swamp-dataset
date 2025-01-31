@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:thoughtbot:paperclip:*:*:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/thoughtbot/paperclip/commit/9aee4112f36058cd28d5fe4a006d6981bd1eda57",
+        "version_end_excluding": {
+            "thoughtbot:paperclip": "unknown"
+        },
+        "path": {
+            "file_path": "lib/paperclip/locales/en.yml"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-2963"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

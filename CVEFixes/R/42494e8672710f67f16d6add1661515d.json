@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:google:tensorflow:2.2.0:*:*:*:-:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.3.0:*:*:*:-:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/tensorflow/tensorflow/commit/22e07fb204386768e5bcbea563641ea11f96ceb8",
+        "version_end_excluding": {
+            "google:tensorflow": "unknown",
+            "opensuse:leap": "unknown"
+        },
+        "path": {
+            "file_path": "tensorflow/python/dlpack/BUILD"
+        }
+    },
+    "programming_language": "r",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15191"
+        ],
+        "CWE": [
+            "CWE-252"
+        ]
+    }
+}

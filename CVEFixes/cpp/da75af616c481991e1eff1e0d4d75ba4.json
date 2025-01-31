@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:-:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:-:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:-:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:-:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:-:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/tensorflow/tensorflow/commit/27b417360cbd671ef55915e4bb6bb06af8b8a832",
+        "version_end_excluding": {
+            "google:tensorflow": "2.3.1",
+            "opensuse:leap": "unknown"
+        },
+        "path": {
+            "file_path": "tensorflow/core/kernels/random_op.cc"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15202"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

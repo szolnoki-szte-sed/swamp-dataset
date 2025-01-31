@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:socket:engine.io:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/socketio/engine.io/commit/734f9d1268840722c41219e69eb58318e0b2ac6b",
+        "version_end_excluding": {
+            "socket:engine.io": "4.0.0"
+        },
+        "path": {
+            "file_path": "lib/server.js"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-36048"
+        ],
+        "CWE": [
+            "CWE-400"
+        ]
+    }
+}

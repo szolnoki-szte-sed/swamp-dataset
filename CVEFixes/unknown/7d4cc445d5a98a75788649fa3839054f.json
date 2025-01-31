@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:node-ipic_project:node-ipic:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/RIAEvangelist/node-ipc/commit/847047cf7f81ab08352038b2204f0e7633449580",
+        "version_end_excluding": {
+            "node-ipic_project:node-ipic": "10.1.3"
+        },
+        "path": {
+            "file_path": "coverage/tmp/coverage-10204-1625688926597-0.json"
+        }
+    },
+    "programming_language": "unknown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-23812"
+        ],
+        "CWE": [
+            "CWE-94"
+        ]
+    }
+}

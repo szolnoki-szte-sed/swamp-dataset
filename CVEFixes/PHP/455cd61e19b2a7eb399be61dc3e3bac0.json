@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:kaltura:kaltura_server:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/kaltura/server/commit/6a6d14328b7a1493e8c47f9565461e5f88be20c9",
+        "version_end_excluding": {
+            "kaltura:kaltura_server": "13.2.0"
+        },
+        "path": {
+            "file_path": "alpha/apps/kaltura/modules/system/actions/helperAction.class.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-14141"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

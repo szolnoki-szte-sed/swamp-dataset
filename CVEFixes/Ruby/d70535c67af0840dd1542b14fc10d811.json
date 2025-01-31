@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sinatrarb:sinatra:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:cloudforms:4.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:cloudforms:4.7:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/sinatra/sinatra/commit/12786867d6faaceaec62c7c2cb5b0e2dc074d71a",
+        "version_end_excluding": {
+            "sinatrarb:sinatra": "2.0.2",
+            "redhat:cloudforms": "unknown"
+        },
+        "path": {
+            "file_path": "lib/sinatra/base.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-11627"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

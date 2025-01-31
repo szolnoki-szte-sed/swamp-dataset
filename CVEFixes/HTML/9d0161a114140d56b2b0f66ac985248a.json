@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:opennms:meridian:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:opennms:meridian:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:opennms:opennms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/OpenNMS/opennms/commit/f3ebfa3da5352b4d57f238b54c6db315ad99f10e",
+        "version_end_excluding": {
+            "opennms:meridian": "unknown",
+            "opennms:opennms": "unknown"
+        },
+        "path": {
+            "file_path": "opennms-webapp/src/main/webapp/WEB-INF/jsp/event/detail.jsp"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-25932"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

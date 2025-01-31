@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:irzip_project:irzip:0.640:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:11.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ckolivas/lrzip/commit/5faf80cd53ecfd16b636d653483144cd12004f46",
+        "version_end_excluding": {
+            "irzip_project:irzip": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "lrzip.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-28044"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

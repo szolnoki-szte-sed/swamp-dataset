@@ -1,0 +1,43 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:cobham:explorer_710_firmware:1.07:*:*:*:*:*:*:*",
+            "cpe:2.3:o:ui:edgemax_edgerouter_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:mac_os_x:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:party_gaming:party_poker_client:121-120:*:*:*:*:*:*:*",
+            "cpe:2.3:a:symantec:liveupdate:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:pingtel:xpressa_firmware:1.2.5:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "cobham:explorer_710_firmware": "unknown",
+            "ui:edgemax_edgerouter_firmware": "2.0.9",
+            "apple:mac_os_x": "10.5.4",
+            "party_gaming:party_poker_client": "unknown",
+            "symantec:liveupdate": "unknown",
+            "pingtel:xpressa_firmware": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-9534",
+            "CVE-2021-22909",
+            "CVE-2008-3438",
+            "CVE-2008-3324",
+            "CVE-2001-1125",
+            "CVE-2002-0671"
+        ],
+        "CWE": [
+            "CWE-494"
+        ]
+    }
+}

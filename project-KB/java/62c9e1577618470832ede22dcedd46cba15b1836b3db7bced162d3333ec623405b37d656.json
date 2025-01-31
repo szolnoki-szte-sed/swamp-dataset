@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:keycloak:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/keycloak/keycloak/commit/62c9e1577618470832ede22dcedd46cba15b1836",
+        "version_end_excluding": {
+            "redhat:keycloak": "9.0.0"
+        },
+        "path": {
+            "file_path": "authz/client/src/main/java/org/keycloak/authorization/client/util/HttpMethod.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1698"
+        ],
+        "CWE": [
+            "CWE-532",
+            "CWE-200"
+        ]
+    }
+}

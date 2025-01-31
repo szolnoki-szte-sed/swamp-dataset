@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:aircrack-ng:aircrack-ng:1.2:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:aircrack-ng:aircrack-ng:1.2:beta3:*:*:*:*:*:*",
+            "cpe:2.3:a:aircrack-ng:aircrack-ng:1.2:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:aircrack-ng:aircrack-ng:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/aircrack-ng/aircrack-ng/commit/ff70494dd389ba570dbdbf36f217c28d4381c6b5",
+        "version_end_excluding": {
+            "aircrack-ng:aircrack-ng": "unknown"
+        },
+        "path": {
+            "file_path": "src/airodump-ng.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-8321"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:xerces2_java:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/xerces2-j/commit/992b5d9c24102ad20330d36c0a71162753a37449",
+        "version_end_excluding": {
+            "apache:xerces2_java": "unknown"
+        },
+        "path": {
+            "file_path": "src/org/apache/xerces/util/SymbolHash.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-0881"
+        ],
+        "CWE": [
+            "CWE-399"
+        ]
+    }
+}

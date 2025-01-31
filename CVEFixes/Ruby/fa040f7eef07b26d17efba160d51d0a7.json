@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:nokogiri:nokogiri:*:*:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/sparklemotion/nokogiri/commit/db05ba9a1bd4b90aa6c76742cf6102a7c7297267",
+        "version_end_excluding": {
+            "nokogiri:nokogiri": "1.13.6"
+        },
+        "path": {
+            "file_path": "lib/nokogiri/html4/sax/parser.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-29181"
+        ],
+        "CWE": [
+            "CWE-241"
+        ]
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ytnef_project:ytnef:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Yeraze/ytnef/commit/f98f5d4adc1c4bd4033638f6167c1bb95d642f89",
+        "version_end_excluding": {
+            "ytnef_project:ytnef": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "lib/ytnef.c"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-6800"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:shibboleth_project:shibboleth:*:*:*:*:*:wordpress:*:*"
+        ],
+        "fix_commit": "https://github.com/michaelryanmcneill/shibboleth/commit/1d65ad6786282d23ba1865f56e2fd19188e7c26a",
+        "version_end_excluding": {
+            "shibboleth_project:shibboleth": "unknown"
+        },
+        "path": {
+            "file_path": "shibboleth.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-14313"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

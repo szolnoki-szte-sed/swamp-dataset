@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:fedoraproject:fedora:33:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/zmartzone/mod_auth_openidc/commit/375407c16c61a70b56fdbe13b0d2c8f11398e92c",
+        "version_end_excluding": {
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "configure.ac"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32791"
+        ],
+        "CWE": [
+            "CWE-330"
+        ]
+    }
+}

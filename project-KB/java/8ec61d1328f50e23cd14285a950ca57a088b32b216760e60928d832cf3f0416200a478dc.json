@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wxjava_project:wxjava:3.3.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Wechat-Group/WxJava/commit/8ec61d1328f50e23cd14285a950ca57a088b32b2",
+        "version_end_excluding": {
+            "wxjava_project:wxjava": "unknown"
+        },
+        "path": {
+            "file_path": "weixin-java-common/src/main/java/me/chanjar/weixin/common/util/crypto/WxCryptUtil.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-5312"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

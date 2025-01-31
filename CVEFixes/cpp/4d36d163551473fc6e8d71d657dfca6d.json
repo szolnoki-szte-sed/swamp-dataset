@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:onlyoffice:core:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:onlyoffice:document_server:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ONLYOFFICE/core/commit/88cf60a3ed4a2b40d71a1c2ced72fa3902a30967",
+        "version_end_excluding": {
+            "onlyoffice:core": "unknown",
+            "onlyoffice:document_server": "unknown"
+        },
+        "path": {
+            "file_path": "DesktopEditor/cximage/CxImage/xmemfile.h"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-29776"
+        ],
+        "CWE": [
+            "CWE-770"
+        ]
+    }
+}

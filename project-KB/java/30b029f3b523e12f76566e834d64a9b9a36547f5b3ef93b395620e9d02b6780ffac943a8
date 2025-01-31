@@ -1,0 +1,26 @@
+diff --git a/core/src/main/java/io/undertow/UndertowLogger.java b/core/src/main/java/io/undertow/UndertowLogger.java
+index d586948cc2..f8d6d3ec1e 100644
+--- a/core/src/main/java/io/undertow/UndertowLogger.java
++++ b/core/src/main/java/io/undertow/UndertowLogger.java
+@@ -393,7 +393,7 @@ void nodeConfigCreated(URI connectionURI, String balancer, String domain, String
+     @Message(id = 5084, value = "Attempted to write %s bytes however content-length has been set to %s")
+     IOException dataLargerThanContentLength(long totalToWrite, long responseContentLength);
+ 
+-    @LogMessage(level = ERROR)
++    @LogMessage(level = DEBUG)
+     @Message(id = 5085, value = "Connection %s for exchange %s was not closed cleanly, forcibly closing connection")
+     void responseWasNotTerminated(ServerConnection connection, HttpServerExchange exchange);
+ 
+diff --git a/core/src/main/java/io/undertow/server/HttpServerExchange.java b/core/src/main/java/io/undertow/server/HttpServerExchange.java
+index 2186a6235d..dbc98f7d46 100644
+--- a/core/src/main/java/io/undertow/server/HttpServerExchange.java
++++ b/core/src/main/java/io/undertow/server/HttpServerExchange.java
+@@ -155,7 +155,7 @@ public final class HttpServerExchange extends AbstractAttachable {
+     // mutable state
+ 
+     private int state = 200;
+-    private HttpString requestMethod;
++    private HttpString requestMethod = HttpString.EMPTY;
+     private String requestScheme;
+ 
+     /**

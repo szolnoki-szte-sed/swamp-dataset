@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/WordPress/WordPress/commit/804363859602d4050d9a38a21f5a65d9aec18216",
+        "version_end_excluding": {
+            "wordpress:wordpress": "4.9.5",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "wp-includes/http.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-10101"
+        ],
+        "CWE": [
+            "CWE-601"
+        ]
+    }
+}

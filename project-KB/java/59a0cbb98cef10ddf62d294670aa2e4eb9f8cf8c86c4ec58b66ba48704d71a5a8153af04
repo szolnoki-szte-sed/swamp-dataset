@@ -1,0 +1,240 @@
+diff --git a/clients/src/main/java/org/apache/kafka/common/requests/ProduceRequest.java b/clients/src/main/java/org/apache/kafka/common/requests/ProduceRequest.java
+index 9f9de42c8668..a961d4783074 100644
+--- a/clients/src/main/java/org/apache/kafka/common/requests/ProduceRequest.java
++++ b/clients/src/main/java/org/apache/kafka/common/requests/ProduceRequest.java
+@@ -214,8 +214,8 @@ public String toString() {
+     // put in the purgatory (due to client throttling, it can take a while before the response is sent).
+     // Care should be taken in methods that use this field.
+     private volatile Map<TopicPartition, MemoryRecords> partitionRecords;
+-    private boolean transactional = false;
+-    private boolean idempotent = false;
++    private boolean hasTransactionalRecords = false;
++    private boolean hasIdempotentRecords = false;
+ 
+     private ProduceRequest(short version, short acks, int timeout, Map<TopicPartition, MemoryRecords> partitionRecords, String transactionalId) {
+         super(ApiKeys.PRODUCE, version);
+@@ -261,8 +261,8 @@ public ProduceRequest(Struct struct, short version) {
+     private void setFlags(MemoryRecords records) {
+         Iterator<MutableRecordBatch> iterator = records.batches().iterator();
+         MutableRecordBatch entry = iterator.next();
+-        idempotent = entry.hasProducerId();
+-        transactional = entry.isTransactional();
++        hasIdempotentRecords = hasIdempotentRecords || entry.hasProducerId();
++        hasTransactionalRecords = hasTransactionalRecords || entry.isTransactional();
+     }
+ 
+     /**
+@@ -366,12 +366,12 @@ public String transactionalId() {
+         return transactionalId;
+     }
+ 
+-    public boolean isTransactional() {
+-        return transactional;
++    public boolean hasTransactionalRecords() {
++        return hasTransactionalRecords;
+     }
+ 
+-    public boolean isIdempotent() {
+-        return idempotent;
++    public boolean hasIdempotentRecords() {
++        return hasIdempotentRecords;
+     }
+ 
+     /**
+diff --git a/clients/src/test/java/org/apache/kafka/clients/producer/internals/SenderTest.java b/clients/src/test/java/org/apache/kafka/clients/producer/internals/SenderTest.java
+index 8e9f3e62441d..5bef1341e3a0 100644
+--- a/clients/src/test/java/org/apache/kafka/clients/producer/internals/SenderTest.java
++++ b/clients/src/test/java/org/apache/kafka/clients/producer/internals/SenderTest.java
+@@ -562,7 +562,7 @@ public void testCanRetryWithoutIdempotence() throws Exception {
+             @Override
+             public boolean matches(AbstractRequest body) {
+                 ProduceRequest request = (ProduceRequest) body;
+-                assertFalse(request.isIdempotent());
++                assertFalse(request.hasIdempotentRecords());
+                 return true;
+             }
+         }, produceResponse(tp0, -1L, Errors.TOPIC_AUTHORIZATION_FAILED, 0));
+@@ -1558,7 +1558,7 @@ void sendIdempotentProducerResponse(final int expectedSequence, TopicPartition t
+             @Override
+             public boolean matches(AbstractRequest body) {
+                 ProduceRequest produceRequest = (ProduceRequest) body;
+-                assertTrue(produceRequest.isIdempotent());
++                assertTrue(produceRequest.hasIdempotentRecords());
+ 
+                 MemoryRecords records = produceRequest.partitionRecordsOrFail().get(tp0);
+                 Iterator<MutableRecordBatch> batchIterator = records.batches().iterator();
+@@ -1586,7 +1586,7 @@ public void testClusterAuthorizationExceptionInProduceRequest() throws Exception
+         client.prepareResponse(new MockClient.RequestMatcher() {
+             @Override
+             public boolean matches(AbstractRequest body) {
+-                return body instanceof ProduceRequest && ((ProduceRequest) body).isIdempotent();
++                return body instanceof ProduceRequest && ((ProduceRequest) body).hasIdempotentRecords();
+             }
+         }, produceResponse(tp0, -1, Errors.CLUSTER_AUTHORIZATION_FAILED, 0));
+ 
+@@ -1620,7 +1620,7 @@ public void testCancelInFlightRequestAfterFatalError() throws Exception {
+         client.respond(new MockClient.RequestMatcher() {
+             @Override
+             public boolean matches(AbstractRequest body) {
+-                return body instanceof ProduceRequest && ((ProduceRequest) body).isIdempotent();
++                return body instanceof ProduceRequest && ((ProduceRequest) body).hasIdempotentRecords();
+             }
+         }, produceResponse(tp0, -1, Errors.CLUSTER_AUTHORIZATION_FAILED, 0));
+ 
+@@ -1635,7 +1635,7 @@ public boolean matches(AbstractRequest body) {
+         client.respond(new MockClient.RequestMatcher() {
+             @Override
+             public boolean matches(AbstractRequest body) {
+-                return body instanceof ProduceRequest && ((ProduceRequest) body).isIdempotent();
++                return body instanceof ProduceRequest && ((ProduceRequest) body).hasIdempotentRecords();
+             }
+         }, produceResponse(tp1, 0, Errors.NONE, 0));
+         sender.run(time.milliseconds());
+@@ -1656,7 +1656,7 @@ public void testUnsupportedForMessageFormatInProduceRequest() throws Exception {
+         client.prepareResponse(new MockClient.RequestMatcher() {
+             @Override
+             public boolean matches(AbstractRequest body) {
+-                return body instanceof ProduceRequest && ((ProduceRequest) body).isIdempotent();
++                return body instanceof ProduceRequest && ((ProduceRequest) body).hasIdempotentRecords();
+             }
+         }, produceResponse(tp0, -1, Errors.UNSUPPORTED_FOR_MESSAGE_FORMAT, 0));
+ 
+@@ -1682,7 +1682,7 @@ public void testUnsupportedVersionInProduceRequest() throws Exception {
+         client.prepareUnsupportedVersionResponse(new MockClient.RequestMatcher() {
+             @Override
+             public boolean matches(AbstractRequest body) {
+-                return body instanceof ProduceRequest && ((ProduceRequest) body).isIdempotent();
++                return body instanceof ProduceRequest && ((ProduceRequest) body).hasIdempotentRecords();
+             }
+         });
+ 
+diff --git a/clients/src/test/java/org/apache/kafka/common/requests/ProduceRequestTest.java b/clients/src/test/java/org/apache/kafka/common/requests/ProduceRequestTest.java
+index 74e3960dd47a..809d64f1e327 100644
+--- a/clients/src/test/java/org/apache/kafka/common/requests/ProduceRequestTest.java
++++ b/clients/src/test/java/org/apache/kafka/common/requests/ProduceRequestTest.java
+@@ -24,6 +24,7 @@
+ import org.apache.kafka.common.record.MemoryRecords;
+ import org.apache.kafka.common.record.MemoryRecordsBuilder;
+ import org.apache.kafka.common.record.RecordBatch;
++import org.apache.kafka.common.record.RecordVersion;
+ import org.apache.kafka.common.record.SimpleRecord;
+ import org.apache.kafka.common.record.TimestampType;
+ import org.junit.Test;
+@@ -31,6 +32,7 @@
+ import java.nio.ByteBuffer;
+ import java.util.Collections;
+ import java.util.HashMap;
++import java.util.LinkedHashMap;
+ import java.util.Map;
+ 
+ import static org.junit.Assert.assertEquals;
+@@ -50,19 +52,19 @@ public void shouldBeFlaggedAsTransactionalWhenTransactionalRecords() throws Exce
+                 (short) 1, 1, 1, simpleRecord);
+         final ProduceRequest request = ProduceRequest.Builder.forCurrentMagic((short) -1,
+                 10, Collections.singletonMap(new TopicPartition("topic", 1), memoryRecords)).build();
+-        assertTrue(request.isTransactional());
++        assertTrue(request.hasTransactionalRecords());
+     }
+ 
+     @Test
+     public void shouldNotBeFlaggedAsTransactionalWhenNoRecords() throws Exception {
+         final ProduceRequest request = createNonIdempotentNonTransactionalRecords();
+-        assertFalse(request.isTransactional());
++        assertFalse(request.hasTransactionalRecords());
+     }
+ 
+     @Test
+     public void shouldNotBeFlaggedAsIdempotentWhenRecordsNotIdempotent() throws Exception {
+         final ProduceRequest request = createNonIdempotentNonTransactionalRecords();
+-        assertFalse(request.isTransactional());
++        assertFalse(request.hasTransactionalRecords());
+     }
+ 
+     @Test
+@@ -71,7 +73,7 @@ public void shouldBeFlaggedAsIdempotentWhenIdempotentRecords() throws Exception
+                 (short) 1, 1, 1, simpleRecord);
+         final ProduceRequest request = ProduceRequest.Builder.forCurrentMagic((short) -1, 10,
+                 Collections.singletonMap(new TopicPartition("topic", 1), memoryRecords)).build();
+-        assertTrue(request.isIdempotent());
++        assertTrue(request.hasIdempotentRecords());
+     }
+ 
+     @Test
+@@ -178,6 +180,53 @@ public void testV6AndBelowCannotUseZStdCompression() {
+         ProduceRequest.Builder.forCurrentMagic((short) 1, 5000, produceData);
+     }
+ 
++    @Test
++    public void testMixedTransactionalData() {
++        final long producerId = 15L;
++        final short producerEpoch = 5;
++        final int sequence = 10;
++        final String transactionalId = "txnlId";
++
++        final MemoryRecords nonTxnRecords = MemoryRecords.withRecords(CompressionType.NONE,
++                new SimpleRecord("foo".getBytes()));
++        final MemoryRecords txnRecords = MemoryRecords.withTransactionalRecords(CompressionType.NONE, producerId,
++                producerEpoch, sequence, new SimpleRecord("bar".getBytes()));
++
++        final Map<TopicPartition, MemoryRecords> recordsByPartition = new LinkedHashMap<>();
++        recordsByPartition.put(new TopicPartition("foo", 0), txnRecords);
++        recordsByPartition.put(new TopicPartition("foo", 1), nonTxnRecords);
++
++        final ProduceRequest.Builder builder = ProduceRequest.Builder.forMagic(RecordVersion.current().value, (short) -1, 5000,
++                recordsByPartition, transactionalId);
++
++        final ProduceRequest request = builder.build();
++        assertTrue(request.hasTransactionalRecords());
++        assertTrue(request.hasIdempotentRecords());
++    }
++
++    @Test
++    public void testMixedIdempotentData() {
++        final long producerId = 15L;
++        final short producerEpoch = 5;
++        final int sequence = 10;
++
++        final MemoryRecords nonTxnRecords = MemoryRecords.withRecords(CompressionType.NONE,
++                new SimpleRecord("foo".getBytes()));
++        final MemoryRecords txnRecords = MemoryRecords.withIdempotentRecords(CompressionType.NONE, producerId,
++                producerEpoch, sequence, new SimpleRecord("bar".getBytes()));
++
++        final Map<TopicPartition, MemoryRecords> recordsByPartition = new LinkedHashMap<>();
++        recordsByPartition.put(new TopicPartition("foo", 0), txnRecords);
++        recordsByPartition.put(new TopicPartition("foo", 1), nonTxnRecords);
++
++        final ProduceRequest.Builder builder = ProduceRequest.Builder.forMagic(RecordVersion.current().value, (short) -1, 5000,
++                recordsByPartition, null);
++
++        final ProduceRequest request = builder.build();
++        assertFalse(request.hasTransactionalRecords());
++        assertTrue(request.hasIdempotentRecords());
++    }
++
+     private void assertThrowsInvalidRecordExceptionForAllVersions(ProduceRequest.Builder builder) {
+         for (short version = builder.oldestAllowedVersion(); version < builder.latestAllowedVersion(); version++) {
+             assertThrowsInvalidRecordException(builder, version);
+diff --git a/core/src/main/scala/kafka/server/KafkaApis.scala b/core/src/main/scala/kafka/server/KafkaApis.scala
+index f08c122a4f1a..ceae894bbaf8 100644
+--- a/core/src/main/scala/kafka/server/KafkaApis.scala
++++ b/core/src/main/scala/kafka/server/KafkaApis.scala
+@@ -377,14 +377,16 @@ class KafkaApis(val requestChannel: RequestChannel,
+     val produceRequest = request.body[ProduceRequest]
+     val numBytesAppended = request.header.toStruct.sizeOf + request.sizeOfBodyInBytes
+ 
+-    if (produceRequest.isTransactional) {
+-      if (!authorize(request.session, Write, Resource(TransactionalId, produceRequest.transactionalId, LITERAL))) {
++    if (produceRequest.hasTransactionalRecords) {
++      val isAuthorizedTransactional = produceRequest.transactionalId != null &&
++        authorize(request.session, Write, Resource(TransactionalId, produceRequest.transactionalId, LITERAL))
++      if (!isAuthorizedTransactional) {
+         sendErrorResponseMaybeThrottle(request, Errors.TRANSACTIONAL_ID_AUTHORIZATION_FAILED.exception)
+         return
+       }
+       // Note that authorization to a transactionalId implies ProducerId authorization
+ 
+-    } else if (produceRequest.isIdempotent && !authorize(request.session, IdempotentWrite, Resource.ClusterResource)) {
++    } else if (produceRequest.hasIdempotentRecords && !authorize(request.session, IdempotentWrite, Resource.ClusterResource)) {
+       sendErrorResponseMaybeThrottle(request, Errors.CLUSTER_AUTHORIZATION_FAILED.exception)
+       return
+     }

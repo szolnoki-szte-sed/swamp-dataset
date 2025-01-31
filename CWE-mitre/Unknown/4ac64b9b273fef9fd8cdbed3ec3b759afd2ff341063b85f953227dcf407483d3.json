@@ -1,0 +1,52 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:tapestry:*:*:*:*:*:*:*:*",
+            "cpe:2.3:h:qualcomm:apq8009:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:sap:router:710:029:*:*:*:*:*:*",
+            "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ibm:lotus_notes:r5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:novell:ichain:2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openbsd:openssh:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:proftpd:proftpd:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:adobe:svg_viewer:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "apache:tapestry": "5.4.3",
+            "qualcomm:apq8009": "unknown",
+            "sap:router": "unknown",
+            "openssl:openssl": "unknown",
+            "ibm:lotus_notes": "unknown",
+            "novell:ichain": "unknown",
+            "openbsd:openssh": "unknown",
+            "proftpd:proftpd": "1.2.10",
+            "adobe:svg_viewer": "3.02"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "unknown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10071",
+            "CVE-2019-10482",
+            "CVE-2014-0984",
+            "CVE-2003-0078",
+            "CVE-2000-1117",
+            "CVE-2003-0637",
+            "CVE-2003-0190",
+            "CVE-2004-1602",
+            "CVE-2005-0918"
+        ],
+        "CWE": [
+            "CWE-208"
+        ]
+    }
+}

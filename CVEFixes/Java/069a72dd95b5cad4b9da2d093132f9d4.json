@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:nekohtml_project:nekohtml:*:*:*:*:*:nokogiri:*:*"
+        ],
+        "fix_commit": "https://github.com/sparklemotion/nekohtml/commit/a800fce3b079def130ed42a408ff1d09f89e773d",
+        "version_end_excluding": {
+            "nekohtml_project:nekohtml": "1.9.22.noko2"
+        },
+        "path": {
+            "file_path": "src/org/cyberneko/html/HTMLScanner.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24839"
+        ],
+        "CWE": [
+            "CWE-400"
+        ]
+    }
+}

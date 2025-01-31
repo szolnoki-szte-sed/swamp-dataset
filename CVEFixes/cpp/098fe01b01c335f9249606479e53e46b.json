@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:isolated-vm_project:isolated-vm:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/laverdet/isolated-vm/commit/2646e6c1558bac66285daeab54c7d490ed332b15",
+        "version_end_excluding": {
+            "isolated-vm_project:isolated-vm": "4.0.0"
+        },
+        "path": {
+            "file_path": "src/isolate/strings.h"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "ISC License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21413"
+        ],
+        "CWE": [
+            "CWE-913"
+        ]
+    }
+}

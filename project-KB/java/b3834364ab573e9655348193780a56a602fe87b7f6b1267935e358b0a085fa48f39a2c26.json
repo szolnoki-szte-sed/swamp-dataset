@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal_software:cloud_foundry_elastic_runtime:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cloudfoundry:cloud_foundry_uaa_bosh:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:cloud_foundry_uaa:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:cloud_foundry:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:login-server:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cloudfoundry/uaa/commit/b3834364ab573e9655348193780a56a602fe87b7",
+        "version_end_excluding": {
+            "cloudfoundry:cloud_foundry_uaa_bosh": "unknown"
+        },
+        "path": {
+            "file_path": "server/src/test/java/org/cloudfoundry/identity/uaa/invitations/InvitationsControllerTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-3084"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

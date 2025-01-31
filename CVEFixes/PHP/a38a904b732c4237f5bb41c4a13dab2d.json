@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bookstackapp:bookstack:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bookstackapp/bookstack/commit/88e6f93abf54192a69cc8080e0dc6516ee68ccbb",
+        "version_end_excluding": {
+            "bookstackapp:bookstack": "21.11"
+        },
+        "path": {
+            "file_path": "tests/Auth/UserInviteTest.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3944"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

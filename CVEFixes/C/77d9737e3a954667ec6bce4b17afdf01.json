@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:radare:radare2:1.2.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/radare/radare2/commit/ead645853a63bf83d8386702cad0cf23b31d7eeb",
+        "version_end_excluding": {
+            "radare:radare2": "unknown"
+        },
+        "path": {
+            "file_path": "libr/bin/p/bin_dex.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-6387"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

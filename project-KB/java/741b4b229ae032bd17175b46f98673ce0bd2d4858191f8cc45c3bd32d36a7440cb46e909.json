@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal_software:spring_framework:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-framework/commit/741b4b229ae032bd17175b46f98673ce0bd2d485",
+        "version_end_excluding": {
+            "pivotal_software:spring_framework": "3.2.8"
+        },
+        "path": {
+            "file_path": "spring-webmvc/src/test/java/org/springframework/web/servlet/tags/form/FormTagTests.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-1904"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

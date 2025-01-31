@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:miniprofiler:rack-mini-profiler:*:*:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/MiniProfiler/rack-mini-profiler/commit/4273771d65f1a7411e3ef5843329308d0e2d257c",
+        "version_end_excluding": {
+            "miniprofiler:rack-mini-profiler": "unknown"
+        },
+        "path": {
+            "file_path": "Gemfile"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-4442"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:linecorp:armeria:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/line/armeria/commit/b597f7a865a527a84ee3d6937075cfbb4470ed20",
+        "version_end_excluding": {
+            "linecorp:armeria": "0.97.0"
+        },
+        "path": {
+            "file_path": "core/src/main/java/com/linecorp/armeria/internal/ArmeriaHttpUtil.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-16771"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

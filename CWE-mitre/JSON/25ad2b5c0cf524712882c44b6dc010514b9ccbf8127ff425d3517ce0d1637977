@@ -1,0 +1,9 @@
+-
+-		   {
+-		   
+-		     "name": "{StorageAccountName}",
+-		     "enableHttpsTrafficOnly": false,
+-		     "type": "Microsoft.Storage/storageAccounts"
+-		   
+-		   }
+-		 

@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:zyxel:p-663hn-51_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:busybox:busybox:1.1.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "zyxel:p-663hn-51_firmware": "3.40\\(ahq.3\\)",
+            "busybox:busybox": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2008-1526",
+            "CVE-2006-1058"
+        ],
+        "CWE": [
+            "CWE-759"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:icewale:casaos:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/IceWhaleTech/CasaOS/commit/d060968b7ab08e7f8cbfe7ca9ccdfa47afe9bb06",
+        "version_end_excluding": {
+            "icewale:casaos": "0.2.7"
+        },
+        "path": {
+            "file_path": "UI"
+        }
+    },
+    "programming_language": "unknown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24193"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

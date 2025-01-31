@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:kaminari_project:kaminari:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/kaminari/kaminari/commit/8dd52a1aed3d2fa2835d836de23fc0d8c4ff5db8",
+        "version_end_excluding": {
+            "kaminari_project:kaminari": "1.2.1",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "kaminari-core/lib/kaminari/helpers/tags.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-11082"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

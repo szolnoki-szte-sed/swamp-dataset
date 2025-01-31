@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cryptography.io:cryptography:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:25:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:24:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:23:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.04:*:*:*:lts:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pyca/cryptography/commit/b924696b2e8731f39696584d12cceeb3aeb2d874",
+        "version_end_excluding": {
+            "cryptography.io:cryptography": "unknown",
+            "fedoraproject:fedora": "unknown",
+            "canonical:ubuntu_linux": "unknown"
+        },
+        "path": {
+            "file_path": "src/cryptography/hazmat/primitives/kdf/hkdf.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-9243"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

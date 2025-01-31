@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sysphonic:thetis:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/sysphonic/thetis/commit/c07e255d2296d50a0bffafaf66a76f8f1b53621f",
+        "version_end_excluding": {
+            "sysphonic:thetis": "unknown"
+        },
+        "path": {
+            "file_path": "app/views/frames/about.html.erb"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-2972"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

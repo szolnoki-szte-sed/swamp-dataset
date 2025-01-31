@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:vyper_project:vyper:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/vyperlang/vyper/commit/049dbdc647b2ce838fae7c188e6bb09cf16e470b",
+        "version_end_excluding": {
+            "vyper_project:vyper": "0.3.2"
+        },
+        "path": {
+            "file_path": "vyper/codegen/types/convert.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24788"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

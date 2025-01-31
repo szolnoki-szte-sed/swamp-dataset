@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apereo:opencast:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apereo:opencast:8.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/opencast/opencast/commit/b157e1fb3b35991ca7bf59f0730329fbe7ce82e8",
+        "version_end_excluding": {
+            "apereo:opencast": "7.6"
+        },
+        "path": {
+            "file_path": "modules/kernel/src/main/java/org/opencastproject/kernel/security/SecurityServiceSpringImpl.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Educational Community License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-5206"
+        ],
+        "CWE": [
+            "CWE-287",
+            "CWE-285"
+        ]
+    }
+}

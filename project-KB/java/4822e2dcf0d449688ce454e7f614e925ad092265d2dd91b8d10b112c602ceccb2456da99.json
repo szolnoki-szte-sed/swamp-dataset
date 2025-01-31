@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jpaseto_project:jpaseto:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/paseto-toolkit/jpaseto/commit/4822e2dcf0d449688ce454e7f614e925ad092265",
+        "version_end_excluding": {
+            "jpaseto_project:jpaseto": "0.3.0"
+        },
+        "path": {
+            "file_path": "extensions/crypto/sodium/src/main/java/dev/paseto/jpaseto/crypto/sodium/SodiumV2LocalCryptoProvider.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-10244"
+        ],
+        "CWE": [
+            "CWE-326"
+        ]
+    }
+}

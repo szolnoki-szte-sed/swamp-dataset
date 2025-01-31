@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:nifi:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/nifi/commit/95746d346cddbd6134c4b28fdc39d5813a626f97",
+        "version_end_excluding": {
+            "apache:nifi": "unknown"
+        },
+        "path": {
+            "file_path": "nifi-nar-bundles/nifi-framework-bundle/nifi-framework/nifi-web/nifi-web-security/src/test/java/org/apache/nifi/web/security/jwt/JwtServiceTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1942"
+        ],
+        "CWE": [
+            "CWE-532"
+        ]
+    }
+}

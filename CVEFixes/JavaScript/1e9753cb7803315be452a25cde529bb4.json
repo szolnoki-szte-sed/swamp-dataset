@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:getoutline:outline:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/outline/outline/commit/85657b7340cdeaa696034f294489df8d6a4914d3",
+        "version_end_excluding": {
+            "getoutline:outline": "0.64.4"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2342"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

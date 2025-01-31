@@ -1,0 +1,38 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:cxf:2.7.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf:2.7.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf:2.7.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf:2.6.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf:2.7.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf:2.7.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf:2.7.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf:2.7.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf:2.7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf:3.0.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/cxf/commit/0b3894f57388b9955f2c33b2295223f2835cd7b3",
+        "version_end_excluding": {
+            "apache:cxf": "unknown"
+        },
+        "path": {
+            "file_path": "rt/rs/security/xml/src/main/java/org/apache/cxf/rs/security/saml/DeflateEncoderDecoder.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-3584"
+        ],
+        "CWE": [
+            "CWE-399"
+        ]
+    }
+}

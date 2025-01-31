@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/fc66c5210ec2539e800e87d7b3a985323c7be96e",
+        "version_end_excluding": {
+            "linux:linux_kernel": "2.6.39"
+        },
+        "path": {
+            "file_path": "arch/x86/kernel/cpu/perf_event.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-2521"
+        ],
+        "CWE": [
+            "CWE-189"
+        ]
+    }
+}

@@ -1,0 +1,51 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:lapack_project:lapack:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openblas_project:openblas:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:julialang:julia:1.7.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:julialang:julia:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:julialang:julia:1.7.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:julialang:julia:1.7.0:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:julialang:julia:1.7.0:beta3:*:*:*:*:*:*",
+            "cpe:2.3:a:julialang:julia:1.7.0:beta4:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:ceph_storage:3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:ceph_storage:2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:ceph_storage:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:ceph_storage:5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:openshift_container_storage:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:openshift_data_foundation:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:35:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/xianyi/OpenBLAS/commit/fe497efa0510466fd93578aaf9da1ad8ed4edbe7",
+        "version_end_excluding": {
+            "lapack_project:lapack": "unknown",
+            "openblas_project:openblas": "0.3.18",
+            "julialang:julia": "unknown",
+            "redhat:ceph_storage": "unknown",
+            "redhat:enterprise_linux": "unknown",
+            "redhat:openshift_container_storage": "unknown",
+            "redhat:openshift_data_foundation": "unknown",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "lapack-netlib/SRC/dlarrv.f"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-4048"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

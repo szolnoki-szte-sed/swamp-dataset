@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:php_font_lib_project:php_font_lib:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/PhenX/php-font-lib/commit/d13682b7e27d14a6323c441426f3dde1cd86c751",
+        "version_end_excluding": {
+            "php_font_lib_project:php_font_lib": "unknown"
+        },
+        "path": {
+            "file_path": "www/make_subset.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v2.1"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-2570"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

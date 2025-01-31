@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:strangerstudios:paid_memberships_pro:*:*:*:*:*:wordpress:*:*"
+        ],
+        "fix_commit": "https://github.com/strangerstudios/paid-memberships-pro/commit/add03e3ed90e9163e5a46e20e6c371a87ff5a677",
+        "version_end_excluding": {
+            "strangerstudios:paid_memberships_pro": "1.8.4.3"
+        },
+        "path": {
+            "file_path": "adminpages/reports.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5532"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

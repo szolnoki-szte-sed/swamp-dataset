@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:redhat:389_directory_server:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:389_directory_server:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:389_directory_server:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:directory_server:11.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/389ds/389-ds-base/commit/cc0f69283abc082488824702dae485b8eae938bc",
+        "version_end_excluding": {
+            "redhat:389_directory_server": "1.4.3.19",
+            "redhat:enterprise_linux": "unknown",
+            "redhat:directory_server": "unknown"
+        },
+        "path": {
+            "file_path": "ldap/servers/slapd/back-ldbm/ldbm_config.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-35518"
+        ],
+        "CWE": [
+            "CWE-203"
+        ]
+    }
+}

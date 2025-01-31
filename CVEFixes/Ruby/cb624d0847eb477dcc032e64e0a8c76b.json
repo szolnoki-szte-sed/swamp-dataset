@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.12.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.12.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.11.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.11.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fatfreecrm:fat_free_crm:0.11.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/fatfreecrm/fat_free_crm/commit/95464495f1e3e714d5c295fe621af5d2e0d4238d",
+        "version_end_excluding": {
+            "fatfreecrm:fat_free_crm": "unknown"
+        },
+        "path": {
+            "file_path": "app/views/layouts/application.html.haml"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-5441"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

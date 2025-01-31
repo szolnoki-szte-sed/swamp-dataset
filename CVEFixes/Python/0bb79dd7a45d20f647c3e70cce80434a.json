@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:microsoft:onefuzz:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/microsoft/onefuzz/commit/2fcb4998887959b4fa11894a068d689189742cb1",
+        "version_end_excluding": {
+            "microsoft:onefuzz": "2.31.0"
+        },
+        "path": {
+            "file_path": "src/api-service/__app__/onefuzzlib/config.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-37705"
+        ],
+        "CWE": [
+            "CWE-285"
+        ]
+    }
+}

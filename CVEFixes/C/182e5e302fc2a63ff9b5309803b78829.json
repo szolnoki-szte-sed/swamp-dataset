@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:tcpdump:tcpdump:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/the-tcpdump-group/tcpdump/commit/a7e5f58f402e6919ec444a57946bade7dfd6b184",
+        "version_end_excluding": {
+            "tcpdump:tcpdump": "unknown"
+        },
+        "path": {
+            "file_path": "print-802_15_4.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-13000"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

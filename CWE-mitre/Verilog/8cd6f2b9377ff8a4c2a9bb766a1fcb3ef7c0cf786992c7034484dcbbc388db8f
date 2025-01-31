@@ -1,0 +1,3 @@
+-
+-					      if (en) lock_jtag <= d;
+-					    

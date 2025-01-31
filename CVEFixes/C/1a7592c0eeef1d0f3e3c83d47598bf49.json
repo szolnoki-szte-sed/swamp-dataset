@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:univention:univention_corporate_server:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/univention/univention-corporate-server/commit/a28053045bd2e778c50ed1acaf4e52e1e34f6e34",
+        "version_end_excluding": {
+            "univention:univention_corporate_server": "unknown"
+        },
+        "path": {
+            "file_path": "management/univention-directory-notifier/src/callback.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-1010283"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

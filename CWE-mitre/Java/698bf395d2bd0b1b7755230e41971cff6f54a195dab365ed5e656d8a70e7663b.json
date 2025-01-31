@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:proxy.py_project:proxy.py:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:squid-cache:squid:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:squid-cache:squid:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "proxy.py_project:proxy.py": "unknown",
+            "squid-cache:squid": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3116",
+            "CVE-2020-15811",
+            "CVE-2016-10003"
+        ],
+        "CWE": [
+            "CWE-697"
+        ]
+    }
+}

@@ -1,0 +1,1789 @@
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/GemFireCacheImpl.java b/geode-core/src/main/java/org/apache/geode/internal/cache/GemFireCacheImpl.java
+index 85c975d095b0..7404a447c8b8 100755
+--- a/geode-core/src/main/java/org/apache/geode/internal/cache/GemFireCacheImpl.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/GemFireCacheImpl.java
+@@ -2965,9 +2965,7 @@ public void validatePoolFactory(PoolFactory poolFactory) {
+   @Override
+   public <K, V> Region<K, V> createRegion(String name, RegionAttributes<K, V> aRegionAttributes)
+       throws RegionExistsException, TimeoutException {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+     return basicCreateRegion(name, aRegionAttributes);
+   }
+ 
+@@ -3214,11 +3212,8 @@ public Set<InternalRegion> getApplicationRegions() {
+     synchronized (this.rootRegions) {
+       for (Object region : this.rootRegions.values()) {
+         InternalRegion internalRegion = (InternalRegion) region;
+-        if (internalRegion.isSecret() || internalRegion.isUsedForMetaRegion()
+-            || internalRegion instanceof HARegion
+-            || internalRegion.isUsedForPartitionedRegionAdmin() || internalRegion
+-                .isInternalRegion()/* internalRegion.isUsedForPartitionedRegionBucket() */) {
+-          continue; // Skip administrative PartitionedRegions
++        if (internalRegion.isInternalRegion()) {
++          continue; // Skip internal regions
+         }
+         result.add(internalRegion);
+         result.addAll(internalRegion.basicSubregions(true));
+@@ -3392,7 +3387,7 @@ private boolean isGlobalRegionInitializing(InternalRegion region) {
+     synchronized (this.rootRegions) {
+       for (InternalRegion region : this.rootRegions.values()) {
+         // If this is an internal meta-region, don't return it to end user
+-        if (region.isSecret() || region.isUsedForMetaRegion() || region instanceof HARegion
++        if (region.isSecret() || region.isUsedForMetaRegion()
+             || !includePRAdminRegions && (region.isUsedForPartitionedRegionAdmin()
+                 || region.isUsedForPartitionedRegionBucket())) {
+           continue; // Skip administrative PartitionedRegions
+@@ -3446,9 +3441,7 @@ public int getLockTimeout() {
+ 
+   @Override
+   public void setLockTimeout(int seconds) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+     this.stopper.checkCancelInProgress(null);
+     this.lockTimeout = seconds;
+   }
+@@ -3460,9 +3453,7 @@ public int getLockLease() {
+ 
+   @Override
+   public void setLockLease(int seconds) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+     this.stopper.checkCancelInProgress(null);
+     this.lockLease = seconds;
+   }
+@@ -3474,9 +3465,7 @@ public int getSearchTimeout() {
+ 
+   @Override
+   public void setSearchTimeout(int seconds) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+     this.stopper.checkCancelInProgress(null);
+     this.searchTimeout = seconds;
+   }
+@@ -3488,9 +3477,7 @@ public int getMessageSyncInterval() {
+ 
+   @Override
+   public void setMessageSyncInterval(int seconds) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+     this.stopper.checkCancelInProgress(null);
+     if (seconds < 0) {
+       throw new IllegalArgumentException(
+@@ -3798,9 +3785,7 @@ public CacheServer addCacheServer() {
+ 
+   @Override
+   public CacheServer addCacheServer(boolean isGatewayReceiver) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+     this.stopper.checkCancelInProgress(null);
+ 
+     CacheServerImpl cacheServer = new CacheServerImpl(this, isGatewayReceiver);
+@@ -3818,9 +3803,7 @@ public boolean removeCacheServer(CacheServer cacheServer) {
+ 
+   @Override
+   public void addGatewaySender(GatewaySender sender) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+ 
+     this.stopper.checkCancelInProgress(null);
+ 
+@@ -3867,9 +3850,7 @@ public void addGatewaySender(GatewaySender sender) {
+ 
+   @Override
+   public void removeGatewaySender(GatewaySender sender) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+ 
+     this.stopper.checkCancelInProgress(null);
+ 
+@@ -3891,9 +3872,7 @@ public void removeGatewaySender(GatewaySender sender) {
+ 
+   @Override
+   public void addGatewayReceiver(GatewayReceiver receiver) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+     this.stopper.checkCancelInProgress(null);
+     synchronized (this.allGatewayReceiversLock) {
+       Set<GatewayReceiver> newReceivers = new HashSet<>(this.allGatewayReceivers.size() + 1);
+@@ -3906,9 +3885,7 @@ public void addGatewayReceiver(GatewayReceiver receiver) {
+   }
+ 
+   public void removeGatewayReceiver(GatewayReceiver receiver) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+     this.stopper.checkCancelInProgress(null);
+     synchronized (this.allGatewayReceiversLock) {
+       Set<GatewayReceiver> newReceivers = new HashSet<>(this.allGatewayReceivers.size() + 1);
+@@ -3992,9 +3969,7 @@ public AsyncEventQueue getAsyncEventQueue(String id) {
+ 
+   @Override
+   public void removeAsyncEventQueue(AsyncEventQueue asyncQueue) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+     // first remove the gateway sender of the queue
+     if (asyncQueue instanceof AsyncEventQueueImpl) {
+       removeGatewaySender(((AsyncEventQueueImpl) asyncQueue).getSender());
+@@ -4201,9 +4176,7 @@ public void removePartitionedRegion(PartitionedRegion region) {
+ 
+   @Override
+   public void setIsServer(boolean isServer) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+     this.stopper.checkCancelInProgress(null);
+ 
+     this.isServer = isServer;
+@@ -4642,11 +4615,8 @@ public TXManagerImpl getTxManager() {
+    */
+   @Override
+   public <K, V> RegionFactory<K, V> createRegionFactory(RegionShortcut shortcut) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    } else {
+-      return new RegionFactoryImpl<>(this, shortcut);
+-    }
++    throwIfClient();
++    return new RegionFactoryImpl<>(this, shortcut);
+   }
+ 
+   /**
+@@ -4654,9 +4624,7 @@ public <K, V> RegionFactory<K, V> createRegionFactory(RegionShortcut shortcut) {
+    */
+   @Override
+   public <K, V> RegionFactory<K, V> createRegionFactory() {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+     return new RegionFactoryImpl<>(this);
+   }
+ 
+@@ -4665,9 +4633,7 @@ public <K, V> RegionFactory<K, V> createRegionFactory() {
+    */
+   @Override
+   public <K, V> RegionFactory<K, V> createRegionFactory(String regionAttributesId) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+     return new RegionFactoryImpl<>(this, regionAttributesId);
+   }
+ 
+@@ -4676,9 +4642,7 @@ public <K, V> RegionFactory<K, V> createRegionFactory(String regionAttributesId)
+    */
+   @Override
+   public <K, V> RegionFactory<K, V> createRegionFactory(RegionAttributes<K, V> regionAttributes) {
+-    if (isClient()) {
+-      throw new UnsupportedOperationException("operation is not supported on a client cache");
+-    }
++    throwIfClient();
+     return new RegionFactoryImpl<>(this, regionAttributes);
+   }
+ 
+@@ -5382,4 +5346,19 @@ public void registerPdxMetaData(Object instance) {
+       throw new SerializationException("Serialization failed", e);
+     }
+   }
++
++  private void throwIfClient() {
++    if (isClient()) {
++      throw new UnsupportedOperationException("operation is not supported on a client cache");
++    }
++  }
++
++  private final InternalCacheForClientAccess cacheForClients =
++      new InternalCacheForClientAccess(this);
++
++  @Override
++  public InternalCache getCacheForProcessingClientRequests() {
++    return cacheForClients;
++  }
++
+ }
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCache.java b/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCache.java
+index 724cf7b7d178..0f97fbfe7633 100644
+--- a/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCache.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCache.java
+@@ -361,4 +361,11 @@ void invokeRegionEntrySynchronizationListenersAfterSynchronization(
+   Boolean getPdxReadSerializedOverride();
+ 
+   void setPdxReadSerializedOverride(boolean pdxReadSerialized);
++
++  /**
++   * Returns a version of InternalCache that can only access
++   * application visible regions. Any regions created internally
++   * by Geode will not be accessible from the returned cache.
++   */
++  InternalCache getCacheForProcessingClientRequests();
+ }
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccess.java b/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccess.java
+new file mode 100644
+index 000000000000..806211128eb6
+--- /dev/null
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccess.java
+@@ -0,0 +1,1189 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements. See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License. You may obtain a copy of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.apache.geode.internal.cache;
++
++import java.io.File;
++import java.io.IOException;
++import java.io.InputStream;
++import java.net.URL;
++import java.util.Collection;
++import java.util.List;
++import java.util.Map;
++import java.util.Properties;
++import java.util.Set;
++import java.util.concurrent.Executor;
++import java.util.concurrent.TimeUnit;
++
++import javax.naming.Context;
++import javax.transaction.TransactionManager;
++
++import org.apache.geode.CancelCriterion;
++import org.apache.geode.LogWriter;
++import org.apache.geode.cache.Cache;
++import org.apache.geode.cache.CacheClosedException;
++import org.apache.geode.cache.CacheTransactionManager;
++import org.apache.geode.cache.CacheWriterException;
++import org.apache.geode.cache.Declarable;
++import org.apache.geode.cache.DiskStore;
++import org.apache.geode.cache.DiskStoreFactory;
++import org.apache.geode.cache.GatewayException;
++import org.apache.geode.cache.Region;
++import org.apache.geode.cache.RegionAttributes;
++import org.apache.geode.cache.RegionExistsException;
++import org.apache.geode.cache.RegionFactory;
++import org.apache.geode.cache.RegionShortcut;
++import org.apache.geode.cache.TimeoutException;
++import org.apache.geode.cache.asyncqueue.AsyncEventQueue;
++import org.apache.geode.cache.asyncqueue.AsyncEventQueueFactory;
++import org.apache.geode.cache.asyncqueue.internal.AsyncEventQueueImpl;
++import org.apache.geode.cache.client.internal.ClientMetadataService;
++import org.apache.geode.cache.control.ResourceManager;
++import org.apache.geode.cache.query.QueryService;
++import org.apache.geode.cache.query.internal.InternalQueryService;
++import org.apache.geode.cache.query.internal.QueryMonitor;
++import org.apache.geode.cache.query.internal.cq.CqService;
++import org.apache.geode.cache.server.CacheServer;
++import org.apache.geode.cache.snapshot.CacheSnapshotService;
++import org.apache.geode.cache.util.GatewayConflictResolver;
++import org.apache.geode.cache.wan.GatewayReceiver;
++import org.apache.geode.cache.wan.GatewayReceiverFactory;
++import org.apache.geode.cache.wan.GatewaySender;
++import org.apache.geode.cache.wan.GatewaySenderFactory;
++import org.apache.geode.distributed.DistributedLockService;
++import org.apache.geode.distributed.DistributedMember;
++import org.apache.geode.distributed.DistributedSystem;
++import org.apache.geode.distributed.internal.DistributionAdvisor;
++import org.apache.geode.distributed.internal.DistributionManager;
++import org.apache.geode.distributed.internal.InternalDistributedSystem;
++import org.apache.geode.distributed.internal.membership.InternalDistributedMember;
++import org.apache.geode.i18n.LogWriterI18n;
++import org.apache.geode.internal.SystemTimer;
++import org.apache.geode.internal.cache.InitialImageOperation.Entry;
++import org.apache.geode.internal.cache.backup.BackupService;
++import org.apache.geode.internal.cache.control.InternalResourceManager;
++import org.apache.geode.internal.cache.control.ResourceAdvisor;
++import org.apache.geode.internal.cache.event.EventTrackerExpiryTask;
++import org.apache.geode.internal.cache.extension.ExtensionPoint;
++import org.apache.geode.internal.cache.persistence.PersistentMemberManager;
++import org.apache.geode.internal.cache.tier.sockets.CacheClientNotifier;
++import org.apache.geode.internal.cache.tier.sockets.ClientProxyMembershipID;
++import org.apache.geode.internal.logging.InternalLogWriter;
++import org.apache.geode.internal.offheap.MemoryAllocator;
++import org.apache.geode.internal.security.SecurityService;
++import org.apache.geode.management.internal.JmxManagerAdvisor;
++import org.apache.geode.management.internal.RestAgent;
++import org.apache.geode.pdx.PdxInstance;
++import org.apache.geode.pdx.PdxInstanceFactory;
++import org.apache.geode.pdx.PdxSerializer;
++import org.apache.geode.pdx.internal.TypeRegistry;
++import org.apache.geode.security.NotAuthorizedException;
++
++/**
++ * This class delegates all methods to the InternalCache instance
++ * it wraps. Any regions returned will be checked and if they are
++ * internal an exception is thrown if they are.
++ * Note: an instance of this class should be used by servers that
++ * process requests from clients that contains region names to prevent
++ * the client from directly accessing internal regions.
++ */
++public class InternalCacheForClientAccess implements InternalCache {
++
++  private final InternalCache delegate;
++
++  public InternalCacheForClientAccess(InternalCache delegate) {
++    this.delegate = delegate;
++  }
++
++  private void checkForInternalRegion(Region<?, ?> r) {
++    InternalRegion ir = (InternalRegion) r;
++    if (ir.isInternalRegion()) {
++      throw new NotAuthorizedException("The region " + r.getName()
++          + " is an internal region that a client is never allowed to access");
++    }
++  }
++
++  @SuppressWarnings("unchecked")
++  private void checkSetOfRegions(@SuppressWarnings("rawtypes") Set regions) {
++    for (InternalRegion r : (Set<InternalRegion>) regions) {
++      checkForInternalRegion(r);
++    }
++  }
++
++  @Override
++  public <K, V> Region<K, V> getRegion(String path) {
++    Region<K, V> result = delegate.getRegion(path);
++    checkForInternalRegion(result);
++    return result;
++  }
++
++  @Override
++  public Region getRegion(String path, boolean returnDestroyedRegion) {
++    Region result = delegate.getRegion(path, returnDestroyedRegion);
++    checkForInternalRegion(result);
++    return result;
++  }
++
++  @Override
++  public InternalRegion getReinitializingRegion(String fullPath) {
++    InternalRegion result = delegate.getReinitializingRegion(fullPath);
++    checkForInternalRegion(result);
++    return result;
++  }
++
++  @Override
++  public InternalRegion getRegionByPath(String path) {
++    InternalRegion result = delegate.getRegionByPath(path);
++    checkForInternalRegion(result);
++    return result;
++  }
++
++  @Override
++  public InternalRegion getRegionByPathForProcessing(String path) {
++    InternalRegion result = delegate.getRegionByPathForProcessing(path);
++    checkForInternalRegion(result);
++    return result;
++  }
++
++  @Override
++  public DistributedRegion getRegionInDestroy(String path) {
++    DistributedRegion result = delegate.getRegionInDestroy(path);
++    checkForInternalRegion(result);
++    return result;
++  }
++
++  @Override
++  public Set<PartitionedRegion> getPartitionedRegions() {
++    Set<PartitionedRegion> result = delegate.getPartitionedRegions();
++    checkSetOfRegions(result);
++    return result;
++  }
++
++  @Override
++  public Set<Region<?, ?>> rootRegions() {
++    Set<Region<?, ?>> result = delegate.rootRegions();
++    checkSetOfRegions(result);
++    return result;
++  }
++
++  @Override
++  public Set<Region<?, ?>> rootRegions(boolean includePRAdminRegions) {
++    Set<Region<?, ?>> result = delegate.rootRegions(includePRAdminRegions);
++    checkSetOfRegions(result);
++    return result;
++  }
++
++  @Override
++  public Set<InternalRegion> getAllRegions() {
++    Set<InternalRegion> result = delegate.getAllRegions();
++    checkSetOfRegions(result);
++    return result;
++  }
++
++  @Override
++  public <K, V> Region<K, V> createVMRegion(String name, RegionAttributes<K, V> p_attrs,
++      InternalRegionArguments internalRegionArgs)
++      throws RegionExistsException, TimeoutException, IOException, ClassNotFoundException {
++    if (internalRegionArgs != null) {
++      if (internalRegionArgs.isInternalRegion()
++          || internalRegionArgs.isUsedForPartitionedRegionBucket()
++          || internalRegionArgs.isUsedForMetaRegion()
++          || internalRegionArgs.isUsedForSerialGatewaySenderQueue()
++          || internalRegionArgs.isUsedForParallelGatewaySenderQueue()) {
++        throw new NotAuthorizedException("The region " + name
++            + " is an internal region that a client is never allowed to create");
++      }
++    }
++    return delegate.createVMRegion(name, p_attrs, internalRegionArgs);
++  }
++
++  @Override
++  public Cache getReconnectedCache() {
++    Cache reconnectedCache = delegate.getReconnectedCache();
++    if (reconnectedCache != null) {
++      return new InternalCacheForClientAccess((InternalCache) reconnectedCache);
++    } else {
++      return null;
++    }
++  }
++
++  @Override
++  public FilterProfile getFilterProfile(String regionName) {
++    InternalRegion r = (InternalRegion) getRegion(regionName, true);
++    if (r != null) {
++      return r.getFilterProfile();
++    }
++    return null;
++  }
++
++  @Override
++  public <K, V> Region<K, V> basicCreateRegion(String name, RegionAttributes<K, V> attrs)
++      throws RegionExistsException, TimeoutException {
++    return delegate.basicCreateRegion(name, attrs);
++  }
++
++  @Override
++  public <K, V> Region<K, V> createVMRegion(String name, RegionAttributes<K, V> aRegionAttributes)
++      throws RegionExistsException, TimeoutException {
++    return delegate.createVMRegion(name, aRegionAttributes);
++  }
++
++  @Override
++  public <K, V> Region<K, V> createRegion(String name, RegionAttributes<K, V> aRegionAttributes)
++      throws RegionExistsException, TimeoutException {
++    return delegate.createRegion(name, aRegionAttributes);
++  }
++
++  @Override
++  public <K, V> RegionFactory<K, V> createRegionFactory() {
++    return delegate.createRegionFactory();
++  }
++
++  @Override
++  public <K, V> RegionFactory<K, V> createRegionFactory(RegionShortcut shortcut) {
++    return delegate.createRegionFactory(shortcut);
++  }
++
++  @Override
++  public <K, V> RegionFactory<K, V> createRegionFactory(String regionAttributesId) {
++    return delegate.createRegionFactory(regionAttributesId);
++  }
++
++  @Override
++  public <K, V> RegionFactory<K, V> createRegionFactory(RegionAttributes<K, V> regionAttributes) {
++    return delegate.createRegionFactory(regionAttributes);
++  }
++
++  @Override
++  public void close(boolean keepAlive) {
++    delegate.close(keepAlive);
++  }
++
++  @Override
++  public LogWriterI18n getLoggerI18n() {
++    return delegate.getLoggerI18n();
++  }
++
++  @Override
++  public LogWriterI18n getSecurityLoggerI18n() {
++    return delegate.getSecurityLoggerI18n();
++  }
++
++  @Override
++  public int getLockTimeout() {
++    return delegate.getLockTimeout();
++  }
++
++  @Override
++  public void setLockTimeout(int seconds) {
++    delegate.setLockTimeout(seconds);
++  }
++
++  @Override
++  public int getMessageSyncInterval() {
++    return delegate.getMessageSyncInterval();
++  }
++
++  @Override
++  public void setMessageSyncInterval(int seconds) {
++    delegate.setMessageSyncInterval(seconds);
++  }
++
++  @Override
++  public int getLockLease() {
++    return delegate.getLockLease();
++  }
++
++  @Override
++  public void setLockLease(int seconds) {
++    delegate.setLockLease(seconds);
++  }
++
++  @Override
++  public int getSearchTimeout() {
++    return delegate.getSearchTimeout();
++  }
++
++  @Override
++  public void setSearchTimeout(int seconds) {
++    delegate.setSearchTimeout(seconds);
++  }
++
++  @Override
++  public CacheServer addCacheServer() {
++    return delegate.addCacheServer();
++  }
++
++  @Override
++  public List<CacheServer> getCacheServers() {
++    return delegate.getCacheServers();
++  }
++
++  @Override
++  public void setGatewayConflictResolver(GatewayConflictResolver resolver) {
++    delegate.setGatewayConflictResolver(resolver);
++  }
++
++  @Override
++  public GatewayConflictResolver getGatewayConflictResolver() {
++    return delegate.getGatewayConflictResolver();
++  }
++
++  @Override
++  public void setIsServer(boolean isServer) {
++    delegate.setIsServer(isServer);
++  }
++
++  @Override
++  public boolean isServer() {
++    return delegate.isServer();
++  }
++
++  @Override
++  public void readyForEvents() {
++    delegate.readyForEvents();
++  }
++
++  @Override
++  public GatewaySenderFactory createGatewaySenderFactory() {
++    return delegate.createGatewaySenderFactory();
++  }
++
++  @Override
++  public AsyncEventQueueFactory createAsyncEventQueueFactory() {
++    return delegate.createAsyncEventQueueFactory();
++  }
++
++  @Override
++  public GatewayReceiverFactory createGatewayReceiverFactory() {
++    return delegate.createGatewayReceiverFactory();
++  }
++
++  @Override
++  public Set<GatewaySender> getGatewaySenders() {
++    return delegate.getGatewaySenders();
++  }
++
++  @Override
++  public GatewaySender getGatewaySender(String id) {
++    return delegate.getGatewaySender(id);
++  }
++
++  @Override
++  public Set<GatewayReceiver> getGatewayReceivers() {
++    return delegate.getGatewayReceivers();
++  }
++
++  @Override
++  public Set<AsyncEventQueue> getAsyncEventQueues() {
++    return delegate.getAsyncEventQueues();
++  }
++
++  @Override
++  public AsyncEventQueue getAsyncEventQueue(String id) {
++    return delegate.getAsyncEventQueue(id);
++  }
++
++  @Override
++  public Set<DistributedMember> getMembers() {
++    return delegate.getMembers();
++  }
++
++  @Override
++  public Set<DistributedMember> getAdminMembers() {
++    return delegate.getAdminMembers();
++  }
++
++  @Override
++  public Set<DistributedMember> getMembers(Region region) {
++    return delegate.getMembers(region);
++  }
++
++  @Override
++  public CacheSnapshotService getSnapshotService() {
++    return delegate.getSnapshotService();
++  }
++
++  @Override
++  public boolean isReconnecting() {
++    return delegate.isReconnecting();
++  }
++
++  @Override
++  public boolean waitUntilReconnected(long time, TimeUnit units) throws InterruptedException {
++    return delegate.waitUntilReconnected(time, units);
++  }
++
++  @Override
++  public void stopReconnecting() {
++    delegate.stopReconnecting();
++  }
++
++  @Override
++  public String getName() {
++    return delegate.getName();
++  }
++
++  @Override
++  public DistributedSystem getDistributedSystem() {
++    return delegate.getDistributedSystem();
++  }
++
++  @Override
++  public ResourceManager getResourceManager() {
++    return delegate.getResourceManager();
++  }
++
++  @Override
++  public void setCopyOnRead(boolean copyOnRead) {
++    delegate.setCopyOnRead(copyOnRead);
++  }
++
++  @Override
++  public boolean getCopyOnRead() {
++    return delegate.getCopyOnRead();
++  }
++
++  @Override
++  public <K, V> RegionAttributes<K, V> getRegionAttributes(String id) {
++    return delegate.getRegionAttributes(id);
++  }
++
++  @Override
++  public <K, V> void setRegionAttributes(String id, RegionAttributes<K, V> attrs) {
++    delegate.setRegionAttributes(id, attrs);
++  }
++
++  @Override
++  public <K, V> Map<String, RegionAttributes<K, V>> listRegionAttributes() {
++    return delegate.listRegionAttributes();
++  }
++
++  @Override
++  public void loadCacheXml(InputStream is)
++      throws TimeoutException, CacheWriterException, GatewayException, RegionExistsException {
++    delegate.loadCacheXml(is);
++  }
++
++  @Override
++  public LogWriter getLogger() {
++    return delegate.getLogger();
++  }
++
++  @Override
++  public LogWriter getSecurityLogger() {
++    return delegate.getSecurityLogger();
++  }
++
++  @Override
++  public DiskStore findDiskStore(String name) {
++    return delegate.findDiskStore(name);
++  }
++
++  @Override
++  public DiskStoreFactory createDiskStoreFactory() {
++    return delegate.createDiskStoreFactory();
++  }
++
++  @Override
++  public boolean getPdxReadSerialized() {
++    return delegate.getPdxReadSerialized();
++  }
++
++  @Override
++  public PdxSerializer getPdxSerializer() {
++    return delegate.getPdxSerializer();
++  }
++
++  @Override
++  public String getPdxDiskStore() {
++    return delegate.getPdxDiskStore();
++  }
++
++  @Override
++  public boolean getPdxPersistent() {
++    return delegate.getPdxPersistent();
++  }
++
++  @Override
++  public boolean getPdxIgnoreUnreadFields() {
++    return delegate.getPdxIgnoreUnreadFields();
++  }
++
++  @Override
++  public void registerPdxMetaData(Object instance) {
++    delegate.registerPdxMetaData(instance);
++  }
++
++  @Override
++  public CacheTransactionManager getCacheTransactionManager() {
++    return delegate.getCacheTransactionManager();
++  }
++
++  @Override
++  public Context getJNDIContext() {
++    return delegate.getJNDIContext();
++  }
++
++  @Override
++  public Declarable getInitializer() {
++    return delegate.getInitializer();
++  }
++
++  @Override
++  public Properties getInitializerProps() {
++    return delegate.getInitializerProps();
++  }
++
++  @Override
++  public CancelCriterion getCancelCriterion() {
++    return delegate.getCancelCriterion();
++  }
++
++  @Override
++  public PdxInstanceFactory createPdxInstanceFactory(String className) {
++    return delegate.createPdxInstanceFactory(className);
++  }
++
++  @Override
++  public PdxInstance createPdxEnum(String className, String enumName, int enumOrdinal) {
++    return delegate.createPdxEnum(className, enumName, enumOrdinal);
++  }
++
++  @Override
++  public void close() {
++    delegate.close();
++  }
++
++  @Override
++  public boolean isClosed() {
++    return delegate.isClosed();
++  }
++
++  @Override
++  public ExtensionPoint<Cache> getExtensionPoint() {
++    return delegate.getExtensionPoint();
++  }
++
++  @Override
++  public InternalDistributedMember getMyId() {
++    return delegate.getMyId();
++  }
++
++  @Override
++  public Collection<DiskStore> listDiskStores() {
++    return delegate.listDiskStores();
++  }
++
++  @Override
++  public Collection<DiskStore> listDiskStoresIncludingRegionOwned() {
++    return delegate.listDiskStoresIncludingRegionOwned();
++  }
++
++  @Override
++  public CqService getCqService() {
++    return delegate.getCqService();
++  }
++
++  @Override
++  public <T extends CacheService> T getService(Class<T> clazz) {
++    return delegate.getService(clazz);
++  }
++
++  @Override
++  public Collection<CacheService> getServices() {
++    return delegate.getServices();
++  }
++
++  @Override
++  public SystemTimer getCCPTimer() {
++    return delegate.getCCPTimer();
++  }
++
++  @Override
++  public void cleanupForClient(CacheClientNotifier ccn, ClientProxyMembershipID client) {
++    delegate.cleanupForClient(ccn, client);
++  }
++
++  @Override
++  public void purgeCCPTimer() {
++    delegate.purgeCCPTimer();
++  }
++
++  @Override
++  public MemoryAllocator getOffHeapStore() {
++    return delegate.getOffHeapStore();
++  }
++
++  @Override
++  public DistributedLockService getPartitionedRegionLockService() {
++    return delegate.getPartitionedRegionLockService();
++  }
++
++  @Override
++  public PersistentMemberManager getPersistentMemberManager() {
++    return delegate.getPersistentMemberManager();
++  }
++
++  @Override
++  public Set<GatewaySender> getAllGatewaySenders() {
++    return delegate.getAllGatewaySenders();
++  }
++
++  @Override
++  public CachePerfStats getCachePerfStats() {
++    return delegate.getCachePerfStats();
++  }
++
++  @Override
++  public DistributionManager getDistributionManager() {
++    return delegate.getDistributionManager();
++  }
++
++  @Override
++  public void regionReinitialized(Region region) {
++    delegate.regionReinitialized(region);
++  }
++
++  @Override
++  public void setRegionByPath(String path, InternalRegion r) {
++    delegate.setRegionByPath(path, r);
++  }
++
++  @Override
++  public InternalResourceManager getInternalResourceManager() {
++    return delegate.getInternalResourceManager();
++  }
++
++  @Override
++  public ResourceAdvisor getResourceAdvisor() {
++    return delegate.getResourceAdvisor();
++  }
++
++  @Override
++  public boolean isCacheAtShutdownAll() {
++    return delegate.isCacheAtShutdownAll();
++  }
++
++  @Override
++  public boolean requiresNotificationFromPR(PartitionedRegion r) {
++    return delegate.requiresNotificationFromPR(r);
++  }
++
++  @Override
++  public <K, V> RegionAttributes<K, V> invokeRegionBefore(InternalRegion parent, String name,
++      RegionAttributes<K, V> attrs, InternalRegionArguments internalRegionArgs) {
++    return delegate.invokeRegionBefore(parent, name, attrs, internalRegionArgs);
++  }
++
++  @Override
++  public void invokeRegionAfter(InternalRegion region) {
++    delegate.invokeRegionAfter(region);
++  }
++
++  @Override
++  public void invokeBeforeDestroyed(InternalRegion region) {
++    delegate.invokeBeforeDestroyed(region);
++  }
++
++  @Override
++  public void invokeCleanupFailedInitialization(InternalRegion region) {
++    delegate.invokeCleanupFailedInitialization(region);
++  }
++
++  @Override
++  public TXManagerImpl getTXMgr() {
++    return delegate.getTXMgr();
++  }
++
++  @Override
++  public boolean forcedDisconnect() {
++    return delegate.forcedDisconnect();
++  }
++
++  @Override
++  public InternalResourceManager getInternalResourceManager(boolean checkCancellationInProgress) {
++    return delegate.getInternalResourceManager();
++  }
++
++  @Override
++  public boolean isCopyOnRead() {
++    return delegate.isCopyOnRead();
++  }
++
++  @Override
++  public TombstoneService getTombstoneService() {
++    return delegate.getTombstoneService();
++  }
++
++  @Override
++  public QueryService getLocalQueryService() {
++    return delegate.getLocalQueryService();
++  }
++
++  @Override
++  public void registerInterestStarted() {
++    delegate.registerInterestStarted();
++  }
++
++  @Override
++  public void registerInterestCompleted() {
++    delegate.registerInterestCompleted();
++  }
++
++  @Override
++  public void regionReinitializing(String fullPath) {
++    delegate.regionReinitializing(fullPath);
++  }
++
++  @Override
++  public void unregisterReinitializingRegion(String fullPath) {
++    delegate.unregisterReinitializingRegion(fullPath);
++  }
++
++  @Override
++  public boolean removeRoot(InternalRegion rootRgn) {
++    return delegate.removeRoot(rootRgn);
++  }
++
++  @Override
++  public Executor getEventThreadPool() {
++    return delegate.getEventThreadPool();
++  }
++
++  @Override
++  public boolean keepDurableSubscriptionsAlive() {
++    return delegate.keepDurableSubscriptionsAlive();
++  }
++
++  @Override
++  public CacheClosedException getCacheClosedException(String reason) {
++    return delegate.getCacheClosedException(reason);
++  }
++
++  @Override
++  public CacheClosedException getCacheClosedException(String reason, Throwable cause) {
++    return delegate.getCacheClosedException(reason, cause);
++  }
++
++  @Override
++  public TypeRegistry getPdxRegistry() {
++    return delegate.getPdxRegistry();
++  }
++
++  @Override
++  public DiskStoreImpl getOrCreateDefaultDiskStore() {
++    return delegate.getOrCreateDefaultDiskStore();
++  }
++
++  @Override
++  public ExpirationScheduler getExpirationScheduler() {
++    return delegate.getExpirationScheduler();
++  }
++
++  @Override
++  public TransactionManager getJTATransactionManager() {
++    return delegate.getJTATransactionManager();
++  }
++
++  @Override
++  public TXManagerImpl getTxManager() {
++    return delegate.getTxManager();
++  }
++
++  @Override
++  public void beginDestroy(String path, DistributedRegion region) {
++    delegate.beginDestroy(path, region);
++  }
++
++  @Override
++  public void endDestroy(String path, DistributedRegion region) {
++    delegate.endDestroy(path, region);
++  }
++
++  @Override
++  public ClientMetadataService getClientMetadataService() {
++    return delegate.getClientMetadataService();
++  }
++
++  @Override
++  public long cacheTimeMillis() {
++    return delegate.cacheTimeMillis();
++  }
++
++  @Override
++  public URL getCacheXmlURL() {
++    return delegate.getCacheXmlURL();
++  }
++
++  @Override
++  public List<File> getBackupFiles() {
++    return delegate.getBackupFiles();
++  }
++
++  @Override
++  public boolean isClient() {
++    return delegate.isClient();
++  }
++
++  @Override
++  public InternalDistributedSystem getInternalDistributedSystem() {
++    return delegate.getInternalDistributedSystem();
++  }
++
++  @Override
++  public void addRegionListener(RegionListener regionListener) {
++    delegate.addRegionListener(regionListener);
++  }
++
++  @Override
++  public void removeRegionListener(RegionListener regionListener) {
++    delegate.removeRegionListener(regionListener);
++  }
++
++  @Override
++  public Set<RegionListener> getRegionListeners() {
++    return delegate.getRegionListeners();
++  }
++
++  @Override
++  public CacheConfig getCacheConfig() {
++    return delegate.getCacheConfig();
++  }
++
++  @Override
++  public boolean getPdxReadSerializedByAnyGemFireServices() {
++    return delegate.getPdxReadSerializedByAnyGemFireServices();
++  }
++
++  @Override
++  public void setDeclarativeCacheConfig(CacheConfig cacheConfig) {
++    delegate.setDeclarativeCacheConfig(cacheConfig);
++  }
++
++  @Override
++  public void initializePdxRegistry() {
++    delegate.initializePdxRegistry();
++  }
++
++  @Override
++  public void readyDynamicRegionFactory() {
++    delegate.readyDynamicRegionFactory();
++  }
++
++  @Override
++  public void setBackupFiles(List<File> backups) {
++    delegate.setBackupFiles(backups);
++  }
++
++  @Override
++  public void addDeclarableProperties(Map<Declarable, Properties> mapOfNewDeclarableProps) {
++    delegate.addDeclarableProperties(mapOfNewDeclarableProps);
++  }
++
++  @Override
++  public void setInitializer(Declarable initializer, Properties initializerProps) {
++    delegate.setInitializer(initializer, initializerProps);
++  }
++
++  @Override
++  public boolean hasPool() {
++    return delegate.hasPool();
++  }
++
++  @Override
++  public DiskStoreFactory createDiskStoreFactory(DiskStoreAttributes attrs) {
++    return delegate.createDiskStoreFactory(attrs);
++  }
++
++  @Override
++  public void determineDefaultPool() {
++    delegate.determineDefaultPool();
++  }
++
++  @Override
++  public BackupService getBackupService() {
++    return delegate.getBackupService();
++  }
++
++  @Override
++  public Throwable getDisconnectCause() {
++    return delegate.getDisconnectCause();
++  }
++
++  @Override
++  public void addPartitionedRegion(PartitionedRegion region) {
++    delegate.addPartitionedRegion(region);
++  }
++
++  @Override
++  public void removePartitionedRegion(PartitionedRegion region) {
++    delegate.removePartitionedRegion(region);
++  }
++
++  @Override
++  public void addDiskStore(DiskStoreImpl dsi) {
++    delegate.addDiskStore(dsi);
++  }
++
++  @Override
++  public TXEntryStateFactory getTXEntryStateFactory() {
++    return delegate.getTXEntryStateFactory();
++  }
++
++  @Override
++  public EventTrackerExpiryTask getEventTrackerTask() {
++    return delegate.getEventTrackerTask();
++  }
++
++  @Override
++  public void removeDiskStore(DiskStoreImpl diskStore) {
++    delegate.removeDiskStore(diskStore);
++  }
++
++  @Override
++  public void addGatewaySender(GatewaySender sender) {
++    delegate.addGatewaySender(sender);
++  }
++
++  @Override
++  public void addAsyncEventQueue(AsyncEventQueueImpl asyncQueue) {
++    delegate.addAsyncEventQueue(asyncQueue);
++  }
++
++  @Override
++  public void removeAsyncEventQueue(AsyncEventQueue asyncQueue) {
++    delegate.removeAsyncEventQueue(asyncQueue);
++  }
++
++  @Override
++  public QueryMonitor getQueryMonitor() {
++    return delegate.getQueryMonitor();
++  }
++
++  @Override
++  public void close(String reason, Throwable systemFailureCause, boolean keepAlive,
++      boolean keepDS) {
++    delegate.close(reason, systemFailureCause, keepAlive, keepDS);
++  }
++
++  @Override
++  public JmxManagerAdvisor getJmxManagerAdvisor() {
++    return delegate.getJmxManagerAdvisor();
++  }
++
++  @Override
++  public List<Properties> getDeclarableProperties(String className) {
++    return delegate.getDeclarableProperties(className);
++  }
++
++  @Override
++  public int getUpTime() {
++    return delegate.getUpTime();
++  }
++
++  @Override
++  public void addRegionOwnedDiskStore(DiskStoreImpl dsi) {
++    delegate.addRegionOwnedDiskStore(dsi);
++  }
++
++  @Override
++  public DiskStoreMonitor getDiskStoreMonitor() {
++    return delegate.getDiskStoreMonitor();
++  }
++
++  @Override
++  public void close(String reason, Throwable optionalCause) {
++    delegate.close(reason, optionalCause);
++  }
++
++  @Override
++  public List getCacheServersAndGatewayReceiver() {
++    return delegate.getCacheServersAndGatewayReceiver();
++  }
++
++  @Override
++  public boolean isGlobalRegionInitializing(String fullPath) {
++    return delegate.isGlobalRegionInitializing(fullPath);
++  }
++
++  @Override
++  public DistributionAdvisor getDistributionAdvisor() {
++    return delegate.getDistributionAdvisor();
++  }
++
++  @Override
++  public void setQueryMonitorRequiredForResourceManager(boolean required) {
++    delegate.setQueryMonitorRequiredForResourceManager(required);
++  }
++
++  @Override
++  public boolean isQueryMonitorDisabledForLowMemory() {
++    return delegate.isQueryMonitorDisabledForLowMemory();
++  }
++
++  @Override
++  public boolean isRESTServiceRunning() {
++    return delegate.isRESTServiceRunning();
++  }
++
++  @Override
++  public InternalLogWriter getInternalLogWriter() {
++    return delegate.getInternalLogWriter();
++  }
++
++  @Override
++  public InternalLogWriter getSecurityInternalLogWriter() {
++    return delegate.getSecurityInternalLogWriter();
++  }
++
++  @Override
++  public Set<InternalRegion> getApplicationRegions() {
++    return delegate.getApplicationRegions();
++  }
++
++  @Override
++  public void removeGatewaySender(GatewaySender sender) {
++    delegate.removeGatewaySender(sender);
++  }
++
++  @Override
++  public DistributedLockService getGatewaySenderLockService() {
++    return delegate.getGatewaySenderLockService();
++  }
++
++  @Override
++  public RestAgent getRestAgent() {
++    return delegate.getRestAgent();
++  }
++
++  @Override
++  public Properties getDeclarableProperties(Declarable declarable) {
++    return delegate.getDeclarableProperties(declarable);
++  }
++
++  @Override
++  public void setRESTServiceRunning(boolean isRESTServiceRunning) {
++    delegate.setRESTServiceRunning(isRESTServiceRunning);
++  }
++
++  @Override
++  public void close(String reason, boolean keepAlive, boolean keepDS) {
++    delegate.close(reason, keepAlive, keepDS);
++  }
++
++  @Override
++  public void addGatewayReceiver(GatewayReceiver receiver) {
++    delegate.addGatewayReceiver(receiver);
++  }
++
++  @Override
++  public void removeGatewayReceiver(GatewayReceiver receiver) {
++    delegate.removeGatewayReceiver(receiver);
++  }
++
++  @Override
++  public CacheServer addCacheServer(boolean isGatewayReceiver) {
++    return delegate.addCacheServer(isGatewayReceiver);
++  }
++
++  @Override
++  public boolean removeCacheServer(CacheServer cacheServer) {
++    return delegate.removeCacheServer(cacheServer);
++  }
++
++  @Override
++  public void setReadSerializedForTest(boolean value) {
++    delegate.setReadSerializedForTest(value);
++  }
++
++  @Override
++  public void setReadSerializedForCurrentThread(boolean value) {
++    delegate.setReadSerializedForCurrentThread(value);
++  }
++
++  @Override
++  public PdxInstanceFactory createPdxInstanceFactory(String className, boolean expectDomainClass) {
++    return delegate.createPdxInstanceFactory(className, expectDomainClass);
++  }
++
++  @Override
++  public void waitForRegisterInterestsInProgress() {
++    delegate.waitForRegisterInterestsInProgress();
++  }
++
++  @Override
++  public void reLoadClusterConfiguration() throws IOException, ClassNotFoundException {
++    delegate.reLoadClusterConfiguration();
++  }
++
++  @Override
++  public SecurityService getSecurityService() {
++    return delegate.getSecurityService();
++  }
++
++  @Override
++  public boolean hasPersistentRegion() {
++    return delegate.hasPersistentRegion();
++  }
++
++  @Override
++  public void shutDownAll() {
++    delegate.shutDownAll();
++  }
++
++  @Override
++  public void invokeRegionEntrySynchronizationListenersAfterSynchronization(
++      InternalDistributedMember sender, InternalRegion region, List<Entry> entriesToSynchronize) {
++    delegate.invokeRegionEntrySynchronizationListenersAfterSynchronization(sender, region,
++        entriesToSynchronize);
++  }
++
++  @Override
++  public InternalQueryService getQueryService() {
++    return delegate.getQueryService();
++  }
++
++  @Override
++  public Set<AsyncEventQueue> getAsyncEventQueues(boolean visibleOnly) {
++    return delegate.getAsyncEventQueues(visibleOnly);
++  }
++
++  @Override
++  public void closeDiskStores() {
++    delegate.closeDiskStores();
++  }
++
++  @Override
++  public Object convertPdxInstanceIfNeeded(Object obj, boolean preferCD) {
++    return delegate.convertPdxInstanceIfNeeded(obj, preferCD);
++  }
++
++  @Override
++  public Boolean getPdxReadSerializedOverride() {
++    return delegate.getPdxReadSerializedOverride();
++  }
++
++  @Override
++  public void setPdxReadSerializedOverride(boolean pdxReadSerialized) {
++    delegate.setPdxReadSerializedOverride(pdxReadSerialized);
++  }
++
++  @Override
++  public InternalCache getCacheForProcessingClientRequests() {
++    return this;
++  }
++}
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/xmlcache/CacheCreation.java b/geode-core/src/main/java/org/apache/geode/internal/cache/xmlcache/CacheCreation.java
+index e5a364763234..736914787183 100755
+--- a/geode-core/src/main/java/org/apache/geode/internal/cache/xmlcache/CacheCreation.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/xmlcache/CacheCreation.java
+@@ -2369,4 +2369,9 @@ public void setPdxReadSerializedOverride(boolean pdxReadSerialized) {
+   public void registerPdxMetaData(Object instance) {
+     throw new UnsupportedOperationException(LocalizedStrings.SHOULDNT_INVOKE.toLocalizedString());
+   }
++
++  @Override
++  public InternalCache getCacheForProcessingClientRequests() {
++    throw new UnsupportedOperationException(LocalizedStrings.SHOULDNT_INVOKE.toLocalizedString());
++  }
+ }
+diff --git a/geode-core/src/test/java/org/apache/geode/internal/cache/InternalCacheForClientAccessTest.java b/geode-core/src/test/java/org/apache/geode/internal/cache/InternalCacheForClientAccessTest.java
+new file mode 100644
+index 000000000000..245a4538abc1
+--- /dev/null
++++ b/geode-core/src/test/java/org/apache/geode/internal/cache/InternalCacheForClientAccessTest.java
+@@ -0,0 +1,332 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements. See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License. You may obtain a copy of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.apache.geode.internal.cache;
++
++import static org.assertj.core.api.Assertions.assertThat;
++import static org.assertj.core.api.Assertions.assertThatThrownBy;
++import static org.mockito.Mockito.any;
++import static org.mockito.Mockito.mock;
++import static org.mockito.Mockito.when;
++
++import java.util.Collections;
++import java.util.Set;
++
++import org.junit.Before;
++import org.junit.Test;
++import org.junit.experimental.categories.Category;
++
++import org.apache.geode.cache.Cache;
++import org.apache.geode.cache.Region;
++import org.apache.geode.security.NotAuthorizedException;
++import org.apache.geode.test.junit.categories.UnitTest;
++
++@Category(UnitTest.class)
++public class InternalCacheForClientAccessTest {
++
++  private InternalCache delegate;
++  private InternalCacheForClientAccess cache;
++  private DistributedRegion secretRegion;
++  private DistributedRegion applicationRegion;
++  private Set applicationRegions;
++  private Set secretRegions;
++
++  @Before
++  public void setup() {
++    delegate = mock(InternalCache.class);
++    cache = new InternalCacheForClientAccess(delegate);
++    secretRegion = mock(DistributedRegion.class);
++    when(secretRegion.isInternalRegion()).thenReturn(true);
++    applicationRegion = mock(DistributedRegion.class);
++    when(applicationRegion.isInternalRegion()).thenReturn(false);
++    applicationRegions = Collections.singleton(applicationRegion);
++    secretRegions = Collections.singleton(secretRegion);
++  }
++
++  @Test
++  public void getRegionWithApplicationWorks() {
++    when(delegate.getRegion("application")).thenReturn(applicationRegion);
++
++    Region result = cache.getRegion("application");
++
++    assertThat(result).isSameAs(applicationRegion);
++  }
++
++  @Test
++  public void getRegionWithSecretThrows() {
++    when(delegate.getRegion("secret")).thenReturn(secretRegion);
++
++    assertThatThrownBy(() -> {
++      cache.getRegion("secret");
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void getFilterProfileWithApplicationWorks() {
++    when(delegate.getRegion("application", true)).thenReturn(applicationRegion);
++    FilterProfile filterProfile = mock(FilterProfile.class);
++    when(applicationRegion.getFilterProfile()).thenReturn(filterProfile);
++
++    FilterProfile result = cache.getFilterProfile("application");
++
++    assertThat(result).isSameAs(filterProfile);
++  }
++
++  @Test
++  public void getFilterProfileWithSecretThrows() {
++    when(delegate.getRegion("secret", true)).thenReturn(secretRegion);
++
++    assertThatThrownBy(() -> {
++      cache.getFilterProfile("secret");
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void getRegionBooleanWithApplicationWorks() {
++    when(delegate.getRegion("application", true)).thenReturn(applicationRegion);
++
++    Region result = cache.getRegion("application", true);
++
++    assertThat(result).isSameAs(applicationRegion);
++  }
++
++  @Test
++  public void getRegionBooleanWithSecretThrows() {
++    when(delegate.getRegion("secret", false)).thenReturn(secretRegion);
++
++    assertThatThrownBy(() -> {
++      cache.getRegion("secret", false);
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void getReinitializingRegionWithApplicationWorks() {
++    when(delegate.getReinitializingRegion("application")).thenReturn(applicationRegion);
++
++    Region result = cache.getReinitializingRegion("application");
++
++    assertThat(result).isSameAs(applicationRegion);
++  }
++
++  @Test
++  public void getReinitializingRegionWithSecretThrows() {
++    when(delegate.getReinitializingRegion("secret")).thenReturn(secretRegion);
++
++    assertThatThrownBy(() -> {
++      cache.getReinitializingRegion("secret");
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void getRegionByPathWithApplicationWorks() {
++    when(delegate.getRegionByPath("application")).thenReturn(applicationRegion);
++
++    Region result = cache.getRegionByPath("application");
++
++    assertThat(result).isSameAs(applicationRegion);
++  }
++
++  @Test
++  public void getRegionByPathWithSecretThrows() {
++    when(delegate.getRegionByPath("secret")).thenReturn(secretRegion);
++
++    assertThatThrownBy(() -> {
++      cache.getRegionByPath("secret");
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void getRegionByPathForProcessingWithApplicationWorks() {
++    when(delegate.getRegionByPathForProcessing("application")).thenReturn(applicationRegion);
++
++    Region result = cache.getRegionByPathForProcessing("application");
++
++    assertThat(result).isSameAs(applicationRegion);
++  }
++
++  @Test
++  public void getRegionByPathForProcessingWithSecretThrows() {
++    when(delegate.getRegionByPathForProcessing("secret")).thenReturn(secretRegion);
++
++    assertThatThrownBy(() -> {
++      cache.getRegionByPathForProcessing("secret");
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void getRegionInDestroyWithApplicationWorks() {
++    when(delegate.getRegionInDestroy("application")).thenReturn(applicationRegion);
++
++    Region result = cache.getRegionInDestroy("application");
++
++    assertThat(result).isSameAs(applicationRegion);
++  }
++
++  @Test
++  public void getRegionInDestroyWithSecretThrows() {
++    when(delegate.getRegionInDestroy("secret")).thenReturn(secretRegion);
++
++    assertThatThrownBy(() -> {
++      cache.getRegionInDestroy("secret");
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void getPartitionedRegionsWithApplicationWorks() {
++    when(delegate.getPartitionedRegions()).thenReturn(applicationRegions);
++
++    Set result = cache.getPartitionedRegions();
++
++    assertThat(result).isSameAs(applicationRegions);
++  }
++
++  @Test
++  public void getPartitionedRegionsWithSecretThrows() {
++    when(delegate.getPartitionedRegions()).thenReturn(secretRegions);
++
++    assertThatThrownBy(() -> {
++      cache.getPartitionedRegions();
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void rootRegionsWithApplicationWorks() {
++    when(delegate.rootRegions()).thenReturn(applicationRegions);
++
++    Set result = cache.rootRegions();
++
++    assertThat(result).isSameAs(applicationRegions);
++  }
++
++  @Test
++  public void rootRegionsWithSecretThrows() {
++    when(delegate.rootRegions()).thenReturn(secretRegions);
++
++    assertThatThrownBy(() -> {
++      cache.rootRegions();
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void rootRegionsWithParameterWithApplicationWorks() {
++    when(delegate.rootRegions(true)).thenReturn(applicationRegions);
++
++    Set result = cache.rootRegions(true);
++
++    assertThat(result).isSameAs(applicationRegions);
++  }
++
++  @Test
++  public void rootRegionsWithParameterWithSecretThrows() {
++    when(delegate.rootRegions(true)).thenReturn(secretRegions);
++
++    assertThatThrownBy(() -> {
++      cache.rootRegions(true);
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void getAllRegionsWithApplicationWorks() {
++    when(delegate.getAllRegions()).thenReturn(applicationRegions);
++
++    Set result = cache.getAllRegions();
++
++    assertThat(result).isSameAs(applicationRegions);
++  }
++
++  @Test
++  public void getAllRegionsWithSecretThrows() {
++    when(delegate.getAllRegions()).thenReturn(secretRegions);
++
++    assertThatThrownBy(() -> {
++      cache.getAllRegions();
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void createVMRegionWithNullArgsApplicationWorks() throws Exception {
++    when(delegate.createVMRegion(any(), any(), any())).thenReturn(applicationRegion);
++
++    Region result = cache.createVMRegion(null, null, null);
++
++    assertThat(result).isSameAs(applicationRegion);
++  }
++
++  @Test
++  public void createVMRegionWithDefaultArgsApplicationWorks() throws Exception {
++    when(delegate.createVMRegion(any(), any(), any())).thenReturn(applicationRegion);
++
++    Region result = cache.createVMRegion(null, null, new InternalRegionArguments());
++
++    assertThat(result).isSameAs(applicationRegion);
++  }
++
++  @Test
++  public void createVMRegionWithInternalRegionThrows() throws Exception {
++    assertThatThrownBy(() -> {
++      cache.createVMRegion(null, null, new InternalRegionArguments().setInternalRegion(true));
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void createVMRegionWithUsedForPartitionedRegionBucketThrows() throws Exception {
++    assertThatThrownBy(() -> {
++      cache.createVMRegion(null, null,
++          new InternalRegionArguments().setPartitionedRegionBucketRedundancy(0));
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void createVMRegionWithUsedForMetaRegionThrows() throws Exception {
++    assertThatThrownBy(() -> {
++      cache.createVMRegion(null, null, new InternalRegionArguments().setIsUsedForMetaRegion(true));
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void createVMRegionWithUsedForSerialGatewaySenderQueueThrows() throws Exception {
++    assertThatThrownBy(() -> {
++      cache.createVMRegion(null, null,
++          new InternalRegionArguments().setIsUsedForSerialGatewaySenderQueue(true));
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void createVMRegionWithUsedForParallelGatewaySenderQueueThrows() throws Exception {
++    assertThatThrownBy(() -> {
++      cache.createVMRegion(null, null,
++          new InternalRegionArguments().setIsUsedForParallelGatewaySenderQueue(true));
++    }).isInstanceOf(NotAuthorizedException.class);
++  }
++
++  @Test
++  public void getReconnectedCacheReturnsNull() throws Exception {
++    when(delegate.getReconnectedCache()).thenReturn(null);
++
++    Cache result = cache.getReconnectedCache();
++
++    assertThat(result).isNull();
++  }
++
++  @Test
++  public void getReconnectedCacheReturnsWrappedCache() throws Exception {
++    when(delegate.getReconnectedCache()).thenReturn(delegate);
++
++    Cache result = cache.getReconnectedCache();
++
++    assertThat(result).isInstanceOf(InternalCacheForClientAccess.class);
++  }
++}

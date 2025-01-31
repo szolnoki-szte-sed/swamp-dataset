@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:postgresql:postgresql:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/tada/pljava/commit/675254b0f17b76f05e72cba2e3b8d3e548ae7a43",
+        "version_end_excluding": {
+            "postgresql:postgresql": "unknown"
+        },
+        "path": {
+            "file_path": "pljava/src/main/java/org/postgresql/pljava/internal/InstallHelper.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-0768"
+        ],
+        "CWE": [
+            "CWE-284"
+        ]
+    }
+}

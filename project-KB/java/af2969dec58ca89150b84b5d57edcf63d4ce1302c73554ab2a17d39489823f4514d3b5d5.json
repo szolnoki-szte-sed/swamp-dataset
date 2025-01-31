@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:cordova:*:*:*:*:*:android:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/cordova-android/commit/af2969dec58ca89150b84b5d57edcf63d4ce1302",
+        "version_end_excluding": {
+            "apache:cordova": "unknown"
+        },
+        "path": {
+            "file_path": "framework/src/org/apache/cordova/CordovaWebViewImpl.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5256"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

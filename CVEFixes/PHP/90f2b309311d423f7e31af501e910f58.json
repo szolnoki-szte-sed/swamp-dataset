@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:rosariosis:rosariosis:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/francoisjacquet/rosariosis/commit/6e213b17e6ac3a3961e1eabcdaba1c892844398a",
+        "version_end_excluding": {
+            "rosariosis:rosariosis": "9.0.1"
+        },
+        "path": {
+            "file_path": "functions/PreparePHP_SELF.fnc.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2036"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

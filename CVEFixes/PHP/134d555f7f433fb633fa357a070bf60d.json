@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:vestacp:vesta_control_panel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/serghey-rodin/vesta/commit/527e4a9a62204be9b34c1338fadfe959b0fd3974",
+        "version_end_excluding": {
+            "vestacp:vesta_control_panel": "unknown"
+        },
+        "path": {
+            "file_path": "web/restart/service/index.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-2861"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

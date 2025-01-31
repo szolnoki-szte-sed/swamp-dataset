@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:uri.js_project:uri.js:*:*:*:*:*:node.js:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:35:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/medialize/uri.js/commit/6ea641cc8648b025ed5f30b090c2abd4d1a5249f",
+        "version_end_excluding": {
+            "uri.js_project:uri.js": "1.19.8",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "src/URI.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0613"
+        ],
+        "CWE": [
+            "CWE-639"
+        ]
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:suse:openstack_cloud:5:*:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_software_development_kit:12:sp1:*:*:*:*:*:*",
+            "cpe:2.3:a:suse:linux_enterprise_software_development_kit:11.0:sp4:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_software_development_kit:12:*:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:linux_enterprise_server:12:sp1:*:*:*:*:*:*",
+            "cpe:2.3:a:suse:linux_enterprise_debuginfo:11:sp4:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:42.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:13.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:suse:suse_linux_enterprise_server:12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:git-scm:git:2.7.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/git/git/commit/34fa79a6cde56d6d428ab0d3160cb094ebad3305",
+        "version_end_excluding": {
+            "suse:openstack_cloud": "unknown",
+            "suse:linux_enterprise_software_development_kit": "unknown",
+            "suse:linux_enterprise_server": "unknown",
+            "suse:linux_enterprise_debuginfo": "unknown",
+            "opensuse:leap": "unknown",
+            "opensuse:opensuse": "unknown",
+            "suse:suse_linux_enterprise_server": "unknown",
+            "git-scm:git": "unknown"
+        },
+        "path": {
+            "file_path": "revision.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-2315"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

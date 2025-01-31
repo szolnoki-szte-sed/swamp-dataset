@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/c85ce65ecac078ab1a1835c87c4a6319cf74660a",
+        "version_end_excluding": {
+            "linux:linux_kernel": "2.6.39"
+        },
+        "path": {
+            "file_path": "drivers/net/wireless/b43/dma.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-3359"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

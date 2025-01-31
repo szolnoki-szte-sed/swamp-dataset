@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:axios:axios:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/axios/axios/commit/5b457116e31db0e88fede6c428e969e87f290929",
+        "version_end_excluding": {
+            "axios:axios": "unknown"
+        },
+        "path": {
+            "file_path": "lib/utils.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3749"
+        ],
+        "CWE": [
+            "CWE-400"
+        ]
+    }
+}

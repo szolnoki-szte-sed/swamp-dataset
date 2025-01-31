@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:wicket:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:wicket:9.0.0:milestone3:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:wicket:9.0.0:milestone4:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:wicket:9.0.0:milestone1:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:wicket:9.0.0:milestone5:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:fortress:2.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:wicket:9.0.0:milestone2:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/wicket/commit/d43c68c0126306021a12afbfe7876a36612fbbc3",
+        "version_end_excluding": {
+            "apache:fortress": "unknown"
+        },
+        "path": {
+            "file_path": "wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-11976"
+        ],
+        "CWE": [
+            "CWE-552"
+        ]
+    }
+}

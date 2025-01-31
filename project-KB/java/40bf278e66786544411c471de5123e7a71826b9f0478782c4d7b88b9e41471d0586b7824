@@ -1,0 +1,612 @@
+diff --git a/core/cas-server-core-audit/src/test/java/org/apereo/cas/audit/spi/ShortenedReturnValueAsStringResourceResolverTests.java b/core/cas-server-core-audit/src/test/java/org/apereo/cas/audit/spi/ShortenedReturnValueAsStringResourceResolverTests.java
+index fea1b7af886e..f74830b9d53e 100644
+--- a/core/cas-server-core-audit/src/test/java/org/apereo/cas/audit/spi/ShortenedReturnValueAsStringResourceResolverTests.java
++++ b/core/cas-server-core-audit/src/test/java/org/apereo/cas/audit/spi/ShortenedReturnValueAsStringResourceResolverTests.java
+@@ -1,9 +1,9 @@
+ package org.apereo.cas.audit.spi;
+ 
+ import org.apereo.cas.audit.spi.resource.ShortenedReturnValueAsStringResourceResolver;
++import org.apereo.cas.util.RandomUtils;
+ 
+ import lombok.val;
+-import org.apache.commons.lang3.RandomStringUtils;
+ import org.aspectj.lang.JoinPoint;
+ import org.junit.jupiter.api.Test;
+ 
+@@ -22,6 +22,6 @@ public class ShortenedReturnValueAsStringResourceResolverTests {
+     @Test
+     public void verifyActionPassed() {
+         val jp = mock(JoinPoint.class);
+-        assertTrue(r.resolveFrom(jp, RandomStringUtils.randomAlphabetic(52)).length > 0);
++        assertTrue(r.resolveFrom(jp, RandomUtils.randomAlphabetic(52)).length > 0);
+     }
+ }
+diff --git a/core/cas-server-core-authentication-mfa-api/src/test/java/org/apereo/cas/authentication/mfa/TestMultifactorAuthenticationProvider.java b/core/cas-server-core-authentication-mfa-api/src/test/java/org/apereo/cas/authentication/mfa/TestMultifactorAuthenticationProvider.java
+index 229d529d368f..24275c1208a5 100644
+--- a/core/cas-server-core-authentication-mfa-api/src/test/java/org/apereo/cas/authentication/mfa/TestMultifactorAuthenticationProvider.java
++++ b/core/cas-server-core-authentication-mfa-api/src/test/java/org/apereo/cas/authentication/mfa/TestMultifactorAuthenticationProvider.java
+@@ -1,9 +1,9 @@
+ package org.apereo.cas.authentication.mfa;
+ 
+ import org.apereo.cas.authentication.AbstractMultifactorAuthenticationProvider;
++import org.apereo.cas.util.RandomUtils;
+ import org.apereo.cas.util.spring.ApplicationContextProvider;
+ 
+-import org.apache.commons.lang3.RandomStringUtils;
+ import org.springframework.context.ConfigurableApplicationContext;
+ 
+ /**
+@@ -29,7 +29,7 @@ public class TestMultifactorAuthenticationProvider extends AbstractMultifactorAu
+     public static TestMultifactorAuthenticationProvider registerProviderIntoApplicationContext(final ConfigurableApplicationContext applicationContext) {
+         return ApplicationContextProvider.registerBeanIntoApplicationContext(applicationContext,
+             TestMultifactorAuthenticationProvider.class,
+-            "provider" + RandomStringUtils.randomAlphabetic(8));
++            "provider" + RandomUtils.randomAlphabetic(8));
+     }
+ 
+     @Override
+diff --git a/core/cas-server-core-services-api/src/main/java/org/apereo/cas/services/AnonymousRegisteredServiceUsernameAttributeProvider.java b/core/cas-server-core-services-api/src/main/java/org/apereo/cas/services/AnonymousRegisteredServiceUsernameAttributeProvider.java
+index af4361a663c2..684405848c97 100644
+--- a/core/cas-server-core-services-api/src/main/java/org/apereo/cas/services/AnonymousRegisteredServiceUsernameAttributeProvider.java
++++ b/core/cas-server-core-services-api/src/main/java/org/apereo/cas/services/AnonymousRegisteredServiceUsernameAttributeProvider.java
+@@ -4,6 +4,7 @@
+ import org.apereo.cas.authentication.principal.Principal;
+ import org.apereo.cas.authentication.principal.Service;
+ import org.apereo.cas.authentication.principal.ShibbolethCompatiblePersistentIdGenerator;
++import org.apereo.cas.util.RandomUtils;
+ 
+ import lombok.AllArgsConstructor;
+ import lombok.EqualsAndHashCode;
+@@ -12,7 +13,6 @@
+ import lombok.Setter;
+ import lombok.extern.slf4j.Slf4j;
+ import lombok.val;
+-import org.apache.commons.lang3.RandomStringUtils;
+ 
+ /**
+  * Generates a persistent id as username for anonymous service access.
+@@ -36,7 +36,7 @@ public class AnonymousRegisteredServiceUsernameAttributeProvider extends BaseReg
+     /**
+      * Encoder to generate PseudoIds.
+      */
+-    private PersistentIdGenerator persistentIdGenerator = new ShibbolethCompatiblePersistentIdGenerator(RandomStringUtils.randomAlphanumeric(16));
++    private PersistentIdGenerator persistentIdGenerator = new ShibbolethCompatiblePersistentIdGenerator(RandomUtils.randomAlphanumeric(16));
+ 
+     @Override
+     protected String resolveUsernameInternal(final Principal principal, final Service service, final RegisteredService registeredService) {
+diff --git a/core/cas-server-core-services-api/src/test/java/org/apereo/cas/services/util/RegisteredServiceNoOpCipherExecutorTests.java b/core/cas-server-core-services-api/src/test/java/org/apereo/cas/services/util/RegisteredServiceNoOpCipherExecutorTests.java
+index c455bb159f88..f96382ff5f85 100644
+--- a/core/cas-server-core-services-api/src/test/java/org/apereo/cas/services/util/RegisteredServiceNoOpCipherExecutorTests.java
++++ b/core/cas-server-core-services-api/src/test/java/org/apereo/cas/services/util/RegisteredServiceNoOpCipherExecutorTests.java
+@@ -4,9 +4,9 @@
+ import org.apereo.cas.services.RegexRegisteredService;
+ import org.apereo.cas.services.RegisteredServiceCipherExecutor;
+ import org.apereo.cas.services.RegisteredServicePublicKeyImpl;
++import org.apereo.cas.util.RandomUtils;
+ 
+ import lombok.val;
+-import org.apache.commons.lang3.RandomStringUtils;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.util.Optional;
+@@ -24,7 +24,7 @@ public class RegisteredServiceNoOpCipherExecutorTests {
+     @Test
+     public void verifyCipherUnableToEncodeForStringIsTooLong() {
+         val svc = getService("classpath:keys/RSA1024Public.key");
+-        val ticketId = RandomStringUtils.randomAlphanumeric(120);
++        val ticketId = RandomUtils.randomAlphanumeric(120);
+         val cipher = RegisteredServiceCipherExecutor.noOp();
+         assertEquals(ticketId, cipher.encode(ticketId, Optional.of(svc)));
+         assertEquals(ticketId, cipher.encode(ticketId));
+diff --git a/core/cas-server-core-services-api/src/test/java/org/apereo/cas/services/util/RegisteredServicePublicKeyCipherExecutorTests.java b/core/cas-server-core-services-api/src/test/java/org/apereo/cas/services/util/RegisteredServicePublicKeyCipherExecutorTests.java
+index cc337b639daf..667f635d6d69 100644
+--- a/core/cas-server-core-services-api/src/test/java/org/apereo/cas/services/util/RegisteredServicePublicKeyCipherExecutorTests.java
++++ b/core/cas-server-core-services-api/src/test/java/org/apereo/cas/services/util/RegisteredServicePublicKeyCipherExecutorTests.java
+@@ -3,9 +3,9 @@
+ import org.apereo.cas.services.AbstractRegisteredService;
+ import org.apereo.cas.services.RegexRegisteredService;
+ import org.apereo.cas.services.RegisteredServicePublicKeyImpl;
++import org.apereo.cas.util.RandomUtils;
+ 
+ import lombok.val;
+-import org.apache.commons.lang3.RandomStringUtils;
+ import org.junit.jupiter.api.Test;
+ 
+ import java.util.Optional;
+@@ -24,7 +24,7 @@ public class RegisteredServicePublicKeyCipherExecutorTests {
+     public void verifyCipherUnableToEncodeForStringIsTooLong() {
+         val svc = getService("classpath:keys/RSA1024Public.key");
+ 
+-        val ticketId = RandomStringUtils.randomAlphanumeric(120);
++        val ticketId = RandomUtils.randomAlphanumeric(120);
+         val e = new RegisteredServicePublicKeyCipherExecutor();
+         assertNull(e.encode(ticketId, Optional.of(svc)));
+     }
+@@ -32,7 +32,7 @@ public void verifyCipherUnableToEncodeForStringIsTooLong() {
+     @Test
+     public void verifyCipherAbleToEncode() {
+         val svc = getService("classpath:keys/RSA4096Public.key");
+-        val ticketId = RandomStringUtils.randomAlphanumeric(120);
++        val ticketId = RandomUtils.randomAlphanumeric(120);
+         val e = new RegisteredServicePublicKeyCipherExecutor();
+         assertNotNull(e.encode(ticketId, Optional.of(svc)));
+     }
+diff --git a/core/cas-server-core-util-api/src/main/java/org/apereo/cas/util/RandomUtils.java b/core/cas-server-core-util-api/src/main/java/org/apereo/cas/util/RandomUtils.java
+index 13410a428f7e..40df7a65e902 100644
+--- a/core/cas-server-core-util-api/src/main/java/org/apereo/cas/util/RandomUtils.java
++++ b/core/cas-server-core-util-api/src/main/java/org/apereo/cas/util/RandomUtils.java
+@@ -3,6 +3,8 @@
+ import lombok.experimental.UtilityClass;
+ import lombok.extern.slf4j.Slf4j;
+ import lombok.val;
++import org.apache.commons.lang3.RandomStringUtils;
++import org.apache.commons.lang3.Validate;
+ 
+ import java.security.NoSuchAlgorithmException;
+ import java.security.SecureRandom;
+@@ -45,9 +47,45 @@ public static SecureRandom getNativeInstance() {
+      * @return the long
+      */
+     public static long nextLong() {
+-        return org.apache.commons.lang3.RandomUtils.nextLong(0, Long.MAX_VALUE);
++        return nextLong(0, Long.MAX_VALUE);
++    }
++
++    public static long nextLong(final long startInclusive, final long endExclusive) {
++        Validate.isTrue(endExclusive >= startInclusive,
++            "Start value must be smaller or equal to end value.");
++        Validate.isTrue(startInclusive >= 0, "Both range values must be non-negative.");
++
++        if (startInclusive == endExclusive) {
++            return startInclusive;
++        }
++
++        return (long) nextDouble(startInclusive, endExclusive);
++    }
++
++    public static double nextDouble(final double startInclusive, final double endInclusive) {
++        Validate.isTrue(endInclusive >= startInclusive,
++            "Start value must be smaller or equal to end value.");
++        Validate.isTrue(startInclusive >= 0, "Both range values must be non-negative.");
++
++        if (startInclusive == endInclusive) {
++            return startInclusive;
++        }
++
++        return startInclusive + (endInclusive - startInclusive) * getNativeInstance().nextDouble();
+     }
+ 
++    /**
++     * <p> Returns a random double within 0 - Double.MAX_VALUE </p> .
++     *
++     * @return the random double
++     * @see #nextDouble(double, double)
++     * @since 3.5
++     */
++    public static double nextDouble() {
++        return nextDouble(0, Double.MAX_VALUE);
++    }
++
++
+     /**
+      * Generate secure random id string.
+      *
+@@ -72,4 +110,150 @@ public static String generateSecureRandomId() {
+         });
+         return String.valueOf(chars);
+     }
++
++    /**
++     * <p>Creates a random string whose length is the number of characters
++     * specified.</p>
++     *
++     * <p>Characters will be chosen from the set of Latin alphabetic
++     * characters (a-z, A-Z).</p>
++     *
++     * @param count the length of random string to create
++     * @return the random string
++     */
++    public static String randomAlphabetic(final int count) {
++        return random(count, true, false);
++    }
++
++    /**
++     * <p>Creates a random string whose length is between the inclusive minimum and
++     * the exclusive maximum.</p>
++     *
++     * <p>Characters will be chosen from the set of Latin alphabetic characters (a-z, A-Z).</p>
++     *
++     * @param minLengthInclusive the inclusive minimum length of the string to generate
++     * @param maxLengthExclusive the exclusive maximum length of the string to generate
++     * @return the random string
++     * @since 3.5
++     */
++    public static String randomAlphabetic(final int minLengthInclusive, final int maxLengthExclusive) {
++        return randomAlphabetic(nextInt(minLengthInclusive, maxLengthExclusive));
++    }
++
++
++    /**
++     * <p>
++     * Returns a random integer within the specified range.
++     * </p>
++     *
++     * @param startInclusive the smallest value that can be returned, must be non-negative
++     * @param endExclusive   the upper bound (not included)
++     * @return the random integer
++     * @throws IllegalArgumentException if {@code startInclusive > endExclusive} or if
++     *                                  {@code startInclusive} is negative
++     */
++    public static int nextInt(final int startInclusive, final int endExclusive) {
++        Validate.isTrue(endExclusive >= startInclusive,
++            "Start value must be smaller or equal to end value.");
++        Validate.isTrue(startInclusive >= 0, "Both range values must be non-negative.");
++
++        if (startInclusive == endExclusive) {
++            return startInclusive;
++        }
++
++        return startInclusive + getNativeInstance().nextInt(endExclusive - startInclusive);
++    }
++
++    /**
++     * Returns a random int within 0 - Integer.MAX_VALUE.
++     *
++     * @return the random integer
++     * @see #nextInt(int, int)
++     * @since 3.5
++     */
++    public static int nextInt() {
++        return nextInt(0, Integer.MAX_VALUE);
++    }
++
++    /**
++     * <p>Creates a random string whose length is the number of characters
++     * specified.</p>
++     *
++     * <p>Characters will be chosen from the set of alpha-numeric
++     * characters as indicated by the arguments.</p>
++     *
++     * @param count   the length of random string to create
++     * @param letters if {@code true}, generated string may include
++     *                alphabetic characters
++     * @param numbers if {@code true}, generated string may include
++     *                numeric characters
++     * @return the random string
++     */
++    public static String random(final int count, final boolean letters, final boolean numbers) {
++        return random(count, 0, 0, letters, numbers);
++    }
++
++    /**
++     * <p>Creates a random string whose length is the number of characters
++     * specified.</p>
++     *
++     * <p>Characters will be chosen from the set of alpha-numeric
++     * characters as indicated by the arguments.</p>
++     *
++     * @param count   the length of random string to create
++     * @param start   the position in set of chars to start at
++     * @param end     the position in set of chars to end before
++     * @param letters if {@code true}, generated string may include
++     *                alphabetic characters
++     * @param numbers if {@code true}, generated string may include
++     *                numeric characters
++     * @return the random string
++     */
++    public static String random(final int count, final int start, final int end, final boolean letters, final boolean numbers) {
++        return RandomStringUtils.random(count, start, end, letters, numbers, null, getNativeInstance());
++    }
++
++    /**
++     * <p>Creates a random string whose length is the number of characters
++     * specified.</p>
++     *
++     * <p>Characters will be chosen from the set of Latin alphabetic
++     * characters (a-z, A-Z) and the digits 0-9.</p>
++     *
++     * @param count the length of random string to create
++     * @return the random string
++     */
++    public static String randomAlphanumeric(final int count) {
++        return random(count, true, true);
++    }
++
++    /**
++     * <p>Creates a random string whose length is between the inclusive minimum and
++     * the exclusive maximum.</p>
++     *
++     * <p>Characters will be chosen from the set of Latin alphabetic
++     * characters (a-z, A-Z) and the digits 0-9.</p>
++     *
++     * @param minLengthInclusive the inclusive minimum length of the string to generate
++     * @param maxLengthExclusive the exclusive maximum length of the string to generate
++     * @return the random string
++     * @since 3.5
++     */
++    public static String randomAlphanumeric(final int minLengthInclusive, final int maxLengthExclusive) {
++        return randomAlphanumeric(nextInt(minLengthInclusive, maxLengthExclusive));
++    }
++
++    /**
++     * <p>Creates a random string whose length is the number of characters
++     * specified.</p>
++     *
++     * <p>Characters will be chosen from the set of numeric
++     * characters.</p>
++     *
++     * @param count the length of random string to create
++     * @return the random string
++     */
++    public static String randomNumeric(final int count) {
++        return random(count, false, true);
++    }
+ }
+diff --git a/docs/cas-server-documentation/installation/JWT-Authentication.md b/docs/cas-server-documentation/installation/JWT-Authentication.md
+index 7024c08fe11e..4c4a7c9466e5 100644
+--- a/docs/cas-server-documentation/installation/JWT-Authentication.md
++++ b/docs/cas-server-documentation/installation/JWT-Authentication.md
+@@ -25,8 +25,8 @@ CAS expects a `token` parameter (or request header) to be passed along to the `/
+ Here is an example of how to generate a JWT via [Pac4j](https://github.com/pac4j/pac4j):
+ 
+ ```java
+-final String signingSecret = RandomStringUtils.randomAlphanumeric(256);
+-final String encryptionSecret = RandomStringUtils.randomAlphanumeric(48);
++final String signingSecret = RandomUtils.randomAlphanumeric(256);
++final String encryptionSecret = RandomUtils.randomAlphanumeric(48);
+ 
+ System.out.println("signingSecret " + signingSecret);
+ System.out.println("encryptionSecret " + encryptionSecret);
+diff --git a/support/cas-server-support-electrofence/src/test/java/org/apereo/cas/impl/mock/MockTicketGrantingTicketCreatedEventProducer.java b/support/cas-server-support-electrofence/src/test/java/org/apereo/cas/impl/mock/MockTicketGrantingTicketCreatedEventProducer.java
+index e2ad01d4f160..3333640e6d10 100644
+--- a/support/cas-server-support-electrofence/src/test/java/org/apereo/cas/impl/mock/MockTicketGrantingTicketCreatedEventProducer.java
++++ b/support/cas-server-support-electrofence/src/test/java/org/apereo/cas/impl/mock/MockTicketGrantingTicketCreatedEventProducer.java
+@@ -5,11 +5,11 @@
+ import org.apereo.cas.support.events.dao.CasEvent;
+ import org.apereo.cas.support.events.ticket.CasTicketGrantingTicketCreatedEvent;
+ import org.apereo.cas.util.CollectionUtils;
++import org.apereo.cas.util.RandomUtils;
+ import org.apereo.cas.util.serialization.TicketIdSanitizationUtils;
+ 
+ import lombok.NoArgsConstructor;
+ import lombok.val;
+-import org.apache.commons.lang3.RandomStringUtils;
+ import org.apache.commons.lang3.tuple.Pair;
+ 
+ import java.time.ZoneOffset;
+@@ -78,7 +78,7 @@ private static void createEvent(final int i, final CasEventRepository casEventRe
+         dto.setType(CasTicketGrantingTicketCreatedEvent.class.getName());
+         dto.putTimestamp(new Date().getTime());
+         dto.setCreationTime(ZonedDateTime.now(ZoneOffset.UTC).minusDays(5).toString());
+-        dto.putEventId(TicketIdSanitizationUtils.sanitize("TGT-" + i + '-' + RandomStringUtils.randomAlphanumeric(16)));
++        dto.putEventId(TicketIdSanitizationUtils.sanitize("TGT-" + i + '-' + RandomUtils.randomAlphanumeric(16)));
+         dto.setPrincipalId("casuser");
+         dto.putClientIpAddress(getMockClientIpAddress());
+         dto.putServerIpAddress("127.0.0.1");
+diff --git a/support/cas-server-support-oauth-core-api/src/main/java/org/apereo/cas/ticket/device/DefaultDeviceTokenFactory.java b/support/cas-server-support-oauth-core-api/src/main/java/org/apereo/cas/ticket/device/DefaultDeviceTokenFactory.java
+index d0b5ae489ae7..13c69a43ae2c 100644
+--- a/support/cas-server-support-oauth-core-api/src/main/java/org/apereo/cas/ticket/device/DefaultDeviceTokenFactory.java
++++ b/support/cas-server-support-oauth-core-api/src/main/java/org/apereo/cas/ticket/device/DefaultDeviceTokenFactory.java
+@@ -10,10 +10,10 @@
+ import org.apereo.cas.ticket.TicketFactory;
+ import org.apereo.cas.ticket.UniqueTicketIdGenerator;
+ import org.apereo.cas.util.DefaultUniqueTicketIdGenerator;
++import org.apereo.cas.util.RandomUtils;
+ 
+ import lombok.RequiredArgsConstructor;
+ import lombok.val;
+-import org.apache.commons.lang3.RandomStringUtils;
+ import org.apache.commons.lang3.StringUtils;
+ 
+ /**
+@@ -62,7 +62,7 @@ public DeviceToken createDeviceCode(final Service service) {
+ 
+     @Override
+     public DeviceUserCode createDeviceUserCode(final DeviceToken deviceToken) {
+-        val userCode = generateDeviceUserCode(RandomStringUtils.randomAlphanumeric(userCodeLength));
++        val userCode = generateDeviceUserCode(RandomUtils.randomAlphanumeric(userCodeLength));
+         val expirationPolicyToUse = determineExpirationPolicyForService(deviceToken.getService());
+         val deviceUserCode = new DeviceUserCodeImpl(userCode, deviceToken.getId(), expirationPolicyToUse);
+         deviceToken.assignUserCode(deviceUserCode);
+diff --git a/support/cas-server-support-oauth/src/test/java/org/apereo/cas/support/oauth/services/OAuth20RegisteredServiceCipherExecutorTests.java b/support/cas-server-support-oauth/src/test/java/org/apereo/cas/support/oauth/services/OAuth20RegisteredServiceCipherExecutorTests.java
+index 2fc9fe7e052d..0023950a250e 100644
+--- a/support/cas-server-support-oauth/src/test/java/org/apereo/cas/support/oauth/services/OAuth20RegisteredServiceCipherExecutorTests.java
++++ b/support/cas-server-support-oauth/src/test/java/org/apereo/cas/support/oauth/services/OAuth20RegisteredServiceCipherExecutorTests.java
+@@ -1,7 +1,8 @@
+ package org.apereo.cas.support.oauth.services;
+ 
++import org.apereo.cas.util.RandomUtils;
++
+ import lombok.val;
+-import org.apache.commons.lang3.RandomStringUtils;
+ import org.junit.jupiter.api.Tag;
+ import org.junit.jupiter.api.Test;
+ 
+@@ -18,7 +19,7 @@ public class OAuth20RegisteredServiceCipherExecutorTests {
+     @Test
+     public void verifyOperation() {
+         val cipher = new OAuth20RegisteredServiceCipherExecutor();
+-        val secret = RandomStringUtils.randomAlphanumeric(12);
++        val secret = RandomUtils.randomAlphanumeric(12);
+         val encoded = cipher.encode(secret);
+         assertNotNull(encoded);
+         assertNotEquals(secret, encoded);
+diff --git a/support/cas-server-support-oauth/src/test/java/org/apereo/cas/support/oauth/util/OAuth20UtilsTests.java b/support/cas-server-support-oauth/src/test/java/org/apereo/cas/support/oauth/util/OAuth20UtilsTests.java
+index 58600efaae3a..603facc9f1c7 100644
+--- a/support/cas-server-support-oauth/src/test/java/org/apereo/cas/support/oauth/util/OAuth20UtilsTests.java
++++ b/support/cas-server-support-oauth/src/test/java/org/apereo/cas/support/oauth/util/OAuth20UtilsTests.java
+@@ -2,9 +2,9 @@
+ 
+ import org.apereo.cas.support.oauth.services.OAuth20RegisteredServiceCipherExecutor;
+ import org.apereo.cas.support.oauth.services.OAuthRegisteredService;
++import org.apereo.cas.util.RandomUtils;
+ 
+ import lombok.val;
+-import org.apache.commons.lang3.RandomStringUtils;
+ import org.junit.jupiter.api.Tag;
+ import org.junit.jupiter.api.Test;
+ 
+@@ -21,7 +21,7 @@ public class OAuth20UtilsTests {
+     @Test
+     public void verifyClientSecretCheck() {
+         val cipher = new OAuth20RegisteredServiceCipherExecutor();
+-        val secret = RandomStringUtils.randomAlphanumeric(12);
++        val secret = RandomUtils.randomAlphanumeric(12);
+         val encodedSecret = cipher.encode(secret);
+         val registeredService = new OAuthRegisteredService();
+         registeredService.setClientId("clientid");
+@@ -33,7 +33,7 @@ public void verifyClientSecretCheck() {
+     @Test
+     public void verifyClientSecretCheckWithoutCipher() {
+         val cipher = new OAuth20RegisteredServiceCipherExecutor();
+-        val secret = RandomStringUtils.randomAlphanumeric(12);
++        val secret = RandomUtils.randomAlphanumeric(12);
+         val registeredService = new OAuthRegisteredService();
+         registeredService.setClientId("clientid");
+         registeredService.setClientSecret(secret);
+diff --git a/support/cas-server-support-oidc-core-api/src/main/java/org/apereo/cas/oidc/web/controllers/dynareg/OidcDynamicClientRegistrationEndpointController.java b/support/cas-server-support-oidc-core-api/src/main/java/org/apereo/cas/oidc/web/controllers/dynareg/OidcDynamicClientRegistrationEndpointController.java
+index a2a253c2755e..0cde8e2585ee 100644
+--- a/support/cas-server-support-oidc-core-api/src/main/java/org/apereo/cas/oidc/web/controllers/dynareg/OidcDynamicClientRegistrationEndpointController.java
++++ b/support/cas-server-support-oidc-core-api/src/main/java/org/apereo/cas/oidc/web/controllers/dynareg/OidcDynamicClientRegistrationEndpointController.java
+@@ -15,13 +15,13 @@
+ import org.apereo.cas.support.oauth.web.endpoints.OAuth20ConfigurationContext;
+ import org.apereo.cas.ticket.accesstoken.AccessToken;
+ import org.apereo.cas.util.HttpUtils;
++import org.apereo.cas.util.RandomUtils;
+ 
+ import com.fasterxml.jackson.databind.ObjectMapper;
+ import lombok.SneakyThrows;
+ import lombok.extern.slf4j.Slf4j;
+ import lombok.val;
+ import org.apache.commons.io.IOUtils;
+-import org.apache.commons.lang3.RandomStringUtils;
+ import org.apache.commons.lang3.StringUtils;
+ import org.apache.http.HttpResponse;
+ import org.springframework.http.HttpStatus;
+@@ -92,7 +92,7 @@ public ResponseEntity handleRequestInternal(@RequestBody final String jsonInput,
+             if (StringUtils.isNotBlank(registrationRequest.getClientName())) {
+                 registeredService.setName(registrationRequest.getClientName());
+             } else if (StringUtils.isBlank(registeredService.getName())) {
+-                registeredService.setName(RandomStringUtils.randomAlphabetic(GENERATED_CLIENT_NAME_LENGTH));
++                registeredService.setName(RandomUtils.randomAlphabetic(GENERATED_CLIENT_NAME_LENGTH));
+             }
+ 
+             val serviceId = String.join("|", registrationRequest.getRedirectUris());
+diff --git a/support/cas-server-support-oidc/src/test/java/org/apereo/cas/oidc/AbstractOidcTests.java b/support/cas-server-support-oidc/src/test/java/org/apereo/cas/oidc/AbstractOidcTests.java
+index fc99ee53413b..e9d6579aa050 100644
+--- a/support/cas-server-support-oidc/src/test/java/org/apereo/cas/oidc/AbstractOidcTests.java
++++ b/support/cas-server-support-oidc/src/test/java/org/apereo/cas/oidc/AbstractOidcTests.java
+@@ -53,6 +53,7 @@
+ import org.apereo.cas.ticket.refreshtoken.RefreshToken;
+ import org.apereo.cas.ticket.registry.TicketRegistry;
+ import org.apereo.cas.util.CollectionUtils;
++import org.apereo.cas.util.RandomUtils;
+ import org.apereo.cas.web.config.CasCookieConfiguration;
+ import org.apereo.cas.web.flow.config.CasCoreWebflowConfiguration;
+ import org.apereo.cas.web.flow.config.CasMultifactorAuthenticationWebflowConfiguration;
+@@ -60,7 +61,6 @@
+ 
+ import com.github.benmanes.caffeine.cache.LoadingCache;
+ import lombok.val;
+-import org.apache.commons.lang3.RandomStringUtils;
+ import org.apache.commons.lang3.StringUtils;
+ import org.jose4j.jwe.ContentEncryptionAlgorithmIdentifiers;
+ import org.jose4j.jwe.KeyManagementAlgorithmIdentifiers;
+@@ -255,7 +255,7 @@ protected static OAuthRegisteredService getOAuthRegisteredService(final String c
+     protected static JwtClaims getClaims(final String subject, final String issuer,
+                                          final String clientId, final String audience) {
+         val claims = new JwtClaims();
+-        claims.setJwtId(RandomStringUtils.randomAlphanumeric(16));
++        claims.setJwtId(RandomUtils.randomAlphanumeric(16));
+         claims.setIssuer(issuer);
+         claims.setAudience(audience);
+ 
+diff --git a/support/cas-server-support-pac4j-core-clients/src/main/java/org/apereo/cas/support/pac4j/authentication/DelegatedClientFactory.java b/support/cas-server-support-pac4j-core-clients/src/main/java/org/apereo/cas/support/pac4j/authentication/DelegatedClientFactory.java
+index 55dd66c2f565..5f72ce4d41e3 100644
+--- a/support/cas-server-support-pac4j-core-clients/src/main/java/org/apereo/cas/support/pac4j/authentication/DelegatedClientFactory.java
++++ b/support/cas-server-support-pac4j-core-clients/src/main/java/org/apereo/cas/support/pac4j/authentication/DelegatedClientFactory.java
+@@ -7,6 +7,7 @@
+ import org.apereo.cas.configuration.model.support.pac4j.oidc.Pac4jOidcClientProperties;
+ import org.apereo.cas.configuration.model.support.pac4j.saml.Pac4jSamlClientProperties;
+ import org.apereo.cas.configuration.support.Beans;
++import org.apereo.cas.util.RandomUtils;
+ 
+ import com.github.scribejava.core.model.Verb;
+ import com.nimbusds.jose.JWSAlgorithm;
+@@ -15,7 +16,6 @@
+ import lombok.SneakyThrows;
+ import lombok.extern.slf4j.Slf4j;
+ import lombok.val;
+-import org.apache.commons.lang3.RandomStringUtils;
+ import org.apache.commons.lang3.StringUtils;
+ import org.pac4j.cas.client.CasClient;
+ import org.pac4j.cas.config.CasConfiguration;
+@@ -583,7 +583,7 @@ protected void configureClient(final IndirectClient client, final Pac4jBaseClien
+             client.setName(cname);
+         } else {
+             val className = client.getClass().getSimpleName();
+-            val genName = className.concat(RandomStringUtils.randomNumeric(2));
++            val genName = className.concat(RandomUtils.randomNumeric(2));
+             client.setName(genName);
+             LOGGER.warn("Client name for [{}] is set to a generated value of [{}]. "
+                 + "Consider defining an explicit name for the delegated provider", className, genName);
+diff --git a/support/cas-server-support-shell/src/main/java/org/apereo/cas/shell/commands/util/GenerateJwtCommand.java b/support/cas-server-support-shell/src/main/java/org/apereo/cas/shell/commands/util/GenerateJwtCommand.java
+index f31ab783f9fb..1b31ced0919e 100644
+--- a/support/cas-server-support-shell/src/main/java/org/apereo/cas/shell/commands/util/GenerateJwtCommand.java
++++ b/support/cas-server-support-shell/src/main/java/org/apereo/cas/shell/commands/util/GenerateJwtCommand.java
+@@ -1,5 +1,7 @@
+ package org.apereo.cas.shell.commands.util;
+ 
++import org.apereo.cas.util.RandomUtils;
++
+ import com.nimbusds.jose.EncryptionMethod;
+ import com.nimbusds.jose.JWEAlgorithm;
+ import com.nimbusds.jose.JWSAlgorithm;
+@@ -7,7 +9,6 @@
+ import com.nimbusds.jose.crypto.DirectDecrypter;
+ import lombok.extern.slf4j.Slf4j;
+ import lombok.val;
+-import org.apache.commons.lang3.RandomStringUtils;
+ import org.apache.commons.lang3.StringUtils;
+ import org.jooq.lambda.Unchecked;
+ import org.pac4j.core.profile.CommonProfile;
+@@ -108,7 +109,7 @@ private static void configureJwtEncryption(final int encryptionSecretSize, final
+             return;
+         }
+ 
+-        val encryptionSecret = RandomStringUtils.randomAlphanumeric(encryptionSecretSize);
++        val encryptionSecret = RandomUtils.randomAlphanumeric(encryptionSecretSize);
+         LOGGER.info("==== Encryption Secret ====\n[{}]\n", encryptionSecret);
+ 
+         val acceptedEncAlgs = Arrays.stream(JWEAlgorithm.class.getDeclaredFields())
+@@ -157,7 +158,7 @@ private static void configureJwtSigning(final int signingSecretSize, final Strin
+             return;
+         }
+ 
+-        val signingSecret = RandomStringUtils.randomAlphanumeric(signingSecretSize);
++        val signingSecret = RandomUtils.randomAlphanumeric(signingSecretSize);
+         LOGGER.info("==== Signing Secret ====\n{}\n", signingSecret);
+ 
+         val acceptedSigningAlgs = Arrays.stream(JWSAlgorithm.class.getDeclaredFields())
+diff --git a/support/cas-server-support-simple-mfa/src/main/java/org/apereo/cas/mfa/simple/CasSimpleMultifactorAuthenticationUniqueTicketIdGenerator.java b/support/cas-server-support-simple-mfa/src/main/java/org/apereo/cas/mfa/simple/CasSimpleMultifactorAuthenticationUniqueTicketIdGenerator.java
+index 589140652948..981cbb7b4bdb 100644
+--- a/support/cas-server-support-simple-mfa/src/main/java/org/apereo/cas/mfa/simple/CasSimpleMultifactorAuthenticationUniqueTicketIdGenerator.java
++++ b/support/cas-server-support-simple-mfa/src/main/java/org/apereo/cas/mfa/simple/CasSimpleMultifactorAuthenticationUniqueTicketIdGenerator.java
+@@ -1,8 +1,7 @@
+ package org.apereo.cas.mfa.simple;
+ 
+ import org.apereo.cas.ticket.UniqueTicketIdGenerator;
+-
+-import org.apache.commons.lang3.RandomStringUtils;
++import org.apereo.cas.util.RandomUtils;
+ 
+ /**
+  * This is {@link CasSimpleMultifactorAuthenticationUniqueTicketIdGenerator}.
+@@ -15,6 +14,6 @@ public class CasSimpleMultifactorAuthenticationUniqueTicketIdGenerator implement
+ 
+     @Override
+     public String getNewTicketId(final String prefix) {
+-        return prefix + SEPARATOR + RandomStringUtils.randomNumeric(TOKEN_LENGTH);
++        return prefix + SEPARATOR + RandomUtils.randomNumeric(TOKEN_LENGTH);
+     }
+ }

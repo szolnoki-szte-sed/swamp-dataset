@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jooby:jooby:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jooby-project/jooby/commit/27b4af283de1a2c2a6b0530039b46eef75ddf655",
+        "version_end_excluding": {
+            "jooby:jooby": "1.6.4"
+        },
+        "path": {
+            "file_path": "jooby/src/test/java/org/jooby/DefaultErrHandlerTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-15477"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

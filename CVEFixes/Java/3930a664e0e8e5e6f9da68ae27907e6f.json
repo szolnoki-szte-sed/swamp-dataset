@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:frentix:openolat:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:frentix:openolat:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/OpenOLAT/OpenOLAT/commit/5668a41ab3f1753102a89757be013487544279d5",
+        "version_end_excluding": {
+            "frentix:openolat": "15.3.18"
+        },
+        "path": {
+            "file_path": "src/main/java/org/olat/course/assessment/bulk/DataStepForm.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-39180"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

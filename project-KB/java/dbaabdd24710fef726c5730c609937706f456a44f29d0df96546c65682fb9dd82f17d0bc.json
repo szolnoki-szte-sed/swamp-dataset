@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:druid:0.17.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/druid/commit/dbaabdd24710fef726c5730c609937706f456a44",
+        "version_end_excluding": {
+            "apache:druid": "unknown"
+        },
+        "path": {
+            "file_path": "extensions-core/druid-basic-security/src/main/java/org/apache/druid/security/basic/authentication/validator/LDAPCredentialsValidator.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1958"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

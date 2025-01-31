@@ -1,0 +1,45 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:hbase:0.98.10.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ibm:infosphere_biginsights:3.0.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ibm:infosphere_biginsights:3.0.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ibm:infosphere_biginsights:3.0.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:hbase:0.98.6.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/hbase/commit/942e09b71eef5bd9fdb1c8711125c4bc1193bcdc",
+        "version_end_excluding": {
+            "ibm:infosphere_biginsights": "unknown"
+        },
+        "path": {
+            "file_path": "hbase-it/src/test/java/org/apache/hadoop/hbase/test/IntegrationTestZKAndFSPermissions.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-1836"
+        ],
+        "CWE": [
+            "CWE-284"
+        ]
+    }
+}

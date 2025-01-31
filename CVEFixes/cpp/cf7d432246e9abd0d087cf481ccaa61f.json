@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:tigervnc:tigervnc:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/CendioOssman/tigervnc/commit/0943c006c7d900dfc0281639e992791d6c567438",
+        "version_end_excluding": {
+            "tigervnc:tigervnc": "1.10.1",
+            "opensuse:leap": "unknown"
+        },
+        "path": {
+            "file_path": "common/rfb/util.h"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-15694"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

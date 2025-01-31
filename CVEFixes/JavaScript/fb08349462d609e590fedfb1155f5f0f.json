@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:edx:edx-platform:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/edx/edx-platform/commit/d54f79f5bf3e1af17063937df1abc0026843412d",
+        "version_end_excluding": {
+            "edx:edx-platform": "2016-06-06"
+        },
+        "path": {
+            "file_path": "lms/static/js/staff_debug_actions.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-10766"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

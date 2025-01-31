@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:tcpdump:tcpdump:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/the-tcpdump-group/tcpdump/commit/3c4d7c0ee30a30e5abff3d6d9586a3753101faf5",
+        "version_end_excluding": {
+            "tcpdump:tcpdump": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "print-rt6.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-13725"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

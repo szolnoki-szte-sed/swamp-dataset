@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:elasticsearch:elasticsearch:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/elastic/elasticsearch/commit/df1427a2935237fb61fc641984f9c76478627fec",
+        "version_end_excluding": {
+            "elasticsearch:elasticsearch": "unknown"
+        },
+        "path": {
+            "file_path": "src/main/java/org/elasticsearch/env/Environment.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5531"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:dropbox:lepton:1.2.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/dropbox/lepton/commit/6a5ceefac1162783fffd9506a3de39c85c725761",
+        "version_end_excluding": {
+            "dropbox:lepton": "unknown"
+        },
+        "path": {
+            "file_path": "src/lepton/jpgcoder.cc"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20820"
+        ],
+        "CWE": [
+            "CWE-190"
+        ]
+    }
+}

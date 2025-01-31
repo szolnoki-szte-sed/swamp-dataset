@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:navidrome:navidrome:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/navidrome/navidrome/commit/9e79b5cbf2a48c1e4344df00fea4ed3844ea965d",
+        "version_end_excluding": {
+            "navidrome:navidrome": "0.47.5"
+        },
+        "path": {
+            "file_path": "scanner/tag_scanner.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-23857"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

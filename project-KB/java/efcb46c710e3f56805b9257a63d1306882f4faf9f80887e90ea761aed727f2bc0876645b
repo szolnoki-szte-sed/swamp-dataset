@@ -1,0 +1,877 @@
+diff --git a/src/main/java/spark/resource/ClassPathResourceHandler.java b/src/main/java/spark/resource/ClassPathResourceHandler.java
+index 40789b77e8..67a6735d64 100644
+--- a/src/main/java/spark/resource/ClassPathResourceHandler.java
++++ b/src/main/java/spark/resource/ClassPathResourceHandler.java
+@@ -22,6 +22,7 @@
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
++import spark.staticfiles.DirectoryTraversal;
+ import spark.utils.Assert;
+ 
+ /**
+@@ -78,7 +79,15 @@ protected AbstractFileResolvingResource getResource(String path) throws Malforme
+                 }
+             }
+ 
+-            return (resource != null && resource.exists()) ? resource : null;
++            if (resource != null && resource.exists()) {
++                DirectoryTraversal.protectAgainstInClassPath(resource.getPath());
++                return resource;
++            } else {
++                return null;
++            }
++
++        } catch (DirectoryTraversal.DirectoryTraversalDetection directoryTraversalDetection) {
++            throw directoryTraversalDetection;
+         } catch (Exception e) {
+             if (LOG.isDebugEnabled()) {
+                 LOG.debug(e.getClass().getSimpleName() + " when trying to get resource. " + e.getMessage());
+diff --git a/src/main/java/spark/resource/ExternalResourceHandler.java b/src/main/java/spark/resource/ExternalResourceHandler.java
+index 7556f41b12..8e5df90ed9 100644
+--- a/src/main/java/spark/resource/ExternalResourceHandler.java
++++ b/src/main/java/spark/resource/ExternalResourceHandler.java
+@@ -22,6 +22,7 @@
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
++import spark.staticfiles.DirectoryTraversal;
+ import spark.utils.Assert;
+ 
+ /**
+@@ -77,7 +78,15 @@ protected AbstractFileResolvingResource getResource(String path) throws Malforme
+                 }
+             }
+ 
+-            return (resource != null && resource.exists()) ? resource : null;
++            if (resource != null && resource.exists()) {
++                DirectoryTraversal.protectAgainstForExternal(resource.getPath());
++                return resource;
++            } else {
++                return null;
++            }
++
++        } catch (DirectoryTraversal.DirectoryTraversalDetection directoryTraversalDetection) {
++            throw directoryTraversalDetection;
+         } catch (Exception e) {
+             if (LOG.isDebugEnabled()) {
+                 LOG.debug(e.getClass().getSimpleName() + " when trying to get resource. " + e.getMessage());
+diff --git a/src/main/java/spark/staticfiles/DirectoryTraversal.java b/src/main/java/spark/staticfiles/DirectoryTraversal.java
+new file mode 100644
+index 0000000000..9f26fcc8ad
+--- /dev/null
++++ b/src/main/java/spark/staticfiles/DirectoryTraversal.java
+@@ -0,0 +1,30 @@
++package spark.staticfiles;
++
++import static spark.utils.StringUtils.removeLeadingAndTrailingSlashesFrom;
++
++/**
++ * Protecting against Directory traversal
++ */
++public class DirectoryTraversal {
++
++    public static void protectAgainstInClassPath(String path) {
++        if (!removeLeadingAndTrailingSlashesFrom(path).startsWith(StaticFilesFolder.local())) {
++            throw new DirectoryTraversalDetection("classpath");
++        }
++    }
++
++    public static void protectAgainstForExternal(String path) {
++        if (!removeLeadingAndTrailingSlashesFrom(path).startsWith(StaticFilesFolder.external())) {
++            throw new DirectoryTraversalDetection("external");
++        }
++    }
++
++    public static final class DirectoryTraversalDetection extends RuntimeException {
++
++        public DirectoryTraversalDetection(String msg) {
++            super(msg);
++        }
++
++    }
++
++}
+diff --git a/src/main/java/spark/staticfiles/StaticFilesConfiguration.java b/src/main/java/spark/staticfiles/StaticFilesConfiguration.java
+index 3025f88d09..c714db1fdc 100644
+--- a/src/main/java/spark/staticfiles/StaticFilesConfiguration.java
++++ b/src/main/java/spark/staticfiles/StaticFilesConfiguration.java
+@@ -69,15 +69,18 @@ public class StaticFilesConfiguration {
+      */
+     public boolean consume(HttpServletRequest httpRequest,
+                            HttpServletResponse httpResponse) throws IOException {
++        try {
++            if (consumeWithFileResourceHandlers(httpRequest, httpResponse)) {
++                return true;
++            }
+ 
+-        if (consumeWithFileResourceHandlers(httpRequest, httpResponse)) {
+-            return true;
+-        }
+-
+-        if (consumeWithJarResourceHandler(httpRequest, httpResponse)) {
+-            return true;
++            if (consumeWithJarResourceHandler(httpRequest, httpResponse)) {
++                return true;
++            }
++        } catch (DirectoryTraversal.DirectoryTraversalDetection directoryTraversalDetection) {
++            LOG.warn(directoryTraversalDetection.getMessage() + " directory traversal detection for path: "
++                             + httpRequest.getPathInfo());
+         }
+-
+         return false;
+     }
+ 
+@@ -94,7 +97,7 @@ private boolean consumeWithFileResourceHandlers(HttpServletRequest httpRequest,
+                     httpResponse.setHeader(MimeType.CONTENT_TYPE, MimeType.fromResource(resource));
+                     customHeaders.forEach(httpResponse::setHeader); //add all user-defined headers to response
+                     OutputStream wrappedOutputStream = GzipUtils.checkAndWrap(httpRequest, httpResponse, false);
+-                    
++
+                     IOUtils.copy(resource.getInputStream(), wrappedOutputStream);
+                     wrappedOutputStream.flush();
+                     wrappedOutputStream.close();
+@@ -177,6 +180,8 @@ public synchronized void configure(String folder) {
+             } catch (IOException e) {
+                 LOG.error("Error when creating StaticResourceHandler", e);
+             }
++
++            StaticFilesFolder.localConfiguredTo(folder);
+             staticResourcesSet = true;
+         }
+ 
+@@ -197,7 +202,7 @@ private boolean configureJarCase(String folder, ClassPathResource resource) thro
+                 staticResourcesSet = true;
+                 return true;
+             }
+-            
++
+             LOG.error("Static file configuration failed.");
+         }
+         return false;
+@@ -227,6 +232,8 @@ public synchronized void configureExternal(String folder) {
+             } catch (IOException e) {
+                 LOG.error("Error when creating external StaticResourceHandler", e);
+             }
++
++            StaticFilesFolder.externalConfiguredTo(folder);
+             externalStaticResourcesSet = true;
+         }
+ 
+diff --git a/src/main/java/spark/staticfiles/StaticFilesFolder.java b/src/main/java/spark/staticfiles/StaticFilesFolder.java
+new file mode 100644
+index 0000000000..a77278cf5f
+--- /dev/null
++++ b/src/main/java/spark/staticfiles/StaticFilesFolder.java
+@@ -0,0 +1,32 @@
++package spark.staticfiles;
++
++import static spark.utils.StringUtils.removeLeadingAndTrailingSlashesFrom;
++
++/**
++ * Created by Per Wendel on 2016-11-05.
++ */
++public class StaticFilesFolder {
++
++    private static volatile String local;
++    private static volatile String external;
++
++    public static final void localConfiguredTo(String folder) {
++
++        local = removeLeadingAndTrailingSlashesFrom(folder);
++    }
++
++    public static final void externalConfiguredTo(String folder) {
++
++        external = removeLeadingAndTrailingSlashesFrom(folder);
++    }
++
++    public static final String local() {
++        return local;
++    }
++
++    public static final String external() {
++        return external;
++    }
++
++
++}
+diff --git a/src/main/java/spark/utils/StringUtils.java b/src/main/java/spark/utils/StringUtils.java
+index adf10df772..06385abdec 100644
+--- a/src/main/java/spark/utils/StringUtils.java
++++ b/src/main/java/spark/utils/StringUtils.java
+@@ -390,4 +390,19 @@ public static String toString(byte[] bytes, String encoding) {
+         return str;
+     }
+ 
++    public static String removeLeadingAndTrailingSlashesFrom(String string) {
++        
++        String trimmed = string;
++
++        if (trimmed.endsWith("/") || trimmed.endsWith("\\")) {
++            trimmed = trimmed.substring(0, trimmed.length() - 1);
++        }
++
++        if (trimmed.startsWith("/")) {
++            trimmed = trimmed.substring(1);
++        }
++
++        return trimmed;
++    }
++
+ }
+diff --git a/src/test/java/spark/StaticFilesTest.java b/src/test/java/spark/StaticFilesTest.java
+index 81e0b1fd01..e09130ac68 100644
+--- a/src/test/java/spark/StaticFilesTest.java
++++ b/src/test/java/spark/StaticFilesTest.java
+@@ -19,6 +19,7 @@
+ import java.io.File;
+ import java.io.FileWriter;
+ import java.io.IOException;
++import java.net.URLEncoder;
+ 
+ import org.junit.AfterClass;
+ import org.junit.Assert;
+@@ -93,14 +94,14 @@ public static void setup() throws IOException {
+ 
+     @Test
+     public void testMimeTypes() throws Exception {
+-        Assert.assertEquals("text/html",                doGet("/pages/index.html").headers.get("Content-Type"));
+-        Assert.assertEquals("application/javascript",   doGet("/js/scripts.js").headers.get("Content-Type"));
+-        Assert.assertEquals("text/css",                 doGet("/css/style.css").headers.get("Content-Type"));
+-        Assert.assertEquals("image/png",                doGet("/img/sparklogo.png").headers.get("Content-Type"));
+-        Assert.assertEquals("image/svg+xml",            doGet("/img/sparklogo.svg").headers.get("Content-Type"));
++        Assert.assertEquals("text/html", doGet("/pages/index.html").headers.get("Content-Type"));
++        Assert.assertEquals("application/javascript", doGet("/js/scripts.js").headers.get("Content-Type"));
++        Assert.assertEquals("text/css", doGet("/css/style.css").headers.get("Content-Type"));
++        Assert.assertEquals("image/png", doGet("/img/sparklogo.png").headers.get("Content-Type"));
++        Assert.assertEquals("image/svg+xml", doGet("/img/sparklogo.svg").headers.get("Content-Type"));
+         Assert.assertEquals("application/octet-stream", doGet("/img/sparklogoPng").headers.get("Content-Type"));
+         Assert.assertEquals("application/octet-stream", doGet("/img/sparklogoSvg").headers.get("Content-Type"));
+-        Assert.assertEquals("text/html",                doGet("/externalFile.html").headers.get("Content-Type"));
++        Assert.assertEquals("text/html", doGet("/externalFile.html").headers.get("Content-Type"));
+     }
+ 
+     @Test
+@@ -136,11 +137,22 @@ public void testStaticFilePageHtml() throws Exception {
+         testGet();
+     }
+ 
++    @Test
++    public void testDirectoryTraversalProtectionLocal() throws Exception {
++        String path = "/" + URLEncoder.encode("..\\spark\\") + "Spark.class";
++        SparkTestUtil.UrlResponse response = doGet(path);
++
++        Assert.assertEquals(404, response.status);
++        Assert.assertEquals(NOT_FOUND_BRO, response.body);
++
++        testGet();
++    }
++
+     @Test
+     public void testExternalStaticFile() throws Exception {
+         SparkTestUtil.UrlResponse response = doGet("/externalFile.html");
+         Assert.assertEquals(200, response.status);
+-        Assert.assertEquals("Content of external file", response.body);
++        Assert.assertEquals(CONTENT_OF_EXTERNAL_FILE, response.body);
+ 
+         testGet();
+     }
+diff --git a/src/test/java/spark/StaticFilesTestExternal.java b/src/test/java/spark/StaticFilesTestExternal.java
+new file mode 100644
+index 0000000000..22c71dc794
+--- /dev/null
++++ b/src/test/java/spark/StaticFilesTestExternal.java
+@@ -0,0 +1,139 @@
++/*
++ * Copyright 2015 - Per Wendel
++ *
++ *  Licensed under the Apache License, Version 2.0 (the "License");
++ *  you may not use this file except in compliance with the License.
++ *  You may obtain a copy of the License at
++ *
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package spark;
++
++import java.io.File;
++import java.io.FileWriter;
++import java.io.IOException;
++import java.net.URLEncoder;
++
++import org.junit.AfterClass;
++import org.junit.Assert;
++import org.junit.BeforeClass;
++import org.junit.Test;
++import org.slf4j.Logger;
++import org.slf4j.LoggerFactory;
++
++import spark.examples.exception.NotFoundException;
++import spark.util.SparkTestUtil;
++
++import static spark.Spark.exception;
++import static spark.Spark.externalStaticFileLocation;
++import static spark.Spark.get;
++
++/**
++ * Test external static files
++ */
++public class StaticFilesTestExternal {
++
++    private static final Logger LOGGER = LoggerFactory.getLogger(StaticFilesTestExternal.class);
++
++    private static final String FO_SHIZZY = "Fo shizzy";
++    private static final String NOT_FOUND_BRO = "Not found bro";
++
++    private static final String EXTERNAL_FILE_NAME_HTML = "externalFile.html";
++
++    private static final String CONTENT_OF_EXTERNAL_FILE = "Content of external file";
++
++    private static SparkTestUtil testUtil;
++
++    private static File tmpExternalFile1;
++    private static File tmpExternalFile2;
++    private static File folderOutsideStaticFiles;
++
++    @AfterClass
++    public static void tearDown() {
++        Spark.stop();
++        if (tmpExternalFile1 != null) {
++            LOGGER.debug("tearDown(). Deleting tmp files");
++            tmpExternalFile1.delete();
++            tmpExternalFile2.delete();
++            folderOutsideStaticFiles.delete();
++        }
++    }
++
++    @BeforeClass
++    public static void setup() throws IOException {
++        testUtil = new SparkTestUtil(4567);
++
++        String directoryRoot = System.getProperty("java.io.tmpdir") + "sparkish";
++        new File(directoryRoot).mkdirs();
++
++        tmpExternalFile1 = new File(directoryRoot, EXTERNAL_FILE_NAME_HTML);
++
++        FileWriter writer = new FileWriter(tmpExternalFile1);
++        writer.write(CONTENT_OF_EXTERNAL_FILE);
++        writer.flush();
++        writer.close();
++
++        File root = new File(directoryRoot);
++
++        folderOutsideStaticFiles = new File(root.getAbsolutePath() + "/../dumpsterstuff");
++        folderOutsideStaticFiles.mkdirs();
++
++        String newFilePath = root.getAbsolutePath() + "/../dumpsterstuff/Spark.class";
++        tmpExternalFile2 = new File(newFilePath);
++        tmpExternalFile2.createNewFile();
++
++        externalStaticFileLocation(directoryRoot);
++
++        get("/hello", (q, a) -> FO_SHIZZY);
++
++        get("/*", (q, a) -> {
++            throw new NotFoundException();
++        });
++
++        exception(NotFoundException.class, (e, request, response) -> {
++            response.status(404);
++            response.body(NOT_FOUND_BRO);
++        });
++
++        Spark.awaitInitialization();
++    }
++
++    @Test
++    public void testExternalStaticFile() throws Exception {
++        SparkTestUtil.UrlResponse response = doGet("/externalFile.html");
++        Assert.assertEquals(200, response.status);
++        Assert.assertEquals(CONTENT_OF_EXTERNAL_FILE, response.body);
++
++        testGet();
++    }
++
++    @Test
++    public void testDirectoryTraversalProtectionExternal() throws Exception {
++        String path = "/" + URLEncoder.encode("..\\..\\spark\\") + "Spark.class";
++        SparkTestUtil.UrlResponse response = doGet(path);
++
++        Assert.assertEquals(404, response.status);
++        Assert.assertEquals(NOT_FOUND_BRO, response.body);
++
++        testGet();
++    }
++
++    private static void testGet() throws Exception {
++        SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hello", "");
++
++        Assert.assertEquals(200, response.status);
++        Assert.assertTrue(response.body.contains(FO_SHIZZY));
++    }
++
++    private SparkTestUtil.UrlResponse doGet(String fileName) throws Exception {
++        return testUtil.doMethod("GET", fileName, null);
++    }
++
++}
+diff --git a/src/test/java/spark/resource/AbstractResourceTest.java b/src/test/java/spark/resource/AbstractResourceTest.java
+deleted file mode 100644
+index ddcbd85bb0..0000000000
+--- a/src/test/java/spark/resource/AbstractResourceTest.java
++++ /dev/null
+@@ -1,103 +0,0 @@
+-package spark.resource;
+-
+-import java.io.File;
+-import java.io.IOException;
+-import java.io.InputStream;
+-
+-import org.junit.Before;
+-import org.junit.Test;
+-import org.mockito.Mockito;
+-
+-import static org.junit.Assert.assertFalse;
+-import static org.junit.Assert.assertTrue;
+-import static org.mockito.Mockito.doThrow;
+-import static org.mockito.Mockito.verify;
+-import static org.mockito.Mockito.when;
+-
+-public class AbstractResourceTest {
+-
+-    private AbstractResource abstractResourceMock;
+-
+-    private File file;
+-
+-    private InputStream inputStreamMock;
+-
+-    @Before
+-    public void setUp() {
+-        this.abstractResourceMock = Mockito.mock(AbstractResource.class);
+-        this.file = Mockito.mock(File.class);
+-        this.inputStreamMock = Mockito.mock(InputStream.class);
+-    }
+-
+-    @Test
+-    public void testExists_whenFileExists_thenReturnTrue() throws IOException {
+-        //when
+-        when(abstractResourceMock.exists()).thenCallRealMethod();
+-        when(abstractResourceMock.getFile()).thenReturn(file);
+-        when(file.exists()).thenReturn(true);
+-
+-        //then
+-        assertTrue("Should return true because the file exists", abstractResourceMock.exists());
+-        verify(abstractResourceMock).getFile();
+-        verify(file).exists();
+-    }
+-
+-    @Test
+-    public void testExists_whenFileDoesntExists_thenReturnFalse() throws IOException {
+-        //when
+-        when(abstractResourceMock.exists()).thenCallRealMethod();
+-        when(abstractResourceMock.getFile()).thenReturn(file);
+-        when(file.exists()).thenReturn(false);
+-
+-        //then
+-        assertFalse("Should return false because the file doesn't exists", abstractResourceMock.exists());
+-        verify(abstractResourceMock).getFile();
+-        verify(file).exists();
+-    }
+-
+-    @Test
+-    public void testExists_whenGetFileThrowsIOException_thenReturnTrue() throws IOException {
+-        //when
+-        when(abstractResourceMock.exists()).thenCallRealMethod();
+-        doThrow(new IOException()).when(abstractResourceMock).getFile();
+-        when(abstractResourceMock.getInputStream()).thenReturn(inputStreamMock);
+-
+-        //then
+-        assertTrue("Should return truen because an InputStream is obtained", abstractResourceMock.exists());
+-        verify(abstractResourceMock).getFile();
+-        verify(abstractResourceMock).getInputStream();
+-        verify(inputStreamMock).close();
+-    }
+-
+-    @Test
+-    public void testExists_whenGetFileThrowsIOException_andGetInputStreamThrowsIOException_thenReturnFalse() throws
+-                                                                                                             IOException {
+-        //when
+-        when(abstractResourceMock.exists()).thenCallRealMethod();
+-        doThrow(new IOException()).when(abstractResourceMock).getFile();
+-        doThrow(new IOException()).when(abstractResourceMock).getInputStream();
+-
+-        //then
+-        assertFalse("Should return false because neither the file exists nor an InputStream could be obtained",
+-                    abstractResourceMock.exists());
+-        verify(abstractResourceMock).getFile();
+-        verify(abstractResourceMock).getInputStream();
+-    }
+-
+-    @Test
+-    public void testExists_whenGetFileThrowsIOException_andCloseInputStreamThrowsIOException_thenReturnFalse() throws
+-                                                                                                               IOException {
+-        //when
+-        when(abstractResourceMock.exists()).thenCallRealMethod();
+-        doThrow(new IOException()).when(abstractResourceMock).getFile();
+-        when(abstractResourceMock.getInputStream()).thenReturn(inputStreamMock);
+-        doThrow(new IOException()).when(inputStreamMock).close();
+-
+-        //then
+-        assertFalse("Should return false because the file doesn't exists and closing an InputStream throws an Exception",
+-                    abstractResourceMock.exists());
+-        verify(abstractResourceMock).getFile();
+-        verify(abstractResourceMock).getInputStream();
+-        verify(inputStreamMock).close();
+-    }
+-}
+diff --git a/src/test/java/spark/resource/ClassPathResourceHandlerTest.java b/src/test/java/spark/resource/ClassPathResourceHandlerTest.java
+deleted file mode 100644
+index e2fa60b33d..0000000000
+--- a/src/test/java/spark/resource/ClassPathResourceHandlerTest.java
++++ /dev/null
+@@ -1,156 +0,0 @@
+-package spark.resource;
+-
+-import java.io.File;
+-import java.io.IOException;
+-import java.net.MalformedURLException;
+-
+-import org.junit.Before;
+-import org.junit.Test;
+-import org.junit.runner.RunWith;
+-import org.powermock.api.mockito.PowerMockito;
+-import org.powermock.core.classloader.annotations.PrepareForTest;
+-import org.powermock.modules.junit4.PowerMockRunner;
+-
+-import static org.junit.Assert.assertEquals;
+-import static org.junit.Assert.assertNull;
+-import static org.mockito.Mockito.doReturn;
+-import static org.mockito.Mockito.doThrow;
+-import static org.mockito.Mockito.mock;
+-import static org.mockito.Mockito.times;
+-import static org.mockito.Mockito.verify;
+-
+-
+-@RunWith(PowerMockRunner.class)
+-@PrepareForTest({ClassPathResourceHandler.class, ClassPathResource.class})
+-class ClassPathResourceHandlerTest {
+-
+-    private ClassPathResource resourceMock;
+-    private File fileMock;
+-
+-    public ClassPathResourceHandlerTest() {
+-    }
+-
+-    @Before
+-    public void setUp() {
+-        this.resourceMock = PowerMockito.mock(ClassPathResource.class);
+-        this.fileMock = mock(File.class);
+-    }
+-
+-    @Test(expected = MalformedURLException.class)
+-    public void testGetResource_whenPathIsNull_thenThrowMalformedURLException() throws MalformedURLException {
+-        String path = null;
+-        ClassPathResourceHandler classPathResourceHandler = new ClassPathResourceHandler("/public", "index.html");
+-        classPathResourceHandler.getResource(path);
+-    }
+-
+-    @Test(expected = MalformedURLException.class)
+-    public void testGetResource_whenPathDoesNotStartWithSlash_thenThrowMalformedURLException() throws
+-                                                                                               MalformedURLException {
+-        String path = "folder";
+-        ClassPathResourceHandler classPathResourceHandler = new ClassPathResourceHandler("/public", "index.html");
+-        classPathResourceHandler.getResource(path);
+-    }
+-
+-    @Test
+-    public void testGetResource_whenResourcePathExists_andResourcePathIsDirectory_andWelcomeFileIsNotNull_thenReturnClassPathResourceObject() throws
+-                                                                                                                                              Exception {
+-        ClassPathResourceHandler classPathResourceHandler = new ClassPathResourceHandler("/public", "index.html");
+-        ClassPathResource secondResourceMock = PowerMockito.mock(ClassPathResource.class);
+-
+-        //when
+-        PowerMockito.whenNew(ClassPathResource.class).withArguments("/public/folder").thenReturn(resourceMock);
+-        PowerMockito.whenNew(ClassPathResource.class).withArguments("/public/folder/index.html").thenReturn(secondResourceMock);
+-        doReturn(true).when(resourceMock).exists();
+-        doReturn(fileMock).when(resourceMock).getFile();
+-        doReturn(true).when(fileMock).isDirectory();
+-        PowerMockito.doReturn("/public/folder").when(resourceMock).getPath();
+-        doReturn(true).when(secondResourceMock).exists();
+-        PowerMockito.doReturn("/public/folder/index.html").when(secondResourceMock).getPath();
+-
+-        //then
+-        String returnedPath = ((ClassPathResource) classPathResourceHandler.getResource("/folder")).getPath();
+-        assertEquals("Should be equals because the resource path exists and it's a directory and welcome file is not null",
+-                     returnedPath, "/public/folder/index.html");
+-
+-        PowerMockito.verifyNew(ClassPathResource.class).withArguments("/public/folder");
+-        PowerMockito.verifyNew(ClassPathResource.class).withArguments("/public/folder/index.html");
+-        verify(resourceMock).exists();
+-        verify(secondResourceMock).exists();
+-        verify(resourceMock).getFile();
+-        verify(resourceMock).getPath();
+-        verify(secondResourceMock).getPath();
+-        verify(fileMock).isDirectory();
+-    }
+-
+-    @Test
+-    public void testGetResource_whenResourcePathExists_andResourcePathIsDirectory_andWelcomeFileIsNull_thenReturnNull() throws
+-                                                                                                                        Exception {
+-        ClassPathResourceHandler classPathResourceHandler = new ClassPathResourceHandler("/public", null);
+-
+-        //when
+-        PowerMockito.whenNew(ClassPathResource.class).withArguments("/public/folder").thenReturn(resourceMock);
+-        doReturn(true).when(resourceMock).exists();
+-        doReturn(fileMock).when(resourceMock).getFile();
+-        doReturn(true).when(fileMock).isDirectory();
+-
+-        //then
+-        assertNull("Should return null because the resource path doesn't point to a file", classPathResourceHandler.getResource("/folder"));
+-        PowerMockito.verifyNew(ClassPathResource.class).withArguments("/public/folder");
+-        verify(resourceMock).exists();
+-        verify(resourceMock).getFile();
+-        verify(fileMock).isDirectory();
+-    }
+-
+-    @Test
+-    public void testGetResource_whenResourcePathDoesNotExists_thenReturnNull() throws Exception {
+-        ClassPathResourceHandler classPathResourceHandler = new ClassPathResourceHandler("/public", null);
+-
+-        //when
+-        PowerMockito.whenNew(ClassPathResource.class).withArguments("/public/folder").thenReturn(resourceMock);
+-        doReturn(false).when(resourceMock).exists();
+-
+-        //then
+-        assertNull("Should return null because the resource path doesn't exists", classPathResourceHandler.getResource("/folder"));
+-        PowerMockito.verifyNew(ClassPathResource.class).withArguments("/public/folder");
+-        verify(resourceMock, times(2)).exists();
+-
+-    }
+-
+-    @Test
+-    public void testGetResource_whenResourcePathExists_andResourcePathIsNotADirectory_thenReturnResourcePathObject() throws
+-                                                                                                                     Exception {
+-        ClassPathResourceHandler classPathResourceHandler = new ClassPathResourceHandler("/public", null);
+-
+-        //when
+-        PowerMockito.whenNew(ClassPathResource.class).withArguments("/public/index.html").thenReturn(resourceMock);
+-        doReturn(true).doReturn(true).when(resourceMock).exists();
+-        doReturn(fileMock).when(resourceMock).getFile();
+-        doReturn(false).when(fileMock).isDirectory();
+-        PowerMockito.doReturn("/public/index.html").when(resourceMock).getPath();
+-
+-        //then
+-
+-        String returnedPath = ((ClassPathResource) classPathResourceHandler.getResource("/index.html")).getPath();
+-        assertEquals("Should be equals because the resource exists", returnedPath, "/public/index.html");
+-        PowerMockito.verifyNew(ClassPathResource.class).withArguments("/public/index.html");
+-        verify(resourceMock, times(2)).exists();
+-        verify(resourceMock).getFile();
+-        verify(fileMock).isDirectory();
+-    }
+-
+-    @Test
+-    public void testGetResource_whenResourcePathExists_andResourceThrowsException_thenReturnNull() throws Exception {
+-        ClassPathResourceHandler classPathResourceHandler = new ClassPathResourceHandler("/public", null);
+-
+-        //when
+-        PowerMockito.whenNew(ClassPathResource.class).withArguments("/public/index.html").thenReturn(resourceMock);
+-        doReturn(true).when(resourceMock).exists();
+-        doThrow(new IOException()).when(resourceMock).getFile();
+-
+-        //then
+-        assertNull(classPathResourceHandler.getResource("/index.html"));
+-        PowerMockito.verifyNew(ClassPathResource.class).withArguments("/public/index.html");
+-        verify(resourceMock).exists();
+-        verify(resourceMock).getFile();
+-    }
+-}
+diff --git a/src/test/java/spark/resource/ExternalResourceHandlerTest.java b/src/test/java/spark/resource/ExternalResourceHandlerTest.java
+deleted file mode 100644
+index f516969f6e..0000000000
+--- a/src/test/java/spark/resource/ExternalResourceHandlerTest.java
++++ /dev/null
+@@ -1,122 +0,0 @@
+-package spark.resource;
+-
+-import java.net.MalformedURLException;
+-
+-import org.junit.Before;
+-import org.junit.Test;
+-import org.junit.runner.RunWith;
+-import org.powermock.api.mockito.PowerMockito;
+-import org.powermock.core.classloader.annotations.PrepareForTest;
+-import org.powermock.modules.junit4.PowerMockRunner;
+-
+-import static org.junit.Assert.assertEquals;
+-import static org.junit.Assert.assertNull;
+-import static org.mockito.Mockito.doReturn;
+-import static org.mockito.Mockito.times;
+-import static org.mockito.Mockito.verify;
+-
+-@RunWith(PowerMockRunner.class)
+-@PrepareForTest({ExternalResourceHandler.class})
+-public class ExternalResourceHandlerTest {
+-
+-    private ExternalResource resourceMock;
+-
+-    @Before
+-    public void setUp() {
+-        resourceMock = PowerMockito.mock(ExternalResource.class);
+-    }
+-
+-    @Test(expected = MalformedURLException.class)
+-    public void testGetResource_whenPathIsNull_thenThrowMalformedURLException() throws MalformedURLException {
+-        String path = null;
+-        ExternalResourceHandler externalResourceHandler = new ExternalResourceHandler("/public", "index.html");
+-        externalResourceHandler.getResource(path);
+-    }
+-
+-    @Test(expected = MalformedURLException.class)
+-    public void testGetResource_whenPathDoesNotStartWithSlash_thenThrowMalformedURLException() throws
+-                                                                                               MalformedURLException {
+-        String path = "folder";
+-        ExternalResourceHandler externalResourceHandler = new ExternalResourceHandler("/public", "index.html");
+-        externalResourceHandler.getResource(path);
+-    }
+-
+-    @Test
+-    public void testGetResource_whenResourcePathExists_andResourcePathIsDirectory_andWelcomeFileIsNotNull_thenReturnExternalResourceObject() throws
+-                                                                                                                                             Exception {
+-        ExternalResourceHandler externalResourceHandler = new ExternalResourceHandler("/public", "index.html");
+-        ExternalResource secondResourceMock = PowerMockito.mock(ExternalResource.class);
+-
+-        //when
+-        PowerMockito.whenNew(ExternalResource.class).withArguments("/public/folder").thenReturn(resourceMock);
+-        PowerMockito.whenNew(ExternalResource.class).withArguments("/public/folder/index.html").thenReturn(secondResourceMock);
+-        doReturn(true).when(resourceMock).exists();
+-        doReturn(true).when(resourceMock).isDirectory();
+-        PowerMockito.doReturn("/public/folder").when(resourceMock).getPath();
+-        doReturn(true).when(secondResourceMock).exists();
+-        PowerMockito.doReturn("/public/folder/index.html").when(secondResourceMock).getPath();
+-
+-        //then
+-        String returnedPath = ((ExternalResource) externalResourceHandler.getResource("/folder")).getPath();
+-        assertEquals("Should be equals because the resource path exists and it's a directory and welcome file is not null", returnedPath, "/public/folder/index.html");
+-        PowerMockito.verifyNew(ExternalResource.class).withArguments("/public/folder");
+-        PowerMockito.verifyNew(ExternalResource.class).withArguments("/public/folder/index.html");
+-        verify(resourceMock).exists();
+-        verify(secondResourceMock).exists();
+-        verify(resourceMock).isDirectory();
+-        verify(resourceMock).getPath();
+-        verify(secondResourceMock).getPath();
+-    }
+-
+-    @Test
+-    public void testGetResource_whenResourcePathExists_andResourcePathIsDirectory_andWelcomeFileIsNull_thenReturnNull() throws
+-                                                                                                                        Exception {
+-        ExternalResourceHandler externalResourceHandler = new ExternalResourceHandler("/public", null);
+-
+-        //when
+-        PowerMockito.whenNew(ExternalResource.class).withArguments("/public/folder").thenReturn(resourceMock);
+-        doReturn(true).when(resourceMock).exists();
+-        doReturn(true).when(resourceMock).isDirectory();
+-
+-        //then
+-        assertNull("Should return null because the resource path doesn't point to a file", externalResourceHandler.getResource("/folder"));
+-        PowerMockito.verifyNew(ExternalResource.class).withArguments("/public/folder");
+-        verify(resourceMock).exists();
+-        verify(resourceMock).isDirectory();
+-    }
+-
+-    @Test
+-    public void testGetResource_whenResourcePathDoesNotExists_thenReturnNull() throws Exception {
+-        ExternalResourceHandler externalResourceHandler = new ExternalResourceHandler("/public", null);
+-
+-        //when
+-        PowerMockito.whenNew(ExternalResource.class).withArguments("/public/folder").thenReturn(resourceMock);
+-        doReturn(false).when(resourceMock).exists();
+-
+-        //then
+-        assertNull("Should return null because the resource path doesn't exists", externalResourceHandler.getResource("/folder"));
+-        PowerMockito.verifyNew(ExternalResource.class).withArguments("/public/folder");
+-        verify(resourceMock, times(2)).exists();
+-
+-    }
+-
+-    @Test
+-    public void testGetResource_whenResourcePathExists_andResourcePathIsNotADirectory_thenReturnResourcePathObject() throws
+-                                                                                                                     Exception {
+-        ExternalResourceHandler externalResourceHandler = new ExternalResourceHandler("/public", null);
+-
+-        //when
+-        PowerMockito.whenNew(ExternalResource.class).withArguments("/public/index.html").thenReturn(resourceMock);
+-        doReturn(true).doReturn(true).when(resourceMock).exists();
+-        doReturn(false).when(resourceMock).isDirectory();
+-        PowerMockito.doReturn("/public/index.html").when(resourceMock).getPath();
+-
+-        //then
+-        String returnedPath = ((ExternalResource) externalResourceHandler.getResource("/index.html")).getPath();
+-        assertEquals("Should be equals because the resource exists", returnedPath, "/public/index.html");
+-        PowerMockito.verifyNew(ExternalResource.class).withArguments("/public/index.html");
+-        verify(resourceMock, times(2)).exists();
+-        verify(resourceMock).isDirectory();
+-    }
+-
+-}
+diff --git a/src/test/java/spark/resource/UriPathTest.java b/src/test/java/spark/resource/UriPathTest.java
+deleted file mode 100644
+index 678ffd1efc..0000000000
+--- a/src/test/java/spark/resource/UriPathTest.java
++++ /dev/null
+@@ -1,48 +0,0 @@
+-package spark.resource;
+-
+-import org.junit.Test;
+-
+-import static org.junit.Assert.assertEquals;
+-
+-public class UriPathTest {
+-
+-    @Test
+-    public void testSingleDot() {
+-        String expected = "test/dir/dot/1";
+-        String test = "././test/dir/./dot/1";
+-
+-        assertEquals(expected, UriPath.canonical(test));
+-    }
+-
+-    @Test
+-    public void testDoubleDot() {
+-        String expected = "/d1/doubledot/";
+-        String test = "/test/d0/../d2/../.././d1/doubledot/down/..";
+-
+-        assertEquals(expected, UriPath.canonical(test));
+-    }
+-
+-    @Test
+-    public void testUpPastRoot() {
+-        String expected = null;
+-        String test = "/r/../s/./../../";
+-
+-        assertEquals(expected, UriPath.canonical(test));
+-    }
+-
+-    @Test
+-    public void testNormalPath() {
+-        String expected = "/path/to/dir/";
+-        String test = "/path/to/dir/";
+-
+-        assertEquals(expected, UriPath.canonical(test));
+-    }
+-
+-    @Test
+-    public void testSingleFile() {
+-        String expected = "file.xml";
+-        String test = "file.xml";
+-
+-        assertEquals(expected, UriPath.canonical(test));
+-    }
+-}

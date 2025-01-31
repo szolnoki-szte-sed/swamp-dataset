@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ulterius:ulterius_server:1.5.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:ulterius:ulterius_server:1.8.0.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Ulterius/server/commit/770d1821de43cf1d0a93c79025995bdd812a76ee",
+        "version_end_excluding": {
+            "ulterius:ulterius_server": "unknown"
+        },
+        "path": {
+            "file_path": "RemoteTaskServer/Api/Network/Models/SystemInformation.cs"
+        }
+    },
+    "programming_language": "c_sharp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Mozilla Public License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-16806"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

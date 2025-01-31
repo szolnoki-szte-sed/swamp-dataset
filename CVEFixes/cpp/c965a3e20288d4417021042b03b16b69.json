@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:high_resolution_streaming_image_server_project:high_resolution_streaming_image_server:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ruven/iipsrv/commit/882925b295a80ec992063deffc2a3b0d803c3195",
+        "version_end_excluding": {
+            "high_resolution_streaming_image_server_project:high_resolution_streaming_image_server": "2022-01-14"
+        },
+        "path": {
+            "file_path": "src/RawTile.h"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-46389"
+        ],
+        "CWE": [
+            "CWE-190"
+        ]
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:openhab:openhab:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/openhab/openhab-addons/commit/4c4cb664f2e2c3866aadf117d22fb54aa8dd0031",
+        "version_end_excluding": {
+            "openhab:openhab": "2.5.2"
+        },
+        "path": {
+            "file_path": "bundles/org.openhab.binding.exec/src/main/java/org/openhab/binding/exec/internal/handler/ExecHandler.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Eclipse Public License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-5242"
+        ],
+        "CWE": [
+            "CWE-863",
+            "CWE-284"
+        ]
+    }
+}

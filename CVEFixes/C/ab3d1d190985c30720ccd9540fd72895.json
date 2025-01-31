@@ -1,0 +1,43 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wireshark:wireshark:2.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:1.12.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:1.12.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:1.12.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:1.12.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:1.12.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:2.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:1.12.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:2.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:1.12.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:1.12.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:1.12.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:1.12.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:1.12.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:2.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:wireshark:wireshark:1.12.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/wireshark/wireshark/commit/9b0b20b8d5f8c9f7839d58ff6c5900f7e19283b4",
+        "version_end_excluding": {
+            "wireshark:wireshark": "unknown"
+        },
+        "path": {
+            "file_path": "epan/crypt/airpdcap.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-5351"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

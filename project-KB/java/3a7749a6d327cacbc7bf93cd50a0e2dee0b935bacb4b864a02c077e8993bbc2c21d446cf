@@ -1,0 +1,62 @@
+diff --git a/docs/UAA-APIs.rst b/docs/UAA-APIs.rst
+index be5931a55d0..905f2692205 100644
+--- a/docs/UAA-APIs.rst
++++ b/docs/UAA-APIs.rst
+@@ -1381,7 +1381,7 @@ Fields            *Available Fields* ::
+                     groupSearchBase             String                  Required search base - defines where in the LDAP tree the UAA will search for user groups, use the value `memberOf` to skip group search, and use the memberOf attributes of the user.
+                     groupSearchFilter           String                  Required Typically "memberOf={0}" group search filter used when searching for a group. {0} denotes the user DN in the search query, or the group DN in case of a nested group search.
+                     mailAttributeName           String                  Required the name of the attribute that contains the user's email address. In most cases this is "mail"
+-                    mailSubstitute              String                  Optional If the user records do not contain an email address, the UAA can create one. It could be "{0}@unknown.org" where
++                    mailSubstitute              String                  Optional If the user records do not contain an email address, the UAA can create one. It could be "{0}@this-default-was-not-configured.invalid" where
+                     mailSubstituteOverridesLdap boolean                 Optional Set to true only if you always wish to override the LDAP supplied user email address
+                     autoAddGroups               boolean                 Required Currently not used
+                     groupSearchSubTree          boolean                 Required Should the sub tree be searched for user groups
+diff --git a/server/src/main/java/org/cloudfoundry/identity/uaa/account/event/PasswordChangeEventPublisher.java b/server/src/main/java/org/cloudfoundry/identity/uaa/account/event/PasswordChangeEventPublisher.java
+index c2688c503f4..f55e98be7af 100644
+--- a/server/src/main/java/org/cloudfoundry/identity/uaa/account/event/PasswordChangeEventPublisher.java
++++ b/server/src/main/java/org/cloudfoundry/identity/uaa/account/event/PasswordChangeEventPublisher.java
+@@ -96,7 +96,7 @@ private String getEmail(ScimUser scimUser) {
+         List<Email> emails = scimUser.getEmails();
+         if (emails == null || emails.isEmpty()) {
+             return scimUser.getUserName().contains("@") ? scimUser.getUserName() : scimUser.getUserName()
+-                            + "@unknown.org";
++                            + "@this-default-was-not-configured.invalid";
+         }
+         for (Email email : emails) {
+             if (email.isPrimary()) {
+diff --git a/server/src/main/java/org/cloudfoundry/identity/uaa/authentication/manager/LoginAuthenticationManager.java b/server/src/main/java/org/cloudfoundry/identity/uaa/authentication/manager/LoginAuthenticationManager.java
+index d095a49d34f..7cdbf8381d1 100644
+--- a/server/src/main/java/org/cloudfoundry/identity/uaa/authentication/manager/LoginAuthenticationManager.java
++++ b/server/src/main/java/org/cloudfoundry/identity/uaa/authentication/manager/LoginAuthenticationManager.java
+@@ -146,11 +146,11 @@ protected UaaUser getUser(AuthzAuthenticationRequest req, Map<String, String> in
+                 if (name.split("@").length == 2 && !name.startsWith("@") && !name.endsWith("@")) {
+                     email = name;
+                 } else {
+-                    email = name.replaceAll("@", "") + "@unknown.org";
++                    email = name.replaceAll("@", "") + "@this-default-was-not-configured.invalid";
+                 }
+             }
+             else {
+-                email = name + "@unknown.org";
++                email = name + "@this-default-was-not-configured.invalid";
+             }
+         }
+         String givenName = info.get("given_name");
+diff --git a/server/src/main/java/org/cloudfoundry/identity/uaa/provider/saml/LoginSamlAuthenticationProvider.java b/server/src/main/java/org/cloudfoundry/identity/uaa/provider/saml/LoginSamlAuthenticationProvider.java
+index f0c3be7bef6..c87430cac0a 100644
+--- a/server/src/main/java/org/cloudfoundry/identity/uaa/provider/saml/LoginSamlAuthenticationProvider.java
++++ b/server/src/main/java/org/cloudfoundry/identity/uaa/provider/saml/LoginSamlAuthenticationProvider.java
+@@ -416,11 +416,11 @@ protected UaaUser getUser(UaaPrincipal principal, MultiValueMap<String,String> u
+                 if (name.split("@").length == 2 && !name.startsWith("@") && !name.endsWith("@")) {
+                     email = name;
+                 } else {
+-                    email = name.replaceAll("@", "") + "@unknown.org";
++                    email = name.replaceAll("@", "") + "@this-default-was-not-configured.invalid";
+                 }
+             }
+             else {
+-                email = name + "@unknown.org";
++                email = name + "@this-default-was-not-configured.invalid";
+             }
+         }
+         if (givenName == null) {

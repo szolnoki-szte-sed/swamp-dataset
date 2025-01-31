@@ -1,0 +1,38 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:lxml:lxml:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:33:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:snapcenter:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:zfs_storage_appliance_kit:8.8:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/lxml/lxml/commit/a5f9cb52079dc57477c460dbe6ba0f775e14a999",
+        "version_end_excluding": {
+            "lxml:lxml": "4.6.3",
+            "debian:debian_linux": "unknown",
+            "fedoraproject:fedora": "unknown",
+            "netapp:snapcenter": "unknown",
+            "oracle:zfs_storage_appliance_kit": "unknown"
+        },
+        "path": {
+            "file_path": "src/lxml/__init__.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-28957"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

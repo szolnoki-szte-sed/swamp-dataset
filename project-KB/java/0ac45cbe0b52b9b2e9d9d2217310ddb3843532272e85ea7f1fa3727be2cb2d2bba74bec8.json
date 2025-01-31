@@ -1,0 +1,44 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:netflix:titus:0.1.1:rc260:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc270:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc262:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc273:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc271:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc261:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc272:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc266:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc269:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc244:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc267:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc263:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc268:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc264:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:rc265:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netflix:titus:0.1.1:-:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Netflix/titus-control-plane/commit/0ac45cbe0b52b9b2e9d9d2217310ddb384353227",
+        "version_end_excluding": {
+            "netflix:titus": "unknown"
+        },
+        "path": {
+            "file_path": "titus-api/src/test/java/com/netflix/titus/api/jobmanager/model/job/sanitizer/SchedulingConstraintValidatorTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-9297"
+        ],
+        "CWE": [
+            "CWE-917"
+        ]
+    }
+}

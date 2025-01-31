@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:limesurvey:limesurvey:4.1.12:-:*:*:*:*:*:*",
+            "cpe:2.3:a:limesurvey:limesurvey:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:limesurvey:limesurvey:4.1.12:200324:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/LimeSurvey/LimeSurvey/commit/04b118acce2a74306f365ef329cbe00efc399b26",
+        "version_end_excluding": {
+            "limesurvey:limesurvey": "unknown"
+        },
+        "path": {
+            "file_path": "application/models/SurveysGroups.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-11456"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

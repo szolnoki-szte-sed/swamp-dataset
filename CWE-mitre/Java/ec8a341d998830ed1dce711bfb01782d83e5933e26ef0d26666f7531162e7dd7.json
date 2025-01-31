@@ -1,0 +1,67 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:apple:mac_os_x:10.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:autolinks:autolinks:2.1:*:pro:*:*:*:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:h:avaya:converged_communications_server:2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rockliffe:mailsite_express:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:martin_bauer:gbook:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:todd_miller:sudo:1.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gnu:mailutils:1.0.6.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:emc:eroom:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:webcalendar:webcalendar:1.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oneorzero:oneorzero_helpdesk:1.6.4.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:blackboard:blackboard:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:yoggie:pico:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:http_server:2.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "apple:mac_os_x": "unknown",
+            "autolinks:autolinks": "unknown",
+            "php:php": "unknown",
+            "avaya:converged_communications_server": "unknown",
+            "rockliffe:mailsite_express": "unknown",
+            "martin_bauer:gbook": "unknown",
+            "todd_miller:sudo": "unknown",
+            "gnu:mailutils": "unknown",
+            "emc:eroom": "unknown",
+            "webcalendar:webcalendar": "unknown",
+            "oneorzero:oneorzero_helpdesk": "unknown",
+            "blackboard:blackboard": "unknown",
+            "yoggie:pico": "unknown",
+            "apache:http_server": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2008-2309",
+            "CVE-2005-2782",
+            "CVE-2004-0542",
+            "CVE-2004-0595",
+            "CVE-2005-3287",
+            "CVE-2004-2351",
+            "CVE-2005-2959",
+            "CVE-2005-1824",
+            "CVE-2005-2184",
+            "CVE-2007-1343",
+            "CVE-2007-5727",
+            "CVE-2006-4308",
+            "CVE-2007-3572",
+            "CVE-2002-0661"
+        ],
+        "CWE": [
+            "CWE-184"
+        ]
+    }
+}

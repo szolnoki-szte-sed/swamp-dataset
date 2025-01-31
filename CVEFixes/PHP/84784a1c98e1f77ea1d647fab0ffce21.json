@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:limesurvey:limesurvey:2.05\\+:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/LimeSurvey/LimeSurvey/commit/d23fbbd6c8434169967cf8bd2c5a4a0b569c352a",
+        "version_end_excluding": {
+            "limesurvey:limesurvey": "unknown"
+        },
+        "path": {
+            "file_path": "application/controllers/admin/participantsaction.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-5016"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

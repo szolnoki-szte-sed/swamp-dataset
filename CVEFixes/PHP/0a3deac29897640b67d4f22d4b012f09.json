@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:osticket:osticket:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:osticket:osticket:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/osTicket/osTicket/commit/99818486c5b1d8aa445cee232825418d6834f249",
+        "version_end_excluding": {
+            "osticket:osticket": "1.12.1"
+        },
+        "path": {
+            "file_path": "include/class.user.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-14749"
+        ],
+        "CWE": [
+            "CWE-1236"
+        ]
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/swagger-api/swagger-codegen/commit/c5724a46d6cbbed03d292a361b3a0d07d1a64dae",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "samples/client/petstore-security-test/java/okhttp-gson/src/main/java/io/swagger/client/api/FakeApi.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-5641"
+        ],
+        "CWE": []
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:struts:2.3.15.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/struts/commit/fd27e5cc748420a53d51e0e19a10efe8c582c2c0",
+        "version_end_excluding": {
+            "apache:struts": "unknown"
+        },
+        "path": {
+            "file_path": "plugins/config-browser/src/main/java/org/apache/struts2/config_browser/ShowConfigAction.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-6348"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

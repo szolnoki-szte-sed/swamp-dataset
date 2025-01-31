@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/21b5944350052d2583e82dd59b19a9ba94a007f0",
+        "version_end_excluding": {
+            "linux:linux_kernel": "4.14.11"
+        },
+        "path": {
+            "file_path": "net/core/net_namespace.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-15129"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bludit:bludit:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bludit/bludit/commit/d0843a4070c7d7fa596a7eb2130be15383013487",
+        "version_end_excluding": {
+            "bludit:bludit": "3.9.0"
+        },
+        "path": {
+            "file_path": "bl-kernel/admin/themes/booty/html/sidebar.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-12548"
+        ],
+        "CWE": [
+            "CWE-434"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:adonisjs:edge:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/edge-js/edge/commit/fa2c7fde86327aeae232752e89a6e37e2e469e21",
+        "version_end_excluding": {
+            "adonisjs:edge": "5.3.2"
+        },
+        "path": {
+            "file_path": "src/Contracts/index.ts"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23443"
+        ],
+        "CWE": [
+            "CWE-843"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:just-safe-set_project:just-safe-set:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/angus-c/just/commit/dd57a476f4bb9d78c6f60741898dc04c71d2eb53",
+        "version_end_excluding": {
+            "just-safe-set_project:just-safe-set": "unknown"
+        },
+        "path": {
+            "file_path": "packages/object-safe-set/package.json"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-25952"
+        ],
+        "CWE": [
+            "CWE-1321"
+        ]
+    }
+}

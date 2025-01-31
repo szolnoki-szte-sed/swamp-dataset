@@ -1,0 +1,87 @@
+diff --git a/deltaspike/core/api/src/main/java/org/apache/deltaspike/core/util/StringUtils.java b/deltaspike/core/api/src/main/java/org/apache/deltaspike/core/util/StringUtils.java
+index 7f70385ce..61ebe12e7 100644
+--- a/deltaspike/core/api/src/main/java/org/apache/deltaspike/core/util/StringUtils.java
++++ b/deltaspike/core/api/src/main/java/org/apache/deltaspike/core/util/StringUtils.java
+@@ -40,4 +40,39 @@ public static boolean isNotEmpty(String text)
+     {
+         return !isEmpty(text);
+     }
++
++    /**
++     * Remove any non-numeric, non-alphanumeric Characters in the given String
++     * @param val
++     * @return the original string but any non-numeric, non-alphanumeric is replaced with a '_'
++     */
++    public static String removeSpecialChars(String val)
++    {
++        if (val == null)
++        {
++            return null;
++        }
++
++        int len = val.length();
++        char[] newBuf = new char[len];
++        val.getChars(0, len, newBuf, 0);
++        for (int i = 0; i < len; i++)
++        {
++            char c = newBuf[i];
++            if (c >= 'a' && c <= 'z' ||
++                c >= 'A' && c <= 'Z' ||
++                c >= '0' && c <= '9' ||
++                c == '-' ||
++                c == '_')
++            {
++                continue;
++            }
++
++            // every other char gets replaced with '_'
++            newBuf[i] = '_';
++        }
++
++        return new String(newBuf);
++    }
++
+ }
+\ No newline at end of file
+diff --git a/deltaspike/core/api/src/test/java/org/apache/deltaspike/test/api/util/StringUtilsTest.java b/deltaspike/core/api/src/test/java/org/apache/deltaspike/test/api/util/StringUtilsTest.java
+index 883ce2ddd..b3c256e37 100644
+--- a/deltaspike/core/api/src/test/java/org/apache/deltaspike/test/api/util/StringUtilsTest.java
++++ b/deltaspike/core/api/src/test/java/org/apache/deltaspike/test/api/util/StringUtilsTest.java
+@@ -32,4 +32,14 @@ public void emptyStringDetection()
+         Assert.assertTrue(StringUtils.isEmpty(" "));
+         Assert.assertFalse(StringUtils.isEmpty(" a "));
+     }
++
++    @Test
++    public void testRemoveSpecialChars() {
++        Assert.assertNull(StringUtils.removeSpecialChars(null));
++        Assert.assertEquals("abc_def", StringUtils.removeSpecialChars("abc def"));
++        Assert.assertEquals("a_c_def", StringUtils.removeSpecialChars("a_c def")); // not replace _
++        Assert.assertEquals("a-c_dex", StringUtils.removeSpecialChars("a-c dex")); // not replace -
++        Assert.assertEquals("a_c_def", StringUtils.removeSpecialChars("a\'c def"));
++        Assert.assertEquals("A_c_deX", StringUtils.removeSpecialChars("A#c deX"));
++    }
+ }
+\ No newline at end of file
+diff --git a/deltaspike/modules/jsf/impl/src/main/java/org/apache/deltaspike/jsf/impl/scope/window/strategy/AbstractClientWindowStrategy.java b/deltaspike/modules/jsf/impl/src/main/java/org/apache/deltaspike/jsf/impl/scope/window/strategy/AbstractClientWindowStrategy.java
+index dc621c1dc..a86495f5a 100644
+--- a/deltaspike/modules/jsf/impl/src/main/java/org/apache/deltaspike/jsf/impl/scope/window/strategy/AbstractClientWindowStrategy.java
++++ b/deltaspike/modules/jsf/impl/src/main/java/org/apache/deltaspike/jsf/impl/scope/window/strategy/AbstractClientWindowStrategy.java
+@@ -25,6 +25,8 @@
+ import javax.faces.context.FacesContext;
+ import javax.inject.Inject;
+ import javax.servlet.http.HttpServletRequest;
++
++import org.apache.deltaspike.core.util.StringUtils;
+ import org.apache.deltaspike.jsf.api.config.JsfModuleConfig;
+ import org.apache.deltaspike.jsf.impl.util.ClientWindowHelper;
+ import org.apache.deltaspike.jsf.spi.scope.window.ClientWindow;
+@@ -103,7 +105,7 @@ public String getWindowId(FacesContext facesContext)
+      */
+     protected String sanitiseWindowId(String windowId)
+     {
+-        return windowId.replace('(', '_').replace('<', '_').replace('&', '_');
++        return StringUtils.removeSpecialChars(windowId);
+     }
+ 
+     protected abstract String getOrCreateWindowId(FacesContext facesContext);

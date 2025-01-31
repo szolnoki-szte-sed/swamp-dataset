@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:-:*:*:*:*:x86:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/f8bd2258e2d520dff28c855658bd24bdafb5102d",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "include/linux/jiffies.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-3209"
+        ],
+        "CWE": [
+            "CWE-189"
+        ]
+    }
+}

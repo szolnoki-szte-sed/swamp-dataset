@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:inverse:sogo:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/inverse-inc/sogo/commit/1a7fc2a0e90a19dfb1fce292ae5ff53aa513ade9",
+        "version_end_excluding": {
+            "inverse:sogo": "unknown"
+        },
+        "path": {
+            "file_path": "UI/WebServerResources/SchedulerUI.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-9905"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

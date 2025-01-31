@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:miniupnp_project:miniupnpd:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/miniupnp/miniupnp/commit/86030db849260dd8fb2ed975b9890aef1b62b692",
+        "version_end_excluding": {
+            "miniupnp_project:miniupnpd": "unknown"
+        },
+        "path": {
+            "file_path": "miniupnpd/upnpsoap.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-12108"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

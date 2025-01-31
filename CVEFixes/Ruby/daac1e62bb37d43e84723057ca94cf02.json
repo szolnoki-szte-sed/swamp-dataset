@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gibbon_project:gibbon:*:*:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/amro/gibbon/commit/cade20ca2438cd1b182dad70cbb77fb895779d10",
+        "version_end_excluding": {
+            "gibbon_project:gibbon": "3.4.4"
+        },
+        "path": {
+            "file_path": "lib/gibbon/version.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-27311"
+        ],
+        "CWE": [
+            "CWE-918"
+        ]
+    }
+}

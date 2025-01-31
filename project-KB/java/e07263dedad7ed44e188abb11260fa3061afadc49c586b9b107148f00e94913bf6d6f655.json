@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:syncope:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/syncope/commit/e07263dedad7ed44e188abb11260fa3061afadc4",
+        "version_end_excluding": {
+            "apache:syncope": "2.0.15"
+        },
+        "path": {
+            "file_path": "core/provisioning-java/src/main/java/org/apache/syncope/core/provisioning/java/jexl/SandboxUberspect.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1961"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

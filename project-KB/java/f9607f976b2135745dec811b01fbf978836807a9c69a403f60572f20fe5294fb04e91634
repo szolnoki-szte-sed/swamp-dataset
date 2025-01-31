@@ -1,0 +1,14 @@
+diff --git a/tika-parsers/src/main/java/org/apache/tika/parser/image/ICNSParser.java b/tika-parsers/src/main/java/org/apache/tika/parser/image/ICNSParser.java
+index f13d46d2ba..47d89ab6ba 100644
+--- a/tika-parsers/src/main/java/org/apache/tika/parser/image/ICNSParser.java
++++ b/tika-parsers/src/main/java/org/apache/tika/parser/image/ICNSParser.java
+@@ -92,6 +92,9 @@ public void parse(
+             tempByteArray[2] = full_file[offset + 6];
+             tempByteArray[3] = full_file[offset + 7];
+             int icon_length = java.nio.ByteBuffer.wrap(tempByteArray).getInt();
++            if (icon_length <= 0) {
++                break;
++            }
+             offset = offset + icon_length;
+         }
+         String icon_details = "", iconmask_details = "", bitsPerPixel,dimensions;

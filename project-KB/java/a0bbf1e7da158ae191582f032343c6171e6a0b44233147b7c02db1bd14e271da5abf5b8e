@@ -1,0 +1,50 @@
+diff --git a/org.eclipse.paho.client.mqttv3/src/main/java/org/eclipse/paho/client/mqttv3/internal/SSLNetworkModule.java b/org.eclipse.paho.client.mqttv3/src/main/java/org/eclipse/paho/client/mqttv3/internal/SSLNetworkModule.java
+index 0f51f4631..e93ab7549 100644
+--- a/org.eclipse.paho.client.mqttv3/src/main/java/org/eclipse/paho/client/mqttv3/internal/SSLNetworkModule.java
++++ b/org.eclipse.paho.client.mqttv3/src/main/java/org/eclipse/paho/client/mqttv3/internal/SSLNetworkModule.java
+@@ -19,6 +19,7 @@
+ 
+ import javax.net.ssl.HostnameVerifier;
+ import javax.net.ssl.SSLParameters;
++import javax.net.ssl.SSLPeerUnverifiedException;
+ import javax.net.ssl.SSLSession;
+ import javax.net.ssl.SSLSocket;
+ import javax.net.ssl.SSLSocketFactory;
+@@ -137,7 +138,11 @@ public void start() throws IOException, MqttException {
+ 		((SSLSocket) socket).startHandshake();
+ 		if (hostnameVerifier != null && !this.httpsHostnameVerificationEnabled) {
+ 			SSLSession session = ((SSLSocket) socket).getSession();
+-			hostnameVerifier.verify(host, session);
++			if(!hostnameVerifier.verify(host, session)) {
++				session.invalidate();
++				socket.close();
++				throw new SSLPeerUnverifiedException("Host: " + host + ", Peer Host: " + session.getPeerHost());
++			}
+ 		}
+ 		// reset timeout to default value
+ 		socket.setSoTimeout(soTimeout);
+diff --git a/org.eclipse.paho.mqttv5.client/src/main/java/org/eclipse/paho/mqttv5/client/internal/SSLNetworkModule.java b/org.eclipse.paho.mqttv5.client/src/main/java/org/eclipse/paho/mqttv5/client/internal/SSLNetworkModule.java
+index b02f3251e..e99c3c658 100644
+--- a/org.eclipse.paho.mqttv5.client/src/main/java/org/eclipse/paho/mqttv5/client/internal/SSLNetworkModule.java
++++ b/org.eclipse.paho.mqttv5.client/src/main/java/org/eclipse/paho/mqttv5/client/internal/SSLNetworkModule.java
+@@ -19,6 +19,7 @@
+ 
+ import javax.net.ssl.HostnameVerifier;
+ import javax.net.ssl.SSLParameters;
++import javax.net.ssl.SSLPeerUnverifiedException;
+ import javax.net.ssl.SSLSession;
+ import javax.net.ssl.SSLSocket;
+ import javax.net.ssl.SSLSocketFactory;
+@@ -135,7 +136,11 @@ public void start() throws IOException, MqttException {
+ 		((SSLSocket) socket).startHandshake();
+ 		if (hostnameVerifier != null) {
+ 			SSLSession session = ((SSLSocket) socket).getSession();
+-			hostnameVerifier.verify(host, session);
++			if(!hostnameVerifier.verify(host, session)) {
++				session.invalidate();
++				socket.close();
++				throw new SSLPeerUnverifiedException("Host: " + host + ", Peer Host: " + session.getPeerHost());
++			}
+ 		}
+ 		// reset timeout to default value
+ 		socket.setSoTimeout(soTimeout);

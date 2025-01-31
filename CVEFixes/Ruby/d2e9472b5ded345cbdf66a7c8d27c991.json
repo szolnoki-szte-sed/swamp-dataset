@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:madeofcode:omniauth-facebook:1.4.1:*:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/mkdynamic/omniauth-facebook/commit/ccfcc26fe7e34acbd75ad4a095fd01ce5ff48ee7",
+        "version_end_excluding": {
+            "madeofcode:omniauth-facebook": "unknown"
+        },
+        "path": {
+            "file_path": "lib/omniauth/facebook/version.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-4562"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

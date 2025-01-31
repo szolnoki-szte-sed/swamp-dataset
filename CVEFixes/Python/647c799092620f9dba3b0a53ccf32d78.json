@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:inventree_project:inventree:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/inventree/inventree/commit/63b4ff3eb6e80861962fafe79c9b483cd7239d6c",
+        "version_end_excluding": {
+            "inventree_project:inventree": "0.8.0"
+        },
+        "path": {
+            "file_path": "requirements.txt"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2134"
+        ],
+        "CWE": [
+            "CWE-400"
+        ]
+    }
+}

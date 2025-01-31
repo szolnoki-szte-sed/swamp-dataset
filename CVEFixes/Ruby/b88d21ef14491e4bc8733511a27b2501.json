@@ -1,0 +1,42 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:spreecommerce:spree:1.2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.2.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.1.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.1.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.1.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:1.2.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spree/spree_auth_devise/commit/038d74771d3b5c13d13b738b73dfda1033a99f65",
+        "version_end_excluding": {
+            "spreecommerce:spree": "unknown"
+        },
+        "path": {
+            "file_path": "app/models/spree/user.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-2506"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

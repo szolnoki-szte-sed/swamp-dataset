@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:tipsandtricks-hq:wp_security_\\&_firewall:*:*:*:*:*:wordpress:*:*"
+        ],
+        "fix_commit": "https://github.com/Arsenal21/all-in-one-wordpress-security/commit/4130906bc049b195467b4fc6980d6d304fbe28d5",
+        "version_end_excluding": {
+            "tipsandtricks-hq:wp_security_\\&_firewall": "4.4.6"
+        },
+        "path": {
+            "file_path": "all-in-one-wp-security/wp-security-core.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-29171"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

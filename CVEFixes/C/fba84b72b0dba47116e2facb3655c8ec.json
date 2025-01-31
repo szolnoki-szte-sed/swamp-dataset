@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:oracle:solaris:11.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:imagemagick:imagemagick:7.0.1-4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:imagemagick:imagemagick:7.0.1-1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:imagemagick:imagemagick:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:imagemagick:imagemagick:7.0.1-3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:imagemagick:imagemagick:7.0.1-2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:imagemagick:imagemagick:7.0.1-0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ImageMagick/ImageMagick/commit/aecd0ada163a4d6c769cec178955d5f3e9316f2f",
+        "version_end_excluding": {
+            "oracle:solaris": "unknown",
+            "imagemagick:imagemagick": "unknown"
+        },
+        "path": {
+            "file_path": "coders/wpg.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-5688"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

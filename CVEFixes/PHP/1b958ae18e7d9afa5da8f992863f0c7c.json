@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mantisbt:mantisbt:1.3.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:mantisbt:mantisbt:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mantisbt/mantisbt/commit/e7e2b5503580e42db9d91e0d599d61d3ff03c27e",
+        "version_end_excluding": {
+            "mantisbt:mantisbt": "unknown"
+        },
+        "path": {
+            "file_path": "core/string_api.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-9701"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

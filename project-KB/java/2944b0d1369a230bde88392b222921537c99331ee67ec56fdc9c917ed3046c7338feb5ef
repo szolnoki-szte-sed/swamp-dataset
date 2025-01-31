@@ -1,0 +1,40 @@
+diff --git a/commons/src/main/java/org/infinispan/commons/marshall/jboss/AbstractJBossMarshaller.java b/commons/src/main/java/org/infinispan/commons/marshall/jboss/AbstractJBossMarshaller.java
+index 75f4959c5216..f94035bba9e9 100644
+--- a/commons/src/main/java/org/infinispan/commons/marshall/jboss/AbstractJBossMarshaller.java
++++ b/commons/src/main/java/org/infinispan/commons/marshall/jboss/AbstractJBossMarshaller.java
+@@ -37,7 +37,7 @@
+  */
+ public abstract class AbstractJBossMarshaller extends AbstractMarshaller implements StreamingMarshaller {
+ 
+-   private static final Log log = LogFactory.getLog(AbstractJBossMarshaller.class);
++   protected static final Log log = LogFactory.getLog(AbstractJBossMarshaller.class);
+    private static final boolean trace = log.isTraceEnabled();
+    protected static final JBossMarshallerFactory factory = new JBossMarshallerFactory();
+    protected static final int DEF_INSTANCE_COUNT = 16;
+diff --git a/documentation/src/main/asciidoc/user_guide/server_protocols_hotrod.adoc b/documentation/src/main/asciidoc/user_guide/server_protocols_hotrod.adoc
+index 63d25f23794a..b36d494b1de0 100644
+--- a/documentation/src/main/asciidoc/user_guide/server_protocols_hotrod.adoc
++++ b/documentation/src/main/asciidoc/user_guide/server_protocols_hotrod.adoc
+@@ -970,6 +970,9 @@ The number of connections per server, total number of connections, how long shou
+ ==== Marshalling data
+ The Hot Rod client allows one to plug in a custom marshaller for transforming user objects into byte arrays and the other way around. This transformation is needed because of Hot Rod's binary nature - it doesn't know about objects.
+ 
++.WARNING: If developing your own custom marshaller, take care of potential injection attacks.
++To avoid such attacks, make the marshaller verify that any class names read, before instantiating it, is amongst the expected/allowed class names.
++
+ The marshaller can be plugged through the "marshaller" configuration element (see Configuration section): the value should be the fully qualified name of a class implementing the link:{javadocroot}/org/infinispan/marshall/Marshaller.html[Marshaller] interface. This is a optional parameter, if not specified it defaults to the link:{javadocroot}/org/infinispan/marshall/jboss/GenericJBossMarshaller.html[GenericJBossMarshaller] - a highly optimized implementation based on the link:http://www.jboss.org/jbossmarshalling[JBoss Marshalling] library.
+ 
+ Since version 6.0, there's a new marshaller available to Java Hot Rod clients based on Protostream which generates portable payloads. You can find more information about it <<_querying_via_the_java_hot_rod_client,here>>
+diff --git a/integrationtests/compatibility-mode-it/src/test/java/org/infinispan/it/compatibility/CompatibilityCacheFactory.java b/integrationtests/compatibility-mode-it/src/test/java/org/infinispan/it/compatibility/CompatibilityCacheFactory.java
+index 19b7efbe3373..b908c593b918 100644
+--- a/integrationtests/compatibility-mode-it/src/test/java/org/infinispan/it/compatibility/CompatibilityCacheFactory.java
++++ b/integrationtests/compatibility-mode-it/src/test/java/org/infinispan/it/compatibility/CompatibilityCacheFactory.java
+@@ -167,7 +167,7 @@ private void createHotRodCache(HotRodServer server) {
+       hotrod = server;
+       hotrodClient = new RemoteCacheManager(new ConfigurationBuilder()
+             .addServers("localhost:" + hotrod.getPort())
+-            .addJavaSerialWhiteList(".*Person.*")
++            .addJavaSerialWhiteList(".*Person.*", ".*CustomEvent.*")
+             .marshaller(marshaller)
+             .build());
+       hotrodCache = cacheName.isEmpty()

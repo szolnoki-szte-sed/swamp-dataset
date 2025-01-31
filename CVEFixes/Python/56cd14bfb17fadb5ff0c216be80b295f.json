@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:django-nopassword_project:django-nopassword:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/relekang/django-nopassword/commit/d8b4615f5fbfe3997d96cf4cb3e342406396193c",
+        "version_end_excluding": {
+            "django-nopassword_project:django-nopassword": "5.0.0"
+        },
+        "path": {
+            "file_path": "nopassword/rest/views.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10682"
+        ],
+        "CWE": [
+            "CWE-312"
+        ]
+    }
+}

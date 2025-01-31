@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cockpit-project:cockpit:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cockpit-project/cockpit/commit/8d9bc10d8128aae03dfde62fd00075fe492ead10",
+        "version_end_excluding": {
+            "cockpit-project:cockpit": "254",
+            "redhat:enterprise_linux": "unknown"
+        },
+        "path": {
+            "file_path": "src/bridge/test-httpstream.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v2.1"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3660"
+        ],
+        "CWE": [
+            "CWE-1021"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:commons_imaging:0.97:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/commons-imaging/commit/6a79d35d6654d895d0a4b73b3a9282ec9aaeeb06",
+        "version_end_excluding": {
+            "apache:commons_imaging": "unknown"
+        },
+        "path": {
+            "file_path": "src/main/java/org/apache/commons/imaging/formats/jpeg/decoder/JpegDecoder.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-17202"
+        ],
+        "CWE": [
+            "CWE-835"
+        ]
+    }
+}

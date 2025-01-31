@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phpservermonitor:php_server_monitor:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/phpservermon/phpservermon/commit/162bba0046fcda1580f4fbc7b9ababe3c7c13ce4",
+        "version_end_excluding": {
+            "phpservermonitor:php_server_monitor": "3.6.0"
+        },
+        "path": {
+            "file_path": "puphpet/puppet/modules/apache/spec/fixtures/files/spec"
+        }
+    },
+    "programming_language": "unknown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-4097"
+        ],
+        "CWE": [
+            "CWE-93"
+        ]
+    }
+}

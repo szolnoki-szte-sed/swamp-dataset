@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:geon_project:geon:1.0.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/math-geon/Geon/commit/005456d752d5434b60026edbc83b2665b8557d19",
+        "version_end_excluding": {
+            "geon_project:geon": "unknown"
+        },
+        "path": {
+            "file_path": "frontend/staGeon/styles.css"
+        }
+    },
+    "programming_language": "css",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24781"
+        ],
+        "CWE": [
+            "CWE-384"
+        ]
+    }
+}

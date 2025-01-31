@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal_software:spring_security:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-security/commit/69b1bc62ffe7c1e1bbf508951efa1e0235954198",
+        "version_end_excluding": {
+            "pivotal_software:spring_security": "5.2.4"
+        },
+        "path": {
+            "file_path": "saml2/saml2-service-provider/src/main/java/org/springframework/security/saml2/provider/service/authentication/OpenSamlAuthenticationProvider.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-5407"
+        ],
+        "CWE": [
+            "CWE-347"
+        ]
+    }
+}

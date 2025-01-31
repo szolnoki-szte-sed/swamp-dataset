@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:cxf_fediz:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf_fediz:1.2.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/cxf-fediz/commit/90c898335786211d253c0503453e2f8b93e0d3fe",
+        "version_end_excluding": {
+            "apache:cxf_fediz": "unknown"
+        },
+        "path": {
+            "file_path": "plugins/core/src/main/java/org/apache/cxf/fediz/core/util/DOMUtils.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5175"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:opensc_project:opensc:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/OpenSC/OpenSC/commit/360e95d45ac4123255a4c796db96337f332160ad",
+        "version_end_excluding": {
+            "opensc_project:opensc": "unknown"
+        },
+        "path": {
+            "file_path": "src/libopensc/card-cac.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v2.1"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-16391"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

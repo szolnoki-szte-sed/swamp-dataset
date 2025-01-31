@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:smartbear:readyapi:2.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:smartbear:readyapi:2.6.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/SmartBear/soapui/commit/a4755e6b10c813c6efbe3b8e8a81a61027a8595a",
+        "version_end_excluding": {
+            "smartbear:readyapi": "unknown"
+        },
+        "path": {
+            "file_path": "soapui/src/main/java/com/eviware/soapui/support/DefinitionPropertyExpansionsDialog.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20580"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

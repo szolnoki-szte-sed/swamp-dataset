@@ -1,0 +1,55 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:nuxeo:nuxeo:5.8.0:-:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:-:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix01:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix02:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix03:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix04:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix05:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix06:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix07:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix08:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix09:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix10:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix11:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix12:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix13:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix14:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix15:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix16:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix17:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix18:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix19:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix20:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix21:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix22:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix23:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix24:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix25:*:*:*:*:*:*",
+            "cpe:2.3:a:nuxeo:nuxeo:5.6.0:hotfix26:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/nuxeo/richfaces/commit/6cbad2a6dcb70d3e33a6ce5879b1a3ad79eb1aec",
+        "version_end_excluding": {
+            "nuxeo:nuxeo": "unknown"
+        },
+        "path": {
+            "file_path": "framework/impl/src/main/java/org/ajax4jsf/resource/UserResource.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-4521"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

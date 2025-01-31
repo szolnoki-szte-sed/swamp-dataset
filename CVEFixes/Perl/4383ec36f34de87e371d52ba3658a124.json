@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:module-signature_project:module-signature:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:12.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:15.04:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/audreyt/module-signature/commit/8a9164596fa5952d4fbcde5aa1c7d1c7bc85372f",
+        "version_end_excluding": {
+            "module-signature_project:module-signature": "0.74",
+            "canonical:ubuntu_linux": "unknown"
+        },
+        "path": {
+            "file_path": "README"
+        }
+    },
+    "programming_language": "perl",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-3406"
+        ],
+        "CWE": [
+            "CWE-681"
+        ]
+    }
+}

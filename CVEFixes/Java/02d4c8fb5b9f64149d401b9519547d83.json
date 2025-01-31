@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:venice_project:venice:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jlangch/venice/commit/c942c73136333bc493050910f171a48e6f575b23",
+        "version_end_excluding": {
+            "venice_project:venice": "1.10.17"
+        },
+        "path": {
+            "file_path": "src/main/java/com/github/jlangch/venice/impl/util/io/LoadPaths.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-36007"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

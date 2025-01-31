@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:exponentcms:exponent_cms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/exponentcms/exponent-cms/commit/fffb2038de4c603931b785a4c3ec69cfd06181ba",
+        "version_end_excluding": {
+            "exponentcms:exponent_cms": "unknown"
+        },
+        "path": {
+            "file_path": "framework/core/controllers/expController.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-9272"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

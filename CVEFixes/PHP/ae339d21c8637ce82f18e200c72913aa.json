@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:4.6.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:opensuse:13.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/phpmyadmin/phpmyadmin/commit/d2dc9481d2af25b035778c67eaf0bfd2d2c59dd8",
+        "version_end_excluding": {
+            "phpmyadmin:phpmyadmin": "unknown",
+            "opensuse:opensuse": "unknown"
+        },
+        "path": {
+            "file_path": "libraries/error_report.lib.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-5098"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

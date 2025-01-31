@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal:reactor_netty:0.9.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal:reactor_netty:0.9.4:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/reactor/reactor-netty/commit/dfb71cf9f20d46754c7166690d4ca7de4ef3ad8e",
+        "version_end_excluding": {
+            "pivotal:reactor_netty": "unknown"
+        },
+        "path": {
+            "file_path": "src/main/java/reactor/netty/http/HttpOperations.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-5403"
+        ],
+        "CWE": [
+            "CWE-755",
+            "CWE-20"
+        ]
+    }
+}

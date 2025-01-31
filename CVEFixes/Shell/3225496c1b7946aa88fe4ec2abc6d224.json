@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fail2ban:fail2ban:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fail2ban:fail2ban:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:fail2ban:fail2ban:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:35:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/fail2ban/fail2ban/commit/410a6ce5c80dd981c22752da034f2529b5eee844",
+        "version_end_excluding": {
+            "fail2ban:fail2ban": "unknown",
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "config/action.d/complain.conf"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32749"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

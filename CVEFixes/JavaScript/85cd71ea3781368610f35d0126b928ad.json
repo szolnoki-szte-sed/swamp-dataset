@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:opensuse:leap:42.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:roundcube:webmail:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/roundcube/roundcubemail/commit/4a408843b0ef816daf70a472a02b78cd6073a4d5",
+        "version_end_excluding": {
+            "opensuse:leap": "unknown",
+            "roundcube:webmail": "unknown"
+        },
+        "path": {
+            "file_path": "plugins/enigma/enigma.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-4069"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

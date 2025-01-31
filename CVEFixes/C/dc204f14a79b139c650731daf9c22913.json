@@ -1,0 +1,39 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:canonical:ubuntu_linux:12.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:oracle:linux:5:-:*:*:*:*:*:*",
+            "cpe:2.3:o:oracle:linux:6:-:*:*:*:*:*:*",
+            "cpe:2.3:o:oracle:linux:7:-:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/5d26a105b5a73e5635eae0629b42fa0a90e07b7b",
+        "version_end_excluding": {
+            "canonical:ubuntu_linux": "unknown",
+            "debian:debian_linux": "unknown",
+            "linux:linux_kernel": "3.18.5",
+            "oracle:linux": "unknown"
+        },
+        "path": {
+            "file_path": "arch/arm/crypto/sha1_glue.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-7421"
+        ],
+        "CWE": [
+            "CWE-269"
+        ]
+    }
+}

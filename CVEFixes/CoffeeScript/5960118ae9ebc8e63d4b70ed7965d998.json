@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ajenti:ajenti:1.2.13:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Eugeny/ajenti/commit/3270fd1d78391bb847b4c9ce37cf921f485b1310",
+        "version_end_excluding": {
+            "ajenti:ajenti": "unknown"
+        },
+        "path": {
+            "file_path": "ajenti/plugins/main/content/js/controls.inputs.coffee"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-2260"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

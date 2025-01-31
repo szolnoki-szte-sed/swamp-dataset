@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:misp-project:malware_information_sharing_platform:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/MISP/MISP/commit/812ac878c3645c02e2a599287117418424cbd4cf",
+        "version_end_excluding": {
+            "misp-project:malware_information_sharing_platform": "unknown"
+        },
+        "path": {
+            "file_path": "app/View/Templates/add.ctp"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5720"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

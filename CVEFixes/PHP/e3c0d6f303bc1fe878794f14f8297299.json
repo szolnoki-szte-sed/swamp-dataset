@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:freepbx:manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:freepbx:manager:13.0.1:alpha1:*:*:*:*:*:*",
+            "cpe:2.3:a:freepbx:manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:sangoma:freepbx:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FreePBX/manager/commit/071a50983ca6a373bb2d1d3db68e9eda4667a372",
+        "version_end_excluding": {
+            "freepbx:manager": "13.0.2.6",
+            "sangoma:freepbx": "14.0.10.3"
+        },
+        "path": {
+            "file_path": "Manager.class.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-16967"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

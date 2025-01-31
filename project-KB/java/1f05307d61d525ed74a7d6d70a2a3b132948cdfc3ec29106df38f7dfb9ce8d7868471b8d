@@ -1,0 +1,2913 @@
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/client/support/destination/Wsdl11DestinationProvider.java b/spring-ws-core/src/main/java/org/springframework/ws/client/support/destination/Wsdl11DestinationProvider.java
+index dda294a0a..86632be6b 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/client/support/destination/Wsdl11DestinationProvider.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/client/support/destination/Wsdl11DestinationProvider.java
+@@ -32,6 +32,7 @@
+ import org.springframework.ws.client.WebServiceIOException;
+ import org.springframework.ws.client.WebServiceTransformerException;
+ import org.springframework.xml.transform.ResourceSource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ import org.springframework.xml.xpath.XPathExpression;
+ import org.springframework.xml.xpath.XPathExpressionFactory;
+ 
+@@ -52,7 +53,7 @@ public class Wsdl11DestinationProvider extends AbstractCachingDestinationProvide
+ 	public static final String DEFAULT_WSDL_LOCATION_EXPRESSION =
+ 			"/wsdl:definitions/wsdl:service/wsdl:port/soap:address/@location";
+ 
+-	private static TransformerFactory transformerFactory = TransformerFactory.newInstance();
++	private static TransformerFactory transformerFactory = TransformerFactoryUtils.newInstance();
+ 
+ 	private Map<String, String> expressionNamespaces = new HashMap<String, String>();
+ 
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/pox/dom/DomPoxMessageFactory.java b/spring-ws-core/src/main/java/org/springframework/ws/pox/dom/DomPoxMessageFactory.java
+index 5100d35ad..1d403fe1f 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/pox/dom/DomPoxMessageFactory.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/pox/dom/DomPoxMessageFactory.java
+@@ -29,6 +29,7 @@
+ import org.springframework.util.Assert;
+ import org.springframework.ws.WebServiceMessageFactory;
+ import org.springframework.xml.transform.TransformerObjectSupport;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ 
+ /**
+  * Implementation of the {@link WebServiceMessageFactory} interface that creates a {@link DomPoxMessage}.
+@@ -42,11 +43,25 @@ public class DomPoxMessageFactory extends TransformerObjectSupport implements We
+ 	/** The default content type for the POX messages. */
+ 	public static final String DEFAULT_CONTENT_TYPE = "application/xml";
+ 
+-	private DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++	private DocumentBuilderFactory documentBuilderFactory;
+ 
+ 	private String contentType = DEFAULT_CONTENT_TYPE;
+ 
++	/**
++	 * Use default {@link DocumentBuilderFactory}.
++	 */
+ 	public DomPoxMessageFactory() {
++		this(DocumentBuilderFactoryUtils.newInstance());
++	}
++
++	/**
++	 * Provide your own {@link DocumentBuilderFactory}.
++	 * 
++	 * @param documentBuilderFactory
++	 */
++	public DomPoxMessageFactory(DocumentBuilderFactory documentBuilderFactory) {
++		this.documentBuilderFactory = documentBuilderFactory;
++		
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		documentBuilderFactory.setValidating(false);
+ 		documentBuilderFactory.setExpandEntityReferences(false);
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/AbstractDomPayloadEndpoint.java b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/AbstractDomPayloadEndpoint.java
+index b508b3494..aa73f4d3b 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/AbstractDomPayloadEndpoint.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/AbstractDomPayloadEndpoint.java
+@@ -29,6 +29,7 @@
+ import org.w3c.dom.Node;
+ 
+ import org.springframework.xml.transform.TransformerObjectSupport;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ 
+ /**
+  * Abstract base class for endpoints that handle the message payload as DOM elements.
+@@ -120,7 +121,7 @@ protected DocumentBuilder createDocumentBuilder(DocumentBuilderFactory factory)
+ 	 * @throws ParserConfigurationException if thrown by JAXP methods
+ 	 */
+ 	protected DocumentBuilderFactory createDocumentBuilderFactory() throws ParserConfigurationException {
+-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory factory = DocumentBuilderFactoryUtils.newInstance();
+ 		factory.setValidating(validating);
+ 		factory.setNamespaceAware(namespaceAware);
+ 		factory.setExpandEntityReferences(expandEntityReferences);
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/AbstractStaxPayloadEndpoint.java b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/AbstractStaxPayloadEndpoint.java
+index 685b0c879..a7f88b392 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/AbstractStaxPayloadEndpoint.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/AbstractStaxPayloadEndpoint.java
+@@ -19,6 +19,7 @@
+ import javax.xml.stream.XMLInputFactory;
+ import javax.xml.stream.XMLOutputFactory;
+ 
++import org.springframework.xml.XMLInputFactoryUtils;
+ import org.springframework.xml.transform.TransformerObjectSupport;
+ 
+ /**
+@@ -63,7 +64,7 @@ protected final XMLOutputFactory getOutputFactory() {
+ 	 * @return the created {@code XMLInputFactory}
+ 	 */
+ 	protected XMLInputFactory createXmlInputFactory() {
+-		return XMLInputFactory.newInstance();
++		return XMLInputFactoryUtils.newInstance();
+ 	}
+ 
+ 	/**
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/adapter/method/SourcePayloadMethodProcessor.java b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/adapter/method/SourcePayloadMethodProcessor.java
+index b0ecbe9d9..01d5ba043 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/adapter/method/SourcePayloadMethodProcessor.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/adapter/method/SourcePayloadMethodProcessor.java
+@@ -29,13 +29,14 @@
+ import javax.xml.transform.stax.StAXSource;
+ import javax.xml.transform.stream.StreamSource;
+ 
+-import org.springframework.core.MethodParameter;
+-import org.springframework.xml.JaxpVersion;
+-
+ import org.w3c.dom.Document;
+ import org.w3c.dom.Node;
+ import org.xml.sax.InputSource;
+ 
++import org.springframework.core.MethodParameter;
++import org.springframework.xml.JaxpVersion;
++import org.springframework.xml.XMLInputFactoryUtils;
++
+ /**
+  * Implementation of {@link MethodArgumentResolver} and {@link MethodReturnValueHandler} that supports {@link Source}
+  * objects.
+@@ -125,7 +126,7 @@ private boolean supports(MethodParameter parameter) {
+ 	 * @return the created factory
+ 	 */
+ 	protected XMLInputFactory createXmlInputFactory() {
+-		return XMLInputFactory.newInstance();
++		return XMLInputFactoryUtils.newInstance();
+ 	}
+ 
+ 	/** Inner class to avoid a static JAXP 1.4 dependency. */
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/adapter/method/StaxPayloadMethodArgumentResolver.java b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/adapter/method/StaxPayloadMethodArgumentResolver.java
+index cdd370fa0..176c9c9d9 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/adapter/method/StaxPayloadMethodArgumentResolver.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/adapter/method/StaxPayloadMethodArgumentResolver.java
+@@ -30,6 +30,7 @@
+ import org.springframework.util.xml.StaxUtils;
+ import org.springframework.ws.context.MessageContext;
+ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
++import org.springframework.xml.XMLInputFactoryUtils;
+ import org.springframework.xml.transform.TransformerObjectSupport;
+ 
+ /**
+@@ -152,7 +153,7 @@ private XMLEventReader resolveEventReader(Source requestSource) throws Transform
+ 	 * @return the created factory
+ 	 */
+ 	protected XMLInputFactory createXmlInputFactory() {
+-		return XMLInputFactory.newInstance();
++		return XMLInputFactoryUtils.newInstance();
+ 	}
+ 
+ 	private ByteArrayInputStream convertToByteArrayInputStream(Source source) throws TransformerException {
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/adapter/method/dom/XomPayloadMethodProcessor.java b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/adapter/method/dom/XomPayloadMethodProcessor.java
+index cb94ca898..cfe92f3e9 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/adapter/method/dom/XomPayloadMethodProcessor.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/adapter/method/dom/XomPayloadMethodProcessor.java
+@@ -25,9 +25,6 @@
+ import javax.xml.transform.TransformerException;
+ import javax.xml.transform.dom.DOMSource;
+ 
+-import org.springframework.core.MethodParameter;
+-import org.springframework.ws.server.endpoint.adapter.method.AbstractPayloadSourceMethodProcessor;
+-
+ import nu.xom.Builder;
+ import nu.xom.Document;
+ import nu.xom.Element;
+@@ -35,6 +32,10 @@
+ import nu.xom.converters.DOMConverter;
+ import org.w3c.dom.DOMImplementation;
+ 
++import org.springframework.core.MethodParameter;
++import org.springframework.ws.server.endpoint.adapter.method.AbstractPayloadSourceMethodProcessor;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
+ /**
+  * Implementation of {@link org.springframework.ws.server.endpoint.adapter.method.MethodArgumentResolver
+  * MethodArgumentResolver} and {@link org.springframework.ws.server.endpoint.adapter.method.MethodReturnValueHandler
+@@ -104,7 +105,7 @@ private boolean supports(MethodParameter parameter) {
+ 	 * @return the created factory
+ 	 */
+ 	protected DocumentBuilderFactory createDocumentBuilderFactory() {
+-		return DocumentBuilderFactory.newInstance();
++		return DocumentBuilderFactoryUtils.newInstance();
+ 	}
+ 
+ }
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/PayloadRootAnnotationMethodEndpointMapping.java b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/PayloadRootAnnotationMethodEndpointMapping.java
+index 6d4ea86f4..61505084d 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/PayloadRootAnnotationMethodEndpointMapping.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/PayloadRootAnnotationMethodEndpointMapping.java
+@@ -29,6 +29,7 @@
+ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+ import org.springframework.ws.server.endpoint.annotation.PayloadRoots;
+ import org.springframework.ws.server.endpoint.support.PayloadRootUtils;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ 
+ /**
+  * Implementation of the {@link EndpointMapping} interface that uses the {@link PayloadRoot} annotation to map methods
+@@ -54,7 +55,16 @@ public class PayloadRootAnnotationMethodEndpointMapping extends AbstractAnnotati
+ 	private static TransformerFactory transformerFactory;
+ 
+ 	static {
+-		transformerFactory = TransformerFactory.newInstance();
++		setTransformerFactory(TransformerFactoryUtils.newInstance());
++	}
++
++	/**
++	 * Override the default {@link TransformerFactory}.
++	 * 
++	 * @param transformerFactory
++	 */
++	public static void setTransformerFactory(TransformerFactory transformerFactory) {
++		PayloadRootAnnotationMethodEndpointMapping.transformerFactory = transformerFactory;
+ 	}
+ 
+ 	@Override
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/PayloadRootQNameEndpointMapping.java b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/PayloadRootQNameEndpointMapping.java
+index 8fa36dad4..aa1c211bd 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/PayloadRootQNameEndpointMapping.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/PayloadRootQNameEndpointMapping.java
+@@ -22,6 +22,7 @@
+ 
+ import org.springframework.ws.context.MessageContext;
+ import org.springframework.ws.server.endpoint.support.PayloadRootUtils;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ 
+ /**
+  * Implementation of the {@code EndpointMapping} interface to map from the qualified name of the request payload
+@@ -49,12 +50,20 @@ public class PayloadRootQNameEndpointMapping extends AbstractQNameEndpointMappin
+ 	private static TransformerFactory transformerFactory;
+ 
+ 	static {
+-		transformerFactory = TransformerFactory.newInstance();
++		setTransformerFactory(TransformerFactoryUtils.newInstance());
+ 	}
+ 
++	/**
++	 * Override the default {@link TransformerFactory}.
++	 *
++	 * @param transformerFactory
++	 */
++	public static void setTransformerFactory(TransformerFactory transformerFactory) {
++		PayloadRootQNameEndpointMapping.transformerFactory = transformerFactory;
++	}
++	
+ 	@Override
+ 	protected QName resolveQName(MessageContext messageContext) throws TransformerException {
+ 		return PayloadRootUtils.getPayloadRootQName(messageContext.getRequest().getPayloadSource(), transformerFactory);
+ 	}
+-
+ }
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/SimpleMethodEndpointMapping.java b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/SimpleMethodEndpointMapping.java
+index bcc0cd450..72eb6c3d8 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/SimpleMethodEndpointMapping.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/SimpleMethodEndpointMapping.java
+@@ -26,6 +26,7 @@
+ import org.springframework.ws.WebServiceMessage;
+ import org.springframework.ws.context.MessageContext;
+ import org.springframework.ws.server.endpoint.support.PayloadRootUtils;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ 
+ /**
+  * Simple subclass of {@link AbstractMethodEndpointMapping} that maps from the local name of the request payload to
+@@ -108,7 +109,7 @@ public void setMethodSuffix(String methodSuffix) {
+ 	@Override
+ 	public final void afterPropertiesSet() throws Exception {
+ 		Assert.notEmpty(getEndpoints(), "'endpoints' is required");
+-		transformerFactory = TransformerFactory.newInstance();
++		transformerFactory = TransformerFactoryUtils.newInstance();
+ 		for (int i = 0; i < getEndpoints().length; i++) {
+ 			registerMethods(getEndpoints()[i]);
+ 		}
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/XPathPayloadEndpointMapping.java b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/XPathPayloadEndpointMapping.java
+index efba2c087..058c23eb8 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/XPathPayloadEndpointMapping.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/server/endpoint/mapping/XPathPayloadEndpointMapping.java
+@@ -29,6 +29,7 @@
+ import org.springframework.util.StringUtils;
+ import org.springframework.ws.WebServiceMessage;
+ import org.springframework.ws.context.MessageContext;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ import org.springframework.xml.xpath.XPathExpression;
+ import org.springframework.xml.xpath.XPathExpressionFactory;
+ 
+@@ -86,7 +87,7 @@ public void afterPropertiesSet() throws Exception {
+ 		else {
+ 			expression = XPathExpressionFactory.createXPathExpression(expressionString, namespaces);
+ 		}
+-		transformerFactory = TransformerFactory.newInstance();
++		transformerFactory = TransformerFactoryUtils.newInstance();
+ 	}
+ 
+ 	@Override
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/soap/addressing/version/AbstractAddressingVersion.java b/spring-ws-core/src/main/java/org/springframework/ws/soap/addressing/version/AbstractAddressingVersion.java
+index 969895adc..a1a7dd3c6 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/soap/addressing/version/AbstractAddressingVersion.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/soap/addressing/version/AbstractAddressingVersion.java
+@@ -52,6 +52,7 @@
+ import org.springframework.xml.transform.TransformerObjectSupport;
+ import org.springframework.xml.xpath.XPathExpression;
+ import org.springframework.xml.xpath.XPathExpressionFactory;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ 
+ /**
+  * Abstract base class for {@link AddressingVersion} implementations. Uses {@link XPathExpression}s to retrieve
+@@ -62,7 +63,7 @@
+  */
+ public abstract class AbstractAddressingVersion extends TransformerObjectSupport implements AddressingVersion {
+ 
+-	private static DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++	private static DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 
+ 	private final XPathExpression toExpression;
+ 
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/soap/axiom/AxiomSoapMessageFactory.java b/spring-ws-core/src/main/java/org/springframework/ws/soap/axiom/AxiomSoapMessageFactory.java
+index 1911f17a5..bc0131fc2 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/soap/axiom/AxiomSoapMessageFactory.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/soap/axiom/AxiomSoapMessageFactory.java
+@@ -53,6 +53,7 @@
+ import org.springframework.ws.soap.support.SoapUtils;
+ import org.springframework.ws.transport.TransportConstants;
+ import org.springframework.ws.transport.TransportInputStream;
++import org.springframework.xml.XMLInputFactoryUtils;
+ 
+ /**
+  * Axiom-specific implementation of the {@link org.springframework.ws.WebServiceMessageFactory WebServiceMessageFactory}
+@@ -366,7 +367,7 @@ protected String getCharSetEncoding(String contentType) {
+ 	 * @return the created factory
+ 	 */
+ 	protected XMLInputFactory createXmlInputFactory() {
+-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++		XMLInputFactory inputFactory = XMLInputFactoryUtils.newInstance();
+ 		inputFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, replacingEntityReferences);
+ 		inputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, supportingExternalEntities);
+ 		return inputFactory;
+diff --git a/spring-ws-core/src/main/java/org/springframework/ws/soap/axiom/support/AxiomUtils.java b/spring-ws-core/src/main/java/org/springframework/ws/soap/axiom/support/AxiomUtils.java
+index f94dd94c6..528c1da4b 100644
+--- a/spring-ws-core/src/main/java/org/springframework/ws/soap/axiom/support/AxiomUtils.java
++++ b/spring-ws-core/src/main/java/org/springframework/ws/soap/axiom/support/AxiomUtils.java
+@@ -34,6 +34,7 @@
+ import org.w3c.dom.Element;
+ 
+ import org.springframework.util.StringUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ 
+ /**
+  * Collection of generic utility methods to work with Axiom. Includes conversion from {@code OMNamespace}s to
+@@ -119,7 +120,7 @@ public static Document toDocument(SOAPEnvelope envelope) {
+ 				envelope.serialize(bos);
+ 
+ 				ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+-				DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++				DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 				documentBuilderFactory.setNamespaceAware(true);
+ 				return documentBuilderFactory.newDocumentBuilder().parse(bis);
+ 			}
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/AbstractWebServiceMessageTestCase.java b/spring-ws-core/src/test/java/org/springframework/ws/AbstractWebServiceMessageTestCase.java
+index 593db134a..e46e7592f 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/AbstractWebServiceMessageTestCase.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/AbstractWebServiceMessageTestCase.java
+@@ -40,13 +40,6 @@
+ import javax.xml.transform.stream.StreamResult;
+ import javax.xml.transform.stream.StreamSource;
+ 
+-import org.springframework.core.io.ClassPathResource;
+-import org.springframework.core.io.Resource;
+-import org.springframework.util.FileCopyUtils;
+-import org.springframework.util.xml.StaxUtils;
+-import org.springframework.xml.sax.SaxUtils;
+-import org.springframework.xml.transform.StringResult;
+-
+ import org.custommonkey.xmlunit.XMLUnit;
+ import org.junit.Before;
+ import org.junit.Test;
+@@ -56,7 +49,17 @@
+ import org.xml.sax.helpers.DefaultHandler;
+ import org.xml.sax.helpers.XMLReaderFactory;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import org.springframework.core.io.ClassPathResource;
++import org.springframework.core.io.Resource;
++import org.springframework.util.FileCopyUtils;
++import org.springframework.util.xml.StaxUtils;
++import org.springframework.xml.XMLInputFactoryUtils;
++import org.springframework.xml.sax.SaxUtils;
++import org.springframework.xml.transform.StringResult;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ 
+ public abstract class AbstractWebServiceMessageTestCase {
+ 
+@@ -74,7 +77,7 @@ private String getExpectedString() throws IOException {
+ 
+ 	@Before
+ 	public final void setUp() throws Exception {
+-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
++		TransformerFactory transformerFactory = TransformerFactoryUtils.newInstance();
+ 		transformer = transformerFactory.newTransformer();
+ 		webServiceMessage = createWebServiceMessage();
+ 		payload = new ClassPathResource("payload.xml", AbstractWebServiceMessageTestCase.class);
+@@ -83,7 +86,7 @@ public final void setUp() throws Exception {
+ 
+ 	@Test
+ 	public void testDomPayload() throws Exception {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document payloadDocument = documentBuilder.parse(SaxUtils.createInputSource(payload));
+@@ -98,7 +101,7 @@ public void testDomPayload() throws Exception {
+ 
+ 	@Test
+ 	public void testEventReaderPayload() throws Exception {
+-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++		XMLInputFactory inputFactory = XMLInputFactoryUtils.newInstance();
+ 		XMLEventReader eventReader = inputFactory.createXMLEventReader(payload.getInputStream());
+ 		Source staxSource = StaxUtils.createCustomStaxSource(eventReader);
+ 		transformer.transform(staxSource, webServiceMessage.getPayloadResult());
+@@ -148,7 +151,7 @@ public void testStreamPayload() throws Exception {
+ 
+ 	@Test
+ 	public void testStreamReaderPayload() throws Exception {
+-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++		XMLInputFactory inputFactory = XMLInputFactoryUtils.newInstance();
+ 		XMLStreamReader streamReader = inputFactory.createXMLStreamReader(payload.getInputStream());
+ 		Source staxSource = StaxUtils.createCustomStaxSource(streamReader);
+ 		transformer.transform(staxSource, webServiceMessage.getPayloadResult());
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/MockWebServiceMessage.java b/spring-ws-core/src/test/java/org/springframework/ws/MockWebServiceMessage.java
+index 03cb9780a..00179634a 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/MockWebServiceMessage.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/MockWebServiceMessage.java
+@@ -37,6 +37,7 @@
+ import org.springframework.util.FileCopyUtils;
+ import org.springframework.xml.sax.SaxUtils;
+ import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ 
+ /**
+  * Mock implementation of the {@code WebServiceMessage} interface.
+@@ -58,7 +59,7 @@ public MockWebServiceMessage() {
+ 	}
+ 
+ 	public MockWebServiceMessage(Source source) throws TransformerException {
+-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
++		TransformerFactory transformerFactory = TransformerFactoryUtils.newInstance();
+ 		Transformer transformer = transformerFactory.newTransformer();
+ 		content = new StringBuilder();
+ 		transformer.transform(source, getPayloadResult());
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/client/core/AbstractSoap11WebServiceTemplateIntegrationTestCase.java b/spring-ws-core/src/test/java/org/springframework/ws/client/core/AbstractSoap11WebServiceTemplateIntegrationTestCase.java
+index 3296439e4..f68603846 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/client/core/AbstractSoap11WebServiceTemplateIntegrationTestCase.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/client/core/AbstractSoap11WebServiceTemplateIntegrationTestCase.java
+@@ -39,12 +39,9 @@
+ import javax.xml.transform.Transformer;
+ import javax.xml.transform.TransformerConfigurationException;
+ import javax.xml.transform.TransformerException;
+-import javax.xml.transform.TransformerFactory;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
+ import org.junit.AfterClass;
+ import org.junit.Assert;
+-import static org.junit.Assert.assertEquals;
+ import org.junit.Before;
+ import org.junit.BeforeClass;
+ import org.junit.Test;
+@@ -66,6 +63,10 @@
+ import org.springframework.ws.transport.support.FreePortScanner;
+ import org.springframework.xml.transform.StringResult;
+ import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
++import static org.junit.Assert.assertEquals;
+ 
+ public abstract class AbstractSoap11WebServiceTemplateIntegrationTestCase {
+ 
+@@ -130,7 +131,7 @@ public void sendSourceAndReceiveToResultNoResponse() {
+ 
+ 	@Test
+ 	public void marshalSendAndReceiveResponse() throws TransformerConfigurationException {
+-		final Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		final Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		final Object requestObject = new Object();
+ 		Marshaller marshaller = new Marshaller() {
+ 
+@@ -173,7 +174,7 @@ public boolean supports(Class<?> clazz) {
+ 
+ 	@Test
+ 	public void marshalSendAndReceiveNoResponse() throws TransformerConfigurationException {
+-		final Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		final Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		final Object requestObject = new Object();
+ 		Marshaller marshaller = new Marshaller() {
+ 
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/client/core/AbstractSoap12WebServiceTemplateIntegrationTestCase.java b/spring-ws-core/src/test/java/org/springframework/ws/client/core/AbstractSoap12WebServiceTemplateIntegrationTestCase.java
+index 1a30aed40..20065dbe0 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/client/core/AbstractSoap12WebServiceTemplateIntegrationTestCase.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/client/core/AbstractSoap12WebServiceTemplateIntegrationTestCase.java
+@@ -41,12 +41,9 @@
+ import javax.xml.transform.Transformer;
+ import javax.xml.transform.TransformerConfigurationException;
+ import javax.xml.transform.TransformerException;
+-import javax.xml.transform.TransformerFactory;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
+ import org.junit.AfterClass;
+ import org.junit.Assert;
+-import static org.junit.Assert.assertEquals;
+ import org.junit.Before;
+ import org.junit.BeforeClass;
+ import org.junit.Test;
+@@ -67,6 +64,10 @@
+ import org.springframework.ws.transport.support.FreePortScanner;
+ import org.springframework.xml.transform.StringResult;
+ import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
++import static org.junit.Assert.assertEquals;
+ 
+ public abstract class AbstractSoap12WebServiceTemplateIntegrationTestCase {
+ 
+@@ -141,7 +142,7 @@ public void sendSourceAndReceiveToResultNoResponse() {
+ 
+ 	@Test
+ 	public void marshalSendAndReceiveResponse() throws TransformerConfigurationException {
+-		final Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		final Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		final Object requestObject = new Object();
+ 		Marshaller marshaller = new Marshaller() {
+ 
+@@ -184,7 +185,7 @@ public boolean supports(Class<?> clazz) {
+ 
+ 	@Test
+ 	public void marshalSendAndReceiveNoResponse() throws TransformerConfigurationException {
+-		final Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		final Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		final Object requestObject = new Object();
+ 		Marshaller marshaller = new Marshaller() {
+ 
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/client/core/DomPoxWebServiceTemplateIntegrationTest.java b/spring-ws-core/src/test/java/org/springframework/ws/client/core/DomPoxWebServiceTemplateIntegrationTest.java
+index 046f72d7d..0e15a96ea 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/client/core/DomPoxWebServiceTemplateIntegrationTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/client/core/DomPoxWebServiceTemplateIntegrationTest.java
+@@ -29,7 +29,6 @@
+ import javax.xml.transform.dom.DOMSource;
+ import javax.xml.transform.stream.StreamResult;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
+ import org.junit.AfterClass;
+ import org.junit.Assert;
+ import org.junit.BeforeClass;
+@@ -45,6 +44,10 @@
+ import org.springframework.ws.transport.support.FreePortScanner;
+ import org.springframework.xml.transform.StringResult;
+ import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ 
+ public class DomPoxWebServiceTemplateIntegrationTest {
+ 
+@@ -125,9 +128,9 @@ private static class PoxServlet extends HttpServlet {
+ 		@Override
+ 		public void init(ServletConfig servletConfig) throws ServletException {
+ 			super.init(servletConfig);
+-			documentBuilderFactory = DocumentBuilderFactory.newInstance();
++			documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 			documentBuilderFactory.setNamespaceAware(true);
+-			transformerFactory = TransformerFactory.newInstance();
++			transformerFactory = TransformerFactoryUtils.newInstance();
+ 		}
+ 
+ 		@Override
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/client/support/interceptor/PayloadValidatingInterceptorTest.java b/spring-ws-core/src/test/java/org/springframework/ws/client/support/interceptor/PayloadValidatingInterceptorTest.java
+index fe68b1bce..6dadacac2 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/client/support/interceptor/PayloadValidatingInterceptorTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/client/support/interceptor/PayloadValidatingInterceptorTest.java
+@@ -22,7 +22,6 @@
+ import javax.xml.soap.SOAPConstants;
+ import javax.xml.soap.SOAPMessage;
+ import javax.xml.transform.Transformer;
+-import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.stream.StreamSource;
+ 
+ import org.junit.Assert;
+@@ -39,6 +38,7 @@
+ import org.springframework.ws.soap.saaj.SaajSoapMessage;
+ import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
+ import org.springframework.ws.soap.saaj.support.SaajUtils;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ import org.springframework.xml.xsd.SimpleXsdSchema;
+ 
+ public class PayloadValidatingInterceptorTest {
+@@ -75,7 +75,7 @@ public void setUp() throws Exception {
+ 
+ 		soap11Factory = new SaajSoapMessageFactory(MessageFactory.newInstance(SOAPConstants.SOAP_1_1_PROTOCOL));
+ 
+-		transformer = TransformerFactory.newInstance().newTransformer();
++		transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 	}
+ 
+ 	@Test
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/pox/dom/DomPoxMessageTest.java b/spring-ws-core/src/test/java/org/springframework/ws/pox/dom/DomPoxMessageTest.java
+index 5802ba8e0..9c8514553 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/pox/dom/DomPoxMessageTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/pox/dom/DomPoxMessageTest.java
+@@ -22,14 +22,16 @@
+ import javax.xml.transform.Transformer;
+ import javax.xml.transform.TransformerFactory;
+ 
+-import org.springframework.xml.transform.StringResult;
+-import org.springframework.xml.transform.StringSource;
+-
+ import org.junit.Before;
+ import org.junit.Test;
+ import org.w3c.dom.Document;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import org.springframework.xml.transform.StringResult;
++import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ 
+ public class DomPoxMessageTest {
+ 
+@@ -39,10 +41,10 @@ public class DomPoxMessageTest {
+ 
+ 	@Before
+ 	public void setUp() throws Exception {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document document = documentBuilder.newDocument();
+-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
++		TransformerFactory transformerFactory = TransformerFactoryUtils.newInstance();
+ 		transformer = transformerFactory.newTransformer();
+ 		message = new DomPoxMessage(document, transformer, DomPoxMessageFactory.DEFAULT_CONTENT_TYPE);
+ 	}
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/AbstractEndpointTestCase.java b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/AbstractEndpointTestCase.java
+index f901e6ba1..d7ea728e7 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/AbstractEndpointTestCase.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/AbstractEndpointTestCase.java
+@@ -30,14 +30,16 @@
+ import javax.xml.transform.sax.SAXSource;
+ import javax.xml.transform.stream.StreamSource;
+ 
+-import org.springframework.util.xml.StaxUtils;
+-
+ import org.junit.Test;
+ import org.w3c.dom.Document;
+ import org.xml.sax.InputSource;
+ import org.xml.sax.XMLReader;
+ import org.xml.sax.helpers.XMLReaderFactory;
+ 
++import org.springframework.util.xml.StaxUtils;
++import org.springframework.xml.XMLInputFactoryUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
+ @SuppressWarnings("Since15")
+ public abstract class AbstractEndpointTestCase {
+ 
+@@ -53,7 +55,7 @@ public abstract class AbstractEndpointTestCase {
+ 
+ 	@Test
+ 	public void testDomSource() throws Exception {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document requestDocument = documentBuilder.parse(new InputSource(new StringReader(REQUEST)));
+@@ -69,14 +71,14 @@ public void testSaxSource() throws Exception {
+ 
+ 	@Test
+ 	public void testStaxSourceEventReader() throws Exception {
+-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++		XMLInputFactory inputFactory = XMLInputFactoryUtils.newInstance();
+ 		XMLEventReader eventReader = inputFactory.createXMLEventReader(new StringReader(REQUEST));
+ 		testSource(new SAXSource(StaxUtils.createXMLReader(eventReader), new InputSource()));
+ 	}
+ 
+ 	@Test
+ 	public void testStaxSourceStreamReader() throws Exception {
+-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++		XMLInputFactory inputFactory = XMLInputFactoryUtils.newInstance();
+ 		XMLStreamReader streamReader = inputFactory.createXMLStreamReader(new StringReader(REQUEST));
+ 		testSource(new SAXSource(StaxUtils.createXMLReader(streamReader), new InputSource()));
+ 	}
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/AbstractPayloadEndpointTestCase.java b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/AbstractPayloadEndpointTestCase.java
+index 2c98bb085..4402a2a1d 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/AbstractPayloadEndpointTestCase.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/AbstractPayloadEndpointTestCase.java
+@@ -18,15 +18,15 @@
+ 
+ import javax.xml.transform.Source;
+ import javax.xml.transform.Transformer;
+-import javax.xml.transform.TransformerFactory;
+-
+-import org.springframework.xml.transform.StringResult;
+-import org.springframework.xml.transform.StringSource;
+ 
+ import org.junit.Before;
+ import org.junit.Test;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import org.springframework.xml.transform.StringResult;
++import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ import static org.junit.Assert.assertNotNull;
+ import static org.junit.Assert.assertNull;
+ 
+@@ -39,7 +39,7 @@ public abstract class AbstractPayloadEndpointTestCase extends AbstractEndpointTe
+ 	@Before
+ 	public void createEndpoint() throws Exception {
+ 		endpoint = createResponseEndpoint();
+-		transformer = TransformerFactory.newInstance().newTransformer();
++		transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 	}
+ 
+ 	@Test
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/MarshallingPayloadEndpointTest.java b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/MarshallingPayloadEndpointTest.java
+index 1649f6f21..0dabdeb90 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/MarshallingPayloadEndpointTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/MarshallingPayloadEndpointTest.java
+@@ -23,14 +23,10 @@
+ import javax.xml.transform.Source;
+ import javax.xml.transform.Transformer;
+ import javax.xml.transform.TransformerException;
+-import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.stream.StreamResult;
+ import javax.xml.transform.stream.StreamSource;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
+-import static org.easymock.EasyMock.*;
+ import org.junit.Assert;
+-import static org.junit.Assert.fail;
+ import org.junit.Before;
+ import org.junit.Test;
+ 
+@@ -47,6 +43,11 @@
+ import org.springframework.ws.mime.MimeMessage;
+ import org.springframework.xml.transform.StringResult;
+ import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
++import static org.easymock.EasyMock.*;
++import static org.junit.Assert.fail;
+ 
+ public class MarshallingPayloadEndpointTest {
+ 
+@@ -59,7 +60,7 @@ public class MarshallingPayloadEndpointTest {
+ 	@Before
+ 	public void setUp() throws Exception {
+ 		MockWebServiceMessage request = new MockWebServiceMessage("<request/>");
+-		transformer = TransformerFactory.newInstance().newTransformer();
++		transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		factoryMock = createMock(WebServiceMessageFactory.class);
+ 
+ 		context = new DefaultMessageContext(request, factoryMock);
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/StaxStreamPayloadEndpointTest.java b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/StaxStreamPayloadEndpointTest.java
+index 45b9ce78f..557580d12 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/StaxStreamPayloadEndpointTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/StaxStreamPayloadEndpointTest.java
+@@ -22,7 +22,10 @@
+ import javax.xml.stream.XMLStreamReader;
+ import javax.xml.stream.XMLStreamWriter;
+ import javax.xml.transform.Transformer;
+-import javax.xml.transform.TransformerFactory;
++
++import org.apache.axiom.om.OMAbstractFactory;
++import org.apache.axiom.soap.SOAPFactory;
++import org.junit.Test;
+ 
+ import org.springframework.ws.context.DefaultMessageContext;
+ import org.springframework.ws.context.MessageContext;
+@@ -32,13 +35,14 @@
+ import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
+ import org.springframework.xml.transform.StringResult;
+ import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ 
+-import org.apache.axiom.om.OMAbstractFactory;
+-import org.apache.axiom.soap.SOAPFactory;
+-import org.junit.Test;
+-
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
+-import static org.junit.Assert.*;
++import static org.custommonkey.xmlunit.XMLAssert.*;
++import static org.junit.Assert.assertEquals;
++import static org.junit.Assert.assertFalse;
++import static org.junit.Assert.assertNotNull;
++import static org.junit.Assert.assertNull;
++import static org.junit.Assert.assertTrue;
+ 
+ /**
+  * Test case for AbstractStaxStreamPayloadEndpoint.
+@@ -101,7 +105,7 @@ protected XMLOutputFactory createXmlOutputFactory() {
+ 
+ 	@Test
+ 	public void testSaajResponse() throws Exception {
+-		Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		MessageFactory messageFactory = MessageFactory.newInstance();
+ 		SaajSoapMessage request = new SaajSoapMessage(messageFactory.createMessage());
+ 		transformer.transform(new StringSource(REQUEST), request.getPayloadResult());
+@@ -119,7 +123,7 @@ public void testSaajResponse() throws Exception {
+ 
+ 	@Test
+ 	public void testAxiomResponse() throws Exception {
+-		Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		SOAPFactory axiomFactory = OMAbstractFactory.getSOAP11Factory();
+ 		AxiomSoapMessage request = new AxiomSoapMessage(axiomFactory);
+ 		transformer.transform(new StringSource(REQUEST), request.getPayloadResult());
+@@ -137,7 +141,7 @@ public void testAxiomResponse() throws Exception {
+ 
+ 	@Test
+ 	public void testAxiomNoResponse() throws Exception {
+-		Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		SOAPFactory axiomFactory = OMAbstractFactory.getSOAP11Factory();
+ 		AxiomSoapMessage request = new AxiomSoapMessage(axiomFactory);
+ 		transformer.transform(new StringSource(REQUEST), request.getPayloadResult());
+@@ -152,7 +156,7 @@ public void testAxiomNoResponse() throws Exception {
+ 
+ 	@Test
+ 	public void testAxiomResponseNoPayloadCaching() throws Exception {
+-		Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		SOAPFactory axiomFactory = OMAbstractFactory.getSOAP11Factory();
+ 		AxiomSoapMessage request = new AxiomSoapMessage(axiomFactory);
+ 		transformer.transform(new StringSource(REQUEST), request.getPayloadResult());
+@@ -172,7 +176,7 @@ public void testAxiomResponseNoPayloadCaching() throws Exception {
+ 
+ 	@Test
+ 	public void testAxiomNoResponseNoPayloadCaching() throws Exception {
+-		Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		SOAPFactory axiomFactory = OMAbstractFactory.getSOAP11Factory();
+ 		AxiomSoapMessage request = new AxiomSoapMessage(axiomFactory);
+ 		transformer.transform(new StringSource(REQUEST), request.getPayloadResult());
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/PayloadEndpointAdapterTest.java b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/PayloadEndpointAdapterTest.java
+index 0e138fa35..a0e136308 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/PayloadEndpointAdapterTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/PayloadEndpointAdapterTest.java
+@@ -20,21 +20,21 @@
+ import java.io.StringWriter;
+ import javax.xml.transform.Source;
+ import javax.xml.transform.Transformer;
+-import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.stream.StreamResult;
+ import javax.xml.transform.stream.StreamSource;
+ 
++import org.junit.Assert;
++import org.junit.Before;
++import org.junit.Test;
++
+ import org.springframework.ws.MockWebServiceMessage;
+ import org.springframework.ws.MockWebServiceMessageFactory;
+ import org.springframework.ws.context.DefaultMessageContext;
+ import org.springframework.ws.context.MessageContext;
+ import org.springframework.ws.server.endpoint.PayloadEndpoint;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ 
+-import org.junit.Assert;
+-import org.junit.Before;
+-import org.junit.Test;
+-
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ import static org.easymock.EasyMock.*;
+ 
+ public class PayloadEndpointAdapterTest {
+@@ -57,7 +57,7 @@ public void testSupports() throws Exception {
+ 	@Test
+ 	public void testInvoke() throws Exception {
+ 		MockWebServiceMessage request = new MockWebServiceMessage("<request/>");
+-		final Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		final Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		PayloadEndpoint endpoint = new PayloadEndpoint() {
+ 			public Source invoke(Source request) throws Exception {
+ 				StringWriter writer = new StringWriter();
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/XPathParamAnnotationMethodEndpointAdapterTest.java b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/XPathParamAnnotationMethodEndpointAdapterTest.java
+index 240c84e7c..fe2c05a3b 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/XPathParamAnnotationMethodEndpointAdapterTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/XPathParamAnnotationMethodEndpointAdapterTest.java
+@@ -31,6 +31,7 @@
+ import org.springframework.ws.server.endpoint.annotation.XPathParam;
+ import org.springframework.xml.transform.StringResult;
+ import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ 
+ import org.junit.Assert;
+ import org.junit.Before;
+@@ -141,7 +142,7 @@ public void testInvokeSource() throws Exception {
+ 
+ 	@Test
+ 	public void testInvokeVoidDom() throws Exception {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document document = documentBuilder.newDocument();
+ 		String rootNamespace = "http://rootnamespace";
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/method/dom/DomPayloadMethodProcessorTest.java b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/method/dom/DomPayloadMethodProcessorTest.java
+index c4a4f21d9..cde7cba50 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/method/dom/DomPayloadMethodProcessorTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/method/dom/DomPayloadMethodProcessorTest.java
+@@ -20,17 +20,17 @@
+ import javax.xml.parsers.DocumentBuilderFactory;
+ import javax.xml.parsers.ParserConfigurationException;
+ 
++import org.w3c.dom.Document;
++import org.w3c.dom.Element;
++
+ import org.springframework.core.MethodParameter;
+ import org.springframework.ws.server.endpoint.adapter.method.AbstractPayloadMethodProcessorTestCase;
+ import org.springframework.ws.server.endpoint.adapter.method.AbstractPayloadSourceMethodProcessor;
+ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ 
+-import org.w3c.dom.Document;
+-import org.w3c.dom.Element;
+-
+-import static org.junit.Assert.assertEquals;
+-import static org.junit.Assert.assertTrue;
++import static org.junit.Assert.*;
+ 
+ public class DomPayloadMethodProcessorTest extends AbstractPayloadMethodProcessorTestCase {
+ 
+@@ -60,7 +60,7 @@ protected void testArgument(Object argument, MethodParameter parameter) {
+ 
+ 	@Override
+ 	protected Element getReturnValue(MethodParameter returnType) throws ParserConfigurationException {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document document = documentBuilder.newDocument();
+ 		return document.createElementNS(NAMESPACE_URI, LOCAL_NAME);
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/method/jaxb/JaxbElementPayloadMethodProcessorTest.java b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/method/jaxb/JaxbElementPayloadMethodProcessorTest.java
+index 6baeaa758..b45d61f2e 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/method/jaxb/JaxbElementPayloadMethodProcessorTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/method/jaxb/JaxbElementPayloadMethodProcessorTest.java
+@@ -23,7 +23,6 @@
+ import javax.xml.bind.annotation.XmlType;
+ import javax.xml.namespace.QName;
+ import javax.xml.transform.Transformer;
+-import javax.xml.transform.TransformerFactory;
+ 
+ import org.junit.Before;
+ import org.junit.Test;
+@@ -39,6 +38,7 @@
+ import org.springframework.ws.soap.axiom.AxiomSoapMessage;
+ import org.springframework.ws.soap.axiom.AxiomSoapMessageFactory;
+ import org.springframework.xml.transform.StringResult;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ 
+ import static org.custommonkey.xmlunit.XMLAssert.*;
+ import static org.junit.Assert.assertEquals;
+@@ -133,7 +133,7 @@ public void handleReturnValueAxiom() throws Exception {
+ 		assertTrue("context has no response", messageContext.hasResponse());
+ 		AxiomSoapMessage response = (AxiomSoapMessage) messageContext.getResponse();
+ 
+-		Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		StringResult payloadResult = new StringResult();
+ 		transformer.transform(response.getPayloadSource(), payloadResult);
+ 
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/method/jaxb/XmlRootElementPayloadMethodProcessorTest.java b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/method/jaxb/XmlRootElementPayloadMethodProcessorTest.java
+index dd3766a85..14020d242 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/method/jaxb/XmlRootElementPayloadMethodProcessorTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/adapter/method/jaxb/XmlRootElementPayloadMethodProcessorTest.java
+@@ -26,7 +26,6 @@
+ import javax.xml.transform.Result;
+ import javax.xml.transform.Source;
+ import javax.xml.transform.Transformer;
+-import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.sax.SAXSource;
+ 
+ import org.junit.Before;
+@@ -49,6 +48,7 @@
+ import org.springframework.ws.soap.axiom.AxiomSoapMessageFactory;
+ import org.springframework.xml.sax.AbstractXmlReader;
+ import org.springframework.xml.transform.StringResult;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ 
+ import static org.custommonkey.xmlunit.XMLAssert.*;
+ import static org.junit.Assert.assertEquals;
+@@ -199,7 +199,7 @@ public void handleReturnValueAxiom() throws Exception {
+ 		assertTrue("context has no response", messageContext.hasResponse());
+ 		AxiomSoapMessage response = (AxiomSoapMessage) messageContext.getResponse();
+ 
+-		Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		StringResult payloadResult = new StringResult();
+ 		transformer.transform(response.getPayloadSource(), payloadResult);
+ 
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/interceptor/PayloadTransformingInterceptorTest.java b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/interceptor/PayloadTransformingInterceptorTest.java
+index d88cc9d7a..ac55888c7 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/interceptor/PayloadTransformingInterceptorTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/interceptor/PayloadTransformingInterceptorTest.java
+@@ -22,7 +22,6 @@
+ import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.sax.SAXSource;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
+ import org.custommonkey.xmlunit.XMLUnit;
+ import org.junit.Assert;
+ import org.junit.Before;
+@@ -41,6 +40,9 @@
+ import org.springframework.xml.sax.SaxUtils;
+ import org.springframework.xml.transform.ResourceSource;
+ import org.springframework.xml.transform.StringResult;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ 
+ public class PayloadTransformingInterceptorTest {
+ 
+@@ -57,7 +59,7 @@ public class PayloadTransformingInterceptorTest {
+ 	@Before
+ 	public void setUp() throws Exception {
+ 		interceptor = new PayloadTransformingInterceptor();
+-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
++		TransformerFactory transformerFactory = TransformerFactoryUtils.newInstance();
+ 		transformer = transformerFactory.newTransformer();
+ 		input = new ClassPathResource("transformInput.xml", getClass());
+ 		output = new ClassPathResource("transformOutput.xml", getClass());
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/support/PayloadRootUtilsTest.java b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/support/PayloadRootUtilsTest.java
+index f2329f4b5..a5a9f99da 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/support/PayloadRootUtilsTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/server/endpoint/support/PayloadRootUtilsTest.java
+@@ -24,30 +24,32 @@
+ import javax.xml.stream.XMLInputFactory;
+ import javax.xml.stream.XMLStreamReader;
+ import javax.xml.transform.Source;
+-import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.dom.DOMSource;
+ import javax.xml.transform.sax.SAXSource;
+ import javax.xml.transform.stream.StreamSource;
+ 
+-import org.springframework.util.xml.StaxUtils;
+-
+ import org.junit.Assert;
+ import org.junit.Test;
+ import org.w3c.dom.Document;
+ import org.w3c.dom.Element;
+ import org.xml.sax.InputSource;
+ 
++import org.springframework.util.xml.StaxUtils;
++import org.springframework.xml.XMLInputFactoryUtils;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
+ public class PayloadRootUtilsTest {
+ 
+ 	@Test
+ 	public void testGetQNameForDomSource() throws Exception {
+-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory factory = DocumentBuilderFactoryUtils.newInstance();
+ 		DocumentBuilder builder = factory.newDocumentBuilder();
+ 		Document document = builder.newDocument();
+ 		Element element = document.createElementNS("namespace", "prefix:localname");
+ 		document.appendChild(element);
+ 		Source source = new DOMSource(document);
+-		QName qName = PayloadRootUtils.getPayloadRootQName(source, TransformerFactory.newInstance());
++		QName qName = PayloadRootUtils.getPayloadRootQName(source, TransformerFactoryUtils.newInstance());
+ 		Assert.assertNotNull("getQNameForNode returns null", qName);
+ 		Assert.assertEquals("QName has invalid localname", "localname", qName.getLocalPart());
+ 		Assert.assertEquals("Qname has invalid namespace", "namespace", qName.getNamespaceURI());
+@@ -57,10 +59,10 @@ public void testGetQNameForDomSource() throws Exception {
+ 	@Test
+ 	public void testGetQNameForStaxSourceStreamReader() throws Exception {
+ 		String contents = "<prefix:localname xmlns:prefix='namespace'/>";
+-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++		XMLInputFactory inputFactory = XMLInputFactoryUtils.newInstance();
+ 		XMLStreamReader streamReader = inputFactory.createXMLStreamReader(new StringReader(contents));
+ 		Source source = StaxUtils.createStaxSource(streamReader);
+-		QName qName = PayloadRootUtils.getPayloadRootQName(source, TransformerFactory.newInstance());
++		QName qName = PayloadRootUtils.getPayloadRootQName(source, TransformerFactoryUtils.newInstance());
+ 		Assert.assertNotNull("getQNameForNode returns null", qName);
+ 		Assert.assertEquals("QName has invalid localname", "localname", qName.getLocalPart());
+ 		Assert.assertEquals("Qname has invalid namespace", "namespace", qName.getNamespaceURI());
+@@ -70,10 +72,10 @@ public void testGetQNameForStaxSourceStreamReader() throws Exception {
+ 	@Test
+ 	public void testGetQNameForStaxSourceEventReader() throws Exception {
+ 		String contents = "<prefix:localname xmlns:prefix='namespace'/>";
+-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++		XMLInputFactory inputFactory = XMLInputFactoryUtils.newInstance();
+ 		XMLEventReader eventReader = inputFactory.createXMLEventReader(new StringReader(contents));
+ 		Source source = StaxUtils.createStaxSource(eventReader);
+-		QName qName = PayloadRootUtils.getPayloadRootQName(source, TransformerFactory.newInstance());
++		QName qName = PayloadRootUtils.getPayloadRootQName(source, TransformerFactoryUtils.newInstance());
+ 		Assert.assertNotNull("getQNameForNode returns null", qName);
+ 		Assert.assertEquals("QName has invalid localname", "localname", qName.getLocalPart());
+ 		Assert.assertEquals("Qname has invalid namespace", "namespace", qName.getNamespaceURI());
+@@ -84,7 +86,7 @@ public void testGetQNameForStaxSourceEventReader() throws Exception {
+ 	public void testGetQNameForStreamSource() throws Exception {
+ 		String contents = "<prefix:localname xmlns:prefix='namespace'/>";
+ 		Source source = new StreamSource(new StringReader(contents));
+-		QName qName = PayloadRootUtils.getPayloadRootQName(source, TransformerFactory.newInstance());
++		QName qName = PayloadRootUtils.getPayloadRootQName(source, TransformerFactoryUtils.newInstance());
+ 		Assert.assertNotNull("getQNameForNode returns null", qName);
+ 		Assert.assertEquals("QName has invalid localname", "localname", qName.getLocalPart());
+ 		Assert.assertEquals("Qname has invalid namespace", "namespace", qName.getNamespaceURI());
+@@ -95,7 +97,7 @@ public void testGetQNameForStreamSource() throws Exception {
+ 	public void testGetQNameForSaxSource() throws Exception {
+ 		String contents = "<prefix:localname xmlns:prefix='namespace'/>";
+ 		Source source = new SAXSource(new InputSource(new StringReader(contents)));
+-		QName qName = PayloadRootUtils.getPayloadRootQName(source, TransformerFactory.newInstance());
++		QName qName = PayloadRootUtils.getPayloadRootQName(source, TransformerFactoryUtils.newInstance());
+ 		Assert.assertNotNull("getQNameForNode returns null", qName);
+ 		Assert.assertEquals("QName has invalid localname", "localname", qName.getLocalPart());
+ 		Assert.assertEquals("Qname has invalid namespace", "namespace", qName.getNamespaceURI());
+@@ -104,7 +106,7 @@ public void testGetQNameForSaxSource() throws Exception {
+ 
+ 	@Test
+ 	public void testGetQNameForNullSource() throws Exception {
+-		QName qName = PayloadRootUtils.getPayloadRootQName(null, TransformerFactory.newInstance());
++		QName qName = PayloadRootUtils.getPayloadRootQName(null, TransformerFactoryUtils.newInstance());
+ 		Assert.assertNull("Qname returned", qName);
+ 	}
+ }
+\ No newline at end of file
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/soap/AbstractSoapElementTestCase.java b/spring-ws-core/src/test/java/org/springframework/ws/soap/AbstractSoapElementTestCase.java
+index 7a9e426b0..5998c7901 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/soap/AbstractSoapElementTestCase.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/soap/AbstractSoapElementTestCase.java
+@@ -25,6 +25,8 @@
+ import org.junit.Before;
+ import org.junit.Test;
+ 
++import org.springframework.xml.transform.TransformerFactoryUtils;
++
+ public abstract class AbstractSoapElementTestCase {
+ 
+ 	private SoapElement soapElement;
+@@ -33,7 +35,7 @@ public abstract class AbstractSoapElementTestCase {
+ 
+ 	@Before
+ 	public final void setUp() throws Exception {
+-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
++		TransformerFactory transformerFactory = TransformerFactoryUtils.newInstance();
+ 		transformer = transformerFactory.newTransformer();
+ 		soapElement = createSoapElement();
+ 	}
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/soap/axiom/AxiomSoap11MessageFactoryTest.java b/spring-ws-core/src/test/java/org/springframework/ws/soap/axiom/AxiomSoap11MessageFactoryTest.java
+index 457c5d8e8..dc06ba95d 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/soap/axiom/AxiomSoap11MessageFactoryTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/soap/axiom/AxiomSoap11MessageFactoryTest.java
+@@ -20,7 +20,10 @@
+ import java.io.InputStream;
+ import javax.xml.transform.Transformer;
+ import javax.xml.transform.TransformerException;
+-import javax.xml.transform.TransformerFactory;
++
++import org.custommonkey.xmlunit.XMLAssert;
++import org.custommonkey.xmlunit.XMLUnit;
++import org.junit.Test;
+ 
+ import org.springframework.ws.InvalidXmlException;
+ import org.springframework.ws.WebServiceMessage;
+@@ -29,13 +32,9 @@
+ import org.springframework.ws.transport.MockTransportInputStream;
+ import org.springframework.ws.transport.TransportInputStream;
+ import org.springframework.xml.transform.StringResult;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ 
+-import org.custommonkey.xmlunit.XMLAssert;
+-import org.custommonkey.xmlunit.XMLUnit;
+-import org.junit.Test;
+-
+-import static org.junit.Assert.assertEquals;
+-import static org.junit.Assert.fail;
++import static org.junit.Assert.*;
+ 
+ public class AxiomSoap11MessageFactoryTest extends AbstractSoap11MessageFactoryTestCase {
+ 
+@@ -43,7 +42,7 @@ public class AxiomSoap11MessageFactoryTest extends AbstractSoap11MessageFactoryT
+ 
+ 	@Override
+ 	protected WebServiceMessageFactory createMessageFactory() throws Exception {
+-		transformer = TransformerFactory.newInstance().newTransformer();
++		transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 
+ 		AxiomSoapMessageFactory factory = new AxiomSoapMessageFactory();
+ 		factory.afterPropertiesSet();
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/soap/axiom/support/AxiomUtilsTest.java b/spring-ws-core/src/test/java/org/springframework/ws/soap/axiom/support/AxiomUtilsTest.java
+index 52f5c1a21..a3b080352 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/soap/axiom/support/AxiomUtilsTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/soap/axiom/support/AxiomUtilsTest.java
+@@ -22,11 +22,6 @@
+ import javax.xml.parsers.DocumentBuilder;
+ import javax.xml.parsers.DocumentBuilderFactory;
+ 
+-import org.springframework.core.io.ClassPathResource;
+-import org.springframework.core.io.Resource;
+-import org.springframework.util.FileCopyUtils;
+-import org.springframework.xml.sax.SaxUtils;
+-
+ import org.apache.axiom.om.OMAbstractFactory;
+ import org.apache.axiom.om.OMElement;
+ import org.apache.axiom.om.OMFactory;
+@@ -41,7 +36,13 @@
+ import org.junit.Test;
+ import org.w3c.dom.Document;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import org.springframework.core.io.ClassPathResource;
++import org.springframework.core.io.Resource;
++import org.springframework.util.FileCopyUtils;
++import org.springframework.xml.sax.SaxUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ 
+ public class AxiomUtilsTest {
+ 
+@@ -107,7 +108,7 @@ public void testToLocale() throws Exception {
+ 	public void testToDocument() throws Exception {
+ 		Resource resource = new ClassPathResource("org/springframework/ws/soap/soap11/soap11.xml");
+ 
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document expected = documentBuilder.parse(SaxUtils.createInputSource(resource));
+@@ -127,7 +128,7 @@ public void testToEnvelope() throws Exception {
+ 		byte[] buf = FileCopyUtils.copyToByteArray(resource.getFile());
+ 		String expected = new String(buf, "UTF-8");
+ 
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document document = documentBuilder.parse(SaxUtils.createInputSource(resource));
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/soap/saaj/support/SaajContentHandlerTest.java b/spring-ws-core/src/test/java/org/springframework/ws/soap/saaj/support/SaajContentHandlerTest.java
+index 17cc157c6..c9b572f46 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/soap/saaj/support/SaajContentHandlerTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/soap/saaj/support/SaajContentHandlerTest.java
+@@ -26,15 +26,15 @@
+ import javax.xml.transform.Result;
+ import javax.xml.transform.Source;
+ import javax.xml.transform.Transformer;
+-import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.sax.SAXResult;
+ 
+-import org.springframework.xml.transform.StringSource;
+-
+ import org.junit.Assert;
+ import org.junit.Before;
+ import org.junit.Test;
+ 
++import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++
+ public class SaajContentHandlerTest {
+ 
+ 	private SaajContentHandler handler;
+@@ -49,7 +49,7 @@ public void setUp() throws Exception {
+ 		SOAPMessage message = messageFactory.createMessage();
+ 		envelope = message.getSOAPPart().getEnvelope();
+ 		handler = new SaajContentHandler(envelope.getBody());
+-		transformer = TransformerFactory.newInstance().newTransformer();
++		transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 	}
+ 
+ 	@Test
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/soap/saaj/support/SaajUtilsTest.java b/spring-ws-core/src/test/java/org/springframework/ws/soap/saaj/support/SaajUtilsTest.java
+index 998bd13b9..88186b777 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/soap/saaj/support/SaajUtilsTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/soap/saaj/support/SaajUtilsTest.java
+@@ -27,16 +27,17 @@
+ import javax.xml.soap.SOAPException;
+ import javax.xml.soap.SOAPMessage;
+ 
+-import org.springframework.core.io.ClassPathResource;
+-import org.springframework.core.io.Resource;
+-import org.springframework.util.StringUtils;
+-
+ import org.junit.Assert;
+ import org.junit.Before;
+ import org.junit.Test;
+ import org.w3c.dom.Document;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import org.springframework.core.io.ClassPathResource;
++import org.springframework.core.io.Resource;
++import org.springframework.util.StringUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ 
+ public class SaajUtilsTest {
+ 
+@@ -119,7 +120,7 @@ public void testToQNamePrefixNamespace() throws Exception {
+ 
+ 	@Test
+ 	public void testLoadMessage() throws Exception {
+-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory factory = DocumentBuilderFactoryUtils.newInstance();
+ 		factory.setNamespaceAware(true);
+ 		DocumentBuilder builder = factory.newDocumentBuilder();
+ 		Document document = builder.parse(getClass().getResourceAsStream("soapMessage.xml"));
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/soap/saaj/support/SaajXmlReaderTest.java b/spring-ws-core/src/test/java/org/springframework/ws/soap/saaj/support/SaajXmlReaderTest.java
+index 63991ffd2..e8d44c570 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/soap/saaj/support/SaajXmlReaderTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/soap/saaj/support/SaajXmlReaderTest.java
+@@ -21,7 +21,6 @@
+ import javax.xml.soap.SOAPMessage;
+ import javax.xml.transform.Source;
+ import javax.xml.transform.Transformer;
+-import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.dom.DOMResult;
+ import javax.xml.transform.dom.DOMSource;
+ import javax.xml.transform.sax.SAXSource;
+@@ -31,7 +30,9 @@
+ import org.w3c.dom.Document;
+ import org.xml.sax.InputSource;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ 
+ public class SaajXmlReaderTest {
+ 
+@@ -47,7 +48,7 @@ public void setUp() throws Exception {
+ 		message = messageFactory.createMessage();
+ 		SOAPEnvelope envelope = message.getSOAPPart().getEnvelope();
+ 		saajReader = new SaajXmlReader(envelope);
+-		transformer = TransformerFactory.newInstance().newTransformer();
++		transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 	}
+ 
+ 	@Test
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/soap/server/endpoint/interceptor/PayloadValidatingInterceptorTest.java b/spring-ws-core/src/test/java/org/springframework/ws/soap/server/endpoint/interceptor/PayloadValidatingInterceptorTest.java
+index 1254a260c..51ba760ed 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/soap/server/endpoint/interceptor/PayloadValidatingInterceptorTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/soap/server/endpoint/interceptor/PayloadValidatingInterceptorTest.java
+@@ -51,6 +51,7 @@
+ import org.springframework.ws.soap.soap12.Soap12Fault;
+ import org.springframework.ws.transport.MockTransportInputStream;
+ import org.springframework.ws.transport.TransportInputStream;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ import org.springframework.xml.validation.ValidationErrorHandler;
+ import org.springframework.xml.xsd.SimpleXsdSchema;
+ 
+@@ -92,7 +93,7 @@ public void setUp() throws Exception {
+ 
+ 		soap11Factory = new SaajSoapMessageFactory(MessageFactory.newInstance(SOAPConstants.SOAP_1_1_PROTOCOL));
+ 		soap12Factory = new SaajSoapMessageFactory(MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL));
+-		transformer = TransformerFactory.newInstance().newTransformer();
++		transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 	}
+ 
+ 	@Test
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/soap/soap11/AbstractSoap11MessageTestCase.java b/spring-ws-core/src/test/java/org/springframework/ws/soap/soap11/AbstractSoap11MessageTestCase.java
+index 0da1d2e76..a0d8d7e67 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/soap/soap11/AbstractSoap11MessageTestCase.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/soap/soap11/AbstractSoap11MessageTestCase.java
+@@ -36,6 +36,7 @@
+ import org.springframework.ws.soap.SoapVersion;
+ import org.springframework.ws.transport.MockTransportOutputStream;
+ import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ 
+ import static org.custommonkey.xmlunit.XMLAssert.*;
+ import static org.junit.Assert.assertEquals;
+@@ -96,7 +97,7 @@ public void testToDocument() throws Exception {
+ 		transformer.transform(new StringSource("<payload xmlns='http://www.springframework.org' />"),
+ 				soapMessage.getSoapBody().getPayloadResult());
+ 
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document expected = documentBuilder.newDocument();
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/soap/soap12/AbstractSoap12MessageTestCase.java b/spring-ws-core/src/test/java/org/springframework/ws/soap/soap12/AbstractSoap12MessageTestCase.java
+index 91ce754ad..0ec8c9911 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/soap/soap12/AbstractSoap12MessageTestCase.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/soap/soap12/AbstractSoap12MessageTestCase.java
+@@ -37,6 +37,7 @@
+ import org.springframework.ws.transport.MockTransportOutputStream;
+ import org.springframework.ws.transport.TransportConstants;
+ import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ 
+ import static org.custommonkey.xmlunit.XMLAssert.*;
+ import static org.junit.Assert.assertNotNull;
+@@ -100,7 +101,7 @@ public void testToDocument() throws Exception {
+ 		transformer.transform(new StringSource("<payload xmlns='http://www.springframework.org' />"),
+ 				soapMessage.getSoapBody().getPayloadResult());
+ 
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document expected = documentBuilder.newDocument();
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/transport/http/AbstractHttpWebServiceMessageSenderIntegrationTestCase.java b/spring-ws-core/src/test/java/org/springframework/ws/transport/http/AbstractHttpWebServiceMessageSenderIntegrationTestCase.java
+index e8afa9f1d..4b83beb43 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/transport/http/AbstractHttpWebServiceMessageSenderIntegrationTestCase.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/transport/http/AbstractHttpWebServiceMessageSenderIntegrationTestCase.java
+@@ -56,6 +56,7 @@
+ import org.springframework.ws.transport.support.FreePortScanner;
+ import org.springframework.xml.transform.StringResult;
+ import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ 
+ import static org.custommonkey.xmlunit.XMLAssert.*;
+ import static org.junit.Assert.assertEquals;
+@@ -109,7 +110,7 @@ public final void setUp() throws Exception {
+ 		XMLUnit.setIgnoreWhitespace(true);
+ 		saajMessageFactory = MessageFactory.newInstance(SOAPConstants.SOAP_1_1_PROTOCOL);
+ 		messageFactory = new SaajSoapMessageFactory(saajMessageFactory);
+-		transformerFactory = TransformerFactory.newInstance();
++		transformerFactory = TransformerFactoryUtils.newInstance();
+ 	}
+ 
+ 	protected abstract T createMessageSender();
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/transport/http/HttpServletConnectionTest.java b/spring-ws-core/src/test/java/org/springframework/ws/transport/http/HttpServletConnectionTest.java
+index 53dc9dd83..47e263c9a 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/transport/http/HttpServletConnectionTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/transport/http/HttpServletConnectionTest.java
+@@ -24,9 +24,7 @@
+ import javax.xml.transform.Transformer;
+ import javax.xml.transform.TransformerFactory;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
+ import org.junit.Assert;
+-import static org.junit.Assert.assertEquals;
+ import org.junit.Before;
+ import org.junit.Test;
+ 
+@@ -37,6 +35,10 @@
+ import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
+ import org.springframework.xml.transform.StringResult;
+ import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
++import static org.junit.Assert.assertEquals;
+ 
+ public class HttpServletConnectionTest {
+ 
+@@ -67,7 +69,7 @@ public void setUp() throws Exception {
+ 		connection = new HttpServletConnection(httpServletRequest, httpServletResponse);
+ 		MessageFactory saajMessageFactory = MessageFactory.newInstance(SOAPConstants.SOAP_1_1_PROTOCOL);
+ 		messageFactory = new SaajSoapMessageFactory(saajMessageFactory);
+-		transformerFactory = TransformerFactory.newInstance();
++		transformerFactory = TransformerFactoryUtils.newInstance();
+ 	}
+ 
+ 	@Test
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/transport/http/LastModifiedHelperTest.java b/spring-ws-core/src/test/java/org/springframework/ws/transport/http/LastModifiedHelperTest.java
+index 448bf1fcb..582eb43cb 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/transport/http/LastModifiedHelperTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/transport/http/LastModifiedHelperTest.java
+@@ -21,15 +21,16 @@
+ import javax.xml.transform.dom.DOMSource;
+ import javax.xml.transform.stream.StreamSource;
+ 
+-import org.springframework.core.io.ClassPathResource;
+-import org.springframework.core.io.Resource;
+-import org.springframework.xml.transform.ResourceSource;
+-
+ import org.junit.Assert;
+ import org.junit.Before;
+ import org.junit.Test;
+ import org.w3c.dom.Document;
+ 
++import org.springframework.core.io.ClassPathResource;
++import org.springframework.core.io.Resource;
++import org.springframework.xml.transform.ResourceSource;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
+ public class LastModifiedHelperTest {
+ 
+ 	private Resource resource;
+@@ -50,7 +51,7 @@ public void testSaxSource() throws Exception {
+ 
+ 	@Test
+ 	public void testDomSource() throws Exception {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document document = documentBuilder.parse(resource.getFile());
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/transport/http/MessageDispatcherServletTest.java b/spring-ws-core/src/test/java/org/springframework/ws/transport/http/MessageDispatcherServletTest.java
+index 2ccf2bbcf..522093eb1 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/transport/http/MessageDispatcherServletTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/transport/http/MessageDispatcherServletTest.java
+@@ -36,6 +36,7 @@
+ import org.springframework.ws.server.endpoint.mapping.PayloadRootQNameEndpointMapping;
+ import org.springframework.ws.soap.server.endpoint.SimpleSoapExceptionResolver;
+ import org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ 
+ import org.custommonkey.xmlunit.XMLUnit;
+ import org.junit.Assert;
+@@ -90,7 +91,7 @@ public void testDetectWsdlDefinitions() throws Exception {
+ 				new MockHttpServletRequest(HttpTransportConstants.METHOD_GET, "/definition.wsdl");
+ 		MockHttpServletResponse response = new MockHttpServletResponse();
+ 		servlet.service(request, response);
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document result = documentBuilder.parse(new ByteArrayInputStream(response.getContentAsByteArray()));
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/transport/http/WsdlDefinitionHandlerAdapterTest.java b/spring-ws-core/src/test/java/org/springframework/ws/transport/http/WsdlDefinitionHandlerAdapterTest.java
+index 0d7c1575a..5ba2216c4 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/transport/http/WsdlDefinitionHandlerAdapterTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/transport/http/WsdlDefinitionHandlerAdapterTest.java
+@@ -23,19 +23,20 @@
+ import javax.xml.parsers.DocumentBuilder;
+ import javax.xml.parsers.DocumentBuilderFactory;
+ 
++import org.junit.Assert;
++import org.junit.Before;
++import org.junit.Test;
++import org.w3c.dom.Document;
++
+ import org.springframework.core.io.ClassPathResource;
+ import org.springframework.mock.web.MockHttpServletRequest;
+ import org.springframework.mock.web.MockHttpServletResponse;
+ import org.springframework.ws.wsdl.WsdlDefinition;
+ import org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition;
+ import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ 
+-import org.junit.Assert;
+-import org.junit.Before;
+-import org.junit.Test;
+-import org.w3c.dom.Document;
+-
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ import static org.easymock.EasyMock.*;
+ 
+ public class WsdlDefinitionHandlerAdapterTest {
+@@ -98,7 +99,7 @@ public void transformLocations() throws Exception {
+ 
+ 		replay(definitionMock);
+ 
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document result = documentBuilder.parse(getClass().getResourceAsStream("wsdl11-input.wsdl"));
+@@ -185,7 +186,7 @@ public void handleSimpleWsdl11DefinitionWithoutTransformLocations() throws Excep
+ 		adapter.handle(request, response, definition);
+ 
+ 		InputStream inputStream = new ByteArrayInputStream(response.getContentAsByteArray());
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document resultingDocument = documentBuilder.parse(inputStream);
+@@ -215,7 +216,7 @@ public void handleSimpleWsdl11DefinitionWithTransformLocation() throws Exception
+ 		adapter.handle(request, response, definition);
+ 
+ 		InputStream inputStream = new ByteArrayInputStream(response.getContentAsByteArray());
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document resultingDocument = documentBuilder.parse(inputStream);
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/transport/http/XsdSchemaHandlerAdapterTest.java b/spring-ws-core/src/test/java/org/springframework/ws/transport/http/XsdSchemaHandlerAdapterTest.java
+index 0b0e77975..cb48f246e 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/transport/http/XsdSchemaHandlerAdapterTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/transport/http/XsdSchemaHandlerAdapterTest.java
+@@ -22,18 +22,19 @@
+ import javax.xml.parsers.DocumentBuilder;
+ import javax.xml.parsers.DocumentBuilderFactory;
+ 
++import org.junit.Before;
++import org.junit.Test;
++import org.w3c.dom.Document;
++
+ import org.springframework.core.io.ClassPathResource;
+ import org.springframework.core.io.Resource;
+ import org.springframework.mock.web.MockHttpServletRequest;
+ import org.springframework.mock.web.MockHttpServletResponse;
+ import org.springframework.util.FileCopyUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ import org.springframework.xml.xsd.SimpleXsdSchema;
+ 
+-import org.junit.Before;
+-import org.junit.Test;
+-import org.w3c.dom.Document;
+-
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ import static org.junit.Assert.assertEquals;
+ 
+ public class XsdSchemaHandlerAdapterTest {
+@@ -99,7 +100,7 @@ public void handleGetWithTransformLocation() throws Exception {
+ 		adapter.handle(request, response, schema);
+ 
+ 		InputStream inputStream = new ByteArrayInputStream(response.getContentAsByteArray());
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document resultingDocument = documentBuilder.parse(inputStream);
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/DefaultWsdl11DefinitionTest.java b/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/DefaultWsdl11DefinitionTest.java
+index 51c17eca6..c91323020 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/DefaultWsdl11DefinitionTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/DefaultWsdl11DefinitionTest.java
+@@ -22,17 +22,19 @@
+ import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.dom.DOMResult;
+ 
+-import org.springframework.core.io.ClassPathResource;
+-import org.springframework.core.io.Resource;
+-import org.springframework.xml.xsd.SimpleXsdSchema;
+-import org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection;
+-
+ import org.custommonkey.xmlunit.XMLUnit;
+ import org.junit.Before;
+ import org.junit.Test;
+ import org.w3c.dom.Document;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import org.springframework.core.io.ClassPathResource;
++import org.springframework.core.io.Resource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++import org.springframework.xml.xsd.SimpleXsdSchema;
++import org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ 
+ public class DefaultWsdl11DefinitionTest {
+ 
+@@ -45,9 +47,9 @@ public class DefaultWsdl11DefinitionTest {
+ 	@Before
+ 	public void setUp() throws Exception {
+ 		definition = new DefaultWsdl11Definition();
+-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
++		TransformerFactory transformerFactory = TransformerFactoryUtils.newInstance();
+ 		transformer = transformerFactory.newTransformer();
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		XMLUnit.setIgnoreWhitespace(true);
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/Wsdl4jDefinitionTest.java b/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/Wsdl4jDefinitionTest.java
+index de42e5728..a9991b598 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/Wsdl4jDefinitionTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/Wsdl4jDefinitionTest.java
+@@ -24,7 +24,6 @@
+ import javax.xml.parsers.DocumentBuilderFactory;
+ import javax.xml.transform.Source;
+ import javax.xml.transform.Transformer;
+-import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.dom.DOMResult;
+ 
+ import org.custommonkey.xmlunit.XMLUnit;
+@@ -34,7 +33,10 @@
+ import org.w3c.dom.Document;
+ import org.xml.sax.InputSource;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ 
+ public class Wsdl4jDefinitionTest {
+ 
+@@ -55,7 +57,7 @@ public void setUp() throws Exception {
+ 		finally {
+ 			is.close();
+ 		}
+-		transformer = TransformerFactory.newInstance().newTransformer();
++		transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 	}
+ 
+ 	@Test
+@@ -64,7 +66,7 @@ public void testGetSource() throws Exception {
+ 		Assert.assertNotNull("Source is null", source);
+ 		DOMResult result = new DOMResult();
+ 		transformer.transform(source, result);
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document expected = documentBuilder.parse(getClass().getResourceAsStream("complete.wsdl"));
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/provider/DefaultMessagesProviderTest.java b/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/provider/DefaultMessagesProviderTest.java
+index 7e3519178..da97475bb 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/provider/DefaultMessagesProviderTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/provider/DefaultMessagesProviderTest.java
+@@ -26,15 +26,16 @@
+ import javax.xml.parsers.DocumentBuilder;
+ import javax.xml.parsers.DocumentBuilderFactory;
+ 
+-import org.springframework.core.io.ClassPathResource;
+-import org.springframework.core.io.Resource;
+-import org.springframework.xml.sax.SaxUtils;
+-
+ import org.junit.Assert;
+ import org.junit.Before;
+ import org.junit.Test;
+ import org.w3c.dom.Document;
+ 
++import org.springframework.core.io.ClassPathResource;
++import org.springframework.core.io.Resource;
++import org.springframework.xml.sax.SaxUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
+ public class DefaultMessagesProviderTest {
+ 
+ 	private DefaultMessagesProvider provider;
+@@ -48,7 +49,7 @@ public void setUp() throws Exception {
+ 		provider = new DefaultMessagesProvider();
+ 		WSDLFactory factory = WSDLFactory.newInstance();
+ 		definition = factory.newDefinition();
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 	}
+diff --git a/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/provider/SuffixBasedMessagesProviderTest.java b/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/provider/SuffixBasedMessagesProviderTest.java
+index 914eeaf0e..6e34c7358 100644
+--- a/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/provider/SuffixBasedMessagesProviderTest.java
++++ b/spring-ws-core/src/test/java/org/springframework/ws/wsdl/wsdl11/provider/SuffixBasedMessagesProviderTest.java
+@@ -26,15 +26,16 @@
+ import javax.xml.parsers.DocumentBuilder;
+ import javax.xml.parsers.DocumentBuilderFactory;
+ 
+-import org.springframework.core.io.ClassPathResource;
+-import org.springframework.core.io.Resource;
+-import org.springframework.xml.sax.SaxUtils;
+-
+ import org.junit.Assert;
+ import org.junit.Before;
+ import org.junit.Test;
+ import org.w3c.dom.Document;
+ 
++import org.springframework.core.io.ClassPathResource;
++import org.springframework.core.io.Resource;
++import org.springframework.xml.sax.SaxUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
+ public class SuffixBasedMessagesProviderTest {
+ 
+ 	private SuffixBasedMessagesProvider provider;
+@@ -49,7 +50,7 @@ public void setUp() throws Exception {
+ 		provider.setFaultSuffix("Foo");
+ 		WSDLFactory factory = WSDLFactory.newInstance();
+ 		definition = factory.newDefinition();
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 	}
+diff --git a/spring-ws-security/src/test/java/org/springframework/ws/soap/security/wss4j2/SaajWss4jMessageInterceptorSignTest.java b/spring-ws-security/src/test/java/org/springframework/ws/soap/security/wss4j2/SaajWss4jMessageInterceptorSignTest.java
+index 1ec930b0d..fbd6ea070 100644
+--- a/spring-ws-security/src/test/java/org/springframework/ws/soap/security/wss4j2/SaajWss4jMessageInterceptorSignTest.java
++++ b/spring-ws-security/src/test/java/org/springframework/ws/soap/security/wss4j2/SaajWss4jMessageInterceptorSignTest.java
+@@ -25,19 +25,19 @@
+ import javax.xml.soap.SOAPHeaderElement;
+ import javax.xml.soap.SOAPMessage;
+ import javax.xml.transform.Transformer;
+-import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.dom.DOMResult;
+ 
++import org.junit.Test;
++
+ import org.springframework.ws.context.DefaultMessageContext;
+ import org.springframework.ws.context.MessageContext;
+ import org.springframework.ws.soap.SoapMessage;
+ import org.springframework.ws.soap.saaj.SaajSoapMessage;
+ import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
+ import org.springframework.xml.transform.StringSource;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ 
+-import org.junit.Test;
+-
+-import static org.junit.Assert.assertTrue;
++import static org.junit.Assert.*;
+ 
+ public class SaajWss4jMessageInterceptorSignTest extends Wss4jMessageInterceptorSignTestCase {
+ 
+@@ -46,7 +46,7 @@ public class SaajWss4jMessageInterceptorSignTest extends Wss4jMessageInterceptor
+ 
+ 	@Test
+ 	public void testSignAndValidate() throws Exception {
+-		Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		interceptor.setSecurementActions("Signature");
+ 		interceptor.setEnableSignatureConfirmation(false);
+ 		interceptor.setSecurementPassword("123456");
+diff --git a/spring-xml/src/main/java/org/springframework/xml/DocumentBuilderFactoryUtils.java b/spring-xml/src/main/java/org/springframework/xml/DocumentBuilderFactoryUtils.java
+new file mode 100644
+index 000000000..49953ff34
+--- /dev/null
++++ b/spring-xml/src/main/java/org/springframework/xml/DocumentBuilderFactoryUtils.java
+@@ -0,0 +1,100 @@
++/*
++ * Copyright 2018 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.springframework.xml;
++
++import javax.xml.XMLConstants;
++import javax.xml.parsers.DocumentBuilderFactory;
++import javax.xml.parsers.ParserConfigurationException;
++
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
++
++/**
++ * @author Greg Turnquist
++ * @since 3.0.5
++ */
++public class DocumentBuilderFactoryUtils {
++
++	private static final Log log = LogFactory.getLog(DocumentBuilderFactoryUtils.class);
++
++	/**
++	 * Build a {@link DocumentBuilderFactory} then set properties to prevent external entity access.
++	 *
++	 * @see DocumentBuilderFactory#newInstance()
++	 */
++	public static DocumentBuilderFactory newInstance() {
++		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
++
++		try {
++			factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
++		} catch (IllegalArgumentException e) {
++			if (log.isWarnEnabled()) {
++				log.warn(XMLConstants.ACCESS_EXTERNAL_DTD + " property not supported by " + factory.getClass().getCanonicalName());
++			}
++		}
++
++		try {
++			factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
++		} catch (IllegalArgumentException e) {
++			if (log.isWarnEnabled()) {
++				log.warn(XMLConstants.ACCESS_EXTERNAL_SCHEMA + " property not supported by " + factory.getClass().getCanonicalName());
++			}
++		}
++
++		try {
++			factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++		} catch (ParserConfigurationException e) {
++			if (log.isWarnEnabled()) {
++				log.warn("FEATURE 'http://apache.org/xml/features/disallow-doctype-decl' is probably not supported by " + factory.getClass().getCanonicalName());
++			}
++		}
++
++		try {
++			factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
++		} catch (ParserConfigurationException e) {
++			if (log.isWarnEnabled()) {
++				log.warn("FEATURE 'http://xml.org/sax/features/external-general-entities' is probably not supported by " + factory.getClass().getCanonicalName());
++			}
++		}
++
++		try {
++			factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++		} catch (ParserConfigurationException e) {
++			if (log.isWarnEnabled()) {
++				log.warn("FEATURE 'http://xml.org/sax/features/external-parameter-entities' is probably not supported by " + factory.getClass().getCanonicalName());
++			}
++		}
++
++		try {
++			factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
++		} catch (ParserConfigurationException e) {
++			if (log.isWarnEnabled()) {
++				log.warn("FEATURE 'http://apache.org/xml/features/nonvalidating/load-external-dtd' is probably not supported by " + factory.getClass().getCanonicalName());
++			}
++		}
++
++		try {
++			factory.setXIncludeAware(false);
++			factory.setExpandEntityReferences(false);
++		} catch (Exception e) {
++			if (log.isWarnEnabled()) {
++				log.warn("Caught " + e.getMessage() + " attempting to configure your XML parser.");
++			}
++		}
++
++		return factory;
++	}
++}
+diff --git a/spring-xml/src/main/java/org/springframework/xml/JaxpVersion.java b/spring-xml/src/main/java/org/springframework/xml/JaxpVersion.java
+index b8e5774f6..a04d81034 100644
+--- a/spring-xml/src/main/java/org/springframework/xml/JaxpVersion.java
++++ b/spring-xml/src/main/java/org/springframework/xml/JaxpVersion.java
+@@ -22,12 +22,11 @@
+  * Helper class used to find the current version of JAXP. We cannot depend on the Java version, since JAXP can be
+  * upgraded independently of the Java version.
+  *
+- * <p>Only distinguishes between JAXP 1.0, 1.1, 1.3, and 1.4, since JAXP 1.2 was a maintenance release with no new
++ * <p>Only distinguishes between JAXP 1.0, 1.1, 1.3, 1.4, and 1.5, since JAXP 1.2 was a maintenance release with no new
+  * classes.
+  *
+- * <p>Note that Spring-WS requires JDK 1.5 as of Spring-WS 2.0, and therefore has at least JAXP 1.3 available.
+- *
+  * @author Arjen Poutsma
++ * @author Greg Turnquist
+  * @since 1.0.0
+  */
+ public abstract class JaxpVersion {
+@@ -52,19 +51,31 @@ public abstract class JaxpVersion {
+ 	 */
+ 	public static final int JAXP_14 = 4;
+ 
++	/**
++	 * Constant identifying JAXP 1.5.
++	 */
++	public static final int JAXP_15 = 5;
++
+ 	private static final String JAXP_14_CLASS_NAME = "javax.xml.transform.stax.StAXSource";
++	
++	private static final String JAXP_15_CLASS_NAME = "javax.xml.validation.SchemaFactoryConfigurationError";
+ 
+ 	private static int jaxpVersion;
+ 
+ 	static {
+ 		ClassLoader classLoader = JaxpVersion.class.getClassLoader();
++
+ 		try {
+-			ClassUtils.forName(JAXP_14_CLASS_NAME, classLoader);
+-			jaxpVersion = JAXP_14;
+-		}
+-		catch (ClassNotFoundException ex) {
+-			// leave 1.3 as default (it's either 1.3 or unknown)
+-			jaxpVersion = JAXP_13;
++			ClassUtils.forName(JAXP_15_CLASS_NAME, classLoader);
++			jaxpVersion = JAXP_15;
++		} catch (ClassNotFoundException ex) {
++			try {
++				ClassUtils.forName(JAXP_14_CLASS_NAME, classLoader);
++				jaxpVersion = JAXP_14;
++			} catch (ClassNotFoundException e) {
++				// leave 1.3 as default (it's either 1.3 or unknown)
++				jaxpVersion = JAXP_13;
++			}
+ 		}
+ 	}
+ 
+@@ -76,6 +87,7 @@ public abstract class JaxpVersion {
+ 	 * @see #JAXP_11
+ 	 * @see #JAXP_13
+ 	 * @see #JAXP_14
++	 * @see #JAXP_15
+ 	 */
+ 	public static int getJaxpVersion() {
+ 		return jaxpVersion;
+diff --git a/spring-xml/src/main/java/org/springframework/xml/XMLInputFactoryUtils.java b/spring-xml/src/main/java/org/springframework/xml/XMLInputFactoryUtils.java
+new file mode 100644
+index 000000000..730604778
+--- /dev/null
++++ b/spring-xml/src/main/java/org/springframework/xml/XMLInputFactoryUtils.java
+@@ -0,0 +1,39 @@
++/*
++ * Copyright 2018 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.springframework.xml;
++
++import javax.xml.stream.XMLInputFactory;
++
++/**
++ * @author Greg Turnquist
++ */
++public class XMLInputFactoryUtils {
++
++	/**
++	 * Build an {@link XMLInputFactory} and set properties to prevent external entities from accessing.
++	 *
++	 * @see XMLInputFactory#newInstance() 
++	 */
++	public static XMLInputFactory newInstance() {
++		XMLInputFactory factory = XMLInputFactory.newInstance();
++
++		factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++		factory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
++		
++		return factory;
++	}
++
++}
+diff --git a/spring-xml/src/main/java/org/springframework/xml/transform/TransformerFactoryUtils.java b/spring-xml/src/main/java/org/springframework/xml/transform/TransformerFactoryUtils.java
+new file mode 100644
+index 000000000..b365b371e
+--- /dev/null
++++ b/spring-xml/src/main/java/org/springframework/xml/transform/TransformerFactoryUtils.java
+@@ -0,0 +1,57 @@
++/*
++ * Copyright 2018 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.springframework.xml.transform;
++
++import javax.xml.XMLConstants;
++import javax.xml.transform.TransformerFactory;
++import javax.xml.transform.TransformerFactoryConfigurationError;
++
++/**
++ * @author Greg Turnquist
++ * @since 3.0.5
++ */
++public class TransformerFactoryUtils {
++
++	/**
++	 * Build a new {@link TransformerFactory} using the default constructor.
++	 */
++	public static TransformerFactory newInstance() {
++		return defaultSettings(TransformerFactory.newInstance());
++	}
++
++	/**
++	 * Build an {@link TransformerFactory} and prevent external entities from accessing.
++	 *
++	 * @see TransformerFactory#newInstance()
++	 */
++	public static TransformerFactory newInstance(Class<? extends TransformerFactory> transformerFactoryClass) {
++		try {
++			return defaultSettings(transformerFactoryClass.newInstance());
++		} catch (InstantiationException | IllegalAccessException e) {
++			throw new TransformerFactoryConfigurationError(e,
++					"Could not instantiate TransformerFactory [" + transformerFactoryClass + "]");
++		}
++	}
++
++	/**
++	 * Prevent external entities from accessing.
++	 */
++	private static TransformerFactory defaultSettings(TransformerFactory factory) {
++		factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
++		factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
++		return factory;
++	}
++}
+diff --git a/spring-xml/src/main/java/org/springframework/xml/transform/TransformerHelper.java b/spring-xml/src/main/java/org/springframework/xml/transform/TransformerHelper.java
+index 14de3faa5..feec48571 100644
+--- a/spring-xml/src/main/java/org/springframework/xml/transform/TransformerHelper.java
++++ b/spring-xml/src/main/java/org/springframework/xml/transform/TransformerHelper.java
+@@ -22,7 +22,6 @@
+ import javax.xml.transform.TransformerConfigurationException;
+ import javax.xml.transform.TransformerException;
+ import javax.xml.transform.TransformerFactory;
+-import javax.xml.transform.TransformerFactoryConfigurationError;
+ 
+ import org.springframework.util.Assert;
+ 
+@@ -83,16 +82,11 @@ public void setTransformerFactoryClass(Class<? extends TransformerFactory> trans
+ 	 */
+ 	protected TransformerFactory newTransformerFactory(Class<? extends TransformerFactory> transformerFactoryClass) {
+ 		if (transformerFactoryClass != null) {
+-			try {
+-				return transformerFactoryClass.newInstance();
+-			}
+-			catch (Exception ex) {
+-				throw new TransformerFactoryConfigurationError(ex,
+-						"Could not instantiate TransformerFactory [" + transformerFactoryClass + "]");
+-			}
+-		}
+-		else {
+-			return TransformerFactory.newInstance();
++			TransformerFactory transformerFactory = TransformerFactoryUtils.newInstance(transformerFactoryClass);
++			return transformerFactory;
++		} else {
++			TransformerFactory transformerFactory = TransformerFactoryUtils.newInstance();
++			return transformerFactory;
+ 		}
+ 	}
+ 
+diff --git a/spring-xml/src/main/java/org/springframework/xml/validation/Jaxp13ValidatorFactory.java b/spring-xml/src/main/java/org/springframework/xml/validation/Jaxp13ValidatorFactory.java
+index 059c3e818..189f631af 100644
+--- a/spring-xml/src/main/java/org/springframework/xml/validation/Jaxp13ValidatorFactory.java
++++ b/spring-xml/src/main/java/org/springframework/xml/validation/Jaxp13ValidatorFactory.java
+@@ -32,6 +32,7 @@
+  * Internal class that uses JAXP 1.0 features to create {@code XmlValidator} instances.
+  *
+  * @author Arjen Poutsma
++ * @author Greg Turnquist
+  * @since 1.0.0
+  */
+ abstract class Jaxp13ValidatorFactory {
+diff --git a/spring-xml/src/main/java/org/springframework/xml/validation/Jaxp15ValidatorFactory.java b/spring-xml/src/main/java/org/springframework/xml/validation/Jaxp15ValidatorFactory.java
+new file mode 100644
+index 000000000..680075b07
+--- /dev/null
++++ b/spring-xml/src/main/java/org/springframework/xml/validation/Jaxp15ValidatorFactory.java
+@@ -0,0 +1,130 @@
++/*
++ * Copyright 2005-2014 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.springframework.xml.validation;
++
++import java.io.IOException;
++import java.util.ArrayList;
++import java.util.List;
++import javax.xml.XMLConstants;
++import javax.xml.transform.Source;
++import javax.xml.validation.Schema;
++import javax.xml.validation.Validator;
++
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
++import org.xml.sax.SAXException;
++import org.xml.sax.SAXNotRecognizedException;
++import org.xml.sax.SAXNotSupportedException;
++import org.xml.sax.SAXParseException;
++
++import org.springframework.core.io.Resource;
++
++/**
++ * Internal class that uses JAXP 1.5 features to create an {@code XmlValidator} with settings to prevent
++ * external entity access.
++ *
++ * @author Arjen Poutsma
++ * @author Greg Turnquist
++ * @since 3.0.5
++ */
++abstract class Jaxp15ValidatorFactory {
++
++	private static final Log log = LogFactory.getLog(Jaxp15ValidatorFactory.class);
++
++
++	static XmlValidator createValidator(Resource[] resources, String schemaLanguage) throws IOException {
++		try {
++			Schema schema = SchemaLoaderUtils.loadSchema(resources, schemaLanguage);
++			return new Jaxp15Validator(schema);
++		}
++		catch (SAXException ex) {
++			throw new XmlValidationException("Could not create Schema: " + ex.getMessage(), ex);
++		}
++	}
++
++	private static class Jaxp15Validator implements XmlValidator {
++
++		private Schema schema;
++
++		public Jaxp15Validator(Schema schema) {
++			this.schema = schema;
++		}
++
++		@Override
++		public SAXParseException[] validate(Source source) throws IOException {
++			return validate(source, null);
++		}
++
++		@Override
++		public SAXParseException[] validate(Source source, ValidationErrorHandler errorHandler) throws IOException {
++			if (errorHandler == null) {
++				errorHandler = new DefaultValidationErrorHandler();
++			}
++			Validator validator = schema.newValidator();
++
++			try {
++				validator.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
++			} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
++				if (log.isWarnEnabled()) {
++					log.warn(XMLConstants.ACCESS_EXTERNAL_DTD + " property not supported by " + validator.getClass().getCanonicalName());
++				}
++			}
++
++			try {
++				validator.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
++			} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
++				if (log.isWarnEnabled()) {
++					log.warn(XMLConstants.ACCESS_EXTERNAL_SCHEMA + " property not supported by " + validator.getClass().getCanonicalName());
++				}
++			}
++
++			validator.setErrorHandler(errorHandler);
++			try {
++				validator.validate(source);
++				return errorHandler.getErrors();
++			}
++			catch (SAXException ex) {
++				throw new XmlValidationException("Could not validate source: " + ex.getMessage(), ex);
++			}
++		}
++	}
++
++	/** {@code ErrorHandler} implementation that stores errors and fatal errors in a list. */
++	private static class DefaultValidationErrorHandler implements ValidationErrorHandler {
++
++		private List<SAXParseException> errors = new ArrayList<SAXParseException>();
++
++		@Override
++		public SAXParseException[] getErrors() {
++			return errors.toArray(new SAXParseException[errors.size()]);
++		}
++
++		@Override
++		public void warning(SAXParseException ex) throws SAXException {
++		}
++
++		@Override
++		public void error(SAXParseException ex) throws SAXException {
++			errors.add(ex);
++		}
++
++		@Override
++		public void fatalError(SAXParseException ex) throws SAXException {
++			errors.add(ex);
++		}
++	}
++}
+diff --git a/spring-xml/src/main/java/org/springframework/xml/validation/SchemaFactoryUtils.java b/spring-xml/src/main/java/org/springframework/xml/validation/SchemaFactoryUtils.java
+new file mode 100644
+index 000000000..32e308728
+--- /dev/null
++++ b/spring-xml/src/main/java/org/springframework/xml/validation/SchemaFactoryUtils.java
+@@ -0,0 +1,61 @@
++/*
++ * Copyright 2018 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.springframework.xml.validation;
++
++import javax.xml.XMLConstants;
++import javax.xml.validation.SchemaFactory;
++
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
++import org.xml.sax.SAXNotRecognizedException;
++import org.xml.sax.SAXNotSupportedException;
++
++/**
++ * @author Greg Turnquist
++ * @since 3.0.5
++ */
++public class SchemaFactoryUtils {
++
++	private static final Log log = LogFactory.getLog(SchemaFactoryUtils.class);
++
++	/**
++	 * Build a {@link SchemaFactory} and set properties to prevent external entities from accessing.
++	 *
++	 * @see SchemaFactory#newInstance(String) 
++	 */
++	public static SchemaFactory newInstance(String schemaLanguage) {
++		SchemaFactory schemaFactory = SchemaFactory.newInstance(schemaLanguage);
++
++		try {
++			schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
++		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
++			if (log.isWarnEnabled()) {
++				log.warn(XMLConstants.ACCESS_EXTERNAL_DTD + " property not supported by " + schemaFactory.getClass().getCanonicalName());
++			}
++
++		}
++
++		try {
++			schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "file,jar:file");
++		} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
++			if (log.isWarnEnabled()) {
++				log.warn(XMLConstants.ACCESS_EXTERNAL_SCHEMA + " property not supported by " + schemaFactory.getClass().getCanonicalName());
++			}
++		}
++
++		return schemaFactory;
++	}
++}
+diff --git a/spring-xml/src/main/java/org/springframework/xml/validation/SchemaLoaderUtils.java b/spring-xml/src/main/java/org/springframework/xml/validation/SchemaLoaderUtils.java
+index b10966bcf..9242e022e 100644
+--- a/spring-xml/src/main/java/org/springframework/xml/validation/SchemaLoaderUtils.java
++++ b/spring-xml/src/main/java/org/springframework/xml/validation/SchemaLoaderUtils.java
+@@ -21,14 +21,13 @@
+ import javax.xml.validation.Schema;
+ import javax.xml.validation.SchemaFactory;
+ 
++import org.xml.sax.SAXException;
++import org.xml.sax.XMLReader;
++
+ import org.springframework.core.io.Resource;
+ import org.springframework.util.Assert;
+ import org.springframework.xml.transform.ResourceSource;
+ 
+-import org.xml.sax.SAXException;
+-import org.xml.sax.XMLReader;
+-import org.xml.sax.helpers.XMLReaderFactory;
+-
+ /**
+  * Convenient utility methods for loading of {@link Schema} objects, performing standard handling of input streams.
+  *
+@@ -67,14 +66,14 @@ public static Schema loadSchema(Resource[] resources, String schemaLanguage) thr
+ 		Assert.notEmpty(resources, "No resources given");
+ 		Assert.hasLength(schemaLanguage, "No schema language provided");
+ 		Source[] schemaSources = new Source[resources.length];
+-		XMLReader xmlReader = XMLReaderFactory.createXMLReader();
++		XMLReader xmlReader = XMLReaderFactoryUtils.createXMLReader();
+ 		xmlReader.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
+ 		for (int i = 0; i < resources.length; i++) {
+ 			Assert.notNull(resources[i], "Resource is null");
+ 			Assert.isTrue(resources[i].exists(), "Resource " + resources[i] + " does not exist");
+ 			schemaSources[i] = new ResourceSource(xmlReader, resources[i]);
+ 		}
+-		SchemaFactory schemaFactory = SchemaFactory.newInstance(schemaLanguage);
++		SchemaFactory schemaFactory = SchemaFactoryUtils.newInstance(schemaLanguage);
+ 		return schemaFactory.newSchema(schemaSources);
+ 	}
+ 
+@@ -87,4 +86,5 @@ public static String getSystemId(Resource resource) {
+ 			return null;
+ 		}
+ 	}
++
+ }
+\ No newline at end of file
+diff --git a/spring-xml/src/main/java/org/springframework/xml/validation/XMLReaderFactoryUtils.java b/spring-xml/src/main/java/org/springframework/xml/validation/XMLReaderFactoryUtils.java
+new file mode 100644
+index 000000000..723912c62
+--- /dev/null
++++ b/spring-xml/src/main/java/org/springframework/xml/validation/XMLReaderFactoryUtils.java
+@@ -0,0 +1,43 @@
++/*
++ * Copyright 2018 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.springframework.xml.validation;
++
++import org.xml.sax.SAXException;
++import org.xml.sax.XMLReader;
++import org.xml.sax.helpers.XMLReaderFactory;
++
++/**
++ * @author Greg Turnquist
++ * @since 3.0.5
++ */
++public class XMLReaderFactoryUtils {
++
++	/**
++	 * Build a {@link XMLReader} and set properties to prevent external entity access.
++	 *
++	 * @see XMLReaderFactory#createXMLReader() 
++	 */
++	public static XMLReader createXMLReader() throws SAXException {
++		XMLReader xmlReader = XMLReaderFactory.createXMLReader();
++
++		xmlReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++		xmlReader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
++		xmlReader.setFeature("http://xml.org/sax/features/external-general-entities", false);
++		xmlReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++
++		return xmlReader;
++	}
++}
+diff --git a/spring-xml/src/main/java/org/springframework/xml/validation/XmlValidatorFactory.java b/spring-xml/src/main/java/org/springframework/xml/validation/XmlValidatorFactory.java
+index 2cce2c0d4..c5ba3ad47 100644
+--- a/spring-xml/src/main/java/org/springframework/xml/validation/XmlValidatorFactory.java
++++ b/spring-xml/src/main/java/org/springframework/xml/validation/XmlValidatorFactory.java
+@@ -19,13 +19,13 @@
+ import java.io.IOException;
+ import javax.xml.validation.Validator;
+ 
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
++
+ import org.springframework.core.io.Resource;
+ import org.springframework.util.Assert;
+ import org.springframework.xml.JaxpVersion;
+ 
+-import org.apache.commons.logging.Log;
+-import org.apache.commons.logging.LogFactory;
+-
+ /**
+  * Factory for {@link XmlValidator} objects, being aware of JAXP 1.3 {@link Validator}s, and JAXP 1.0 parsing
+  * capabilities. Mainly for internal use within the framework.
+@@ -84,10 +84,15 @@ public static XmlValidator createValidator(Resource[] schemaResources, String sc
+ 		Assert.hasLength(schemaLanguage, "No schema language provided");
+ 		Assert.isTrue(SCHEMA_W3C_XML.equals(schemaLanguage) || SCHEMA_RELAX_NG.equals(schemaLanguage),
+ 				"Invalid schema language: " + schemaLanguage);
++		Assert.noNullElements(schemaResources, "No null schemaResources allowed");
+ 		for (Resource schemaResource : schemaResources) {
+ 			Assert.isTrue(schemaResource.exists(), "schema [" + schemaResource + "] does not exist");
+ 		}
+-		if (JaxpVersion.getJaxpVersion() >= JaxpVersion.JAXP_13) {
++		if (JaxpVersion.getJaxpVersion() >= JaxpVersion.JAXP_15) {
++			logger.trace("Creating JAXP 1.5 XmlValidator");
++			return Jaxp15ValidatorFactory.createValidator(schemaResources, schemaLanguage);
++		}
++		else if (JaxpVersion.getJaxpVersion() >= JaxpVersion.JAXP_13) {
+ 			logger.trace("Creating JAXP 1.3 XmlValidator");
+ 			return Jaxp13ValidatorFactory.createValidator(schemaResources, schemaLanguage);
+ 		}
+diff --git a/spring-xml/src/main/java/org/springframework/xml/xsd/SimpleXsdSchema.java b/spring-xml/src/main/java/org/springframework/xml/xsd/SimpleXsdSchema.java
+index 5a6fd9c1c..d7305d572 100644
+--- a/spring-xml/src/main/java/org/springframework/xml/xsd/SimpleXsdSchema.java
++++ b/spring-xml/src/main/java/org/springframework/xml/xsd/SimpleXsdSchema.java
+@@ -31,6 +31,7 @@
+ import org.springframework.beans.factory.InitializingBean;
+ import org.springframework.core.io.Resource;
+ import org.springframework.util.Assert;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ import org.springframework.xml.sax.SaxUtils;
+ import org.springframework.xml.validation.XmlValidator;
+ import org.springframework.xml.validation.XmlValidatorFactory;
+@@ -48,7 +49,7 @@
+  */
+ public class SimpleXsdSchema implements XsdSchema, InitializingBean {
+ 
+-	private static DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++	private static DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 
+ 	private static final String SCHEMA_NAMESPACE = "http://www.w3.org/2001/XMLSchema";
+ 
+diff --git a/spring-xml/src/test/java/org/springframework/xml/dom/DomContentHandlerTest.java b/spring-xml/src/test/java/org/springframework/xml/dom/DomContentHandlerTest.java
+index 216372776..2f52973f8 100644
+--- a/spring-xml/src/test/java/org/springframework/xml/dom/DomContentHandlerTest.java
++++ b/spring-xml/src/test/java/org/springframework/xml/dom/DomContentHandlerTest.java
+@@ -28,6 +28,8 @@
+ import org.xml.sax.XMLReader;
+ import org.xml.sax.helpers.XMLReaderFactory;
+ 
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
+ import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
+ 
+ public class DomContentHandlerTest {
+@@ -55,7 +57,7 @@ public class DomContentHandlerTest {
+ 
+ 	@Before
+ 	public void setUp() throws Exception {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		result = documentBuilder.newDocument();
+diff --git a/spring-xml/src/test/java/org/springframework/xml/namespace/QNameUtilsTest.java b/spring-xml/src/test/java/org/springframework/xml/namespace/QNameUtilsTest.java
+index 4535ffd30..63d66dc43 100644
+--- a/spring-xml/src/test/java/org/springframework/xml/namespace/QNameUtilsTest.java
++++ b/spring-xml/src/test/java/org/springframework/xml/namespace/QNameUtilsTest.java
+@@ -20,13 +20,14 @@
+ import javax.xml.parsers.DocumentBuilder;
+ import javax.xml.parsers.DocumentBuilderFactory;
+ 
+-import org.springframework.util.StringUtils;
+-
+ import org.junit.Assert;
+ import org.junit.Test;
+ import org.w3c.dom.Document;
+ import org.w3c.dom.Element;
+ 
++import org.springframework.util.StringUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
+ public class QNameUtilsTest {
+ 
+ 	@Test
+@@ -45,7 +46,7 @@ public void testInvalidQNames() {
+ 
+ 	@Test
+ 	public void testGetQNameForNodeNoNamespace() throws Exception {
+-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory factory = DocumentBuilderFactoryUtils.newInstance();
+ 		DocumentBuilder builder = factory.newDocumentBuilder();
+ 		Document document = builder.newDocument();
+ 		Element element = document.createElement("localname");
+@@ -59,7 +60,7 @@ public void testGetQNameForNodeNoNamespace() throws Exception {
+ 
+ 	@Test
+ 	public void testGetQNameForNodeNoPrefix() throws Exception {
+-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory factory = DocumentBuilderFactoryUtils.newInstance();
+ 		DocumentBuilder builder = factory.newDocumentBuilder();
+ 		Document document = builder.newDocument();
+ 		Element element = document.createElementNS("namespace", "localname");
+@@ -72,7 +73,7 @@ public void testGetQNameForNodeNoPrefix() throws Exception {
+ 
+ 	@Test
+ 	public void testGetQNameForNode() throws Exception {
+-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory factory = DocumentBuilderFactoryUtils.newInstance();
+ 		DocumentBuilder builder = factory.newDocumentBuilder();
+ 		Document document = builder.newDocument();
+ 		Element element = document.createElementNS("namespace", "prefix:localname");
+diff --git a/spring-xml/src/test/java/org/springframework/xml/transform/ResourceSourceTest.java b/spring-xml/src/test/java/org/springframework/xml/transform/ResourceSourceTest.java
+index da184d772..8ec8c86df 100644
+--- a/spring-xml/src/test/java/org/springframework/xml/transform/ResourceSourceTest.java
++++ b/spring-xml/src/test/java/org/springframework/xml/transform/ResourceSourceTest.java
+@@ -17,20 +17,19 @@
+ package org.springframework.xml.transform;
+ 
+ import javax.xml.transform.Transformer;
+-import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.dom.DOMResult;
+ 
+-import org.springframework.core.io.ClassPathResource;
+-
+ import org.junit.Assert;
+ import org.junit.Test;
+ import org.w3c.dom.Element;
+ 
++import org.springframework.core.io.ClassPathResource;
++
+ public class ResourceSourceTest {
+ 
+ 	@Test
+ 	public void testStringSource() throws Exception {
+-		Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		DOMResult result = new DOMResult();
+ 		ResourceSource source = new ResourceSource(new ClassPathResource("resourceSource.xml", getClass()));
+ 		transformer.transform(source, result);
+diff --git a/spring-xml/src/test/java/org/springframework/xml/transform/StringResultTest.java b/spring-xml/src/test/java/org/springframework/xml/transform/StringResultTest.java
+index cdc30532a..0ad0a9b55 100644
+--- a/spring-xml/src/test/java/org/springframework/xml/transform/StringResultTest.java
++++ b/spring-xml/src/test/java/org/springframework/xml/transform/StringResultTest.java
+@@ -16,25 +16,25 @@
+ 
+ package org.springframework.xml.transform;
+ 
+-import javax.xml.parsers.DocumentBuilderFactory;
+ import javax.xml.transform.Transformer;
+-import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.dom.DOMSource;
+ 
+ import org.junit.Test;
+ import org.w3c.dom.Document;
+ import org.w3c.dom.Element;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ 
+ public class StringResultTest {
+ 
+ 	@Test
+ 	public void testStringResult() throws Exception {
+-		Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
++		Document document = DocumentBuilderFactoryUtils.newInstance().newDocumentBuilder().newDocument();
+ 		Element element = document.createElementNS("namespace", "prefix:localName");
+ 		document.appendChild(element);
+-		Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		StringResult result = new StringResult();
+ 		transformer.transform(new DOMSource(document), result);
+ 		assertXMLEqual("Invalid result", "<prefix:localName xmlns:prefix='namespace'/>", result.toString());
+diff --git a/spring-xml/src/test/java/org/springframework/xml/transform/StringSourceTest.java b/spring-xml/src/test/java/org/springframework/xml/transform/StringSourceTest.java
+index 2f775e70f..3d2f47a6f 100644
+--- a/spring-xml/src/test/java/org/springframework/xml/transform/StringSourceTest.java
++++ b/spring-xml/src/test/java/org/springframework/xml/transform/StringSourceTest.java
+@@ -29,7 +29,7 @@ public class StringSourceTest {
+ 
+ 	@Test
+ 	public void testStringSource() throws TransformerException {
+-		Transformer transformer = TransformerFactory.newInstance().newTransformer();
++		Transformer transformer = TransformerFactoryUtils.newInstance().newTransformer();
+ 		String content = "<prefix:content xmlns:prefix='namespace'/>";
+ 		DOMResult result = new DOMResult();
+ 		transformer.transform(new StringSource(content), result);
+diff --git a/spring-xml/src/test/java/org/springframework/xml/transform/TraxUtilsTest.java b/spring-xml/src/test/java/org/springframework/xml/transform/TraxUtilsTest.java
+index a4e929143..7d0640ca2 100644
+--- a/spring-xml/src/test/java/org/springframework/xml/transform/TraxUtilsTest.java
++++ b/spring-xml/src/test/java/org/springframework/xml/transform/TraxUtilsTest.java
+@@ -41,8 +41,6 @@
+ import javax.xml.transform.stream.StreamResult;
+ import javax.xml.transform.stream.StreamSource;
+ 
+-import org.springframework.util.xml.StaxUtils;
+-
+ import org.junit.Assert;
+ import org.junit.Test;
+ import org.w3c.dom.Document;
+@@ -55,13 +53,17 @@
+ import org.xml.sax.helpers.DefaultHandler;
+ import org.xml.sax.helpers.XMLReaderFactory;
+ 
++import org.springframework.util.xml.StaxUtils;
++import org.springframework.xml.XMLInputFactoryUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
+ import static org.easymock.EasyMock.*;
+ 
+ public class TraxUtilsTest {
+ 
+ 	@Test
+ 	public void testGetDocument() throws Exception {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document document = documentBuilder.newDocument();
+@@ -73,7 +75,7 @@ public void testGetDocument() throws Exception {
+ 
+ 	@Test
+ 	public void testDoWithDomSource() throws Exception {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document document = documentBuilder.newDocument();
+ 
+@@ -89,7 +91,7 @@ public void testDoWithDomSource() throws Exception {
+ 
+ 	@Test
+ 	public void testDoWithDomResult() throws Exception {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document document = documentBuilder.newDocument();
+ 
+@@ -137,7 +139,7 @@ public void testDoWithSaxResult() throws Exception {
+ 
+ 	@Test
+ 	public void testDoWithStaxSourceEventReader() throws Exception {
+-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++		XMLInputFactory inputFactory = XMLInputFactoryUtils.newInstance();
+ 		XMLEventReader eventReader = inputFactory.createXMLEventReader(new StringReader("<element/>"));
+ 
+ 		TraxUtils.SourceCallback mock = createMock(TraxUtils.SourceCallback.class);
+@@ -167,7 +169,7 @@ public void testDoWithStaxResultEventWriter() throws Exception {
+ 
+ 	@Test
+ 	public void testDoWithStaxSourceStreamReader() throws Exception {
+-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++		XMLInputFactory inputFactory = XMLInputFactoryUtils.newInstance();
+ 		XMLStreamReader streamReader = inputFactory.createXMLStreamReader(new StringReader("<element/>"));
+ 
+ 		TraxUtils.SourceCallback mock = createMock(TraxUtils.SourceCallback.class);
+diff --git a/spring-xml/src/test/java/org/springframework/xml/validation/AbstractValidatorFactoryTestCase.java b/spring-xml/src/test/java/org/springframework/xml/validation/AbstractValidatorFactoryTestCase.java
+index 79e8720d2..f2ae9aabb 100644
+--- a/spring-xml/src/test/java/org/springframework/xml/validation/AbstractValidatorFactoryTestCase.java
++++ b/spring-xml/src/test/java/org/springframework/xml/validation/AbstractValidatorFactoryTestCase.java
+@@ -23,10 +23,6 @@
+ import javax.xml.transform.sax.SAXSource;
+ import javax.xml.transform.stream.StreamSource;
+ 
+-import org.springframework.core.io.ClassPathResource;
+-import org.springframework.core.io.Resource;
+-import org.springframework.xml.transform.ResourceSource;
+-
+ import org.junit.After;
+ import org.junit.Assert;
+ import org.junit.Before;
+@@ -36,6 +32,11 @@
+ import org.xml.sax.SAXException;
+ import org.xml.sax.SAXParseException;
+ 
++import org.springframework.core.io.ClassPathResource;
++import org.springframework.core.io.Resource;
++import org.springframework.xml.transform.ResourceSource;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++
+ public abstract class AbstractValidatorFactoryTestCase {
+ 
+ 	private XmlValidator validator;
+@@ -98,7 +99,7 @@ public void testHandleInvalidMessageSax() throws Exception {
+ 
+ 	@Test
+ 	public void testHandleValidMessageDom() throws Exception {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		Document document = documentBuilderFactory.newDocumentBuilder()
+ 				.parse(new InputSource(validInputStream));
+@@ -109,7 +110,7 @@ public void testHandleValidMessageDom() throws Exception {
+ 
+ 	@Test
+ 	public void testHandleInvalidMessageDom() throws Exception {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		Document document = documentBuilderFactory.newDocumentBuilder()
+ 				.parse(new InputSource(invalidInputStream));
+diff --git a/spring-xml/src/test/java/org/springframework/xml/validation/Jaxp15ValidatorFactoryTest.java b/spring-xml/src/test/java/org/springframework/xml/validation/Jaxp15ValidatorFactoryTest.java
+new file mode 100644
+index 000000000..93d1fb373
+--- /dev/null
++++ b/spring-xml/src/test/java/org/springframework/xml/validation/Jaxp15ValidatorFactoryTest.java
+@@ -0,0 +1,29 @@
++/*
++ * Copyright 2005-2010 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.springframework.xml.validation;
++
++import java.io.IOException;
++
++import org.springframework.core.io.Resource;
++
++public class Jaxp15ValidatorFactoryTest extends AbstractValidatorFactoryTestCase {
++
++	@Override
++	protected XmlValidator createValidator(Resource[] schemaResources, String schemaLanguage) throws IOException {
++		return Jaxp15ValidatorFactory.createValidator(schemaResources, schemaLanguage);
++	}
++}
+\ No newline at end of file
+diff --git a/spring-xml/src/test/java/org/springframework/xml/xpath/AbstractXPathExpressionFactoryTestCase.java b/spring-xml/src/test/java/org/springframework/xml/xpath/AbstractXPathExpressionFactoryTestCase.java
+index be9467139..c2a5b78be 100644
+--- a/spring-xml/src/test/java/org/springframework/xml/xpath/AbstractXPathExpressionFactoryTestCase.java
++++ b/spring-xml/src/test/java/org/springframework/xml/xpath/AbstractXPathExpressionFactoryTestCase.java
+@@ -33,6 +33,7 @@
+ import org.xml.sax.SAXException;
+ 
+ import org.springframework.util.StringUtils;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ 
+ public abstract class AbstractXPathExpressionFactoryTestCase {
+ 
+@@ -46,7 +47,7 @@ public abstract class AbstractXPathExpressionFactoryTestCase {
+ 	public void setUp() throws Exception {
+ 		namespaces.put("prefix1", "namespace1");
+ 		namespaces.put("prefix2", "namespace2");
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		InputStream inputStream = getClass().getResourceAsStream("nonamespaces.xml");
+diff --git a/spring-xml/src/test/java/org/springframework/xml/xpath/AbstractXPathTemplateTestCase.java b/spring-xml/src/test/java/org/springframework/xml/xpath/AbstractXPathTemplateTestCase.java
+index 61f4080cc..66ae16ead 100644
+--- a/spring-xml/src/test/java/org/springframework/xml/xpath/AbstractXPathTemplateTestCase.java
++++ b/spring-xml/src/test/java/org/springframework/xml/xpath/AbstractXPathTemplateTestCase.java
+@@ -34,6 +34,7 @@
+ import org.springframework.core.io.ClassPathResource;
+ import org.springframework.xml.sax.SaxUtils;
+ import org.springframework.xml.transform.ResourceSource;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ 
+ import org.junit.Assert;
+ import org.junit.Before;
+@@ -128,7 +129,7 @@ public void testEvaluateAsString() throws IOException, SAXException {
+ 
+ 	@Test
+ 	public void testEvaluateDomSource() throws IOException, SAXException, ParserConfigurationException {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		Document document = documentBuilder.parse(SaxUtils.createInputSource(
+diff --git a/spring-xml/src/test/java/org/springframework/xml/xsd/AbstractXsdSchemaTestCase.java b/spring-xml/src/test/java/org/springframework/xml/xsd/AbstractXsdSchemaTestCase.java
+index e8aaefddd..14959d915 100644
+--- a/spring-xml/src/test/java/org/springframework/xml/xsd/AbstractXsdSchemaTestCase.java
++++ b/spring-xml/src/test/java/org/springframework/xml/xsd/AbstractXsdSchemaTestCase.java
+@@ -22,18 +22,20 @@
+ import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.dom.DOMResult;
+ 
+-import org.springframework.core.io.ClassPathResource;
+-import org.springframework.core.io.Resource;
+-import org.springframework.xml.sax.SaxUtils;
+-import org.springframework.xml.validation.XmlValidator;
+-
+ import org.custommonkey.xmlunit.XMLUnit;
+ import org.junit.Assert;
+ import org.junit.Before;
+ import org.junit.Test;
+ import org.w3c.dom.Document;
+ 
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import org.springframework.core.io.ClassPathResource;
++import org.springframework.core.io.Resource;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
++import org.springframework.xml.sax.SaxUtils;
++import org.springframework.xml.transform.TransformerFactoryUtils;
++import org.springframework.xml.validation.XmlValidator;
++
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ 
+ public abstract class AbstractXsdSchemaTestCase {
+ 
+@@ -43,10 +45,10 @@ public abstract class AbstractXsdSchemaTestCase {
+ 
+ 	@Before
+ 	public final void setUp() throws Exception {
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		documentBuilder = documentBuilderFactory.newDocumentBuilder();
+-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
++		TransformerFactory transformerFactory = TransformerFactoryUtils.newInstance();
+ 		transformer = transformerFactory.newTransformer();
+ 		XMLUnit.setIgnoreWhitespace(true);
+ 	}
+diff --git a/spring-xml/src/test/java/org/springframework/xml/xsd/commons/CommonsXsdSchemaCollectionTest.java b/spring-xml/src/test/java/org/springframework/xml/xsd/commons/CommonsXsdSchemaCollectionTest.java
+index 229b52428..ec4a8013f 100644
+--- a/spring-xml/src/test/java/org/springframework/xml/xsd/commons/CommonsXsdSchemaCollectionTest.java
++++ b/spring-xml/src/test/java/org/springframework/xml/xsd/commons/CommonsXsdSchemaCollectionTest.java
+@@ -22,20 +22,22 @@
+ import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.dom.DOMResult;
+ 
++import org.custommonkey.xmlunit.XMLUnit;
++import org.junit.Assert;
++import org.junit.Before;
++import org.junit.Test;
++import org.w3c.dom.Document;
++
+ import org.springframework.core.io.ClassPathResource;
+ import org.springframework.core.io.Resource;
+ import org.springframework.xml.sax.SaxUtils;
++import org.springframework.xml.transform.TransformerFactoryUtils;
+ import org.springframework.xml.validation.XmlValidator;
+ import org.springframework.xml.xsd.AbstractXsdSchemaTestCase;
++import org.springframework.xml.DocumentBuilderFactoryUtils;
+ import org.springframework.xml.xsd.XsdSchema;
+ 
+-import org.custommonkey.xmlunit.XMLUnit;
+-import org.junit.Assert;
+-import org.junit.Before;
+-import org.junit.Test;
+-import org.w3c.dom.Document;
+-
+-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
++import static org.custommonkey.xmlunit.XMLAssert.*;
+ 
+ public class CommonsXsdSchemaCollectionTest {
+ 
+@@ -48,9 +50,9 @@ public class CommonsXsdSchemaCollectionTest {
+ 	@Before
+ 	public void setUp() throws Exception {
+ 		collection = new CommonsXsdSchemaCollection();
+-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
++		TransformerFactory transformerFactory = TransformerFactoryUtils.newInstance();
+ 		transformer = transformerFactory.newTransformer();
+-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
++		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactoryUtils.newInstance();
+ 		documentBuilderFactory.setNamespaceAware(true);
+ 		documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 		XMLUnit.setIgnoreWhitespace(true);

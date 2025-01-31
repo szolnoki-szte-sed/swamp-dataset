@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:shrinerb:shrine:*:*:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/shrinerb/shrine/commit/1b27090ce31543bf39f186c20ea47c8250fca2f0",
+        "version_end_excluding": {
+            "shrinerb:shrine": "3.3.0"
+        },
+        "path": {
+            "file_path": "lib/shrine/plugins/derivation_endpoint.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15237"
+        ],
+        "CWE": [
+            "CWE-203"
+        ]
+    }
+}

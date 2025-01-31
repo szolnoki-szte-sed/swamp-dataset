@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:supportflow_project:supportflow:*:*:*:*:*:wordpress:*:*"
+        ],
+        "fix_commit": "https://github.com/SupportFlow/supportflow/commit/c507cc863d161f87c28d0682714bf188ffac1a67",
+        "version_end_excluding": {
+            "supportflow_project:supportflow": "0.7"
+        },
+        "path": {
+            "file_path": "classes/class-supportflow-admin.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-10970"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sefrengo:sefrengo:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/sefrengo-cms/sefrengo-1.x/commit/22c0d16bfd715631ed317cc990785ccede478f07",
+        "version_end_excluding": {
+            "sefrengo:sefrengo": "unknown"
+        },
+        "path": {
+            "file_path": "setup/sql/config.sql"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-1428"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

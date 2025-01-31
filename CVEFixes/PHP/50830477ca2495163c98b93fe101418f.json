@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jorani_project:jorani:1.0.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bbalet/jorani/commit/3d01cef4ee9cdd70cfe1ac4fd7f5d607dda0d0ca",
+        "version_end_excluding": {
+            "jorani_project:jorani": "unknown"
+        },
+        "path": {
+            "file_path": "application/controllers/Leaves.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-34133"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

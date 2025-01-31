@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:limesurvey:limesurvey:3.17.7\\+190627:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/LimeSurvey/LimeSurvey/commit/0b7391dff91b326284ca3fc5188b768b5d522d88",
+        "version_end_excluding": {
+            "limesurvey:limesurvey": "unknown"
+        },
+        "path": {
+            "file_path": "application/views/admin/labels/labelview_view.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-14512"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

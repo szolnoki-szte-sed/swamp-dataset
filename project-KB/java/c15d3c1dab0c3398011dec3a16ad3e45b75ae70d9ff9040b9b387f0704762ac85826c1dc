@@ -1,0 +1,944 @@
+diff --git a/integration/pom.xml b/integration/pom.xml
+index 95b184662..14afe6abb 100755
+--- a/integration/pom.xml
++++ b/integration/pom.xml
+@@ -7,7 +7,7 @@
+   <parent>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-parent</artifactId>
+-    <version>1.8.0-beta3-SNAPSHOT</version>
++    <version>1.8.0-beta3</version>
+   </parent>
+ 
+   <artifactId>integration</artifactId>
+diff --git a/jcl-over-slf4j/pom.xml b/jcl-over-slf4j/pom.xml
+index b8ac7c643..bb3719764 100755
+--- a/jcl-over-slf4j/pom.xml
++++ b/jcl-over-slf4j/pom.xml
+@@ -5,7 +5,7 @@
+   <parent>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-parent</artifactId>
+-    <version>1.8.0-beta3-SNAPSHOT</version>
++    <version>1.8.0-beta3</version>
+   </parent>
+ 
+   <modelVersion>4.0.0</modelVersion>
+diff --git a/jul-to-slf4j/pom.xml b/jul-to-slf4j/pom.xml
+index e31065d05..394de22a8 100755
+--- a/jul-to-slf4j/pom.xml
++++ b/jul-to-slf4j/pom.xml
+@@ -7,7 +7,7 @@
+   <parent>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-parent</artifactId>
+-    <version>1.8.0-beta3-SNAPSHOT</version>
++    <version>1.8.0-beta3</version>
+   </parent>
+ 
+   <artifactId>jul-to-slf4j</artifactId>
+diff --git a/log4j-over-slf4j/pom.xml b/log4j-over-slf4j/pom.xml
+index f555fc11a..e449c9e20 100755
+--- a/log4j-over-slf4j/pom.xml
++++ b/log4j-over-slf4j/pom.xml
+@@ -7,7 +7,7 @@
+   <parent>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-parent</artifactId>
+-    <version>1.8.0-beta3-SNAPSHOT</version>
++    <version>1.8.0-beta3</version>
+   </parent>
+ 
+ 
+diff --git a/osgi-over-slf4j/pom.xml b/osgi-over-slf4j/pom.xml
+index 577d5bc66..760625f29 100755
+--- a/osgi-over-slf4j/pom.xml
++++ b/osgi-over-slf4j/pom.xml
+@@ -7,7 +7,7 @@
+   <parent>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-parent</artifactId>
+-    <version>1.8.0-beta3-SNAPSHOT</version>
++    <version>1.8.0-beta3</version>
+   </parent>
+ 
+   <artifactId>osgi-over-slf4j</artifactId>
+diff --git a/pom.xml b/pom.xml
+index 4f239683d..5c9a0152d 100755
+--- a/pom.xml
++++ b/pom.xml
+@@ -6,7 +6,7 @@
+ 
+   <groupId>org.slf4j</groupId>
+   <artifactId>slf4j-parent</artifactId>
+-  <version>1.8.0-beta3-SNAPSHOT</version>
++  <version>1.8.0-beta3</version>
+ 
+   <packaging>pom</packaging>
+   <name>SLF4J</name>
+diff --git a/slf4j-api/pom.xml b/slf4j-api/pom.xml
+index 22226d1e9..eedd8800b 100755
+--- a/slf4j-api/pom.xml
++++ b/slf4j-api/pom.xml
+@@ -7,7 +7,7 @@
+   <parent>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-parent</artifactId>
+-    <version>1.8.0-beta3-SNAPSHOT</version>
++    <version>1.8.0-beta3</version>
+   </parent>
+ 
+   <artifactId>slf4j-api</artifactId>
+diff --git a/slf4j-ext/pom.xml b/slf4j-ext/pom.xml
+index a2c94024d..5ef710d2c 100755
+--- a/slf4j-ext/pom.xml
++++ b/slf4j-ext/pom.xml
+@@ -7,7 +7,7 @@
+   <parent>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-parent</artifactId>
+-    <version>1.8.0-beta3-SNAPSHOT</version>
++    <version>1.8.0-beta3</version>
+   </parent>
+ 
+   <artifactId>slf4j-ext</artifactId>
+@@ -40,12 +40,6 @@
+       <version>3.4.GA</version>
+       <optional>true</optional>
+     </dependency>
+-    <dependency>
+-      <groupId>commons-lang</groupId>
+-      <artifactId>commons-lang</artifactId>
+-      <version>2.4</version>
+-      <optional>true</optional>
+-    </dependency>
+   </dependencies>
+ 
+   <build>
+diff --git a/slf4j-ext/src/main/java/org/slf4j/ext/EventData.java b/slf4j-ext/src/main/java/org/slf4j/ext/EventData.java
+deleted file mode 100755
+index 42467905f..000000000
+--- a/slf4j-ext/src/main/java/org/slf4j/ext/EventData.java
++++ /dev/null
+@@ -1,307 +0,0 @@
+-/**
+- * Copyright (c) 2004-2011 QOS.ch
+- * All rights reserved.
+- *
+- * Permission is hereby granted, free  of charge, to any person obtaining
+- * a  copy  of this  software  and  associated  documentation files  (the
+- * "Software"), to  deal in  the Software without  restriction, including
+- * without limitation  the rights to  use, copy, modify,  merge, publish,
+- * distribute,  sublicense, and/or sell  copies of  the Software,  and to
+- * permit persons to whom the Software  is furnished to do so, subject to
+- * the following conditions:
+- *
+- * The  above  copyright  notice  and  this permission  notice  shall  be
+- * included in all copies or substantial portions of the Software.
+- *
+- * THE  SOFTWARE IS  PROVIDED  "AS  IS", WITHOUT  WARRANTY  OF ANY  KIND,
+- * EXPRESS OR  IMPLIED, INCLUDING  BUT NOT LIMITED  TO THE  WARRANTIES OF
+- * MERCHANTABILITY,    FITNESS    FOR    A   PARTICULAR    PURPOSE    AND
+- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+- * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
+- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+- *
+- */
+-package org.slf4j.ext;
+-
+-import java.io.Serializable;
+-import java.io.ByteArrayInputStream;
+-import java.io.ByteArrayOutputStream;
+-import java.util.Date;
+-import java.util.HashMap;
+-import java.util.Iterator;
+-import java.util.Map;
+-import java.beans.XMLDecoder;
+-import java.beans.XMLEncoder;
+-import java.beans.ExceptionListener;
+-
+-/**
+- * Base class for Event Data. Event Data contains data to be logged about an
+- * event. Users may extend this class for each EventType they want to log.
+- * 
+- * @author Ralph Goers
+- * 
+- * @deprecated Due to a security vulnerability, this class will be removed without replacement.
+- */
+-public class EventData implements Serializable {
+-
+-    private static final long serialVersionUID = 153270778642103985L;
+-
+-    private Map<String, Object> eventData = new HashMap<String, Object>();
+-    public static final String EVENT_MESSAGE = "EventMessage";
+-    public static final String EVENT_TYPE = "EventType";
+-    public static final String EVENT_DATETIME = "EventDateTime";
+-    public static final String EVENT_ID = "EventId";
+-
+-    /**
+-     * Default Constructor
+-     */
+-    public EventData() {
+-    }
+-
+-    /**
+-     * Constructor to create event data from a Map.
+-     * 
+-     * @param map
+-     *          The event data.
+-     */
+-    public EventData(Map<String, Object> map) {
+-        eventData.putAll(map);
+-    }
+-
+-    /**
+-     * Construct from a serialized form of the Map containing the RequestInfo
+-     * elements
+-     * 
+-     * @param xml
+-     *          The serialized form of the RequestInfo Map.
+-     */
+-    @SuppressWarnings("unchecked")
+-    public EventData(String xml) {
+-        ByteArrayInputStream bais = new ByteArrayInputStream(xml.getBytes());
+-        try {
+-            XMLDecoder decoder = new XMLDecoder(bais);
+-            this.eventData = (Map<String, Object>) decoder.readObject();
+-        } catch (Exception e) {
+-            throw new EventException("Error decoding " + xml, e);
+-        }
+-    }
+-
+-    /**
+-     * Serialize all the EventData items into an XML representation.
+-     * 
+-     * @return an XML String containing all the EventData items.
+-     */
+-    public String toXML() {
+-        return toXML(eventData);
+-    }
+-
+-    /**
+-     * Serialize all the EventData items into an XML representation.
+-     * 
+-     * @param map the Map to transform
+-     * @return an XML String containing all the EventData items.
+-     */
+-    public static String toXML(Map<String, Object> map) {
+-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+-        try {
+-            XMLEncoder encoder = new XMLEncoder(baos);
+-            encoder.setExceptionListener(new ExceptionListener() {
+-                public void exceptionThrown(Exception exception) {
+-                    exception.printStackTrace();
+-                }
+-            });
+-            encoder.writeObject(map);
+-            encoder.close();
+-            return baos.toString();
+-        } catch (Exception e) {
+-            e.printStackTrace();
+-            return null;
+-        }
+-    }
+-
+-    /**
+-     * Retrieve the event identifier.
+-     * 
+-     * @return The event identifier
+-     */
+-    public String getEventId() {
+-        return (String) this.eventData.get(EVENT_ID);
+-    }
+-
+-    /**
+-     * Set the event identifier.
+-     * 
+-     * @param eventId
+-     *          The event identifier.
+-     */
+-    public void setEventId(String eventId) {
+-        if (eventId == null) {
+-            throw new IllegalArgumentException("eventId cannot be null");
+-        }
+-        this.eventData.put(EVENT_ID, eventId);
+-    }
+-
+-    /**
+-     * Retrieve the message text associated with this event, if any.
+-     * 
+-     * @return The message text associated with this event or null if there is
+-     *         none.
+-     */
+-    public String getMessage() {
+-        return (String) this.eventData.get(EVENT_MESSAGE);
+-    }
+-
+-    /**
+-     * Set the message text associated with this event.
+-     * 
+-     * @param message
+-     *          The message text.
+-     */
+-    public void setMessage(String message) {
+-        this.eventData.put(EVENT_MESSAGE, message);
+-    }
+-
+-    /**
+-     * Retrieve the date and time the event occurred.
+-     * 
+-     * @return The Date associated with the event.
+-     */
+-    public Date getEventDateTime() {
+-        return (Date) this.eventData.get(EVENT_DATETIME);
+-    }
+-
+-    /**
+-     * Set the date and time the event occurred in case it is not the same as when
+-     * the event was logged.
+-     * 
+-     * @param eventDateTime
+-     *          The event Date.
+-     */
+-    public void setEventDateTime(Date eventDateTime) {
+-        this.eventData.put(EVENT_DATETIME, eventDateTime);
+-    }
+-
+-    /**
+-     * Set the type of event that occurred.
+-     * 
+-     * @param eventType
+-     *          The type of the event.
+-     */
+-    public void setEventType(String eventType) {
+-        this.eventData.put(EVENT_TYPE, eventType);
+-    }
+-
+-    /**
+-     * Retrieve the type of the event.
+-     * 
+-     * @return The event type.
+-     */
+-    public String getEventType() {
+-        return (String) this.eventData.get(EVENT_TYPE);
+-    }
+-
+-    /**
+-     * Add arbitrary attributes about the event.
+-     * 
+-     * @param name
+-     *          The attribute's key.
+-     * @param obj
+-     *          The data associated with the key.
+-     */
+-    public void put(String name, Serializable obj) {
+-        this.eventData.put(name, obj);
+-    }
+-
+-    /**
+-     * Retrieve an event attribute.
+-     * 
+-     * @param name
+-     *          The attribute's key.
+-     * @return The value associated with the key or null if the key is not
+-     *         present.
+-     */
+-    public Serializable get(String name) {
+-        return (Serializable) this.eventData.get(name);
+-    }
+-
+-    /**
+-     * Populate the event data from a Map.
+-     * 
+-     * @param data
+-     *          The Map to copy.
+-     */
+-    public void putAll(Map<String, Object> data) {
+-        this.eventData.putAll(data);
+-    }
+-
+-    /**
+-     * Returns the number of attributes in the EventData.
+-     * 
+-     * @return the number of attributes in the EventData.
+-     */
+-    public int getSize() {
+-        return this.eventData.size();
+-    }
+-
+-    /**
+-     * Returns an Iterator over all the entries in the EventData.
+-     * 
+-     * @return an Iterator that can be used to access all the event attributes.
+-     */
+-    public Iterator<Map.Entry<String, Object>> getEntrySetIterator() {
+-        return this.eventData.entrySet().iterator();
+-    }
+-
+-    /**
+-     * Retrieve all the attributes in the EventData as a Map. Changes to this map
+-     * will be reflected in the EventData.
+-     * 
+-     * @return The Map of attributes in this EventData instance.
+-     */
+-    public Map<String, Object> getEventMap() {
+-        return this.eventData;
+-    }
+-
+-    /**
+-     * Convert the EventData to a String.
+-     * 
+-     * @return The EventData as a String.
+-     */
+-    @Override
+-    public String toString() {
+-        return toXML();
+-    }
+-
+-    /**
+-     * Compare two EventData objects for equality.
+-     * 
+-     * @param o
+-     *          The Object to compare.
+-     * @return true if the objects are the same instance or contain all the same
+-     *         keys and their values.
+-     */
+-    @SuppressWarnings("unchecked")
+-    @Override
+-    public boolean equals(Object o) {
+-        if (this == o) {
+-            return true;
+-        }
+-        if (!(o instanceof EventData || o instanceof Map)) {
+-            return false;
+-        }
+-        Map<String, Object> map = (o instanceof EventData) ? ((EventData) o).getEventMap() : (Map<String, Object>) o;
+-
+-        return this.eventData.equals(map);
+-    }
+-
+-    /**
+-     * Compute the hashCode for this EventData instance.
+-     * 
+-     * @return The hashcode for this EventData instance.
+-     */
+-    @Override
+-    public int hashCode() {
+-        return this.eventData.hashCode();
+-    }
+-}
+\ No newline at end of file
+diff --git a/slf4j-ext/src/main/java/org/slf4j/ext/EventException.java b/slf4j-ext/src/main/java/org/slf4j/ext/EventException.java
+deleted file mode 100644
+index cb6c5a1c2..000000000
+--- a/slf4j-ext/src/main/java/org/slf4j/ext/EventException.java
++++ /dev/null
+@@ -1,68 +0,0 @@
+-/**
+- * Copyright (c) 2004-2011 QOS.ch
+- * All rights reserved.
+- *
+- * Permission is hereby granted, free  of charge, to any person obtaining
+- * a  copy  of this  software  and  associated  documentation files  (the
+- * "Software"), to  deal in  the Software without  restriction, including
+- * without limitation  the rights to  use, copy, modify,  merge, publish,
+- * distribute,  sublicense, and/or sell  copies of  the Software,  and to
+- * permit persons to whom the Software  is furnished to do so, subject to
+- * the following conditions:
+- *
+- * The  above  copyright  notice  and  this permission  notice  shall  be
+- * included in all copies or substantial portions of the Software.
+- *
+- * THE  SOFTWARE IS  PROVIDED  "AS  IS", WITHOUT  WARRANTY  OF ANY  KIND,
+- * EXPRESS OR  IMPLIED, INCLUDING  BUT NOT LIMITED  TO THE  WARRANTIES OF
+- * MERCHANTABILITY,    FITNESS    FOR    A   PARTICULAR    PURPOSE    AND
+- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+- * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
+- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+- *
+- */
+-package org.slf4j.ext;
+-
+-/**
+- * Exception used to identify issues related to an event that is being logged.
+- * 
+- * @deprecated This class will be removed in subsequent released without replacement. Only used by EventData.
+- */
+-public class EventException extends RuntimeException {
+-
+-    private static final long serialVersionUID = -22873966112391992L;
+-
+-    /**
+-     * Default constructor.
+-     */
+-    public EventException() {
+-        super();
+-    }
+-
+-    /**
+-     * Constructor that allows an exception message.
+-     * @param exceptionMessage The exception message.
+-     */
+-    public EventException(String exceptionMessage) {
+-        super(exceptionMessage);
+-    }
+-
+-    /**
+-     * Constructor that chains another Exception or Error.
+-     * @param originalException The original exception.
+-     */
+-    public EventException(Throwable originalException) {
+-        super(originalException);
+-    }
+-
+-    /**
+-     * Constructor that chains another Exception or Error and also allows a message
+-     * to be specified.
+-     * @param exceptionMessage The exception message.
+-     * @param originalException The original exception.
+-     */
+-    public EventException(String exceptionMessage, Throwable originalException) {
+-        super(exceptionMessage, originalException);
+-    }
+-}
+diff --git a/slf4j-ext/src/main/java/org/slf4j/ext/EventLogger.java b/slf4j-ext/src/main/java/org/slf4j/ext/EventLogger.java
+deleted file mode 100755
+index a72e656e7..000000000
+--- a/slf4j-ext/src/main/java/org/slf4j/ext/EventLogger.java
++++ /dev/null
+@@ -1,64 +0,0 @@
+-/**
+- * Copyright (c) 2004-2011 QOS.ch
+- * All rights reserved.
+- *
+- * Permission is hereby granted, free  of charge, to any person obtaining
+- * a  copy  of this  software  and  associated  documentation files  (the
+- * "Software"), to  deal in  the Software without  restriction, including
+- * without limitation  the rights to  use, copy, modify,  merge, publish,
+- * distribute,  sublicense, and/or sell  copies of  the Software,  and to
+- * permit persons to whom the Software  is furnished to do so, subject to
+- * the following conditions:
+- *
+- * The  above  copyright  notice  and  this permission  notice  shall  be
+- * included in all copies or substantial portions of the Software.
+- *
+- * THE  SOFTWARE IS  PROVIDED  "AS  IS", WITHOUT  WARRANTY  OF ANY  KIND,
+- * EXPRESS OR  IMPLIED, INCLUDING  BUT NOT LIMITED  TO THE  WARRANTIES OF
+- * MERCHANTABILITY,    FITNESS    FOR    A   PARTICULAR    PURPOSE    AND
+- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+- * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
+- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+- *
+- */
+-package org.slf4j.ext;
+-
+-import org.slf4j.LoggerFactory;
+-import org.slf4j.Marker;
+-import org.slf4j.MarkerFactory;
+-import org.slf4j.spi.LocationAwareLogger;
+-
+-/**
+- * Simple Logger used to log events. All events are directed to a logger named "EventLogger"
+- * with a level of INFO and with an Event marker.
+- *
+- * @author Ralph Goers
+- */
+-public class EventLogger {
+-
+-    private static final String FQCN = EventLogger.class.getName();
+-
+-    static Marker EVENT_MARKER = MarkerFactory.getMarker("EVENT");
+-
+-    private static LoggerWrapper eventLogger = new LoggerWrapper(LoggerFactory.getLogger("EventLogger"), FQCN);
+-
+-    /**
+-     * There can only be a single EventLogger.
+-     */
+-    private EventLogger() {
+-    }
+-
+-    /**
+-     * Logs the event.
+-     *
+-     * @param data The EventData.
+-     */
+-    public static void logEvent(EventData data) {
+-        if (eventLogger.instanceofLAL) {
+-            ((LocationAwareLogger) eventLogger.logger).log(EVENT_MARKER, FQCN, LocationAwareLogger.INFO_INT, data.toXML(), new Object[] { data }, null);
+-        } else {
+-            eventLogger.logger.info(EVENT_MARKER, data.toXML(), data);
+-        }
+-    }
+-}
+diff --git a/slf4j-ext/src/main/java/org/slf4j/ext/MDCStrLookup.java b/slf4j-ext/src/main/java/org/slf4j/ext/MDCStrLookup.java
+deleted file mode 100644
+index 5d1e63cff..000000000
+--- a/slf4j-ext/src/main/java/org/slf4j/ext/MDCStrLookup.java
++++ /dev/null
+@@ -1,49 +0,0 @@
+-/**
+- * Copyright (c) 2004-2011 QOS.ch
+- * All rights reserved.
+- *
+- * Permission is hereby granted, free  of charge, to any person obtaining
+- * a  copy  of this  software  and  associated  documentation files  (the
+- * "Software"), to  deal in  the Software without  restriction, including
+- * without limitation  the rights to  use, copy, modify,  merge, publish,
+- * distribute,  sublicense, and/or sell  copies of  the Software,  and to
+- * permit persons to whom the Software  is furnished to do so, subject to
+- * the following conditions:
+- *
+- * The  above  copyright  notice  and  this permission  notice  shall  be
+- * included in all copies or substantial portions of the Software.
+- *
+- * THE  SOFTWARE IS  PROVIDED  "AS  IS", WITHOUT  WARRANTY  OF ANY  KIND,
+- * EXPRESS OR  IMPLIED, INCLUDING  BUT NOT LIMITED  TO THE  WARRANTIES OF
+- * MERCHANTABILITY,    FITNESS    FOR    A   PARTICULAR    PURPOSE    AND
+- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+- * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
+- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+- *
+- */
+-package org.slf4j.ext;
+-
+-import org.apache.commons.lang.text.StrLookup;
+-import org.slf4j.MDC;
+-
+-/**
+- * This class can be used with the Commons Lang StrSubstitutor to replace
+- * tokens that occur in Strings with their values in the MDC.
+- *
+- * @author Ralph Goers
+- */
+-public class MDCStrLookup extends StrLookup {
+-    /**
+-     * Looks up up a value in the MDC.
+-     *
+-     * @param key the key to be looked up, may be null
+-     * @return the matching value, null if no match
+-     */
+-    public String lookup(String key) {
+-        if (key == null) {
+-            return null;
+-        }
+-        return MDC.get(key);
+-    }
+-}
+diff --git a/slf4j-ext/src/test/java/org/slf4j/dummyExt/EventLoggerTest.java b/slf4j-ext/src/test/java/org/slf4j/dummyExt/EventLoggerTest.java
+deleted file mode 100644
+index bb04f3f32..000000000
+--- a/slf4j-ext/src/test/java/org/slf4j/dummyExt/EventLoggerTest.java
++++ /dev/null
+@@ -1,106 +0,0 @@
+-/**
+- * Copyright (c) 2004-2011 QOS.ch
+- * All rights reserved.
+- *
+- * Permission is hereby granted, free  of charge, to any person obtaining
+- * a  copy  of this  software  and  associated  documentation files  (the
+- * "Software"), to  deal in  the Software without  restriction, including
+- * without limitation  the rights to  use, copy, modify,  merge, publish,
+- * distribute,  sublicense, and/or sell  copies of  the Software,  and to
+- * permit persons to whom the Software  is furnished to do so, subject to
+- * the following conditions:
+- *
+- * The  above  copyright  notice  and  this permission  notice  shall  be
+- * included in all copies or substantial portions of the Software.
+- *
+- * THE  SOFTWARE IS  PROVIDED  "AS  IS", WITHOUT  WARRANTY  OF ANY  KIND,
+- * EXPRESS OR  IMPLIED, INCLUDING  BUT NOT LIMITED  TO THE  WARRANTIES OF
+- * MERCHANTABILITY,    FITNESS    FOR    A   PARTICULAR    PURPOSE    AND
+- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+- * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
+- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+- *
+- */
+-package org.slf4j.dummyExt;
+-
+-import static org.junit.Assert.assertEquals;
+-
+-import java.util.Date;
+-import java.util.Locale;
+-import java.util.TimeZone;
+-
+-import org.apache.log4j.spi.LocationInfo;
+-import org.apache.log4j.spi.LoggingEvent;
+-import org.junit.After;
+-import org.junit.Before;
+-import org.junit.Test;
+-import org.slf4j.MDC;
+-import org.slf4j.ext.EventData;
+-import org.slf4j.ext.EventLogger;
+-
+-public class EventLoggerTest {
+-
+-    ListAppender listAppender;
+-    org.apache.log4j.Logger log4;
+-
+-    final static String EXPECTED_FILE_NAME = "EventLoggerTest.java";
+-
+-    @Before
+-    public void setUp() throws Exception {
+-
+-        // start from a clean slate for each test
+-
+-        listAppender = new ListAppender();
+-        listAppender.extractLocationInfo = true;
+-        org.apache.log4j.Logger eventLogger = org.apache.log4j.Logger.getLogger("EventLogger");
+-        eventLogger.addAppender(listAppender);
+-        eventLogger.setLevel(org.apache.log4j.Level.TRACE);
+-        eventLogger.setAdditivity(false);
+-        // Items that apply to any activity
+-        MDC.put("ipAddress", "192.168.1.110");
+-        MDC.put("login", "TestUSer");
+-        MDC.put("hostname", "localhost");
+-        MDC.put("productName", "SLF4J");
+-        MDC.put("locale", Locale.getDefault().getDisplayName());
+-        MDC.put("timezone", TimeZone.getDefault().getDisplayName());
+-
+-    }
+-
+-    @After
+-    public void tearDown() throws Exception {
+-        MDC.clear();
+-    }
+-
+-    void verify(LoggingEvent le, String expectedMsg) {
+-        assertEquals(expectedMsg, le.getMessage());
+-        assertEquals(EXPECTED_FILE_NAME, le.getLocationInformation().getFileName());
+-    }
+-
+-    @Test
+-    public void testEventLogger() {
+-        EventData data[] = new EventData[2];
+-        data[0] = new EventData();
+-        data[0].setEventType("Login");
+-        data[0].setEventId("1");
+-        data[0].setEventDateTime(new Date());
+-        data[0].put("Userid", "TestUser");
+-        EventLogger.logEvent(data[0]);
+-
+-        data[1] = new EventData();
+-        data[1].setEventType("Update");
+-        data[1].setEventId("2");
+-        data[1].setEventDateTime(new Date());
+-        data[1].put("FileName", "/etc/hosts");
+-        EventLogger.logEvent(data[1]);
+-
+-        assertEquals(2, listAppender.list.size());
+-        for (int i = 0; i < 2; ++i) {
+-            LoggingEvent event = listAppender.list.get(i);
+-            verify(event, data[i].toXML());
+-            LocationInfo li = event.getLocationInformation();
+-            assertEquals(this.getClass().getName(), li.getClassName());
+-            assertEquals(event.getMDC("hostname"), "localhost");
+-        }
+-    }
+-}
+\ No newline at end of file
+diff --git a/slf4j-ext/src/test/java/org/slf4j/dummyExt/MDCStrLookupTest.java b/slf4j-ext/src/test/java/org/slf4j/dummyExt/MDCStrLookupTest.java
+deleted file mode 100644
+index aa035b91e..000000000
+--- a/slf4j-ext/src/test/java/org/slf4j/dummyExt/MDCStrLookupTest.java
++++ /dev/null
+@@ -1,46 +0,0 @@
+-/**
+- * Copyright (c) 2004-2011 QOS.ch
+- * All rights reserved.
+- *
+- * Permission is hereby granted, free  of charge, to any person obtaining
+- * a  copy  of this  software  and  associated  documentation files  (the
+- * "Software"), to  deal in  the Software without  restriction, including
+- * without limitation  the rights to  use, copy, modify,  merge, publish,
+- * distribute,  sublicense, and/or sell  copies of  the Software,  and to
+- * permit persons to whom the Software  is furnished to do so, subject to
+- * the following conditions:
+- *
+- * The  above  copyright  notice  and  this permission  notice  shall  be
+- * included in all copies or substantial portions of the Software.
+- *
+- * THE  SOFTWARE IS  PROVIDED  "AS  IS", WITHOUT  WARRANTY  OF ANY  KIND,
+- * EXPRESS OR  IMPLIED, INCLUDING  BUT NOT LIMITED  TO THE  WARRANTIES OF
+- * MERCHANTABILITY,    FITNESS    FOR    A   PARTICULAR    PURPOSE    AND
+- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+- * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
+- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+- *
+- */
+-package org.slf4j.dummyExt;
+-
+-import static org.junit.Assert.assertEquals;
+-
+-import org.junit.Test;
+-import org.slf4j.MDC;
+-import org.slf4j.ext.MDCStrLookup;
+-
+-public class MDCStrLookupTest {
+-
+-    @Test
+-    public void testLookup() throws Exception {
+-        MDC.put("key", "value");
+-        MDC.put("number", "2");
+-        MDCStrLookup lookup = new MDCStrLookup();
+-        assertEquals("value", lookup.lookup("key"));
+-        assertEquals("2", lookup.lookup("number"));
+-        assertEquals(null, lookup.lookup(null));
+-        assertEquals(null, lookup.lookup(""));
+-        assertEquals(null, lookup.lookup("other"));
+-    }
+-}
+diff --git a/slf4j-ext/src/test/java/org/slf4j/dummyExt/PackageTest.java b/slf4j-ext/src/test/java/org/slf4j/dummyExt/PackageTest.java
+index 153005251..dd9b9890f 100644
+--- a/slf4j-ext/src/test/java/org/slf4j/dummyExt/PackageTest.java
++++ b/slf4j-ext/src/test/java/org/slf4j/dummyExt/PackageTest.java
+@@ -29,6 +29,6 @@
+ import org.junit.runners.Suite.SuiteClasses;
+ 
+ @RunWith(Suite.class)
+-@SuiteClasses({ MDCStrLookupTest.class, XLoggerTest.class, EventLoggerTest.class })
++@SuiteClasses({ XLoggerTest.class})
+ public class PackageTest {
+ }
+diff --git a/slf4j-ext/src/test/java/org/slf4j/dummyExt/XLoggerTest.java b/slf4j-ext/src/test/java/org/slf4j/dummyExt/XLoggerTest.java
+index 9bb52bb88..6bf8e6fe4 100644
+--- a/slf4j-ext/src/test/java/org/slf4j/dummyExt/XLoggerTest.java
++++ b/slf4j-ext/src/test/java/org/slf4j/dummyExt/XLoggerTest.java
+@@ -45,7 +45,7 @@ public void setUp() throws Exception {
+ 
+         // start from a clean slate for each test
+ 
+-        listAppender = new ListAppender();
++        listAppender = new ListAppender(); 
+         listAppender.extractLocationInfo = true;
+         log4jRoot = org.apache.log4j.Logger.getRootLogger();
+         log4jRoot.addAppender(listAppender);
+diff --git a/slf4j-jdk14/pom.xml b/slf4j-jdk14/pom.xml
+index 5a091cf03..a699aed09 100755
+--- a/slf4j-jdk14/pom.xml
++++ b/slf4j-jdk14/pom.xml
+@@ -7,7 +7,7 @@
+   <parent>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-parent</artifactId>
+-    <version>1.8.0-beta3-SNAPSHOT</version>
++    <version>1.8.0-beta3</version>
+   </parent>
+ 
+   <artifactId>slf4j-jdk14</artifactId>
+diff --git a/slf4j-log4j12/pom.xml b/slf4j-log4j12/pom.xml
+index 76ef7a934..93dd99276 100755
+--- a/slf4j-log4j12/pom.xml
++++ b/slf4j-log4j12/pom.xml
+@@ -7,7 +7,7 @@
+   <parent>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-parent</artifactId>
+-    <version>1.8.0-beta3-SNAPSHOT</version>
++    <version>1.8.0-beta3</version>
+   </parent>
+ 
+   <artifactId>slf4j-log4j12</artifactId>
+diff --git a/slf4j-migrator/pom.xml b/slf4j-migrator/pom.xml
+index 229db6a46..a081df630 100755
+--- a/slf4j-migrator/pom.xml
++++ b/slf4j-migrator/pom.xml
+@@ -7,7 +7,7 @@
+   <parent>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-parent</artifactId>
+-    <version>1.8.0-beta3-SNAPSHOT</version>
++    <version>1.8.0-beta3</version>
+   </parent>
+ 
+   <artifactId>slf4j-migrator</artifactId>
+diff --git a/slf4j-nop/pom.xml b/slf4j-nop/pom.xml
+index 0b06e10d7..c8cae49e2 100755
+--- a/slf4j-nop/pom.xml
++++ b/slf4j-nop/pom.xml
+@@ -7,7 +7,7 @@
+   <parent>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-parent</artifactId>
+-    <version>1.8.0-beta3-SNAPSHOT</version>
++    <version>1.8.0-beta3</version>
+   </parent>
+ 
+   <artifactId>slf4j-nop</artifactId>
+diff --git a/slf4j-simple/pom.xml b/slf4j-simple/pom.xml
+index da00d4e09..cb8be5f61 100755
+--- a/slf4j-simple/pom.xml
++++ b/slf4j-simple/pom.xml
+@@ -7,7 +7,7 @@
+   <parent>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-parent</artifactId>
+-    <version>1.8.0-beta3-SNAPSHOT</version>
++    <version>1.8.0-beta3</version>
+   </parent>
+ 
+   <artifactId>slf4j-simple</artifactId>
+diff --git a/slf4j-site/pom.xml b/slf4j-site/pom.xml
+index f7e1e899a..37401a371 100755
+--- a/slf4j-site/pom.xml
++++ b/slf4j-site/pom.xml
+@@ -7,7 +7,7 @@
+   <parent>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-parent</artifactId>
+-    <version>1.8.0-beta3-SNAPSHOT</version>
++    <version>1.8.0-beta3</version>
+   </parent>
+ 
+   <artifactId>slf4j-site</artifactId>
+diff --git a/slf4j-site/src/site/pages/news.html b/slf4j-site/src/site/pages/news.html
+index 6895f27b9..2c097fe77 100755
+--- a/slf4j-site/src/site/pages/news.html
++++ b/slf4j-site/src/site/pages/news.html
+@@ -34,7 +34,8 @@ <h1>SLF4J News</h1>
+ 
+    <hr noshade="noshade" size="1"/>
+ 
+-   <h3> 2018 - Release of SLF4J 1.8.0-beta3</h3>
++   
++   <h3>February 16th, 2019 - Release of SLF4J 1.8.0-beta3</h3>
+ 
+    <p class="highlight"t>In the 1.8.x series, SLF4J has been
+    modularized per <a
+@@ -63,7 +64,31 @@ <h3> 2018 - Release of SLF4J 1.8.0-beta3</h3>
+    href="https://jira.qos.ch/browse/SLF4J-99">SLF4J-99</a> (again) and
+    <a href="https://jira.qos.ch/browse/SLF4J-409">SLF4J-409</a> as
+    reported by Devin Smith.</p>
++
++   <p>Fixed <a
++   href="https://nvd.nist.gov/vuln/detail/CVE-2018-8088">CVE-2018-8088</a>
++   by removing the <code>EventData</code> <code>EventException</code>
++   <code>EventLogger</code> classes in the same way as done in SLF4J
++   1.7.26.
++   </p>
+    
++   <h3>February 16th, 2019 - Release of SLF4J 1.7.26</h3>
++
++   <p>Due to popular demand in relation <a
++   href="https://nvd.nist.gov/vuln/detail/CVE-2018-8088">CVE-2018-8088</a>,
++   removed <code>EventData</code> <code>EventException</code>
++   <code>EventLogger</code> classes in the <code>org.slf4j.ext</code>
++   package in the slf4j-ext module. These classes were rarely
++   used.
++   </p>
++   
++   <p>The aforementioned vulnerabilty has quite a low severty but was
++   incorrectly marked critical in National Vulnerability
++   Database. However, it was easier to remove the rarely-used
++   incriminated classes than to try to convince the universe that the
++   severity of the vulnerability was indeed low.
++   </p>
++
+    
+    <hr noshade="noshade" size="1"/> 
+    

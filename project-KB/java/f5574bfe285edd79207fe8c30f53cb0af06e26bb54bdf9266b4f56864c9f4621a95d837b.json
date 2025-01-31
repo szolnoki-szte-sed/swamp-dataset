@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:commons_imaging:0.97:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/commons-imaging/commit/f5574bfe285edd79207fe8c30f53cb0af06e26bb",
+        "version_end_excluding": {
+            "apache:commons_imaging": "unknown"
+        },
+        "path": {
+            "file_path": "src/test/java/org/apache/commons/imaging/formats/rgbe/RgbeReadTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-17201"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

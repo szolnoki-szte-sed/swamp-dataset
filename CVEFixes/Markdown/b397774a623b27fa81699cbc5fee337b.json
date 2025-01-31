@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:set_project:set:1.0.0:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/strikeentco/set/commit/102cc6b2e1d1e0c928ced87e75df759d5541ff60",
+        "version_end_excluding": {
+            "set_project:set": "unknown"
+        },
+        "path": {
+            "file_path": "LICENSE"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-28267"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

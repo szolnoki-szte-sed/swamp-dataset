@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sanitize_project:sanitize:*:*:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/rgrove/sanitize/commit/a11498de9e283cd457b35ee252983662f7452aa9",
+        "version_end_excluding": {
+            "sanitize_project:sanitize": "5.2.1"
+        },
+        "path": {
+            "file_path": "lib/sanitize/config/default.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-4054"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

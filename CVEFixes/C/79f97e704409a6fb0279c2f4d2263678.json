@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:4.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/70945643722ffeac779d2529a348f99567fa5c33",
+        "version_end_excluding": {
+            "linux:linux_kernel": "2.6.39",
+            "redhat:enterprise_linux": "unknown"
+        },
+        "path": {
+            "file_path": "fs/cifs/connect.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-3363"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

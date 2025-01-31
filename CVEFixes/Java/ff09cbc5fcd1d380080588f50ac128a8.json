@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:onedev_project:onedev:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/theonedev/onedev/commit/39d95ab8122c5d9ed18e69dc024870cae08d2d60",
+        "version_end_excluding": {
+            "onedev_project:onedev": "4.0.3"
+        },
+        "path": {
+            "file_path": "server-core/src/main/java/io/onedev/server/model/support/inputspec/InputSpec.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-21248"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

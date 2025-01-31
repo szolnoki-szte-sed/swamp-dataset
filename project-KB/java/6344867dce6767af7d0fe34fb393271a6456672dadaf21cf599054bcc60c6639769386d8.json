@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:xstream_project:xstream:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:xstream_project:xstream:1.4.10:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/x-stream/xstream/commit/6344867dce6767af7d0fe34fb393271a6456672d",
+        "version_end_excluding": {
+            "xstream_project:xstream": "unknown"
+        },
+        "path": {
+            "file_path": "xstream/src/java/com/thoughtworks/xstream/security/ProxyTypePermission.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-7285"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

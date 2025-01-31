@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:parse-path_project:parse-path:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/ionicabizau/parse-path/commit/f9ad8856a3c8ae18e1cf4caef5edbabbc42840e8",
+        "version_end_excluding": {
+            "parse-path_project:parse-path": "5.0.0"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0624"
+        ],
+        "CWE": [
+            "CWE-639"
+        ]
+    }
+}

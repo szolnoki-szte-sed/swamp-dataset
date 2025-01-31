@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:metalgenix:genixcms:0.0.8:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/semplon/GeniXCMS/commit/6e21c01d87672d81080450e6913e0093a02bfab8",
+        "version_end_excluding": {
+            "metalgenix:genixcms": "unknown"
+        },
+        "path": {
+            "file_path": "assets/js/plugins/summernote-ext-genixcms.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-5345"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

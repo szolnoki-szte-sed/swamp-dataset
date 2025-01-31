@@ -1,0 +1,39 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:xmlsoft:libxml2:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cisco:unified_presence:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jabberd2:jabberd2:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:apr-util:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:xmlsoft:libxml2:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "xmlsoft:libxml2": "unknown",
+            "cisco:unified_presence": "unknown",
+            "jabberd2:jabberd2": "unknown",
+            "apache:apr-util": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "xml",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2008-3281",
+            "CVE-2011-3288",
+            "CVE-2011-1755",
+            "CVE-2009-1955",
+            "CVE-2003-1564"
+        ],
+        "CWE": [
+            "CWE-776"
+        ]
+    }
+}

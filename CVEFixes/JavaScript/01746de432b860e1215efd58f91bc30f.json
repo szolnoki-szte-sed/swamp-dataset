@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sysend.js_project:sysend.js:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/jcubic/sysend.js/commit/a24f4b776fb18191ae0f7e3d90c2c7bec459431a",
+        "version_end_excluding": {
+            "sysend.js_project:sysend.js": "1.10.0"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24762"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

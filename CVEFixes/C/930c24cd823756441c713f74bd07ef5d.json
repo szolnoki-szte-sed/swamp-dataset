@@ -1,0 +1,84 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:postgresql:postgresql:8.4.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.13:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.18:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.1.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.1.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.1.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.15:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.14:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.15:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.14:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.1.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.16:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.1.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.1.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.13:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.2.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.2.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.1.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:9.1.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:postgresql:postgresql:8.4.17:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/postgres/postgres/commit/4318daecc959886d001a6e79c6ea853e8b1dfb4b",
+        "version_end_excluding": {
+            "postgresql:postgresql": "unknown"
+        },
+        "path": {
+            "file_path": "src/interfaces/ecpg/pgtypeslib/interval.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-0063"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

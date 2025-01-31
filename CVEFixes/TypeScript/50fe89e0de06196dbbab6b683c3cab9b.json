@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:convert-svg_project:convert-svg:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/neocotic/convert-svg/commit/2bbc498c5029238637206661dbac9e44d37d17c5",
+        "version_end_excluding": {
+            "convert-svg_project:convert-svg": "0.6.4"
+        },
+        "path": {
+            "file_path": "packages/convert-svg-core/src/Converter.js"
+        }
+    },
+    "programming_language": "typescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-24278"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

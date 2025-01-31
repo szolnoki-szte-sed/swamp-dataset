@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:weave:weave:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/weaveworks/weave/commit/a0ac81b3b4cae6d0dcaf3732fd91cedefc89f720",
+        "version_end_excluding": {
+            "weave:weave": "2.8.0"
+        },
+        "path": {
+            "file_path": "prog/weave-kube/weave-daemonset-k8s-1.11.yaml"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-26278"
+        ],
+        "CWE": [
+            "CWE-250"
+        ]
+    }
+}

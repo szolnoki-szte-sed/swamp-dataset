@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:convos:convos:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Nordaaker/convos/commit/54d1763ac65c05aad27ad454b4e5a62ba8352d39",
+        "version_end_excluding": {
+            "convos:convos": "4.20"
+        },
+        "path": {
+            "file_path": "t/config.t"
+        }
+    },
+    "programming_language": "perl",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Artistic License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-14423"
+        ],
+        "CWE": [
+            "CWE-330"
+        ]
+    }
+}

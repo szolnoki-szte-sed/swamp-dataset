@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/ntop/nDPI/commit/b69177be2fbe01c2442239a61832c44e40136c05",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "src/lib/protocols/oracle.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15476"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

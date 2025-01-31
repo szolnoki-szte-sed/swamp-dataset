@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:php:ext-http:2.6.0:-:*:*:*:*:*:*",
+            "cpe:2.3:a:php:ext-http:2.6.0:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:php:ext-http:2.6.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:php:ext-http:2.6.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:php:ext-http:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:ext-http:3.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:ext-http:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:ext-http:3.1.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:php:ext-http:3.1.0:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:php:ext-http:3.1.0:rc1:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/m6w6/ext-http/commit/17137d4ab1ce81a2cee0fae842340a344ef3da83",
+        "version_end_excluding": {
+            "php:ext-http": "unknown"
+        },
+        "path": {
+            "file_path": "src/php_http_params.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 2-Clause \"Simplified\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-7398"
+        ],
+        "CWE": [
+            "CWE-704"
+        ]
+    }
+}

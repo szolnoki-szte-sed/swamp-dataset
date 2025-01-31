@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ffmpeg:ffmpeg:4.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FFmpeg/FFmpeg/commit/95556e27e2c1d56d9e18f5db34d6f756f3011148",
+        "version_end_excluding": {
+            "ffmpeg:ffmpeg": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "libavformat/movenc.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-13300"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

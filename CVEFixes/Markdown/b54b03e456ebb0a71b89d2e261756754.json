@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:smarty:smarty:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/smarty-php/smarty/commit/bcedfd6b58bed4a7366336979ebaa5a240581531",
+        "version_end_excluding": {
+            "smarty:smarty": "3.1.33",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "change_log.txt"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-13982"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

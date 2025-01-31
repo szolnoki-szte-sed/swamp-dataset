@@ -1,0 +1,41 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jolokia:jolokia:1.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jolokia:jolokia:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jolokia:jolokia:1.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jolokia:jolokia:1.1.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jolokia:jolokia:1.1.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jolokia:jolokia:1.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jolokia:jolokia:1.1.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jolokia:jolokia:1.1.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jolokia:jolokia:1.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jolokia:jolokia:1.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jolokia:jolokia:1.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jolokia:jolokia:1.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jolokia:jolokia:1.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jolokia:jolokia:1.0.4:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/rhuss/jolokia/commit/2d9b168cfbbf5a6d16fa6e8a5b34503e3dc42364",
+        "version_end_excluding": {
+            "jolokia:jolokia": "unknown"
+        },
+        "path": {
+            "file_path": "agent/core/src/main/java/org/jolokia/restrictor/AbstractConstantRestrictor.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-0168"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

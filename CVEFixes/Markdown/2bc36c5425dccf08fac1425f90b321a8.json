@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:tcpdump:tcpdump:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/the-tcpdump-group/tcpdump/commit/331530a4076c69bbd2e3214db6ccbe834fb75640",
+        "version_end_excluding": {
+            "tcpdump:tcpdump": "unknown"
+        },
+        "path": {
+            "file_path": "tests/esis_snpa_asan-3.out"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-13047"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

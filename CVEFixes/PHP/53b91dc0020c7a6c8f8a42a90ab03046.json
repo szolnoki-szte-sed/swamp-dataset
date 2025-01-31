@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:revive-adserver:revive_adserver:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/revive-adserver/revive-adserver/commit/847941390f5b3310d51b07c92ec91cc1f4cc82c9",
+        "version_end_excluding": {
+            "revive-adserver:revive_adserver": "unknown"
+        },
+        "path": {
+            "file_path": "lib/OA/Auth.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-9124"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:cxf:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:cxf:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.1.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/cxf/commit/fae6fabf9bd7647f5e9cb68897a7d72b545b741b",
+        "version_end_excluding": {
+            "apache:cxf": "3.2.5",
+            "redhat:jboss_enterprise_application_platform": "unknown"
+        },
+        "path": {
+            "file_path": "rt/transports/http/src/main/java/org/apache/cxf/transport/https/HttpsURLConnectionFactory.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-8039"
+        ],
+        "CWE": [
+            "CWE-755"
+        ]
+    }
+}

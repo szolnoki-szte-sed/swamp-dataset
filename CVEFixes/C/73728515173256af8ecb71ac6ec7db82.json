@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/c131187db2d3fa2f8bf32fdf4e9a4ef805168467",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "include/linux/bpf_verifier.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-17862"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

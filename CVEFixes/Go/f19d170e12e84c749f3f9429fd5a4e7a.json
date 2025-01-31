@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/pritunl/pritunl-client-electron/commit/e16d47437f8ef62546aa00edb0d64be2a7d2205b",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "service/platform/platform_windows.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-25372"
+        ],
+        "CWE": [
+            "CWE-269"
+        ]
+    }
+}

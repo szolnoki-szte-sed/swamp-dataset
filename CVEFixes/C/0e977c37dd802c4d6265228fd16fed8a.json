@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redis:redis:7.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/redis/redis/commit/4a7a4e42db8ff757cdf3f4a824f66426036034ef",
+        "version_end_excluding": {
+            "redis:redis": "unknown"
+        },
+        "path": {
+            "file_path": "src/t_stream.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-33105"
+        ],
+        "CWE": [
+            "CWE-401"
+        ]
+    }
+}

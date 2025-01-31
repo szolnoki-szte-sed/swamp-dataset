@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cornelisnetworks:opa-ff:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cornelisnetworks:opa-fm:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/01org/opa-fm/commit/c5759e7b76f5bf844be6c6641cc1b356bbc83869",
+        "version_end_excluding": {
+            "cornelisnetworks:opa-ff": "unknown",
+            "cornelisnetworks:opa-fm": "unknown"
+        },
+        "path": {
+            "file_path": "Esm/ib/src/linux/fm_cmd/hsm_config_client_data.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5232"
+        ],
+        "CWE": [
+            "CWE-362"
+        ]
+    }
+}

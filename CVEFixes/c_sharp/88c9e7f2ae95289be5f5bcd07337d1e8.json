@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sparkdevnetwork:rock_rms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/SparkDevNetwork/Rock/commit/576f5ec22b1c43f123a377612981c68538167c61",
+        "version_end_excluding": {
+            "sparkdevnetwork:rock_rms": "1.8.6"
+        },
+        "path": {
+            "file_path": "RockWeb/Blocks/Crm/PersonDetail/Bio.ascx.cs"
+        }
+    },
+    "programming_language": "c_sharp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-18641"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

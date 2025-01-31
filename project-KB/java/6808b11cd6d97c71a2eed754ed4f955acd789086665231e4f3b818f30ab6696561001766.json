@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:jboss_weld:3.0.0:alpha2:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_weld:3.0.0:alpha1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_weld:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/weld/core/commit/6808b11cd6d97c71a2eed754ed4f955acd789086",
+        "version_end_excluding": {
+            "redhat:jboss_weld": "unknown"
+        },
+        "path": {
+            "file_path": "impl/src/main/java/org/jboss/weld/context/cache/RequestScopedCache.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-8122"
+        ],
+        "CWE": [
+            "CWE-362"
+        ]
+    }
+}

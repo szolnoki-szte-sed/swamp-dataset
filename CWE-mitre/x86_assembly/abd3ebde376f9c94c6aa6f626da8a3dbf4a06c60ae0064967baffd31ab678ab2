@@ -1,0 +1,5 @@
+-
+-						adc edi,dword ptr [ebx+edx+13BE13BDh]
+-						adc dl,byte ptr [edi]
+-						...
+-						

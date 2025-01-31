@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:xerte:xerte:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/thexerteproject/xerteonlinetoolkits/commit/6daeb81d089d4a561e22f931fff1327660a7d1b5",
+        "version_end_excluding": {
+            "xerte:xerte": "unknown"
+        },
+        "path": {
+            "file_path": "editor/elfinder/php/connector.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-44664"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

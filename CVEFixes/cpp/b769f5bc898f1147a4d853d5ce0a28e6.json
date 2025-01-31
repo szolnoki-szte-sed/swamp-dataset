@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:libreoffice:libreoffice:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/LibreOffice/core/commit/28e61b634353110445e334ccaa415d7fb6629d62",
+        "version_end_excluding": {
+            "libreoffice:libreoffice": "unknown"
+        },
+        "path": {
+            "file_path": "vcl/source/gdi/svmconverter.cxx"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-7856"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/apache/activemq-artemis/commit/48d9951d879e0c8cbb59d4b64ab59d53ef88310d",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "artemis-selector/src/main/java/org/apache/activemq/artemis/selector/filter/XalanXPathEvaluator.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-3208"
+        ],
+        "CWE": []
+    }
+}

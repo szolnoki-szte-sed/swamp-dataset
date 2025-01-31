@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:infinispan:infinispan:9.2.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:a:infinispan:infinispan:9.2.0:beta2:*:*:*:*:*:*",
+            "cpe:2.3:a:infinispan:infinispan:9.2.0:alpha1:*:*:*:*:*:*",
+            "cpe:2.3:a:infinispan:infinispan:9.2.0:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:infinispan:infinispan:9.2.0:alpha2:*:*:*:*:*:*",
+            "cpe:2.3:a:infinispan:infinispan:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/infinispan/infinispan/commit/1deadcb1c74ea0337abd5382c0150b000f6b106f",
+        "version_end_excluding": {
+            "infinispan:infinispan": "unknown"
+        },
+        "path": {
+            "file_path": "commons/src/main/java/org/infinispan/commons/marshall/MarshallUtil.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-15089"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

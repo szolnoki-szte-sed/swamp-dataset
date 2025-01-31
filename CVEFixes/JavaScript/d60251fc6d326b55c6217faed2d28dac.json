@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:parall:jspdf:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/MrRio/jsPDF/commit/d8bb3b39efcd129994f7a3b01b632164144ec43e",
+        "version_end_excluding": {
+            "parall:jspdf": "2.3.1"
+        },
+        "path": {
+            "file_path": "src/modules/addimage.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23353"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

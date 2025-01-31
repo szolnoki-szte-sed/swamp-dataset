@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:chatwoot:chatwoot:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/chatwoot/chatwoot/commit/a737f89c473e64f9abdf8ff13a3e64edefa28877",
+        "version_end_excluding": {
+            "chatwoot:chatwoot": "unknown"
+        },
+        "path": {
+            "file_path": "app/controllers/api/v1/accounts/campaigns_controller.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0527"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

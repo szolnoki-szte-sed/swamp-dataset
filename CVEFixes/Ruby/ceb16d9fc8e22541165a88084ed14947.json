@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:doorkeeper_project:doorkeeper:*:*:*:*:*:ruby:*:*",
+            "cpe:2.3:a:doorkeeper_project:doorkeeper:*:*:*:*:*:ruby:*:*",
+            "cpe:2.3:a:doorkeeper_project:doorkeeper:*:*:*:*:*:ruby:*:*",
+            "cpe:2.3:a:doorkeeper_project:doorkeeper:*:*:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/doorkeeper-gem/doorkeeper/commit/25d038022c2fcad45af5b73f9d003cf38ff491f6",
+        "version_end_excluding": {
+            "doorkeeper_project:doorkeeper": "5.3.2"
+        },
+        "path": {
+            "file_path": "app/controllers/doorkeeper/authorized_applications_controller.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-10187"
+        ],
+        "CWE": [
+            "CWE-862"
+        ]
+    }
+}

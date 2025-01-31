@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mediawiki:shortdescription:*:*:*:*:*:mediawiki:*:*"
+        ],
+        "fix_commit": "https://github.com/StarCitizenTools/mediawiki-extensions-ShortDescription/commit/7c86644158388620c6c858258cc4e1a8de6e48ea",
+        "version_end_excluding": {
+            "mediawiki:shortdescription": "2.3.4"
+        },
+        "path": {
+            "file_path": "modules/ext.shortDescription.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-21710"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

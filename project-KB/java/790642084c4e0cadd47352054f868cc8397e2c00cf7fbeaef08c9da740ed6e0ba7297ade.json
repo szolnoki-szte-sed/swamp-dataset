@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:bouncycastle:legion-of-the-bouncy-castle-java-crytography-api:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bcgit/bc-java/commit/790642084c4e0cadd47352054f868cc8397e2c00",
+        "version_end_excluding": {
+            "bouncycastle:legion-of-the-bouncy-castle-java-crytography-api": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/test/java/org/bouncycastle/math/ec/custom/sec/test/SecP384R1FieldTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-1000340"
+        ],
+        "CWE": [
+            "CWE-19"
+        ]
+    }
+}

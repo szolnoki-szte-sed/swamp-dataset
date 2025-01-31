@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gemirro_project:gemirro:*:*:*:*:*:ruby:*:*"
+        ],
+        "fix_commit": "https://github.com/PierreRambaud/gemirro/commit/9659f9b7ce15a723da8e361bd41b9203b19c97de",
+        "version_end_excluding": {
+            "gemirro_project:gemirro": "0.16.0"
+        },
+        "path": {
+            "file_path": "Gemfile.lock"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-16833"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

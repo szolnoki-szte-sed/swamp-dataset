@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:olingo:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/olingo-odata4/commit/5948974ad28271818e2afe747c71cde56a7f2c63",
+        "version_end_excluding": {
+            "apache:olingo": "unknown"
+        },
+        "path": {
+            "file_path": "lib/server-core-ext/src/main/java/org/apache/olingo/server/core/MetadataParser.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-17554"
+        ],
+        "CWE": [
+            "CWE-611"
+        ]
+    }
+}

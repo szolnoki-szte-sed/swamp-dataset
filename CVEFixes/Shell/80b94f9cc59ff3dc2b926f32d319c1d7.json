@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cornelisnetworks:opa-ff:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cornelisnetworks:opa-fm:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/01org/opa-ff/commit/080ab97461d80a01636f77ba6aecc667c3c0087c",
+        "version_end_excluding": {
+            "cornelisnetworks:opa-ff": "unknown",
+            "cornelisnetworks:opa-fm": "unknown"
+        },
+        "path": {
+            "file_path": "IbaTools/FastFabric/opatest.sh"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5232"
+        ],
+        "CWE": [
+            "CWE-362"
+        ]
+    }
+}

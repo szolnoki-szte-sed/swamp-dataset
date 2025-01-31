@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:serialize-to-js_project:serialize-to-js:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/commenthol/serialize-to-js/commit/181d7d583ae5293cd47cc99b14ad13352875f3e3",
+        "version_end_excluding": {
+            "serialize-to-js_project:serialize-to-js": "3.0.1"
+        },
+        "path": {
+            "file_path": "lib/index.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-16772"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

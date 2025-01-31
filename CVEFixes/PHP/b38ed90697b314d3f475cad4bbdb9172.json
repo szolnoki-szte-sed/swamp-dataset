@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:scratch-wiki:scratchsig:*:*:*:*:*:mediawiki:*:*"
+        ],
+        "fix_commit": "https://github.com/InternationalScratchWiki/wiki-scratchsig/commit/4160a39a20eebeb63a59eb7597a91b961eca6388",
+        "version_end_excluding": {
+            "scratch-wiki:scratchsig": "1.0.1"
+        },
+        "path": {
+            "file_path": "ScratchSig2.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15179"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ffmpeg:ffmpeg:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FFmpeg/FFmpeg/commit/c42a1388a6d1bfd8001bf6a4241d8ca27e49326d",
+        "version_end_excluding": {
+            "ffmpeg:ffmpeg": "unknown"
+        },
+        "path": {
+            "file_path": "libavformat/rtpdec_h264.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-14767"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

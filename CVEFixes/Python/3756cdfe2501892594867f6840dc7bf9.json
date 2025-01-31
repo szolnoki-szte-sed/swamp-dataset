@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:dart:dart_software_development_kit:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/dart-lang/sdk/commit/d787e78d21e12ec1ef712d229940b1172aafcdf8",
+        "version_end_excluding": {
+            "dart:dart_software_development_kit": "2.15.0"
+        },
+        "path": {
+            "file_path": "DEPS"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-22568"
+        ],
+        "CWE": [
+            "CWE-668"
+        ]
+    }
+}

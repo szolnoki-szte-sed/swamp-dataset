@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:horde:groupware:5.2.21:*:*:*:*:*:*:*",
+            "cpe:2.3:a:horde:groupware:5.2.19:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/horde/base/commit/fb2113bbcd04bd4a28c46aad0889fb0a3979a230",
+        "version_end_excluding": {
+            "horde:groupware": "unknown"
+        },
+        "path": {
+            "file_path": "lib/View/Sidebar.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-16907"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

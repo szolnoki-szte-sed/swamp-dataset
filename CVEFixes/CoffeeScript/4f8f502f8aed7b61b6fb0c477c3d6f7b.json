@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sysphonic:thetis:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/sysphonic/thetis/commit/1b8234706e1294f41df42f3d1ccb71b983ffbe23",
+        "version_end_excluding": {
+            "sysphonic:thetis": "unknown"
+        },
+        "path": {
+            "file_path": "config/locales/de.yml"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-2972"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

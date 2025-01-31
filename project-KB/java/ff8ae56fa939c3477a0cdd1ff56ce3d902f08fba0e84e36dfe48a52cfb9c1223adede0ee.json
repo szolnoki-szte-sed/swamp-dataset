@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:eclipse:jetty:9.4.29:20200521:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.4.28:20200408:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.4.27:20200227:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/eclipse/jetty.project/commit/ff8ae56fa939c3477a0cdd1ff56ce3d902f08fba",
+        "version_end_excluding": {
+            "eclipse:jetty": "unknown"
+        },
+        "path": {
+            "file_path": "jetty-server/src/main/java/org/eclipse/jetty/server/HttpConnection.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-17638"
+        ],
+        "CWE": [
+            "CWE-672",
+            "CWE-675"
+        ]
+    }
+}

@@ -1,0 +1,41 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:osgeo:gdal:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:spatial_and_graph:19c:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:spatial_and_graph:12.2.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:30:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:31:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:opensuse:backports_sle:15.0:sp1:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/OSGeo/gdal/commit/148115fcc40f1651a5d15fa34c9a8c528e7147bb",
+        "version_end_excluding": {
+            "osgeo:gdal": "unknown",
+            "oracle:spatial_and_graph": "unknown",
+            "debian:debian_linux": "unknown",
+            "fedoraproject:fedora": "unknown",
+            "opensuse:leap": "unknown",
+            "opensuse:backports_sle": "unknown"
+        },
+        "path": {
+            "file_path": "gdal/ogr/ogr_expat.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-17545"
+        ],
+        "CWE": [
+            "CWE-415"
+        ]
+    }
+}

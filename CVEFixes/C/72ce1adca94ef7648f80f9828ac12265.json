@@ -1,0 +1,57 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:oracle:vm_server:3.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:oracle:vm_server:3.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:oracle:linux:5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:oracle:linux:6:*:*:*:*:*:*:*",
+            "cpe:2.3:o:oracle:linux:7:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:novell:suse_linux_enterprise_real_time_extension:12.0:sp1:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_desktop:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server_aus:7.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_workstation:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_hpc_node:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server_eus:7.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_hpc_node_eus:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_for_real_time:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_mrg:2.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/38327424b40bcebe2de92d07312c89360ac9229a",
+        "version_end_excluding": {
+            "oracle:vm_server": "unknown",
+            "oracle:linux": "unknown",
+            "linux:linux_kernel": "unknown",
+            "novell:suse_linux_enterprise_real_time_extension": "unknown",
+            "redhat:enterprise_linux_desktop": "unknown",
+            "redhat:enterprise_linux_server_aus": "unknown",
+            "redhat:enterprise_linux_workstation": "unknown",
+            "redhat:enterprise_linux": "unknown",
+            "redhat:enterprise_linux_server": "unknown",
+            "redhat:enterprise_linux_hpc_node": "unknown",
+            "redhat:enterprise_linux_server_eus": "unknown",
+            "redhat:enterprise_linux_hpc_node_eus": "unknown",
+            "redhat:enterprise_linux_for_real_time": "unknown",
+            "redhat:enterprise_mrg": "unknown"
+        },
+        "path": {
+            "file_path": "security/keys/key.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-4470"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

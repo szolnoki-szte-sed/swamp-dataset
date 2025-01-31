@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:react_draft_wysiwyg_project:react_draft_wysiwyg:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/jpuri/react-draft-wysiwyg/commit/d2faeb612b53f10dff048de7dc57e1f4044b5380",
+        "version_end_excluding": {
+            "react_draft_wysiwyg_project:react_draft_wysiwyg": "1.14.6"
+        },
+        "path": {
+            "file_path": "dist/react-draft-wysiwyg.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-31712"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

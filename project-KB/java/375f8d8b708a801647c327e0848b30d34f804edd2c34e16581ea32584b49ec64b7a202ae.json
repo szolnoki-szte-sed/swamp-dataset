@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:netflix:conductor:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Netflix/conductor/commit/375f8d8b708a801647c327e0848b30d34f804edd",
+        "version_end_excluding": {
+            "netflix:conductor": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/test/java/com/netflix/conductor/validations/WorkflowTaskTypeConstraintTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-9296"
+        ],
+        "CWE": [
+            "CWE-917"
+        ]
+    }
+}

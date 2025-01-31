@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal_software:cloud_foundry_elastic_runtime:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cloudfoundry:cloud_foundry_uaa_bosh:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:cloud_foundry_uaa:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:cloud_foundry:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:login-server:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cloudfoundry/uaa/commit/14350228989e2aee900b8d48a848293bb5152b6f",
+        "version_end_excluding": {
+            "cloudfoundry:cloud_foundry_uaa_bosh": "unknown"
+        },
+        "path": {
+            "file_path": "uaa/src/test/java/org/cloudfoundry/identity/uaa/integration/feature/ChangePasswordIT.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-3084"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

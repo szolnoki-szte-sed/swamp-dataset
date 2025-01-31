@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:kitty_project:kitty:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/kovidgoyal/kitty/commit/82c137878c2b99100a3cdc1c0f0efea069313901",
+        "version_end_excluding": {
+            "kitty_project:kitty": "0.19.3"
+        },
+        "path": {
+            "file_path": "kitty/graphics.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-35605"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

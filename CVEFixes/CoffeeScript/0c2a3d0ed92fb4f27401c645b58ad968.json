@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/pnpm/pnpm/commit/04b7f60861ddee8331e50d70e193d1e701abeefb",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "packages/git-fetcher/package.json"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-26183"
+        ],
+        "CWE": [
+            "CWE-426"
+        ]
+    }
+}

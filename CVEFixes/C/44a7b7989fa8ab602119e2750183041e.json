@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:fedoraproject:fedora:33:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/zmartzone/mod_auth_openidc/commit/00c315cb0c8ab77c67be4a2ac08a71a83ac58751",
+        "version_end_excluding": {
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "src/mod_auth_openidc.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32792"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

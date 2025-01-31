@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jenkins:jenkins:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:*:*:*:*:lts:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jenkinsci/jenkins/commit/e6aa166246d1734f4798a9e31f78842f4c85c28b",
+        "version_end_excluding": {
+            "jenkins:jenkins": "2.32.2"
+        },
+        "path": {
+            "file_path": "core/src/main/java/hudson/model/Item.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-2598"
+        ],
+        "CWE": [
+            "CWE-326"
+        ]
+    }
+}

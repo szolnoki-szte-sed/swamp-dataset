@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:solr:4.0.0:beta:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:4.0.0:alpha:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/lucene-solr/commit/f230486ce6707762c1a6e81655d0fac52887906d",
+        "version_end_excluding": {
+            "apache:solr": "unknown"
+        },
+        "path": {
+            "file_path": "solr/core/src/java/org/apache/solr/util/EmptyEntityResolver.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-6612"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

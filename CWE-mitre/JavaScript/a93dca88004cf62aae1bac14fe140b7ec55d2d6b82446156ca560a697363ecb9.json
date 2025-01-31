@@ -1,0 +1,74 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redmine:redmine:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:github:github:*:*:*:*:enterprise:*:*:*",
+            "cpe:2.3:a:spreecommerce:spree:0.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cubecart:cubecart:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:typo3:typo3:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:tiki:tikiwiki_cms\\/groupware:*:*:*:*:lts:*:*:*",
+            "cpe:2.3:a:tiki:tikiwiki_cms\\/groupware:*:*:*:*:lts:*:*:*",
+            "cpe:2.3:a:silverstripe:silverstripe:2.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:matomo:matomo:0.2.25:*:*:*:*:*:*:*",
+            "cpe:2.3:a:plone:plone:2.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:system-config-firewall:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:py2play:py2play:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rubyonrails:rails:3.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_framework:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:springsource:grails:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:google:chrome:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apple:quicktime:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "redmine:redmine": "1.3.1",
+            "github:github": "unknown",
+            "spreecommerce:spree": "unknown",
+            "cubecart:cubecart": "5.2.0",
+            "typo3:typo3": "unknown",
+            "tiki:tikiwiki_cms\\/groupware": "unknown",
+            "silverstripe:silverstripe": "unknown",
+            "matomo:matomo": "unknown",
+            "plone:plone": "unknown",
+            "redhat:system-config-firewall": "1.2.29",
+            "py2play:py2play": "unknown",
+            "rubyonrails:rails": "unknown",
+            "vmware:spring_framework": "3.0.5",
+            "springsource:grails": "1.3.7",
+            "google:chrome": "unknown",
+            "apple:quicktime": "7.4.4"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-2054",
+            "CVE-2012-2055",
+            "CVE-2008-7310",
+            "CVE-2013-1465",
+            "CVE-2012-3527",
+            "CVE-2012-0911",
+            "CVE-2011-4962",
+            "CVE-2009-4137",
+            "CVE-2007-5741",
+            "CVE-2011-2520",
+            "CVE-2005-2875",
+            "CVE-2013-0277",
+            "CVE-2011-2894",
+            "CVE-2012-1833",
+            "CVE-2010-3258",
+            "CVE-2008-1013"
+        ],
+        "CWE": [
+            "CWE-915"
+        ]
+    }
+}

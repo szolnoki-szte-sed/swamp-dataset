@@ -1,0 +1,24 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [],
+        "fix_commit": "https://github.com/GNS3/ubridge/commit/2eb0d1dab6a6de76cf3556130a2d52af101077db",
+        "version_end_excluding": {},
+        "path": {
+            "file_path": "src/parse.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-14976"
+        ],
+        "CWE": [
+            "CWE-269"
+        ]
+    }
+}

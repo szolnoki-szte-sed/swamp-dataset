@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:hutool:hutool:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/looly/hutool/commit/9f8a801c7b98b75ee681c0988e1a58bcfdc21756",
+        "version_end_excluding": {
+            "hutool:hutool": "4.1.12"
+        },
+        "path": {
+            "file_path": "hutool-core/src/main/java/cn/hutool/core/io/FileUtil.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-17297"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

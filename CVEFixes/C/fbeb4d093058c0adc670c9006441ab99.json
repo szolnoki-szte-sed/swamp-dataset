@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mit:kerberos_5:1.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.12.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.12.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.13:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/krb5/krb5/commit/5bb8a6b9c9eb8dd22bc9526751610aaa255ead9c",
+        "version_end_excluding": {
+            "mit:kerberos_5": "unknown"
+        },
+        "path": {
+            "file_path": "src/lib/gssapi/mechglue/mglueP.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-9423"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

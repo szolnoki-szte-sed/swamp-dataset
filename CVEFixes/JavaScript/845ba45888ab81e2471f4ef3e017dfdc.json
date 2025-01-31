@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:html-parse-stringify_project:html-parse-stringify:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/HenrikJoreteg/html-parse-stringify/commit/c7274a48e59c92b2b7e906fedf9065159e73fe12",
+        "version_end_excluding": {
+            "html-parse-stringify_project:html-parse-stringify": "2.0.1"
+        },
+        "path": {
+            "file_path": "src/parse.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-23346"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

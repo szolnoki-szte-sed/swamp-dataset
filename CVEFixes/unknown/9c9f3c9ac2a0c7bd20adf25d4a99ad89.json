@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:blamer_project:blamer:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/kucherenko/blamer/commit/5fada8c9b6986ecd28942b724fa682e77ce1e11c",
+        "version_end_excluding": {
+            "blamer_project:blamer": "1.0.1"
+        },
+        "path": {
+            "file_path": ".coveralls.yml"
+        }
+    },
+    "programming_language": "unknown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10807"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

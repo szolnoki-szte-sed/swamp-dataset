@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:whoops_project:whoops:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/filp/whoops/commit/c16791d28d1ca3139e398145f0c6565c523c291a",
+        "version_end_excluding": {
+            "whoops_project:whoops": "2.1.13"
+        },
+        "path": {
+            "file_path": "src/Whoops/Util/TemplateHelper.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-16880"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

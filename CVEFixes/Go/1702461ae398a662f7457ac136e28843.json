@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gogits:gogs:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gogits:gogs:0.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gogits:gogs:0.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gogits:gogs:0.3.1-9:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gogits:gogs:0.5.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gogits:gogs:0.4.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/gogits/gogs/commit/83283bca4cb4e0f4ec48a28af680f0d88db3d2c8",
+        "version_end_excluding": {
+            "gogits:gogs": "unknown"
+        },
+        "path": {
+            "file_path": "gogs.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-8681"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:compile-sass_project:compile-sass:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/eiskalteschatten/compile-sass/commit/d9ada7797ff93875b6466dea7a78768e90a0f8d2",
+        "version_end_excluding": {
+            "compile-sass_project:compile-sass": "1.0.5"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10799"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

@@ -1,0 +1,43 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:wasd:wasd_http_server:7.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:tooltalk:tooltalk_database_server:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:sun:solaris:2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:kim_storm:nn:6.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:dia:dia:0.94:*:*:*:*:*:*:*",
+            "cpe:2.3:a:elinks:elinks:0.11.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "wasd:wasd_http_server": "unknown",
+            "tooltalk:tooltalk_database_server": "unknown",
+            "sun:solaris": "unknown",
+            "kim_storm:nn": "unknown",
+            "dia:dia": "unknown",
+            "elinks:elinks": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2002-1825",
+            "CVE-2001-0717",
+            "CVE-2002-0573",
+            "CVE-2002-1788",
+            "CVE-2006-2480",
+            "CVE-2007-2027"
+        ],
+        "CWE": [
+            "CWE-134"
+        ]
+    }
+}

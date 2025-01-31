@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:qemu:qemu:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/qemu/qemu/commit/2563c9c6b8670400c48e562034b321a7cf3d9a85",
+        "version_end_excluding": {
+            "qemu:qemu": "2.9"
+        },
+        "path": {
+            "file_path": "nbd/client.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-2630"
+        ],
+        "CWE": [
+            "CWE-121"
+        ]
+    }
+}

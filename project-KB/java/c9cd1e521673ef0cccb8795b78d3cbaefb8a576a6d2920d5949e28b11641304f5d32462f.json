@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ignite_realtime:openfire:3.4.5:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/igniterealtime/Openfire/commit/c9cd1e521673ef0cccb8795b78d3cbaefb8a576a",
+        "version_end_excluding": {
+            "ignite_realtime:openfire": "unknown"
+        },
+        "path": {
+            "file_path": "src/java/org/jivesoftware/openfire/spi/ConnectionManagerImpl.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2008-1728"
+        ],
+        "CWE": [
+            "CWE-399"
+        ]
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:eclipse:kura:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/eclipse/kura/commit/4ce772e57eb939dd6c03d99fc12e434bb08b352d",
+        "version_end_excluding": {
+            "eclipse:kura": "unknown"
+        },
+        "path": {
+            "file_path": "target-platform/org.eclipse.kura.jetty.customizer/src/main/java/org/eclipse/kura/jetty/customizer/KuraJettyCustomizer.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Eclipse Public License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10243"
+        ],
+        "CWE": [
+            "CWE-200",
+            "CWE-497"
+        ]
+    }
+}

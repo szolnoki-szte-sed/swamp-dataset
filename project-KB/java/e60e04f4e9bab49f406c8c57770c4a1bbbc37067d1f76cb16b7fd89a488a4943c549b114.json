@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:undertow:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/undertow-io/undertow/commit/e60e04f4e9bab49f406c8c57770c4a1bbbc37067",
+        "version_end_excluding": {
+            "redhat:undertow": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/main/java/io/undertow/UndertowOptions.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1745"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo",
+            "CWE-285"
+        ]
+    }
+}

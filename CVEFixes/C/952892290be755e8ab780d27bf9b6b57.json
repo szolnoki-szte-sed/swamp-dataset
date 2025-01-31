@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:haproxy:haproxy:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:software_collections:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:openshift_container_platform:4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:11.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/haproxy/haproxy/commit/bfb15ab34ead85f64cd6da0e9fb418c9cd14cee8",
+        "version_end_excluding": {
+            "haproxy:haproxy": "2.5.2",
+            "redhat:enterprise_linux": "unknown",
+            "redhat:software_collections": "unknown",
+            "redhat:openshift_container_platform": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "src/http_ana.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0711"
+        ],
+        "CWE": [
+            "CWE-835"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:elasticsearch:elasticsearch:1.5.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/elastic/elasticsearch/commit/f5cfb2a1869d1a52930cbd3138278a6e2c1b22e6",
+        "version_end_excluding": {
+            "elasticsearch:elasticsearch": "unknown"
+        },
+        "path": {
+            "file_path": "src/test/java/org/elasticsearch/indices/IndicesOptionsIntegrationTests.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-4165"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

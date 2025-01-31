@@ -1,0 +1,59 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:netty:netty:3.9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.18:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.14:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.17:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.16:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.15:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.13:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.8.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:3.6.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netty:netty:4.0.9:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/netty/netty/commit/8599ab5bdb761bb99d41a975d689f74c12e4892b",
+        "version_end_excluding": {
+            "netty:netty": "unknown"
+        },
+        "path": {
+            "file_path": "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocket08FrameDecoder.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-0193"
+        ],
+        "CWE": [
+            "CWE-399"
+        ]
+    }
+}

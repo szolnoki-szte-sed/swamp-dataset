@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cirt.net:nikto:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/sullo/nikto/commit/e759b3300aace5314fe3d30800c8bd83c81c29f7",
+        "version_end_excluding": {
+            "cirt.net:nikto": "unknown"
+        },
+        "path": {
+            "file_path": "program/plugins/nikto_outdated.plugin"
+        }
+    },
+    "programming_language": "perl",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-11652"
+        ],
+        "CWE": [
+            "CWE-1236"
+        ]
+    }
+}

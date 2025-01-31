@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:zammad:zammad:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/zammad/zammad/commit/40148392426f626cb779c76d6bdda0f67bd6069d",
+        "version_end_excluding": {
+            "zammad:zammad": "3.3.1"
+        },
+        "path": {
+            "file_path": "app/models/user.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-14214"
+        ],
+        "CWE": [
+            "CWE-863"
+        ]
+    }
+}

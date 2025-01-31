@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jenkins:jenkins:*:*:*:*:lts:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jenkinsci/jenkins/commit/bf539198564a1108b7b71a973bf7de963a6213ef",
+        "version_end_excluding": {
+            "jenkins:jenkins": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/main/resources/hudson/model/PasswordParameterDefinition/config.jelly"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-2061"
+        ],
+        "CWE": [
+            "CWE-310"
+        ]
+    }
+}

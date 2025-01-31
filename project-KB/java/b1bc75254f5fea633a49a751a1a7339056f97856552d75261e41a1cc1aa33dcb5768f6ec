@@ -1,0 +1,191 @@
+diff --git a/core/src/main/java/org/bouncycastle/asn1/ASN1InputStream.java b/core/src/main/java/org/bouncycastle/asn1/ASN1InputStream.java
+index f0604dd0b2..0591a93b8d 100644
+--- a/core/src/main/java/org/bouncycastle/asn1/ASN1InputStream.java
++++ b/core/src/main/java/org/bouncycastle/asn1/ASN1InputStream.java
+@@ -139,7 +139,7 @@ protected ASN1Primitive buildObject(
+     {
+         boolean isConstructed = (tag & CONSTRUCTED) != 0;
+ 
+-        DefiniteLengthInputStream defIn = new DefiniteLengthInputStream(this, length);
++        DefiniteLengthInputStream defIn = new DefiniteLengthInputStream(this, length, limit);
+ 
+         if ((tag & APPLICATION) != 0)
+         {
+diff --git a/core/src/main/java/org/bouncycastle/asn1/ASN1StreamParser.java b/core/src/main/java/org/bouncycastle/asn1/ASN1StreamParser.java
+index a9d76605f9..95bc611339 100644
+--- a/core/src/main/java/org/bouncycastle/asn1/ASN1StreamParser.java
++++ b/core/src/main/java/org/bouncycastle/asn1/ASN1StreamParser.java
+@@ -169,11 +169,7 @@ public ASN1Encodable readObject()
+         }
+         else
+         {
+-            if (length >= _limit)   // after all we must have read at least 1 byte
+-            {
+-                throw new IOException("corrupted stream - out of bounds length found: " + length + " >= " + _limit);
+-            }
+-            DefiniteLengthInputStream defIn = new DefiniteLengthInputStream(_in, length);
++            DefiniteLengthInputStream defIn = new DefiniteLengthInputStream(_in, length, _limit);
+ 
+             if ((tag & BERTags.APPLICATION) != 0)
+             {
+diff --git a/core/src/main/java/org/bouncycastle/asn1/DefiniteLengthInputStream.java b/core/src/main/java/org/bouncycastle/asn1/DefiniteLengthInputStream.java
+index d7b51dedd4..dd533ca1ca 100644
+--- a/core/src/main/java/org/bouncycastle/asn1/DefiniteLengthInputStream.java
++++ b/core/src/main/java/org/bouncycastle/asn1/DefiniteLengthInputStream.java
+@@ -15,13 +15,15 @@ class DefiniteLengthInputStream
+     private static final byte[] EMPTY_BYTES = new byte[0];
+ 
+     private final int _originalLength;
++
+     private int _remaining;
+ 
+     DefiniteLengthInputStream(
+         InputStream in,
+-        int         length)
++        int         length,
++        int         limit)
+     {
+-        super(in, length);
++        super(in, limit, length);
+ 
+         if (length < 0)
+         {
+@@ -97,6 +99,12 @@ byte[] toByteArray()
+             return EMPTY_BYTES;
+         }
+ 
++        // make sure it's safe to do this!
++        if (_remaining >= this.getLimit())
++        {
++            throw new IOException("corrupted stream - out of bounds length found: " + _remaining + " >= " + this.getLimit());
++        }
++
+         byte[] bytes = new byte[_remaining];
+         if ((_remaining -= Streams.readFully(_in, bytes)) != 0)
+         {
+diff --git a/core/src/main/java/org/bouncycastle/asn1/IndefiniteLengthInputStream.java b/core/src/main/java/org/bouncycastle/asn1/IndefiniteLengthInputStream.java
+index 353da3b079..e37af6483b 100644
+--- a/core/src/main/java/org/bouncycastle/asn1/IndefiniteLengthInputStream.java
++++ b/core/src/main/java/org/bouncycastle/asn1/IndefiniteLengthInputStream.java
+@@ -17,7 +17,7 @@ class IndefiniteLengthInputStream
+         int         limit)
+         throws IOException
+     {
+-        super(in, limit);
++        super(in, limit, limit);
+ 
+         _b1 = in.read();
+         _b2 = in.read();
+diff --git a/core/src/main/java/org/bouncycastle/asn1/LimitedInputStream.java b/core/src/main/java/org/bouncycastle/asn1/LimitedInputStream.java
+index ab8470f8b0..410a3e47c3 100644
+--- a/core/src/main/java/org/bouncycastle/asn1/LimitedInputStream.java
++++ b/core/src/main/java/org/bouncycastle/asn1/LimitedInputStream.java
+@@ -10,19 +10,27 @@ abstract class LimitedInputStream
+ {
+     protected final InputStream _in;
+     private int _limit;
++    private int _length;
+ 
+     LimitedInputStream(
+         InputStream in,
+-        int         limit)
++        int         limit,
++        int         length)
+     {
+         this._in = in;
+         this._limit = limit;
++        this._length = length;
++    }
++
++    int getLimit()
++    {
++        return _limit;
+     }
+ 
+     int getRemaining()
+     {
+         // TODO: maybe one day this can become more accurate
+-        return _limit;
++        return _length;
+     }
+     
+     protected void setParentEofDetect(boolean on)
+diff --git a/core/src/main/java/org/bouncycastle/asn1/StreamUtil.java b/core/src/main/java/org/bouncycastle/asn1/StreamUtil.java
+index b6cb070644..3b9e90613e 100644
+--- a/core/src/main/java/org/bouncycastle/asn1/StreamUtil.java
++++ b/core/src/main/java/org/bouncycastle/asn1/StreamUtil.java
+@@ -11,7 +11,7 @@ class StreamUtil
+     private static final long  MAX_MEMORY = Runtime.getRuntime().maxMemory();
+ 
+     /**
+-     * Find out possible longest length...
++     * Find out possible longest length, capped by available memory.
+      *
+      * @param in input stream of interest
+      * @return length calculation or MAX_VALUE.
+@@ -20,7 +20,7 @@ static int findLimit(InputStream in)
+     {
+         if (in instanceof LimitedInputStream)
+         {
+-            return ((LimitedInputStream)in).getRemaining();
++            return ((LimitedInputStream)in).getLimit();
+         }
+         else if (in instanceof ASN1InputStream)
+         {
+diff --git a/core/src/test/java/org/bouncycastle/asn1/test/InputStreamTest.java b/core/src/test/java/org/bouncycastle/asn1/test/InputStreamTest.java
+index fd39973a3c..90de5a4e68 100644
+--- a/core/src/test/java/org/bouncycastle/asn1/test/InputStreamTest.java
++++ b/core/src/test/java/org/bouncycastle/asn1/test/InputStreamTest.java
+@@ -17,9 +17,9 @@ public class InputStreamTest
+ 
+     private static final byte[] classCast1 = Base64.decode("p1AkHmYAvfOEIrL4ESfrNg==");
+ 
+-    private static final byte[] memoryError1 = Base64.decode("JICNbaBUTTq7uxj5mg==");
+-    private static final byte[] memoryError2 = Base64.decode("vm66gOiEe+FV/NvujMwSkUp5Lffw5caQlaRU5sdMPC70IGWmyK2/");
+-    private static final byte[] memoryError3 = Base64.decode("vm4ogOSEfVGsS3w+KTzb2A0ALYR8VBOQqQeuRwnsPC4AAGWEDLjd");
++    private static final byte[] classCast2 = Base64.decode("JICNbaBUTTq7uxj5mg==");
++    private static final byte[] memoryError1 = Base64.decode("vm66gOiEe+FV/NvujMwSkUp5Lffw5caQlaRU5sdMPC70IGWmyK2/");
++    private static final byte[] memoryError2 = Base64.decode("vm4ogOSEfVGsS3w+KTzb2A0ALYR8VBOQqQeuRwnsPC4AAGWEDLjd");
+ 
+     public String getName()
+     {
+@@ -75,10 +75,10 @@ public void performTest()
+         }
+ 
+         testWithByteArray(classCast1, "unknown object encountered: class org.bouncycastle.asn1.DLApplicationSpecific");
+-
+-        testWithByteArray(memoryError1, "corrupted stream - out of bounds length found: 109 >= 13");
+-        testWithByteArray(memoryError2, "corrupted stream - out of bounds length found: 2078365180 >= 110");
+-        testWithByteArray(memoryError3, "corrupted stream - out of bounds length found: 2102504523 >= 110");
++        testWithByteArray(classCast2, "unknown object encountered: class org.bouncycastle.asn1.BERTaggedObjectParser");
++        
++        testWithByteArray(memoryError1, "corrupted stream - out of bounds length found: 2078365180 >= 110");
++        testWithByteArray(memoryError2, "corrupted stream - out of bounds length found: 2102504523 >= 110");
+     }
+ 
+     private void testWithByteArray(byte[] data, String message)
+diff --git a/pkix/src/test/java/org/bouncycastle/openssl/test/ParserTest.java b/pkix/src/test/java/org/bouncycastle/openssl/test/ParserTest.java
+index 7fe0cd691b..b9fba0d535 100644
+--- a/pkix/src/test/java/org/bouncycastle/openssl/test/ParserTest.java
++++ b/pkix/src/test/java/org/bouncycastle/openssl/test/ParserTest.java
+@@ -248,15 +248,15 @@ public void performTest()
+         doOpenSslDsaTest("rc2_64_cbc");
+         doOpenSslRsaTest("rc2_64_cbc");
+ 
+-        doDudPasswordTest("7fd98", 0, "corrupted stream - out of bounds length found: 599005160 >= 19");
+-        doDudPasswordTest("ef677", 1, "corrupted stream - out of bounds length found: 2087569732 >= 66");
++        doDudPasswordTest("7fd98", 0, "corrupted stream - out of bounds length found: 599005160 >= 447");
++        doDudPasswordTest("ef677", 1, "corrupted stream - out of bounds length found: 2087569732 >= 447");
+         doDudPasswordTest("800ce", 2, "unknown tag 26 encountered");
+         doDudPasswordTest("b6cd8", 3, "DEF length 81 object truncated by 56");
+         doDudPasswordTest("28ce09", 4, "DEF length 110 object truncated by 28");
+         doDudPasswordTest("2ac3b9", 5, "DER length more than 4 bytes: 11");
+-        doDudPasswordTest("2cba96", 6, "corrupted stream - out of bounds length found: 100 >= 67");
+-        doDudPasswordTest("2e3354", 7, "corrupted stream - out of bounds length found: 42 >= 35");
+-        doDudPasswordTest("2f4142", 8, "corrupted stream - out of bounds length found: 127 >= 39");
++        doDudPasswordTest("2cba96", 6, "DEF length 100 object truncated by 35");
++        doDudPasswordTest("2e3354", 7, "DEF length 42 object truncated by 9");
++        doDudPasswordTest("2f4142", 8, "DER length more than 4 bytes: 14");
+         doDudPasswordTest("2fe9bb", 9, "DER length more than 4 bytes: 65");
+         doDudPasswordTest("3ee7a8", 10, "DER length more than 4 bytes: 57");
+         doDudPasswordTest("41af75", 11, "unknown tag 16 encountered");

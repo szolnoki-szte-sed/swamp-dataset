@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:imagemagick:imagemagick:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ImageMagick/ImageMagick/commit/1bc1fd0ff8c555841c78829217ac81fa0598255d",
+        "version_end_excluding": {
+            "imagemagick:imagemagick": "unknown"
+        },
+        "path": {
+            "file_path": "coders/mat.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-10071"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

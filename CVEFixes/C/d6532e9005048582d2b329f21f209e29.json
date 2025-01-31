@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ucbrise:opaque:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ucbrise/opaque/commit/5ddda15d89f5ac82f4416208c5319ace4aecdc36",
+        "version_end_excluding": {
+            "ucbrise:opaque": "2018-12-01"
+        },
+        "path": {
+            "file_path": "src/enclave/App/App.cpp"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20742"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

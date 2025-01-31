@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:agentejo:cockpit:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/agentejo/cockpit/commit/33e7199575631ba1f74cba6b16b10c820bec59af",
+        "version_end_excluding": {
+            "agentejo:cockpit": "0.11.2"
+        },
+        "path": {
+            "file_path": "lib/MongoLite/Database.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-35846"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

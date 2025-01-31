@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:zyantific:zydis:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/zyantific/zydis/commit/55dd08c210722aed81b38132f5fd4a04ec1943b5",
+        "version_end_excluding": {
+            "zyantific:zydis": "unknown"
+        },
+        "path": {
+            "file_path": "dependencies/zycore"
+        }
+    },
+    "programming_language": "unknown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41253"
+        ],
+        "CWE": [
+            "CWE-122"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phpmyadmin:phpmyadmin:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/phpmyadmin/phpmyadmin/commit/00d90b3ae415b31338f76263359467a9fbebd0a1",
+        "version_end_excluding": {
+            "phpmyadmin:phpmyadmin": "4.8.3"
+        },
+        "path": {
+            "file_path": "libraries/classes/Sql.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-15605"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

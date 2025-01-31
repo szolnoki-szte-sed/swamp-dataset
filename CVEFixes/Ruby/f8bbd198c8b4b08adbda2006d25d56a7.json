@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:nebulab:solidus:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:nebulab:solidus:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:nebulab:solidus:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/solidusio/solidus/commit/4d17cacf066d9492fc04eb3a0b16084b47376d81",
+        "version_end_excluding": {
+            "nebulab:solidus": "3.1.5"
+        },
+        "path": {
+            "file_path": "frontend/app/controllers/spree/orders_controller.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-43846"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

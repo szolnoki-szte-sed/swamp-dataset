@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:rsvpmaker_project:rsvpmaker:*:*:*:*:*:wordpress:*:*"
+        ],
+        "fix_commit": "https://github.com/davidfcarr/rsvpmaker/commit/bfb189f49af7ab0d34499a2da772e3266f72167d",
+        "version_end_excluding": {
+            "rsvpmaker_project:rsvpmaker": "unknown"
+        },
+        "path": {
+            "file_path": "rsvpmaker-api-endpoints.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-1453"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

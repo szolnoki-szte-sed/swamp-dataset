@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:django-user-sessions_project:django-user-sessions:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jazzband/django-user-sessions/commit/f0c4077e7d1436ba6d721af85cee89222ca5d2d9",
+        "version_end_excluding": {
+            "django-user-sessions_project:django-user-sessions": "1.7.1"
+        },
+        "path": {
+            "file_path": "tests/tests.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-5224"
+        ],
+        "CWE": [
+            "CWE-326"
+        ]
+    }
+}

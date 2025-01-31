@@ -1,0 +1,38 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.28.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.28.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.28.5:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.28.8:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.28.3:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.28.9:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.28.6:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.28.7:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.28.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.6.28:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/dc0b027dfadfcb8a5504f7d8052754bf8d501ab9",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "fs/nfs/inode.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-4324"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

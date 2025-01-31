@@ -1,0 +1,64 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:trendmicro:apex_central:2019:-:*:*:*:windows:*:*",
+            "cpe:2.3:a:bqe:billquick_web_suite:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:accellion:fta:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:sophos:sfos:17.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:concourse:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pam-pgsql:pam-pgsql:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mountaingrafix:easytrade:2.x:*:*:*:*:*:*:*",
+            "cpe:2.3:a:buyscripts:vshare_youtube_clone:2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:noserub:noserub:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:web_scribble_solutions:webclassifieds:2005:*:*:*:*:*:*:*",
+            "cpe:2.3:a:iisprotect:iisprotect:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:courier-mta:courtier-authlib:0.52:*:*:*:*:*:*:*",
+            "cpe:2.3:a:tenable:securitycenter:5.5.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "trendmicro:apex_central": "unknown",
+            "bqe:billquick_web_suite": "unknown",
+            "accellion:fta": "9_12_370",
+            "sophos:sfos": "unknown",
+            "pivotal_software:concourse": "unknown",
+            "pam-pgsql:pam-pgsql": "unknown",
+            "mountaingrafix:easytrade": "unknown",
+            "buyscripts:vshare_youtube_clone": "unknown",
+            "noserub:noserub": "0.5.2",
+            "web_scribble_solutions:webclassifieds": "unknown",
+            "iisprotect:iisprotect": "2.2",
+            "courier-mta:courtier-authlib": "unknown",
+            "tenable:securitycenter": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "perl",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2023-32530",
+            "CVE-2021-42258",
+            "CVE-2021-27101",
+            "CVE-2020-12271",
+            "CVE-2019-3792",
+            "CVE-2004-0366",
+            "CVE-2008-2790",
+            "CVE-2008-2223",
+            "CVE-2007-6602",
+            "CVE-2008-5817",
+            "CVE-2003-0377",
+            "CVE-2008-2380",
+            "CVE-2017-11508"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

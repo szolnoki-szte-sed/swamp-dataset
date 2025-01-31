@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:dolibarr:dolibarr_erp\\/crm:13.0.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/Dolibarr/dolibarr/commit/abb1ad6bf0469eccd2b58beb20bdabc18fc36e22",
+        "version_end_excluding": {
+            "dolibarr:dolibarr_erp\\/crm": "unknown"
+        },
+        "path": {
+            "file_path": "htdocs/societe/card.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-36625"
+        ],
+        "CWE": [
+            "CWE-89"
+        ]
+    }
+}

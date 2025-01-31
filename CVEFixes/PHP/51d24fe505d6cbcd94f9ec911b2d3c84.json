@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:snipeitapp:snipe-it:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:snipeitapp:snipe-it:5.3.10:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/snipe/snipe-it/commit/bdabbbd4e98e88ee01e728ceb4fd512661fbd38d",
+        "version_end_excluding": {
+            "snipeitapp:snipe-it": "unknown"
+        },
+        "path": {
+            "file_path": "resources/lang/en/auth/message.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-1155"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

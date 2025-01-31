@@ -1,0 +1,214 @@
+diff --git a/lib/client-core/src/main/java/org/apache/olingo/client/core/communication/request/AsyncBatchRequestWrapperImpl.java b/lib/client-core/src/main/java/org/apache/olingo/client/core/communication/request/AsyncBatchRequestWrapperImpl.java
+index c99e58335e..0502f3ec83 100644
+--- a/lib/client-core/src/main/java/org/apache/olingo/client/core/communication/request/AsyncBatchRequestWrapperImpl.java
++++ b/lib/client-core/src/main/java/org/apache/olingo/client/core/communication/request/AsyncBatchRequestWrapperImpl.java
+@@ -18,7 +18,6 @@
+  */
+ package org.apache.olingo.client.core.communication.request;
+ 
+-import java.net.URI;
+ import java.util.Collection;
+ 
+ import org.apache.commons.io.IOUtils;
+@@ -95,7 +94,7 @@ private void retrieveMonitorDetails(final ODataBatchResponse res) {
+       if (headers == null || headers.isEmpty()) {
+         throw new AsyncRequestException("Invalid async request response. Monitor URL not found");
+       } else {
+-        this.location = URI.create(headers.iterator().next());
++        this.location = createLocation(headers.iterator().next());
+       }
+ 
+       headers = res.getHeader(HttpHeader.RETRY_AFTER);
+diff --git a/lib/client-core/src/main/java/org/apache/olingo/client/core/communication/request/AsyncRequestWrapperImpl.java b/lib/client-core/src/main/java/org/apache/olingo/client/core/communication/request/AsyncRequestWrapperImpl.java
+index 61b2e0557b..924f47bed4 100644
+--- a/lib/client-core/src/main/java/org/apache/olingo/client/core/communication/request/AsyncRequestWrapperImpl.java
++++ b/lib/client-core/src/main/java/org/apache/olingo/client/core/communication/request/AsyncRequestWrapperImpl.java
+@@ -20,6 +20,7 @@
+ 
+ import java.io.IOException;
+ import java.net.URI;
++import java.util.Objects;
+ import java.util.logging.Level;
+ import java.util.logging.Logger;
+ 
+@@ -86,6 +87,7 @@ protected AsyncRequestWrapperImpl(final ODataClient odataClient, final ODataRequ
+ 
+     // target uri
+     this.uri = odataRequest.getURI();
++    Objects.requireNonNull(this.uri, "Target URI can't be null");
+ 
+     HttpClient _httpClient = odataClient.getConfiguration().getHttpClientFactory().create(method, this.uri);
+     if (odataClient.getConfiguration().isGzipCompression()) {
+@@ -139,6 +141,19 @@ protected HttpResponse doExecute() {
+     return executeHttpRequest(httpClient, this.request);
+   }
+ 
++  private URI checkLocation(URI uri) {
++    if (!this.uri.getScheme().equals(uri.getScheme())) {
++      throw new AsyncRequestException("Unexpected scheme in the Location header");
++    }
++    if (!this.uri.getHost().equals(uri.getHost())) {
++      throw new AsyncRequestException("Unexpected host name in the Location header");
++    }
++    if (this.uri.getPort() != uri.getPort()) {
++      throw new AsyncRequestException("Unexpected port in the Location header");
++    }
++    return uri;
++  }
++
+   public class AsyncResponseWrapperImpl implements AsyncResponseWrapper<R> {
+ 
+     static final int DEFAULT_RETRY_AFTER = 5;
+@@ -222,6 +237,10 @@ public R getODataResponse() {
+       return response;
+     }
+ 
++    URI createLocation(String string) {
++      return checkLocation(URI.create(string));
++    }
++
+     int parseReplyAfter(String value) {
+       if (value == null || value.isEmpty()) {
+         return DEFAULT_RETRY_AFTER;
+@@ -274,7 +293,7 @@ private R instantiateResponse(final HttpResponse res) {
+     private void retrieveMonitorDetails(final HttpResponse res) {
+       Header[] headers = res.getHeaders(HttpHeader.LOCATION);
+       if (ArrayUtils.isNotEmpty(headers)) {
+-        this.location = URI.create(headers[0].getValue());
++        this.location = createLocation(headers[0].getValue());
+       } else {
+         throw new AsyncRequestException(
+             "Invalid async request response. Monitor URL '" + headers[0].getValue() + "'");
+diff --git a/lib/client-core/src/test/java/org/apache/olingo/client/core/communication/request/AsyncRequestWrapperTest.java b/lib/client-core/src/test/java/org/apache/olingo/client/core/communication/request/AsyncRequestWrapperTest.java
+index 43b0456e00..0287e0d561 100644
+--- a/lib/client-core/src/test/java/org/apache/olingo/client/core/communication/request/AsyncRequestWrapperTest.java
++++ b/lib/client-core/src/test/java/org/apache/olingo/client/core/communication/request/AsyncRequestWrapperTest.java
+@@ -29,7 +29,6 @@
+ import java.io.IOException;
+ import java.net.URI;
+ import java.net.URISyntaxException;
+-
+ import org.apache.http.HttpResponse;
+ import org.apache.http.HttpResponseFactory;
+ import org.apache.http.HttpVersion;
+@@ -91,7 +90,7 @@ public void testReq() throws URISyntaxException {
+   }
+ 
+   private AsyncRequestWrapperImpl createAsyncRequestWrapperImplWithRetryAfter(int retryAfter)
+-      throws IOException {
++      throws IOException, URISyntaxException {
+ 
+     HttpClient httpClient = mock(HttpClient.class);
+     ODataClient oDataClient = mock(ODataClient.class);
+@@ -116,13 +115,14 @@ private AsyncRequestWrapperImpl createAsyncRequestWrapperImplWithRetryAfter(int
+     AbstractODataRequest oDataRequest = mock(AbstractODataRequest.class);
+     ODataResponse oDataResponse = mock(ODataResponse.class);
+     when(oDataRequest.getResponseTemplate()).thenReturn(oDataResponse);
++    when(oDataRequest.getURI()).thenReturn(new URI("http://localhost/path"));
+     when(oDataResponse.initFromHttpResponse(any(HttpResponse.class))).thenReturn(null);
+ 
+     return new AsyncRequestWrapperImpl(oDataClient, oDataRequest);
+   }
+ 
+   @Test
+-  public void testTooBigRetryAfter() throws IOException {
++  public void testTooBigRetryAfter() throws IOException, URISyntaxException {
+ 
+     AsyncRequestWrapperImpl req = createAsyncRequestWrapperImplWithRetryAfter(Integer.MAX_VALUE);
+     AsyncResponseWrapper wrappedResponse = req.execute();
+@@ -132,7 +132,7 @@ public void testTooBigRetryAfter() throws IOException {
+   }
+ 
+   @Test
+-  public void testZeroRetryAfter() throws IOException {
++  public void testZeroRetryAfter() throws IOException, URISyntaxException {
+ 
+     AsyncRequestWrapperImpl req = createAsyncRequestWrapperImplWithRetryAfter(0);
+     AsyncResponseWrapper wrappedResponse = req.execute();
+@@ -142,7 +142,7 @@ public void testZeroRetryAfter() throws IOException {
+   }
+ 
+   @Test
+-  public void testNegativeRetryAfter() throws IOException {
++  public void testNegativeRetryAfter() throws IOException, URISyntaxException {
+ 
+     AsyncRequestWrapperImpl req = createAsyncRequestWrapperImplWithRetryAfter(-1);
+     AsyncResponseWrapper wrappedResponse = req.execute();
+@@ -152,7 +152,7 @@ public void testNegativeRetryAfter() throws IOException {
+   }
+ 
+   @Test
+-  public void testRetryAfter() throws IOException {
++  public void testRetryAfter() throws IOException, URISyntaxException {
+ 
+     int retryAfter = 7;
+     assertNotEquals(retryAfter, AsyncResponseWrapperImpl.DEFAULT_RETRY_AFTER);
+@@ -178,4 +178,68 @@ public void testException() {
+     assertEquals("Exception", ex.getMessage());
+   }
+ 
++  private AsyncResponseWrapperImpl createAsyncRequestWrapperImplWithLocation(String target, String location)
++      throws IOException, URISyntaxException {
++
++    HttpClient httpClient = mock(HttpClient.class);
++    ODataClient oDataClient = mock(ODataClient.class);
++    Configuration configuration = mock(Configuration.class);
++    HttpClientFactory httpClientFactory = mock(HttpClientFactory.class);
++    HttpUriRequestFactory httpUriRequestFactory = mock(HttpUriRequestFactory.class);
++    HttpUriRequest httpUriRequest = mock(HttpUriRequest.class);
++
++    when(oDataClient.getConfiguration()).thenReturn(configuration);
++    when(configuration.getHttpClientFactory()).thenReturn(httpClientFactory);
++    when(configuration.getHttpUriRequestFactory()).thenReturn(httpUriRequestFactory);
++    when(httpClientFactory.create(any(), any())).thenReturn(httpClient);
++    when(httpUriRequestFactory.create(any(), any())).thenReturn(httpUriRequest);
++
++    HttpResponseFactory factory = new DefaultHttpResponseFactory();
++    HttpResponse firstResponse = factory.newHttpResponse(
++        new BasicStatusLine(HttpVersion.HTTP_1_1, 202, null), null);
++    firstResponse.addHeader(HttpHeader.LOCATION, location);
++    when(httpClient.execute(any(HttpUriRequest.class))).thenReturn(firstResponse);
++
++    ODataResponse oDataResponse = mock(ODataResponse.class);
++    when(oDataResponse.initFromHttpResponse(any(HttpResponse.class))).thenReturn(null);
++
++    AbstractODataRequest oDataRequest = mock(AbstractODataRequest.class);
++    when(oDataRequest.getURI()).thenReturn(new URI(target));
++    when(oDataRequest.getResponseTemplate()).thenReturn(oDataResponse);
++
++    AsyncRequestWrapperImpl req = new AsyncRequestWrapperImpl(oDataClient, oDataRequest);
++    AsyncResponseWrapper wrappedResponse = req.execute();
++    assertTrue(wrappedResponse instanceof AsyncResponseWrapperImpl);
++    return (AsyncResponseWrapperImpl) wrappedResponse;
++  }
++
++  @Test(expected = AsyncRequestException.class)
++  public void testLocationWithInvalidScheme() throws IOException, URISyntaxException {
++    String target = "https://server/path";
++    String location = "http://server/path";
++    createAsyncRequestWrapperImplWithLocation(target, location);
++  }
++
++  @Test(expected = AsyncRequestException.class)
++  public void testLocationWithInvalidHost() throws IOException, URISyntaxException {
++    String target = "http://server/path";
++    String location = "http://something.else/path";
++    createAsyncRequestWrapperImplWithLocation(target, location);
++  }
++
++  @Test(expected = AsyncRequestException.class)
++  public void testLocationWithInvalidPort() throws IOException, URISyntaxException {
++    String target = "http://server/path";
++    String location = "http://server:8080/path";
++    createAsyncRequestWrapperImplWithLocation(target, location);
++  }
++
++  @Test
++  public void testLocationWithDifferentPaths() throws IOException, URISyntaxException {
++    String target = "http://server/path";
++    String location = "http://server/monitor";
++    AsyncResponseWrapperImpl wrapper = createAsyncRequestWrapperImplWithLocation(target, location);
++    assertEquals(new URI(location), wrapper.location);
++  }
++
+ }

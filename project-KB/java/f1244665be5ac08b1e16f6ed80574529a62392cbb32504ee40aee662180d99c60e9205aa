@@ -1,0 +1,22 @@
+diff --git a/jcl/src/java.base/share/classes/java/lang/String.java b/jcl/src/java.base/share/classes/java/lang/String.java
+index 5e787115def..c5a1e428542 100644
+--- a/jcl/src/java.base/share/classes/java/lang/String.java
++++ b/jcl/src/java.base/share/classes/java/lang/String.java
+@@ -1784,7 +1784,7 @@ public byte[] getBytes() {
+ 	 */
+ 	@Deprecated(forRemoval=false, since="1.1")
+ 	public void getBytes(int start, int end, byte[] data, int index) {
+-		if (0 <= start && start <= end && end <= lengthInternal()) {
++		if (0 <= start && start <= end && end <= lengthInternal() && 0 <= index && ((end - start) <= (data.length - index))) {
+ 			// Check if the String is compressed
+ 			if (enableCompression && (null == compressionFlag || coder == LATIN1)) {
+ 				compressedArrayCopy(value, start, data, index, end - start);
+@@ -5756,7 +5756,7 @@ public byte[] getBytes() {
+ 	 */
+ 	@Deprecated
+ 	public void getBytes(int start, int end, byte[] data, int index) {
+-		if (0 <= start && start <= end && end <= lengthInternal()) {
++		if (0 <= start && start <= end && end <= lengthInternal() && 0 <= index && ((end - start) <= (data.length - index))) {
+ 			// Check if the String is compressed
+ 			if (enableCompression && (null == compressionFlag || count >= 0)) {
+ 				compressedArrayCopy(value, start, data, index, end - start);

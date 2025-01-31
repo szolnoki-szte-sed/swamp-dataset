@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:revive-adserver:revive_adserver:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/revive-adserver/revive-adserver/commit/a323fd626627e8d42819fd5b7e2829196b5c54a3",
+        "version_end_excluding": {
+            "revive-adserver:revive_adserver": "unknown"
+        },
+        "path": {
+            "file_path": "plugins_repo/openXInvocationTags/plugins/invocationTags/oxInvocationTags/spc.class.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-9128"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

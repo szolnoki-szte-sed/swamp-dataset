@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mantisbt:mantisbt:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mantisbt/mantisbt/commit/9cee1971c498bbe0a72bca1c773fae50171d8c27",
+        "version_end_excluding": {
+            "mantisbt:mantisbt": "unknown"
+        },
+        "path": {
+            "file_path": "core/classes/IssueAttachmentTimelineEvent.class.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-15074"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

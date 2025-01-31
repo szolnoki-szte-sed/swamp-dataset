@@ -1,0 +1,34 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:lite:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:lite:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:lite:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:lite:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:lite:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.2:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/tensorflow/tensorflow/commit/8ee24e7949a203d234489f9da2c5bf45a7d5157d",
+        "version_end_excluding": {
+            "google:tensorflow": "2.3.1",
+            "opensuse:leap": "unknown"
+        },
+        "path": {
+            "file_path": "tensorflow/lite/kernels/internal/types.h"
+        }
+    },
+    "programming_language": "objective_c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15208"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

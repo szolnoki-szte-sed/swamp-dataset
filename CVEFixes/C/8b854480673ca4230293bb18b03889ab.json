@@ -1,0 +1,44 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:5.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.0:rc2:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.0:rc3:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:5.0:rc4:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:solidfire:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:hci_management_node:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:snapprotect:-:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:18.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/77f8269606bf95fcb232ee86f6da80886f1dfae8",
+        "version_end_excluding": {
+            "linux:linux_kernel": "4.20.5",
+            "netapp:solidfire": "unknown",
+            "netapp:hci_management_node": "unknown",
+            "netapp:snapprotect": "unknown",
+            "canonical:ubuntu_linux": "unknown",
+            "opensuse:leap": "unknown"
+        },
+        "path": {
+            "file_path": "drivers/char/ipmi/ipmi_msghandler.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-9003"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

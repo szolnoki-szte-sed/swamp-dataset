@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:showdoc:showdoc:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/star7th/showdoc/commit/409c8a1208bbb847046a9496303192980f2e6219",
+        "version_end_excluding": {
+            "showdoc:showdoc": "2.10.2"
+        },
+        "path": {
+            "file_path": "web/static/js/app.8a9350efdba95123bddd.js"
+        }
+    },
+    "programming_language": "unknown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-4172"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

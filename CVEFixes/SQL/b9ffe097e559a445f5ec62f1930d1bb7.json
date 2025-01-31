@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:django-unicorn:unicorn:*:*:*:*:*:django:*:*"
+        ],
+        "fix_commit": "https://github.com/adamghill/django-unicorn/commit/3a832a9e3f6455ddd3b87f646247269918ad10c6",
+        "version_end_excluding": {
+            "django-unicorn:unicorn": "0.36.1"
+        },
+        "path": {
+            "file_path": "tests/templates/test_component_kwargs.html"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-42134"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

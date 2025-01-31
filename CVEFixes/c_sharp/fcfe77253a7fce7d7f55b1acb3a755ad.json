@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:orchardcore:orchardcore:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/orchardcms/orchardcore/commit/4da927d39a49138527c30db09c962ff706f95202",
+        "version_end_excluding": {
+            "orchardcore:orchardcore": "1.2.1"
+        },
+        "path": {
+            "file_path": "src/OrchardCore.Modules/OrchardCore.AdminDashboard/Controllers/DashboardController.cs"
+        }
+    },
+    "programming_language": "c_sharp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0159"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

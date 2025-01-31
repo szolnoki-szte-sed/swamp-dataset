@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jabberd2:jabberd2:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jabberd2/jabberd2/commit/8416ae54ecefa670534f27a31db71d048b9c7f16",
+        "version_end_excluding": {
+            "jabberd2:jabberd2": "unknown"
+        },
+        "path": {
+            "file_path": "sx/sasl.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-10807"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

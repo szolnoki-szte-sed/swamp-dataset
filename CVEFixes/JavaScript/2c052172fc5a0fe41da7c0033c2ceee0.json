@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jupyter:jupyterlab:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jupyter:jupyterlab:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jupyter:jupyterlab:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jupyter:jupyterlab:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jupyter:jupyterlab:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jupyterlab/jupyterlab/commit/504825938c0abfa2fb8ff8d529308830a5ae42ed",
+        "version_end_excluding": {
+            "jupyter:jupyterlab": "1.2.21"
+        },
+        "path": {
+            "file_path": "packages/apputils/src/sanitizer.ts"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-32797"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

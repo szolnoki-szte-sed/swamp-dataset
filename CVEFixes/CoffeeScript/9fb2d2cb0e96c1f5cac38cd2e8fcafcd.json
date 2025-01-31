@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:atlassian:atlasboard:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://bitbucket.org/atlassian/atlasboard/commit/9c03df09f09399e2601010466e8ba3a28236eb9c",
+        "version_end_excluding": {
+            "atlassian:atlasboard": "1.1.9"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-39109"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:warnsystem_project:warnsystem:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/retke/Laggrons-Dumb-Cogs/commit/c79dd2cc879989cf2018e76ba2aad0baef3b4ec8",
+        "version_end_excluding": {
+            "warnsystem_project:warnsystem": "1.3.18"
+        },
+        "path": {
+            "file_path": "warnsystem/warnsystem.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-29502"
+        ],
+        "CWE": [
+            "CWE-74"
+        ]
+    }
+}

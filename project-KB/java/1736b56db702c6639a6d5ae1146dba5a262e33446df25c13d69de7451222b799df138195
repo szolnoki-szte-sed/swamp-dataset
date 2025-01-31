@@ -1,0 +1,122 @@
+diff --git a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/FileHandler.java b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/FileHandler.java
+index ffbde4ccf3..fe7a7d7322 100644
+--- a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/FileHandler.java
++++ b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/FileHandler.java
+@@ -35,7 +35,7 @@ public void generate() throws IOException {
+         a.addDefaultToEmpty("name", params.get("name"))
+                 .add("type", "file")
+                 .addIfExists("size", params.get("size"))
+-                .addIfExists("value", params.get("nameValue"), false)
++                .addIfExists("value", params.get("nameValue"))
+                 .addIfTrue("disabled", params.get("disabled"))
+                 .addIfExists("accept", params.get("accept"))
+                 .addIfExists("tabindex", params.get("tabindex"))
+diff --git a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/HiddenHandler.java b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/HiddenHandler.java
+index 83c869ca9e..395f7ccba0 100644
+--- a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/HiddenHandler.java
++++ b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/HiddenHandler.java
+@@ -34,7 +34,7 @@ public void generate() throws IOException {
+ 
+         a.addDefaultToEmpty("name", params.get("name"))
+                 .add("type", "hidden")
+-                .addIfExists("value", params.get("nameValue"), false)
++                .addIfExists("value", params.get("nameValue"))
+                 .addIfTrue("disabled", params.get("disabled"))
+                 .addIfExists("id", params.get("id"))
+                 .addIfExists("class", params.get("cssClass"))
+diff --git a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/PasswordHandler.java b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/PasswordHandler.java
+index 6dbb99bb44..b6c2ebbdb1 100644
+--- a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/PasswordHandler.java
++++ b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/PasswordHandler.java
+@@ -34,7 +34,7 @@ public void generate() throws IOException {
+ 
+         Boolean showPassword = (Boolean) params.get("showPassword");
+         if (showPassword != null && showPassword)
+-           attrs.addIfExists("value",  params.get("nameValue"), false);
++           attrs.addIfExists("value",  params.get("nameValue"));
+ 
+         attrs.addDefaultToEmpty("name", params.get("name"))
+                 .add("type", "password")
+diff --git a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/RadioHandler.java b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/RadioHandler.java
+index 65d781b885..0d6dac4802 100644
+--- a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/RadioHandler.java
++++ b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/RadioHandler.java
+@@ -79,7 +79,7 @@ public void generate() throws IOException {
+                 a.add("type", "radio")
+                         .addDefaultToEmpty("name", params.get("name"))
+                         .addIfTrue("checked", checked)
+-                        .addIfExists("value", itemKeyStr, false)
++                        .addIfExists("value", itemKeyStr)
+                         .addIfTrue("disabled", params.get("disabled"))
+                         .addIfExists("tabindex", params.get("tabindex"))
+                         .addIfExists("id", id);
+diff --git a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/ResetHandler.java b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/ResetHandler.java
+index 53074234ba..3d4909f22d 100644
+--- a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/ResetHandler.java
++++ b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/ResetHandler.java
+@@ -37,7 +37,7 @@ public void generate() throws IOException {
+ 
+         attrs.addDefaultToEmpty("name", params.get("name"))
+                 .add("type", "reset")
+-                .addIfExists("value", params.get("nameValue"), false)
++                .addIfExists("value", params.get("nameValue"))
+                 .addIfExists("tabindex", params.get("tabindex"))
+                 .addIfExists("id", params.get("id"))
+                 .addIfExists("class", params.get("cssClass"))
+diff --git a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/SelectHandler.java b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/SelectHandler.java
+index 2e37aa7182..66caca9de6 100644
+--- a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/SelectHandler.java
++++ b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/SelectHandler.java
+@@ -43,7 +43,7 @@ public void generate() throws IOException {
+ 
+         a.addDefaultToEmpty("name", params.get("name"))
+                 .addIfExists("size", params.get("size"))
+-                .addIfExists("value", value, false)
++                .addIfExists("value", value)
+                 .addIfTrue("disabled", params.get("disabled"))
+                 .addIfTrue("readonly", params.get("readonly"))
+                 .addIfTrue("multiple", params.get("multiple"))
+diff --git a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/SubmitHandler.java b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/SubmitHandler.java
+index 0abefedd16..66bb184aaf 100644
+--- a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/SubmitHandler.java
++++ b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/SubmitHandler.java
+@@ -38,7 +38,7 @@ public void generate() throws IOException {
+         if ("button".equals(type)) {
+             attrs.addIfExists("name", params.get("name"))
+                     .add("type", "submit")
+-                    .addIfExists("value", params.get("nameValue"), false)
++                    .addIfExists("value", params.get("nameValue"))
+                     .addIfTrue("disabled", params.get("disabled"))
+                     .addIfExists("tabindex", params.get("tabindex"))
+                     .addIfExists("id", params.get("id"))
+@@ -47,7 +47,7 @@ public void generate() throws IOException {
+ 
+             start("button", attrs);
+         } else if ("image".equals(type)) {
+-            attrs.addIfExists("src", params.get("src"), false)
++            attrs.addIfExists("src", params.get("src"))
+                     .add("type", "image")
+             		.addIfExists("alt", params.get("label"))
+             		.addIfExists("id", params.get("id"))
+@@ -57,7 +57,7 @@ public void generate() throws IOException {
+         } else {
+             attrs.addIfExists("name", params.get("name"))
+                     .add("type", "submit")
+-                    .addIfExists("value", params.get("nameValue"), false)
++                    .addIfExists("value", params.get("nameValue"))
+                     .addIfTrue("disabled", params.get("disabled"))
+                     .addIfExists("tabindex", params.get("tabindex"))
+                     .addIfExists("id", params.get("id"))
+diff --git a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/TextFieldHandler.java b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/TextFieldHandler.java
+index d7cdd7ce42..ba5a689625 100644
+--- a/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/TextFieldHandler.java
++++ b/plugins/javatemplates/src/main/java/org/apache/struts2/views/java/simple/TextFieldHandler.java
+@@ -36,7 +36,7 @@ public void generate() throws IOException {
+                 .addDefaultToEmpty("name", params.get("name"))
+                 .addIfExists("size", params.get("size"))
+                 .addIfExists("maxlength", params.get("maxlength"))
+-                .addIfExists("value", params.get("nameValue"), false)
++                .addIfExists("value", params.get("nameValue"))
+                 .addIfTrue("disabled", params.get("disabled"))
+                 .addIfTrue("readonly", params.get("readonly"))
+                 .addIfExists("tabindex", params.get("tabindex"))

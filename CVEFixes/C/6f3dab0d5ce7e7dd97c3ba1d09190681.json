@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jasper_project:jasper:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/mdadams/jasper/commit/d42b2388f7f8e0332c846675133acea151fc557a",
+        "version_end_excluding": {
+            "jasper_project:jasper": "unknown"
+        },
+        "path": {
+            "file_path": "src/libjasper/jpc/jpc_dec.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-9395"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

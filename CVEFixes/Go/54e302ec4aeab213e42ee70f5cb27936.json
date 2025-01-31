@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:oauth2_proxy_project:oauth2_proxy:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/oauth2-proxy/oauth2-proxy/commit/ee5662e0f5001d76ec76562bb605abbd07c266a2",
+        "version_end_excluding": {
+            "oauth2_proxy_project:oauth2_proxy": "6.0.0"
+        },
+        "path": {
+            "file_path": "oauthproxy.go"
+        }
+    },
+    "programming_language": "go",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-4037"
+        ],
+        "CWE": [
+            "CWE-601"
+        ]
+    }
+}

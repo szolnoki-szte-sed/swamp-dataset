@@ -1,0 +1,1 @@
+-Registers used to store sensitive values read from fuses should be blocked during debug. These registers should be disconnected from the debug interface.

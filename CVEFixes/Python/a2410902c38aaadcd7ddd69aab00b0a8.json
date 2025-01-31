@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:openzeppelin:contracts:0.2.0:*:*:*:*:cairo:*:*"
+        ],
+        "fix_commit": "https://github.com/OpenZeppelin/cairo-contracts/commit/2cd60279c3332285d47edf9ee3888b71257acdc9",
+        "version_end_excluding": {
+            "openzeppelin:contracts": "unknown"
+        },
+        "path": {
+            "file_path": "tests/access/test_Ownable.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-31153"
+        ],
+        "CWE": [
+            "CWE-863"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:icu-project:international_components_for_unicode:63.1:*:*:*:*:c\\/c\\+\\+:*:*"
+        ],
+        "fix_commit": "https://github.com/unicode-org/icu/commit/53d8c8f3d181d87a6aa925b449b51c4a2c922a51",
+        "version_end_excluding": {
+            "icu-project:international_components_for_unicode": "unknown"
+        },
+        "path": {
+            "file_path": "icu4c/source/i18n/fmtable.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-18928"
+        ],
+        "CWE": [
+            "CWE-190"
+        ]
+    }
+}

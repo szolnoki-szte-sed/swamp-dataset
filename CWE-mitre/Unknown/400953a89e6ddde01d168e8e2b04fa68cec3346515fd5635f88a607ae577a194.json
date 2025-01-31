@@ -1,0 +1,63 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:tenda:ac15_firmware:15.03.05.19:*:*:*:*:*:*:*",
+            "cpe:2.3:a:rconfig:rconfig:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:zyxel:nas326_firmware:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:http_server:1.0.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:http_server:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_ftp_client:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jcoppens:cbrpager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apple:terminal:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phpcollab:phpcollab:*:rc3:*:*:*:*:*:*",
+            "cpe:2.3:a:snoopy_project:snoopy:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:yoggie:pico:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:puppet:puppet:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "tenda:ac15_firmware": "unknown",
+            "rconfig:rconfig": "3.9.4",
+            "zyxel:nas326_firmware": "unknown",
+            "apache:http_server": "unknown",
+            "php:php": "4.1.0",
+            "mit:kerberos_ftp_client": "unknown",
+            "jcoppens:cbrpager": "unknown",
+            "apple:terminal": "unknown",
+            "phpcollab:phpcollab": "2.5",
+            "snoopy_project:snoopy": "1.2.3",
+            "yoggie:pico": "unknown",
+            "puppet:puppet": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "unknown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-10987",
+            "CVE-2020-10221",
+            "CVE-2020-9054",
+            "CVE-1999-0067",
+            "CVE-2001-1246",
+            "CVE-2002-0061",
+            "CVE-2003-0041",
+            "CVE-2008-2575",
+            "CVE-2002-1898",
+            "CVE-2008-4304",
+            "CVE-2008-4796",
+            "CVE-2007-3572",
+            "CVE-2012-1988"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

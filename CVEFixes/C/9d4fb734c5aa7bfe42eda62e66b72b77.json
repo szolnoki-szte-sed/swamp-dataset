@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:radare:radare2:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/radareorg/radare2/commit/cb8b683758edddae2d2f62e8e63a738c39f92683",
+        "version_end_excluding": {
+            "radare:radare2": "4.4.0"
+        },
+        "path": {
+            "file_path": "libr/core/core.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-27794"
+        ],
+        "CWE": [
+            "CWE-415"
+        ]
+    }
+}

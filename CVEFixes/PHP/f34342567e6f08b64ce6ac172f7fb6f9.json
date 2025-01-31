@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pterodactyl:panel:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pterodactyl/panel/commit/45999ba4ee1b2dcb12b4a2fa2cedfb6b5d66fac2",
+        "version_end_excluding": {
+            "pterodactyl:panel": "1.6.3"
+        },
+        "path": {
+            "file_path": "routes/auth.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-41176"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

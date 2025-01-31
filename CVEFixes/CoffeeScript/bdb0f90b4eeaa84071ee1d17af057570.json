@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:git-tag-annotation-action_project:git-tag-annotation-action:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ericcornelissen/git-tag-annotation-action/commit/9f30756375cc4b1b6c66f274fc9c591fa901455a",
+        "version_end_excluding": {
+            "git-tag-annotation-action_project:git-tag-annotation-action": "1.0.1"
+        },
+        "path": {
+            "file_path": "action.yml"
+        }
+    },
+    "programming_language": "coffeescript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-15272"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

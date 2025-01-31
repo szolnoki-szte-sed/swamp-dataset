@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:ignite:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/ignite/commit/02b0439639a9dab264cdb3ed4081c231e0079c13",
+        "version_end_excluding": {
+            "apache:ignite": "unknown"
+        },
+        "path": {
+            "file_path": "modules/clients/src/test/java/org/apache/ignite/jdbc/thin/JdbcThinBatchSelfTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-1963"
+        ],
+        "CWE": [
+            "CWE-862"
+        ]
+    }
+}

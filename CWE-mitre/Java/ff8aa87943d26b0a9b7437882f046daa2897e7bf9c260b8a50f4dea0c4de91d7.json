@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ncipher:pkcs_11_library:1.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:openbsd:openbsd:2.9:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:2.4.20:*:*:*:*:*:*:*",
+            "cpe:2.3:a:microsoft:internet_explorer:3.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "ncipher:pkcs_11_library": "unknown",
+            "openbsd:openbsd": "unknown",
+            "linux:linux_kernel": "unknown",
+            "microsoft:internet_explorer": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2002-1446",
+            "CVE-2001-1559",
+            "CVE-2003-0187",
+            "CVE-1999-1446"
+        ],
+        "CWE": [
+            "CWE-684"
+        ]
+    }
+}

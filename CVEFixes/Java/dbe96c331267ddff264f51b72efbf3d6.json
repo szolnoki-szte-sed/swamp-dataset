@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:thoughtworks:gocd:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/gocd/gocd/commit/41abc210ac4e8cfa184483c9ff1c0cc04fb3511c",
+        "version_end_excluding": {
+            "thoughtworks:gocd": "21.3.0"
+        },
+        "path": {
+            "file_path": "server/src/main/java/com/thoughtworks/go/addon/businesscontinuity/primary/controller/PrimaryStatusProviderController.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-43287"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

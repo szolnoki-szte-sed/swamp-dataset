@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:google:tensorflow:2.7.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.7.0:rc0:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.8.0:rc0:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.8.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.9.0:rc1:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.9.0:rc0:*:*:*:*:*:*",
+            "cpe:2.3:a:google:tensorflow:2.8.0:-:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/tensorflow/tensorflow/commit/cebe3c45d76357d201c65bdbbf0dbe6e8a63bbdb",
+        "version_end_excluding": {
+            "google:tensorflow": "unknown"
+        },
+        "path": {
+            "file_path": "tensorflow/python/ops/data_flow_ops.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-29195"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

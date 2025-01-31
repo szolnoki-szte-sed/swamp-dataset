@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:cloudfoundry:cf-deployment:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cloudfoundry:user_account_and_authentication:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cloudfoundry/uaa/commit/565b848a4cd07e86fd63c3d013b419cc7796e699",
+        "version_end_excluding": {
+            "cloudfoundry:cf-deployment": "12.33.0"
+        },
+        "path": {
+            "file_path": "server/src/test/java/org/cloudfoundry/identity/uaa/provider/oauth/XOAuthAuthenticationFilterTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-5402"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

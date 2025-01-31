@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:java-websocket_project:java-websocket:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/TooTallNate/Java-WebSocket/commit/2dbe2d3c4a3ba63a0132a256ccefbfceb69531c9",
+        "version_end_excluding": {
+            "java-websocket_project:java-websocket": "unknown"
+        },
+        "path": {
+            "file_path": "src/test/java/org/java_websocket/issues/Issue997Test.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-11050"
+        ],
+        "CWE": [
+            "CWE-295",
+            "CWE-297"
+        ]
+    }
+}

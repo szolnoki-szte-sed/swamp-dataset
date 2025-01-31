@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:teslamate_project:teslamate:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/adriankumpf/teslamate/commit/fff6915e7364f83b3030f980d5743299c4e5260d",
+        "version_end_excluding": {
+            "teslamate_project:teslamate": "1.25.1"
+        },
+        "path": {
+            "file_path": "website/docs/installation/docker.md"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-23126"
+        ],
+        "CWE": [
+            "CWE-287"
+        ]
+    }
+}

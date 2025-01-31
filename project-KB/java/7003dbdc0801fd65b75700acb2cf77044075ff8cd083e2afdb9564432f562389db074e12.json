@@ -1,0 +1,56 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:quay:3.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_core_services:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:mac_os_x:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:graalvm:19.2.0:*:*:*:enterprise:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:a:synology:skynas:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:nodejs:node.js:*:*:*:*:lts:*:*:*",
+            "cpe:2.3:h:synology:vs960hd:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:synology:diskstation_manager:6.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apple:swiftnio:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:16.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:30:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:29:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:traffic_server:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:software_collections:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mcafee:web_gateway:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:synology:vs960hd_firmware:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:openshift_service_mesh:1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:nodejs:node.js:*:*:*:*:-:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:19.04:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/netty/netty/commit/7003dbdc0801fd65b75700acb2cf77044075ff8c",
+        "version_end_excluding": {
+            "apple:swiftnio": "unknown"
+        },
+        "path": {
+            "file_path": "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2EmptyDataFrameListener.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-9518"
+        ],
+        "CWE": [
+            "CWE-770",
+            "CWE-400"
+        ]
+    }
+}

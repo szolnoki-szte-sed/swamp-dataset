@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:planka:planka:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/plankanban/planka/commit/ac1df5201dfdaf68d37f7e1b272bc137870d7418",
+        "version_end_excluding": {
+            "planka:planka": "1.5.1"
+        },
+        "path": {
+            "file_path": "server/config/routes.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Affero General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2653"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

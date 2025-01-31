@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sitaram_chamarty:gitolite:3.01:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitolite:gitolite:3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitolite:gitolite:3.02:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitolite:gitolite:3.03:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gitolite:gitolite:3.04:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/sitaramc/gitolite/commit/f636ce3ba3e340569b26d1e47b9d9b62dd8a3bf2",
+        "version_end_excluding": {
+            "sitaram_chamarty:gitolite": "unknown",
+            "gitolite:gitolite": "unknown"
+        },
+        "path": {
+            "file_path": "src/gitolite-shell"
+        }
+    },
+    "programming_language": "perl",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-4506"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ntop:ndpi:3.4:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ntop/nDPI/commit/1ec621c85b9411cc611652fd57a892cfef478af3",
+        "version_end_excluding": {
+            "ntop:ndpi": "unknown"
+        },
+        "path": {
+            "file_path": "src/lib/protocols/netbios.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-36082"
+        ],
+        "CWE": [
+            "CWE-787"
+        ]
+    }
+}

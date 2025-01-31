@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ruoyi:ruoyi:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/yangzongzhuan/RuoYi/commit/d8b2a9a905fb750fa60e2400238cf4750a77c5e6",
+        "version_end_excluding": {
+            "ruoyi:ruoyi": "unknown"
+        },
+        "path": {
+            "file_path": "ruoyi-common/src/main/java/com/ruoyi/common/exception/file/InvalidExtensionException.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-32065"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

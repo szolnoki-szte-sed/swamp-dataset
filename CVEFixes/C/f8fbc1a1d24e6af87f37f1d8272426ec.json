@@ -1,0 +1,33 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:opensuse:leap:15.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:19.10:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/4a9d46a9fe14401f21df69cea97c62396d5fb053",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown",
+            "canonical:ubuntu_linux": "unknown",
+            "opensuse:leap": "unknown"
+        },
+        "path": {
+            "file_path": "drivers/infiniband/hw/bnxt_re/ib_verbs.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-19077"
+        ],
+        "CWE": [
+            "CWE-401"
+        ]
+    }
+}

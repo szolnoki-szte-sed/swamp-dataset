@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:pivotal_software:cloud_foundry_elastic_runtime:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:pivotal_software:cloud_foundry_uaa:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:cloudfoundry:cf-release:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cloudfoundry/uaa/commit/a54f3fb8225ef7d5021ca7d4fb52bef1e884568e",
+        "version_end_excluding": {
+            "cloudfoundry:cf-release": "216"
+        },
+        "path": {
+            "file_path": "uaa/src/test/java/org/cloudfoundry/identity/uaa/mock/ldap/LdapMockMvcTests.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5170"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

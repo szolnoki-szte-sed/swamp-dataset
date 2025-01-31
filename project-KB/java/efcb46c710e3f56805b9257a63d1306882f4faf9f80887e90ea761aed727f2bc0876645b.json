@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:sparkjava:spark:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/perwendel/spark/commit/efcb46c710e3f56805b9257a63d1306882f4faf9",
+        "version_end_excluding": {
+            "sparkjava:spark": "unknown"
+        },
+        "path": {
+            "file_path": "src/main/java/spark/staticfiles/StaticFilesConfiguration.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-9177"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

@@ -1,0 +1,45 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:wildfly_core:7.0.0:alpha1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:wildfly_core:7.0.0:beta1:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:single_sign-on:7.3.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:wildfly_core:7.0.0:cr1:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:wildfly_core:7.0.0:alpha2:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.2.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:wildfly_core:7.0.0:alpha5:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.2.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:data_grid:7.3.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:wildfly_core:7.0.0:alpha3:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:wildfly_core:7.0.0:alpha4:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:wildfly_core:7.0.0:-:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/wildfly/wildfly-core/commit/80e18b46f73f9d061d4150c66e6dc2fc1fd0bc41",
+        "version_end_excluding": {
+            "redhat:wildfly_core": "unknown"
+        },
+        "path": {
+            "file_path": "host-controller/src/main/java/org/jboss/as/host/controller/operations/ServerStopHandler.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-14838"
+        ],
+        "CWE": [
+            "CWE-269",
+            "CWE-284"
+        ]
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:openstack:compute:2012.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openstack:essex:2012.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:openstack:diablo:2011.3:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/openstack/nova/commit/ff06c7c885dc94ed7c828e8cdbb8b5d850a7e654",
+        "version_end_excluding": {
+            "openstack:compute": "unknown",
+            "openstack:essex": "unknown",
+            "openstack:diablo": "unknown"
+        },
+        "path": {
+            "file_path": "nova/api/ec2/cloud.py"
+        }
+    },
+    "programming_language": "python",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-2654"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

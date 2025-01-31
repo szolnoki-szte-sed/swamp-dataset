@@ -1,0 +1,75 @@
+diff --git a/deltaspike/modules/jsf/impl-ee6/pom.xml b/deltaspike/modules/jsf/impl-ee6/pom.xml
+index 0bb30562c..2d9a109af 100644
+--- a/deltaspike/modules/jsf/impl-ee6/pom.xml
++++ b/deltaspike/modules/jsf/impl-ee6/pom.xml
+@@ -137,6 +137,11 @@
+             <artifactId>deltaspike-proxy-module-impl-asm</artifactId>
+         </dependency>
+ 
++        <dependency>
++            <groupId>org.owasp.encoder</groupId>
++            <artifactId>encoder</artifactId>
++        </dependency>
++
+         <dependency>
+             <groupId>org.apache.geronimo.specs</groupId>
+             <artifactId>geronimo-el_2.2_spec</artifactId>
+diff --git a/deltaspike/modules/jsf/impl/pom.xml b/deltaspike/modules/jsf/impl/pom.xml
+index d3ae797bc..04934537d 100644
+--- a/deltaspike/modules/jsf/impl/pom.xml
++++ b/deltaspike/modules/jsf/impl/pom.xml
+@@ -119,6 +119,11 @@
+             <artifactId>deltaspike-proxy-module-impl-asm</artifactId>
+         </dependency>
+ 
++        <dependency>
++            <groupId>org.owasp.encoder</groupId>
++            <artifactId>encoder</artifactId>
++        </dependency>
++
+         <dependency>
+             <groupId>org.apache.geronimo.specs</groupId>
+             <artifactId>geronimo-el_2.2_spec</artifactId>
+diff --git a/deltaspike/modules/jsf/impl/src/main/java/org/apache/deltaspike/jsf/impl/scope/window/strategy/ClientSideWindowStrategy.java b/deltaspike/modules/jsf/impl/src/main/java/org/apache/deltaspike/jsf/impl/scope/window/strategy/ClientSideWindowStrategy.java
+index 572da07bb..a18010c10 100644
+--- a/deltaspike/modules/jsf/impl/src/main/java/org/apache/deltaspike/jsf/impl/scope/window/strategy/ClientSideWindowStrategy.java
++++ b/deltaspike/modules/jsf/impl/src/main/java/org/apache/deltaspike/jsf/impl/scope/window/strategy/ClientSideWindowStrategy.java
+@@ -118,15 +118,17 @@ protected void sendWindowHandlerHtml(ExternalContext externalContext, String win
+ 
+             // set the windowId value in the javascript code
+             windowHandlerHtml = windowHandlerHtml.replace(WINDOW_ID_REPLACE_PATTERN,
+-                    windowId);
++                                                          org.owasp.encoder.Encode.forJavaScriptBlock(windowId));
+             // set the current request url
+             // on the client we can't use window.location as the location
+             // could be a different when using forwards
+             windowHandlerHtml = windowHandlerHtml.replace(REQUEST_URL_REPLACE_PATTERN,
+-                    ClientWindowHelper.constructRequestUrl(externalContext));
++                                                          org.owasp.encoder.Encode.forJavaScriptBlock(
++                                                              ClientWindowHelper.constructRequestUrl(externalContext)));
+             // set the noscript-URL for users with no JavaScript
+             windowHandlerHtml =
+-                    windowHandlerHtml.replace(NOSCRIPT_URL_REPLACE_PATTERN, getNoscriptUrl(externalContext));
++                windowHandlerHtml.replace(NOSCRIPT_URL_REPLACE_PATTERN,
++                                          org.owasp.encoder.Encode.forHtmlAttribute(getNoscriptUrl(externalContext)));
+ 
+             OutputStream os = httpResponse.getOutputStream();
+             try
+diff --git a/deltaspike/parent/pom.xml b/deltaspike/parent/pom.xml
+index ec8501973..acfbcd69e 100644
+--- a/deltaspike/parent/pom.xml
++++ b/deltaspike/parent/pom.xml
+@@ -736,6 +736,13 @@
+                 <scope>provided</scope>
+             </dependency>
+ 
++            <!-- dependency for DELTASPIKE-1401 -->
++            <dependency>
++                <groupId>org.owasp.encoder</groupId>
++                <artifactId>encoder</artifactId>
++                <version>1.2.2</version>
++            </dependency>
++
+             <!-- TomEE dependencies -->
+             <dependency>
+                 <groupId>org.apache.openejb</groupId>

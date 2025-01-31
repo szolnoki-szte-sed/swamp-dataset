@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:o:fedoraproject:fedora:23:*:*:*:*:*:*:*",
+            "cpe:2.3:a:vmware:spring_social:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/spring-projects/spring-social/commit/5151e1158e1ed51369e7aba9e8092930d28c31d3",
+        "version_end_excluding": {
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "spring-social-web/src/test/java/org/springframework/social/connect/web/ProviderSignInControllerTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-5258"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

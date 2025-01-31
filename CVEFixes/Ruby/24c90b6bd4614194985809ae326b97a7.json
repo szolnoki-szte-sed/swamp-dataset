@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:helpy.io:helpy:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/helpyio/helpy/commit/a26dd854deb17e36a605f91a6f51d128e98d3818",
+        "version_end_excluding": {
+            "helpy.io:helpy": "2.2.0"
+        },
+        "path": {
+            "file_path": "app/views/admin/users/_user.html.erb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20851"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

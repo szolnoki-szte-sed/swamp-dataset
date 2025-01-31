@@ -1,0 +1,19 @@
+diff --git a/activemq-broker/src/main/java/org/apache/activemq/broker/jmx/ManagementContext.java b/activemq-broker/src/main/java/org/apache/activemq/broker/jmx/ManagementContext.java
+index 1f3c2f0db35..4bd68b03bc2 100644
+--- a/activemq-broker/src/main/java/org/apache/activemq/broker/jmx/ManagementContext.java
++++ b/activemq-broker/src/main/java/org/apache/activemq/broker/jmx/ManagementContext.java
+@@ -587,13 +587,12 @@ private void createConnector(MBeanServer mbeanServer) throws MalformedObjectName
+             rmiServer = ""+getConnectorHost()+":" + rmiServerPort;
+         }
+ 
+-        final Map<String,Object> env = new HashMap<>();
+         server = new RMIJRMPServerImpl(connectorPort, null, null, environment);
+ 
+         final String serviceURL = "service:jmx:rmi://" + rmiServer + "/jndi/rmi://" +getConnectorHost()+":" + connectorPort + connectorPath;
+         final JMXServiceURL url = new JMXServiceURL(serviceURL);
+ 
+-        connectorServer = new RMIConnectorServer(url, env, server, ManagementFactory.getPlatformMBeanServer());
++        connectorServer = new RMIConnectorServer(url, environment, server, ManagementFactory.getPlatformMBeanServer());
+         LOG.debug("Created JMXConnectorServer {}", connectorServer);
+     }
+ 

@@ -1,0 +1,31 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:satellite_capsule:6.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:redhat:satellite:6.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:bouncycastle:legion-of-the-bouncy-castle-java-crytography-api:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bcgit/bc-java/commit/81b00861cd5711e85fe8dce2a0e119f684120255",
+        "version_end_excluding": {
+            "bouncycastle:legion-of-the-bouncy-castle-java-crytography-api": "unknown"
+        },
+        "path": {
+            "file_path": "src/test/java/org/bouncycastle/asn1/test/X500NameTest.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-5382"
+        ],
+        "CWE": [
+            "CWE-354",
+            "CWE-327"
+        ]
+    }
+}

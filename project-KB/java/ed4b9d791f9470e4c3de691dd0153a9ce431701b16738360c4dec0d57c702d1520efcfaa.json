@@ -1,0 +1,49 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone21:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone26:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone15:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone16:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone9:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone22:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone13:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone25:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone11:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone24:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone10:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone12:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone20:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone14:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone18:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone17:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone19:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone27:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:tomcat:9.0.0:milestone23:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/tomcat/commit/ed4b9d791f9470e4c3de691dd0153a9ce431701b",
+        "version_end_excluding": {
+            "apache:tomcat": "unknown"
+        },
+        "path": {
+            "file_path": "java/org/apache/tomcat/util/net/Nio2Endpoint.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-8037"
+        ],
+        "CWE": [
+            "CWE-362"
+        ]
+    }
+}

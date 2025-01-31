@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:radare:radare2:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/radareorg/radare2/commit/e5c14c167b0dcf0a53d76bd50bacbbcc0dfc1ae7",
+        "version_end_excluding": {
+            "radare:radare2": "unknown"
+        },
+        "path": {
+            "file_path": "libr/asm/arch/arm/armass64.c"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU Lesser General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2018-20457"
+        ],
+        "CWE": [
+            "CWE-125"
+        ]
+    }
+}

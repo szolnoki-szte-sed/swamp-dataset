@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:livehelperchat:live_helper_chat:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/livehelperchat/livehelperchat/commit/55b1e3bf62c564db7c919f5293ec1e755c2958d6",
+        "version_end_excluding": {
+            "livehelperchat:live_helper_chat": "unknown"
+        },
+        "path": {
+            "file_path": "lhc_web/design/defaulttheme/tpl/lhuser/parts/avatar_build.tpl.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-4132"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

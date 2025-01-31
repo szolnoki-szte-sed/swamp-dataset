@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:apache:solr:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/lucene-solr/commit/325824cd391c8e71f36f17d687f52344e50e9715",
+        "version_end_excluding": {
+            "apache:solr": "7.7.3"
+        },
+        "path": {
+            "file_path": "solr/core/src/java/org/apache/solr/core/PluginBag.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-0193"
+        ],
+        "CWE": [
+            "CWE-94"
+        ]
+    }
+}

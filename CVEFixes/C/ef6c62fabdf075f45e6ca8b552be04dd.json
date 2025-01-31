@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:redhat:virtio-win:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/YanVugenfirer/kvm-guest-drivers-windows/commit/723416fa4210b7464b28eab89cc76252e6193ac1",
+        "version_end_excluding": {
+            "redhat:virtio-win": "unknown"
+        },
+        "path": {
+            "file_path": "NetKVM/wlh/ParaNdis6-Impl.cpp"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-3215"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

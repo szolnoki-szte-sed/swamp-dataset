@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:promise-probe_project:promise-probe:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/dottgonzo/node-promise-probe/commit/0d9affb67fc1ad985903536d35372cf55efe5a45",
+        "version_end_excluding": {
+            "promise-probe_project:promise-probe": "0.10.0"
+        },
+        "path": {
+            "file_path": "index.js.map"
+        }
+    },
+    "programming_language": "scala",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-10791"
+        ],
+        "CWE": [
+            "CWE-78"
+        ]
+    }
+}

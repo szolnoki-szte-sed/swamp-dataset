@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:owasp:enterprise_security_api:2.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:owasp:enterprise_security_api:2.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/ESAPI/esapi-java-legacy/commit/41138fef5f63d9cf0d5e05d2bee2c7f682ffef3f",
+        "version_end_excluding": {
+            "owasp:enterprise_security_api": "unknown"
+        },
+        "path": {
+            "file_path": "src/main/java/org/owasp/esapi/crypto/CipherText.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-5679"
+        ],
+        "CWE": [
+            "CWE-310"
+        ]
+    }
+}

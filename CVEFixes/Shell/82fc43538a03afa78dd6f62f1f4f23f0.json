@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:litespeedtech:lsquic:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/litespeedtech/lsquic/commit/a74702c630e108125e71898398737baec8f02238",
+        "version_end_excluding": {
+            "litespeedtech:lsquic": "3.1.0"
+        },
+        "path": {
+            "file_path": "EXAMPLES.txt"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-30592"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:walmart:concord:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/walmartlabs/concord/commit/ab32c17f85200545ed6376badc528c7df95f5adb",
+        "version_end_excluding": {
+            "walmart:concord": "1.44.0"
+        },
+        "path": {
+            "file_path": "server/impl/src/main/java/com/walmartlabs/concord/server/boot/filters/CORSFilter.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-10591"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

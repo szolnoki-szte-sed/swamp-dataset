@@ -1,0 +1,52 @@
+diff --git a/src/main/java/org/primefaces/application/resource/StreamedContentHandler.java b/src/main/java/org/primefaces/application/resource/StreamedContentHandler.java
+index a39c5a9432..41577975fd 100644
+--- a/src/main/java/org/primefaces/application/resource/StreamedContentHandler.java
++++ b/src/main/java/org/primefaces/application/resource/StreamedContentHandler.java
+@@ -18,6 +18,7 @@
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.util.Map;
++import java.util.UUID;
+ import java.util.logging.Level;
+ import java.util.logging.Logger;
+ import javax.el.ELContext;
+@@ -46,11 +47,18 @@ public void handle(FacesContext context) throws IOException {
+             boolean cache = Boolean.valueOf(params.get(Constants.DYNAMIC_CONTENT_CACHE_PARAM));
+ 
+             try {
+-                // see #6448
+-                dynamicContentId = dynamicContentId.replaceAll(" ", "+");
+-
+-                String dynamicContentEL = strEn.decrypt(dynamicContentId);
+                 ExternalContext externalContext = context.getExternalContext();
++                Map<String,Object> session = externalContext.getSessionMap();
++                String sessionKey = strEn.decrypt(dynamicContentId);
++                try {
++                    UUID.fromString(sessionKey);
++                } catch (IllegalArgumentException illegalArgumentException) {
++                    session.remove(sessionKey);
++                    throw new IOException("Not a valid key", illegalArgumentException);
++                }
++                
++                String dynamicContentEL = (String) session.get(sessionKey);
++                session.remove(sessionKey);
+ 
+                 if(dynamicContentEL != null) {
+                     ELContext eLContext = context.getELContext();
+diff --git a/src/main/java/org/primefaces/util/DynamicResourceBuilder.java b/src/main/java/org/primefaces/util/DynamicResourceBuilder.java
+index f65c7151c9..2f4169b7f4 100644
+--- a/src/main/java/org/primefaces/util/DynamicResourceBuilder.java
++++ b/src/main/java/org/primefaces/util/DynamicResourceBuilder.java
+@@ -50,8 +50,10 @@ else if (value instanceof StreamedContent) {
+             StringEncrypter encrypter = RequestContext.getCurrentInstance().getEncrypter();
+ 
+             ValueExpression expression = ValueExpressionAnalyzer.getExpression(context.getELContext(), component.getValueExpression("value"));
+-            String rid = encrypter.encrypt(expression.getExpressionString());
+-
++            String sessionKey = UUID.randomUUID().toString();
++            String rid = encrypter.encrypt(sessionKey);
++            context.getExternalContext().getSessionMap().put(sessionKey, expression.getExpressionString());
++            
+             StringBuilder builder = SharedStringBuilder.get(context, SB_BUILD);
+ 
+             builder.append(resourcePath).append("&").append(Constants.DYNAMIC_CONTENT_PARAM).append("=").append(URLEncoder.encode(rid,"UTF-8"))

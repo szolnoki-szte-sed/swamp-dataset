@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:eclipse:jetty:9.2.7:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.0:m0:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:22:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.3.0:m1:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.2.8:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.2.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:eclipse:jetty:9.2.4:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/eclipse/jetty.project/commit/4df5647f6dfdc5fa7abb812afe9290d60b17c098",
+        "version_end_excluding": {
+            "fedoraproject:fedora": "unknown"
+        },
+        "path": {
+            "file_path": "jetty-util/src/main/java/org/eclipse/jetty/util/BufferUtil.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-2080"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

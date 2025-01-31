@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:librenms:librenms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/librenms/librenms/commit/99d2462b80435b91a35236639b909eebee432126",
+        "version_end_excluding": {
+            "librenms:librenms": "unknown"
+        },
+        "path": {
+            "file_path": "app/Http/Controllers/OverviewController.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-43324"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

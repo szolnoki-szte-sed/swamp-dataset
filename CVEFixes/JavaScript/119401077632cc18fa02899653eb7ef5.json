@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:json_pattern_validator_project:json_pattern_validator:*:*:*:*:*:node.js:*:*"
+        ],
+        "fix_commit": "https://github.com/manvel-khnkoyan/jpv/commit/e3eec1215caa8d5c560f5e88d0943422831927d6",
+        "version_end_excluding": {
+            "json_pattern_validator_project:json_pattern_validator": "2.2.2"
+        },
+        "path": {
+            "file_path": "test/modes.js"
+        }
+    },
+    "programming_language": "javascript",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-17479"
+        ],
+        "CWE": [
+            "CWE-20"
+        ]
+    }
+}

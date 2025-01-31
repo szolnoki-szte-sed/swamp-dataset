@@ -1,0 +1,88 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:application_testing_suite:13.3.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:agile_plm:9.3.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_policy_management:12.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_diameter_signaling_router:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_offline_mediation_controller:12.0.0.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_services_gatekeeper:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_contacts_server:8.0.0.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_calendar_server:8.0.0.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_credit_facilities_process_management:14.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:autovue_for_agile_product_lifecycle_management:21.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_corporate_lending_process_management:14.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_corporate_lending_process_management:14.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_corporate_lending_process_management:14.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_credit_facilities_process_management:14.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_credit_facilities_process_management:14.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_liquidity_management:14.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_supply_chain_finance:14.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_supply_chain_finance:14.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_supply_chain_finance:14.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_calendar_server:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_contacts_server:8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_element_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_messaging_server:8.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_unified_inventory_management:7.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:identity_manager_connector:11.1.1.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:siebel_core_-_server_framework:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:siebel_ui_framework:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_liquidity_management:14.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:banking_liquidity_management:14.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:blockchain_platform:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_instant_messaging_server:10.0.1.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_pricing_design_center:12.0.0.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_session_report_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:oracle:communications_session_route_manager:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/FasterXML/jackson-databind/commit/ad5a630174f08d279504bc51ebba8772fd71b86b",
+        "version_end_excluding": {
+            "fasterxml:jackson-databind": "2.9.10.6",
+            "oracle:application_testing_suite": "unknown",
+            "oracle:agile_plm": "unknown",
+            "oracle:communications_policy_management": "unknown",
+            "oracle:communications_diameter_signaling_router": "unknown",
+            "oracle:communications_offline_mediation_controller": "unknown",
+            "oracle:communications_services_gatekeeper": "unknown",
+            "oracle:communications_contacts_server": "unknown",
+            "oracle:communications_calendar_server": "unknown",
+            "oracle:banking_credit_facilities_process_management": "unknown",
+            "oracle:autovue_for_agile_product_lifecycle_management": "unknown",
+            "oracle:banking_corporate_lending_process_management": "unknown",
+            "oracle:banking_liquidity_management": "unknown",
+            "oracle:banking_supply_chain_finance": "unknown",
+            "oracle:communications_element_manager": "unknown",
+            "oracle:communications_messaging_server": "unknown",
+            "oracle:communications_unified_inventory_management": "unknown",
+            "oracle:identity_manager_connector": "unknown",
+            "oracle:siebel_core_-_server_framework": "unknown",
+            "oracle:siebel_ui_framework": "unknown",
+            "oracle:blockchain_platform": "21.1.2",
+            "oracle:communications_instant_messaging_server": "unknown",
+            "oracle:communications_pricing_design_center": "unknown",
+            "oracle:communications_session_report_manager": "unknown",
+            "oracle:communications_session_route_manager": "unknown",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "release-notes/VERSION-2.x"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-24750"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

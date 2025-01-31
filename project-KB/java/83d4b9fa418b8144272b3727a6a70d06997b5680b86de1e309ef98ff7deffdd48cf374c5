@@ -1,0 +1,47 @@
+diff --git a/server/src/main/java/org/cloudfoundry/identity/uaa/oauth/AntPathRedirectResolver.java b/server/src/main/java/org/cloudfoundry/identity/uaa/oauth/AntPathRedirectResolver.java
+index a41b80602c6..8154714efd6 100644
+--- a/server/src/main/java/org/cloudfoundry/identity/uaa/oauth/AntPathRedirectResolver.java
++++ b/server/src/main/java/org/cloudfoundry/identity/uaa/oauth/AntPathRedirectResolver.java
+@@ -143,16 +143,23 @@ private boolean isWildcard(String configuredRedirectPattern) {
+ 
+         private String getHost() {
+             String authority = redirectMatcher.group(URI_EXTRACTOR_AUTHORITY_GROUP);
+-            return extractHost(authority);
++            return stripPort(stripAuthority(authority));
+         }
+ 
+-        private String extractHost(String authority) {
++        private String stripAuthority(String authority) {
+             if (authority.contains("@")) {
+                 return authority.split("@")[1];
+             }
+             return authority;
+         }
+ 
++        private String stripPort(String hostAndPort) {
++            if (hostAndPort.contains(":")) {
++                return hostAndPort.split(":")[0];
++            }
++            return hostAndPort;
++        }
++
+         private static String[] splitAndReverseHost(String host) {
+             String[] parts = host.split("\\.");
+             ArrayUtils.reverse(parts);
+diff --git a/server/src/test/java/org/cloudfoundry/identity/uaa/oauth/AntPathRedirectResolverTests.java b/server/src/test/java/org/cloudfoundry/identity/uaa/oauth/AntPathRedirectResolverTests.java
+index 2694010bc71..ad74f568afb 100644
+--- a/server/src/test/java/org/cloudfoundry/identity/uaa/oauth/AntPathRedirectResolverTests.java
++++ b/server/src/test/java/org/cloudfoundry/identity/uaa/oauth/AntPathRedirectResolverTests.java
+@@ -332,6 +332,12 @@ void subdomainMatchingOnWildcardSubdomainWithBasicAuth() {
+             String clientRedirectUri = "http://u:p@*.domain.com/";
+             assertTrue(resolver.redirectMatches("http://u:p@sub.domain.com/", clientRedirectUri));
+         }
++
++        @Test
++        void matchesHostsWithPort() {
++            String clientRedirectUri = "http://*.domain.com:8080/";
++            assertTrue(resolver.redirectMatches("http://any.domain.com:8080/", clientRedirectUri));
++        }
+     }
+ 
+     @Nested

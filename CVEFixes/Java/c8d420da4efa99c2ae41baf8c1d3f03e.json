@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:objectcomputing:micronaut:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:objectcomputing:micronaut:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/micronaut-projects/micronaut-core/commit/9d1eff5c8df1d6cda1fe00ef046729b2a6abe7f1",
+        "version_end_excluding": {
+            "objectcomputing:micronaut": "1.2.11"
+        },
+        "path": {
+            "file_path": "http-netty/src/main/java/io/micronaut/http/netty/NettyHttpHeaders.java"
+        }
+    },
+    "programming_language": "java",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-7611"
+        ],
+        "CWE": [
+            "CWE-444"
+        ]
+    }
+}

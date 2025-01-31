@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:elgg:elgg:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/elgg/elgg/commit/572d210e2392f1fdf47ff2f38665372a6535c126",
+        "version_end_excluding": {
+            "elgg:elgg": "3.3.23"
+        },
+        "path": {
+            "file_path": "views/default/forms/admin/user/change_email.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-3980"
+        ],
+        "CWE": [
+            "CWE-359"
+        ]
+    }
+}

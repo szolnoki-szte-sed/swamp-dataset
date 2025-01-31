@@ -1,0 +1,35 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:o:google:android:6.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:google:android:5.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:o:google:android:5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:google:android:6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:google:android:5.0.2:*:*:*:*:*:*:*",
+            "cpe:2.3:o:google:android:4.4.4:*:*:*:*:*:*:*",
+            "cpe:2.3:o:google:android:5.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:google:android:5.1.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/bcgit/bc-java/commit/25aca54734b861ef109ac4943c4a5f98c0c1b885",
+        "version_end_excluding": {
+            "google:android": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/main/java/org/bouncycastle/crypto/modes/GCMBlockCipher.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-6644"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

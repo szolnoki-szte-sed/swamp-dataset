@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:serenityos:serenity:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/SerenityOS/serenity/commit/48fbf6a88d4822a1e5470cf08f29464511bd72c1",
+        "version_end_excluding": {
+            "serenityos:serenity": "unknown"
+        },
+        "path": {
+            "file_path": "Userland/Libraries/LibCrypto/NumberTheory/ModularFunctions.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 2-Clause \"Simplified\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2021-27343"
+        ],
+        "CWE": [
+            "CWE-120"
+        ]
+    }
+}

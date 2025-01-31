@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:arm64:*"
+        ],
+        "fix_commit": "https://github.com/torvalds/linux/commit/97fc15436b36ee3956efad83e22a557991f7d19d",
+        "version_end_excluding": {
+            "linux:linux_kernel": "unknown"
+        },
+        "path": {
+            "file_path": "arch/arm64/lib/clear_user.S"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-7843"
+        ],
+        "CWE": [
+            "CWE-17"
+        ]
+    }
+}

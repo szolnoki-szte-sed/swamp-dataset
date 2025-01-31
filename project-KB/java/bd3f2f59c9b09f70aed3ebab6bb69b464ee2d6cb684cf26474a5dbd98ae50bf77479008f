@@ -1,0 +1,17 @@
+diff --git a/core/src/main/java/org/apache/struts2/views/util/UrlHelper.java b/core/src/main/java/org/apache/struts2/views/util/UrlHelper.java
+index 5b6ca1f53d..0754ce10b3 100644
+--- a/core/src/main/java/org/apache/struts2/views/util/UrlHelper.java
++++ b/core/src/main/java/org/apache/struts2/views/util/UrlHelper.java
+@@ -176,10 +176,9 @@ else if ((scheme != null) && !scheme.equals(request.getScheme())) {
+ 
+         String result = link.toString();
+         
+-        if (result.indexOf("<script>") >= 0){
++        while (result.indexOf("<script>") > 0){
+         	result = result.replaceAll("<script>", "script");
+-        }
+-        
++        }        
+         try {
+             result = encodeResult ? response.encodeURL(result) : result;
+         } catch (Exception ex) {

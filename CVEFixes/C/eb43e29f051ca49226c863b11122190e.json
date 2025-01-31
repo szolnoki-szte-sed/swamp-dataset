@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:canonical:ubuntu_linux:12.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:15.10:*:*:*:*:*:*:*",
+            "cpe:2.3:o:canonical:ubuntu_linux:14.04:*:*:*:lts:*:*:*",
+            "cpe:2.3:a:xchat:xchat:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:xchat:xchat_gnome:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:hexchat_project:hexchat:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a4910a7e02d",
+        "version_end_excluding": {
+            "canonical:ubuntu_linux": "unknown",
+            "xchat:xchat": "unknown",
+            "xchat:xchat_gnome": "unknown",
+            "hexchat_project:hexchat": "unknown"
+        },
+        "path": {
+            "file_path": "src/common/ssl.h"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-7449"
+        ],
+        "CWE": [
+            "CWE-310"
+        ]
+    }
+}

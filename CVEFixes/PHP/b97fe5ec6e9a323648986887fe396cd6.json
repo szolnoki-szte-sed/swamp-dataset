@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:ilch:ilch_cms:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/IlchCMS/Ilch-2.0/commit/381e15f39d07d3cdf6aaaa25c0f2321f817935f7",
+        "version_end_excluding": {
+            "ilch:ilch_cms": "unknown"
+        },
+        "path": {
+            "file_path": "application/layouts/2columns/index.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-1944"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

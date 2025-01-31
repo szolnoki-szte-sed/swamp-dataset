@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:teampass:teampass:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/nilsteampassnet/TeamPass/commit/9811c9d453da4bd1101ff7033250d1fbedf101fc",
+        "version_end_excluding": {
+            "teampass:teampass": "2.1.27.9"
+        },
+        "path": {
+            "file_path": "admin.settings.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-15054"
+        ],
+        "CWE": [
+            "CWE-434"
+        ]
+    }
+}

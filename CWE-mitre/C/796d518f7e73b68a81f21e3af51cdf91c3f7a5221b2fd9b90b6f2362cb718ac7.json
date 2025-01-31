@@ -1,0 +1,46 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:a:rtfm:ssldump:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:bufferzonesecurity:bufferzone:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:php:php:5.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:gecad_technologies:axigen_mail_server:1.2.6:*:*:*:*:*:*:*",
+            "cpe:2.3:a:proftpd_project:proftpd:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:festalon:festalon:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:paul_l_daniels:ripmime:1.3.1.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "rtfm:ssldump": "0.9b2",
+            "bufferzonesecurity:bufferzone": "2.5",
+            "php:php": "unknown",
+            "gecad_technologies:axigen_mail_server": "unknown",
+            "proftpd_project:proftpd": "1.3.0a",
+            "festalon:festalon": "0.5.5",
+            "paul_l_daniels:ripmime": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2002-2227",
+            "CVE-2007-4580",
+            "CVE-2007-1584",
+            "CVE-2007-0886",
+            "CVE-2006-6171",
+            "CVE-2006-4024",
+            "CVE-2004-2620"
+        ],
+        "CWE": [
+            "CWE-786"
+        ]
+    }
+}

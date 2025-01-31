@@ -1,0 +1,238 @@
+diff --git a/server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimGroupEndpoints.java b/server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimGroupEndpoints.java
+index f22803771e9..b192e48e832 100644
+--- a/server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimGroupEndpoints.java
++++ b/server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimGroupEndpoints.java
+@@ -53,6 +53,7 @@
+ import org.springframework.web.bind.annotation.ResponseStatus;
+ import org.springframework.web.client.RestTemplate;
+ import org.springframework.web.servlet.View;
++import org.springframework.web.util.HtmlUtils;
+ 
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
+@@ -164,7 +165,7 @@ public SearchResults<?> listGroups(
+         try {
+             result = dao.query(filter, sortBy, "ascending".equalsIgnoreCase(sortOrder), identityZoneManager.getCurrentIdentityZoneId());
+         } catch (IllegalArgumentException e) {
+-            throw new ScimException("Invalid filter expression: [" + filter + "]", HttpStatus.BAD_REQUEST);
++            throw new ScimException("Invalid filter expression: [" + HtmlUtils.htmlEscape(filter) + "]", HttpStatus.BAD_REQUEST);
+         }
+ 
+         List<ScimGroup> input;
+diff --git a/server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimUserEndpoints.java b/server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimUserEndpoints.java
+index 7cae9a5649e..ce54f8142c0 100644
+--- a/server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimUserEndpoints.java
++++ b/server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimUserEndpoints.java
+@@ -52,6 +52,7 @@
+ import org.springframework.web.bind.annotation.*;
+ import org.springframework.web.client.RestTemplate;
+ import org.springframework.web.servlet.View;
++import org.springframework.web.util.HtmlUtils;
+ 
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
+@@ -370,7 +371,7 @@ public SearchResults<?> findUsers(
+             if (StringUtils.hasText(sortBy)) {
+                 msg += " [" +sortBy+"]";
+             }
+-            throw new ScimException(msg, HttpStatus.BAD_REQUEST);
++            throw new ScimException(HtmlUtils.htmlEscape(msg), HttpStatus.BAD_REQUEST);
+         }
+ 
+         if (!StringUtils.hasLength(attributesCommaSeparated)) {
+diff --git a/server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/UserIdConversionEndpoints.java b/server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/UserIdConversionEndpoints.java
+index 44b94b5a60c..a86e13a590f 100644
+--- a/server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/UserIdConversionEndpoints.java
++++ b/server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/UserIdConversionEndpoints.java
+@@ -15,17 +15,16 @@
+ 
+ import com.unboundid.scim.sdk.SCIMException;
+ import com.unboundid.scim.sdk.SCIMFilter;
+-import org.slf4j.Logger;
+-import org.slf4j.LoggerFactory;
+ import org.cloudfoundry.identity.uaa.constants.OriginKeys;
++import org.cloudfoundry.identity.uaa.provider.IdentityProvider;
++import org.cloudfoundry.identity.uaa.provider.IdentityProviderProvisioning;
+ import org.cloudfoundry.identity.uaa.resources.SearchResults;
+ import org.cloudfoundry.identity.uaa.scim.ScimCore;
+ import org.cloudfoundry.identity.uaa.scim.exception.ScimException;
+-import org.cloudfoundry.identity.uaa.security.beans.DefaultSecurityContextAccessor;
+ import org.cloudfoundry.identity.uaa.security.beans.SecurityContextAccessor;
+-import org.cloudfoundry.identity.uaa.provider.IdentityProvider;
+-import org.cloudfoundry.identity.uaa.provider.IdentityProviderProvisioning;
+ import org.cloudfoundry.identity.uaa.zone.IdentityZoneHolder;
++import org.slf4j.Logger;
++import org.slf4j.LoggerFactory;
+ import org.springframework.beans.factory.InitializingBean;
+ import org.springframework.http.HttpStatus;
+ import org.springframework.stereotype.Controller;
+@@ -36,6 +35,7 @@
+ import org.springframework.web.bind.annotation.ResponseBody;
+ import org.springframework.web.bind.annotation.ResponseStatus;
+ import org.springframework.web.servlet.View;
++import org.springframework.web.util.HtmlUtils;
+ 
+ import javax.servlet.http.HttpServletRequest;
+ import java.util.ArrayList;
+@@ -46,7 +46,6 @@
+ /**
+  * @author Dave Syer
+  * @author Luke Taylor
+- *
+  */
+ @Controller
+ public class UserIdConversionEndpoints implements InitializingBean {
+@@ -137,12 +136,13 @@ private void checkFilter(String filter) {
+             }
+         } catch (SCIMException e) {
+             logger.debug("/ids/Users received an invalid filter [" + filter + "]", e);
+-            throw new ScimException("Invalid filter '"+filter+"'", HttpStatus.BAD_REQUEST);
++            throw new ScimException("Invalid filter '" + HtmlUtils.htmlEscape(filter) + "'", HttpStatus.BAD_REQUEST);
+         }
+     }
+ 
+     /**
+      * Returns true if the field 'id' or 'userName' are present in the query.
++     *
+      * @param filter
+      * @return
+      */
+diff --git a/server/src/test/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimGroupEndpointsTests.java b/server/src/test/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimGroupEndpointsTests.java
+index 39731bf24b4..a6e1d106f3d 100644
+--- a/server/src/test/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimGroupEndpointsTests.java
++++ b/server/src/test/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimGroupEndpointsTests.java
+@@ -325,7 +325,7 @@ void testListGroupsWithNameCoFilter() {
+     void testListGroupsWithInvalidFilterFails() {
+         assertThrowsWithMessageThat(ScimException.class,
+                 () -> scimGroupEndpoints.listGroups("id,displayName", "displayName cr \"admin\"", "created", "ascending", 1, 100),
+-                is("Invalid filter expression: [displayName cr \"admin\"]"));
++                is("Invalid filter expression: [displayName cr &quot;admin&quot;]"));
+     }
+ 
+     @Test
+diff --git a/server/src/test/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimUserEndpointsTests.java b/server/src/test/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimUserEndpointsTests.java
+index 1d7899e9eec..e8674648665 100644
+--- a/server/src/test/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimUserEndpointsTests.java
++++ b/server/src/test/java/org/cloudfoundry/identity/uaa/scim/endpoints/ScimUserEndpointsTests.java
+@@ -9,12 +9,27 @@
+ import org.cloudfoundry.identity.uaa.approval.JdbcApprovalStore;
+ import org.cloudfoundry.identity.uaa.constants.OriginKeys;
+ import org.cloudfoundry.identity.uaa.mfa.JdbcUserGoogleMfaCredentialsProvisioning;
+-import org.cloudfoundry.identity.uaa.provider.*;
++import org.cloudfoundry.identity.uaa.provider.IdentityProvider;
++import org.cloudfoundry.identity.uaa.provider.JdbcIdentityProviderProvisioning;
++import org.cloudfoundry.identity.uaa.provider.LdapIdentityProviderDefinition;
++import org.cloudfoundry.identity.uaa.provider.OIDCIdentityProviderDefinition;
++import org.cloudfoundry.identity.uaa.provider.UaaIdentityProviderDefinition;
+ import org.cloudfoundry.identity.uaa.resources.SearchResults;
+ import org.cloudfoundry.identity.uaa.resources.SimpleAttributeNameMapper;
+ import org.cloudfoundry.identity.uaa.resources.jdbc.SimpleSearchQueryConverter;
+-import org.cloudfoundry.identity.uaa.scim.*;
+-import org.cloudfoundry.identity.uaa.scim.exception.*;
++import org.cloudfoundry.identity.uaa.scim.DisableInternalUserManagementFilter;
++import org.cloudfoundry.identity.uaa.scim.InternalUserManagementDisabledException;
++import org.cloudfoundry.identity.uaa.scim.ScimGroup;
++import org.cloudfoundry.identity.uaa.scim.ScimGroupMember;
++import org.cloudfoundry.identity.uaa.scim.ScimGroupMembershipManager;
++import org.cloudfoundry.identity.uaa.scim.ScimMeta;
++import org.cloudfoundry.identity.uaa.scim.ScimUser;
++import org.cloudfoundry.identity.uaa.scim.ScimUserProvisioning;
++import org.cloudfoundry.identity.uaa.scim.exception.InvalidPasswordException;
++import org.cloudfoundry.identity.uaa.scim.exception.InvalidScimResourceException;
++import org.cloudfoundry.identity.uaa.scim.exception.ScimException;
++import org.cloudfoundry.identity.uaa.scim.exception.ScimResourceConflictException;
++import org.cloudfoundry.identity.uaa.scim.exception.ScimResourceNotFoundException;
+ import org.cloudfoundry.identity.uaa.scim.jdbc.JdbcScimGroupMembershipManager;
+ import org.cloudfoundry.identity.uaa.scim.jdbc.JdbcScimGroupProvisioning;
+ import org.cloudfoundry.identity.uaa.scim.jdbc.JdbcScimUserProvisioning;
+@@ -53,19 +68,41 @@
+ import org.springframework.web.HttpMediaTypeException;
+ import org.springframework.web.servlet.View;
+ 
+-import java.util.*;
++import java.util.ArrayList;
++import java.util.Collection;
++import java.util.Collections;
++import java.util.HashMap;
++import java.util.HashSet;
++import java.util.List;
++import java.util.Map;
++import java.util.Set;
++import java.util.UUID;
+ 
+ import static java.util.Arrays.asList;
+ import static org.cloudfoundry.identity.uaa.util.AssertThrowsWithMessage.assertThrowsWithMessageThat;
+ import static org.hamcrest.Matchers.containsString;
+ import static org.hamcrest.Matchers.hasSize;
+-import static org.junit.Assert.*;
++import static org.hamcrest.core.Is.is;
++import static org.junit.Assert.assertEquals;
++import static org.junit.Assert.assertNotNull;
++import static org.junit.Assert.assertNull;
++import static org.junit.Assert.assertThat;
++import static org.junit.Assert.assertTrue;
++import static org.junit.Assert.fail;
+ import static org.junit.jupiter.api.Assertions.assertThrows;
+ import static org.mockito.ArgumentMatchers.any;
+ import static org.mockito.ArgumentMatchers.anyBoolean;
+ import static org.mockito.ArgumentMatchers.anyString;
+ import static org.mockito.ArgumentMatchers.eq;
+-import static org.mockito.Mockito.*;
++import static org.mockito.Mockito.atLeastOnce;
++import static org.mockito.Mockito.doThrow;
++import static org.mockito.Mockito.mock;
++import static org.mockito.Mockito.never;
++import static org.mockito.Mockito.spy;
++import static org.mockito.Mockito.times;
++import static org.mockito.Mockito.verify;
++import static org.mockito.Mockito.verifyZeroInteractions;
++import static org.mockito.Mockito.when;
+ 
+ @WithSpring
+ @ExtendWith(PollutionPreventionExtension.class)
+@@ -679,7 +716,10 @@ void whenSettingANegativeValueUserMaxCount_ScimUsersEndpointShouldThrowAnExcepti
+ 
+     @Test
+     void invalidFilterExpression() {
+-        assertThrowsWithMessageThat(ScimException.class, () -> scimUserEndpoints.findUsers("id", "userName qq 'd'", null, "ascending", 1, 100), containsString("Invalid filter"));
++        assertThrowsWithMessageThat(
++                ScimException.class,
++                () -> scimUserEndpoints.findUsers("id", "<svg onload=alert(document.domain)>", null, "ascending", 1, 100),
++                is("Invalid filter expression: [&lt;svg onload=alert(document.domain)&gt;]"));
+     }
+ 
+     @Test
+diff --git a/server/src/test/java/org/cloudfoundry/identity/uaa/scim/endpoints/UserIdConversionEndpointsTests.java b/server/src/test/java/org/cloudfoundry/identity/uaa/scim/endpoints/UserIdConversionEndpointsTests.java
+index 0db418fc2fa..79f9e6af6fc 100644
+--- a/server/src/test/java/org/cloudfoundry/identity/uaa/scim/endpoints/UserIdConversionEndpointsTests.java
++++ b/server/src/test/java/org/cloudfoundry/identity/uaa/scim/endpoints/UserIdConversionEndpointsTests.java
+@@ -13,6 +13,7 @@
+ 
+ package org.cloudfoundry.identity.uaa.scim.endpoints;
+ 
++import org.cloudfoundry.identity.uaa.impl.config.UaaConfiguration;
+ import org.cloudfoundry.identity.uaa.provider.IdentityProviderProvisioning;
+ import org.cloudfoundry.identity.uaa.resources.SearchResults;
+ import org.cloudfoundry.identity.uaa.scim.exception.ScimException;
+@@ -30,6 +31,7 @@
+ 
+ import static junit.framework.Assert.assertTrue;
+ import static org.hamcrest.Matchers.containsString;
++import static org.hamcrest.Matchers.is;
+ import static org.mockito.ArgumentMatchers.anyString;
+ import static org.mockito.Mockito.when;
+ 
+@@ -72,6 +74,13 @@ public void testHappyDay() {
+         endpoints.findUsers("userName eq \"marissa\"", "ascending", 0, 100, false);
+     }
+ 
++    @Test
++    public void testSanitizeExceptionInFilter() {
++        expected.expect(ScimException.class);
++        expected.expectMessage(is("Invalid filter '&lt;svg onload=alert(document.domain)&gt;'"));
++        endpoints.findUsers("<svg onload=alert(document.domain)>", "ascending", 0, 100, false);
++    }
++
+     @Test
+     public void testBadFieldInFilter() {
+         expected.expect(ScimException.class);

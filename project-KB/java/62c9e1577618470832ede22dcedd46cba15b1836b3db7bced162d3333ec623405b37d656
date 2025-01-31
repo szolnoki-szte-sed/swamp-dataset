@@ -1,0 +1,13 @@
+diff --git a/authz/client/src/main/java/org/keycloak/authorization/client/util/HttpMethod.java b/authz/client/src/main/java/org/keycloak/authorization/client/util/HttpMethod.java
+index 230b7f8c748c..b324ac9f8025 100644
+--- a/authz/client/src/main/java/org/keycloak/authorization/client/util/HttpMethod.java
++++ b/authz/client/src/main/java/org/keycloak/authorization/client/util/HttpMethod.java
+@@ -103,7 +103,7 @@ public R execute(HttpResponseProcessor<R> responseProcessor) {
+         } catch (HttpResponseException e) {
+             throw e;
+         } catch (Exception e) {
+-            throw new RuntimeException("Error executing http method [" + builder + "]. Response : " + String.valueOf(bytes), e);
++            throw new RuntimeException("Error executing http method [" + builder.getMethod() + "]. Response : " + String.valueOf(bytes), e);
+         }
+     }
+ 

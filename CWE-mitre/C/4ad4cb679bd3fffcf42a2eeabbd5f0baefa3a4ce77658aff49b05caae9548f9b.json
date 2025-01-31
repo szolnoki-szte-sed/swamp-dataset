@@ -1,0 +1,41 @@
+{
+    "original_source": {
+        "database(url)": "https://cwe.mitre.org/",
+        "software_system(CPE)": [
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:freebsd:freebsd:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:openbsd:openbsd:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:proftpd:proftpd:1.2.0:rc2:*:*:*:*:*:*"
+        ],
+        "fix_commit": "",
+        "version_end_excluding": {
+            "linux:linux_kernel": "2.6.13.3",
+            "freebsd:freebsd": "4.5",
+            "openbsd:openbsd": "3.4",
+            "proftpd:proftpd": "unknown"
+        },
+        "path": {
+            "file_path": ""
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2005-3119",
+            "CVE-2004-0427",
+            "CVE-2002-0574",
+            "CVE-2005-3181",
+            "CVE-2004-0222",
+            "CVE-2001-0136"
+        ],
+        "CWE": [
+            "CWE-401"
+        ]
+    }
+}

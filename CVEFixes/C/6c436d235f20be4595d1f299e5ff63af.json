@@ -1,0 +1,50 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:o:debian:debian_linux:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_desktop:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_workstation:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_server:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:redhat:enterprise_linux_hpc_node:7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.10:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.10.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.10.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.10.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.10.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.12.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/krb5/krb5/commit/524688ce87a15fc75f87efc8c039ba4c7d5c197b",
+        "version_end_excluding": {
+            "debian:debian_linux": "unknown",
+            "redhat:enterprise_linux_desktop": "unknown",
+            "redhat:enterprise_linux_workstation": "unknown",
+            "redhat:enterprise_linux_server": "unknown",
+            "redhat:enterprise_linux_hpc_node": "unknown",
+            "mit:kerberos_5": "unknown"
+        },
+        "path": {
+            "file_path": "src/lib/gssapi/spnego/spnego_mech.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-4344"
+        ],
+        "CWE": [
+            "CWE-476"
+        ]
+    }
+}

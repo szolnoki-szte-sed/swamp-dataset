@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:gitolite:gitolite:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/sitaramc/gitolite/commit/3dad4f8e3214d6ab5f71823019a624fa48b055a3",
+        "version_end_excluding": {
+            "gitolite:gitolite": "unknown"
+        },
+        "path": {
+            "file_path": "src/lib/Gitolite/Rc.pm"
+        }
+    },
+    "programming_language": "perl",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-4451"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

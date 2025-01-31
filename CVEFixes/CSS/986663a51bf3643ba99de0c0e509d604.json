@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:totaljs:total.js_cms:13.0.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/totaljs/cms/commit/2a26c4c6a61d3fda4527a761716ef7e1c5f7c970",
+        "version_end_excluding": {
+            "totaljs:total.js_cms": "unknown"
+        },
+        "path": {
+            "file_path": "cms.bundle"
+        }
+    },
+    "programming_language": "css",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-9381"
+        ],
+        "CWE": [
+            "CWE-863"
+        ]
+    }
+}

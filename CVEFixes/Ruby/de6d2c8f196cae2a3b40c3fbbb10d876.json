@@ -1,0 +1,30 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:rack-cors_project:rack-cors:*:*:*:*:*:ruby:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/cyu/rack-cors/commit/42ebe6caa8e85ffa9c8a171bda668ba1acc7a5e6",
+        "version_end_excluding": {
+            "rack-cors_project:rack-cors": "0.4.1",
+            "debian:debian_linux": "unknown"
+        },
+        "path": {
+            "file_path": "lib/rack/cors.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-11173"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

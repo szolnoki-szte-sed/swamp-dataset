@@ -1,0 +1,51 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:linuxcontainers:lxc:0.3.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.7.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.7.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.6.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.7.4.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.7.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.5.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.6.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.5.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.7.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.2.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.1.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.6.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.6.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.5.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.8.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.7.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.7.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.6.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.4.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.7.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:linuxcontainers:lxc:0.6.4:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/lxc/lxc/commit/f4d5cc8e1f39d132b61e110674528cac727ae0e2",
+        "version_end_excluding": {
+            "linuxcontainers:lxc": "unknown"
+        },
+        "path": {
+            "file_path": "templates/lxc-sshd.in"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-6441"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

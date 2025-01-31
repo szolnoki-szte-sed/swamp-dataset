@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:fribidi:pyfribidi:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/pediapress/pyfribidi/commit/d2860c655357975e7b32d84e6b45e98f0dcecd7a",
+        "version_end_excluding": {
+            "fribidi:pyfribidi": "unknown"
+        },
+        "path": {
+            "file_path": "MANIFEST.in"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-1176"
+        ],
+        "CWE": [
+            "CWE-119"
+        ]
+    }
+}

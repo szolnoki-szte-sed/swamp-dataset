@@ -1,0 +1,14 @@
+-
+-                            
+-                            If (Bus_transaction[14] == "1") 
+-                            
+-                            
+-                                Security_Identifier == "1"
+-                            
+-                            
+-                                Else
+-                            
+-                            
+-                                Security_Identifier == "0"
+-                            
+-                        

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:eclipse:che:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/eclipse/che/commit/a8ce4435e3ffe9985116999f8dfae1b883548acf",
+        "version_end_excluding": {
+            "eclipse:che": "unknown"
+        },
+        "path": {
+            "file_path": "assembly/assembly-wsmaster-war/src/main/java/org/eclipse/che/api/deploy/WsMasterServletModule.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Eclipse Public License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-17633"
+        ],
+        "CWE": [
+            "CWE-352"
+        ]
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jenkins:jenkins:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:jenkins:jenkins:*:*:*:*:lts:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jenkinsci/jenkins/commit/a814154695e23dc37542af7d40cacc129cf70722",
+        "version_end_excluding": {
+            "jenkins:jenkins": "2.32.2"
+        },
+        "path": {
+            "file_path": "pom.xml"
+        }
+    },
+    "programming_language": "html",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-2608"
+        ],
+        "CWE": [
+            "CWE-502"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:b2evolution:b2evolution:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/b2evolution/b2evolution/commit/261dbd5b294e707af766691e65a177a290314a6e",
+        "version_end_excluding": {
+            "b2evolution:b2evolution": "unknown"
+        },
+        "path": {
+            "file_path": "conf/_application.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2017-5494"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

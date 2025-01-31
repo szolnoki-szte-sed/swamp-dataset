@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:openmeetings:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/openmeetings/commit/6e5b1828f7813eedab08a31a46018a86bf715775",
+        "version_end_excluding": {
+            "apache:openmeetings": "unknown"
+        },
+        "path": {
+            "file_path": "openmeetings-install/src/main/java/org/apache/openmeetings/backup/BackupImport.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-0784"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

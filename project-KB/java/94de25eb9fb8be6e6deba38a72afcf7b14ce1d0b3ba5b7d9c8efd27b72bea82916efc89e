@@ -1,0 +1,12 @@
+diff --git a/broker-core/src/main/java/org/apache/qpid/server/transport/NonBlockingConnection.java b/broker-core/src/main/java/org/apache/qpid/server/transport/NonBlockingConnection.java
+index 48dcb37075..843e3d7618 100644
+--- a/broker-core/src/main/java/org/apache/qpid/server/transport/NonBlockingConnection.java
++++ b/broker-core/src/main/java/org/apache/qpid/server/transport/NonBlockingConnection.java
+@@ -542,6 +542,7 @@ protected long readFromNetwork() throws IOException
+         if (read == -1)
+         {
+             _closed.set(true);
++            _protocolEngine.notifyWork();
+         }
+ 
+         _partialRead = read != 0;

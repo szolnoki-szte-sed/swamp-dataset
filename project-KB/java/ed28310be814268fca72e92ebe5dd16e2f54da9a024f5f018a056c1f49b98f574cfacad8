@@ -1,0 +1,998 @@
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/GemFireCacheImpl.java b/geode-core/src/main/java/org/apache/geode/internal/cache/GemFireCacheImpl.java
+index ce0195e81f33..311a92c69535 100755
+--- a/geode-core/src/main/java/org/apache/geode/internal/cache/GemFireCacheImpl.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/GemFireCacheImpl.java
+@@ -265,6 +265,7 @@ public class GemFireCacheImpl implements InternalCache, InternalClientCache, Has
+   public static final boolean DEFAULT_COPY_ON_READ = false;
+ 
+   /**
++   * getcachefor
+    * The default amount of time to wait for a {@code netSearch} to complete
+    */
+   public static final int DEFAULT_SEARCH_TIMEOUT =
+@@ -921,7 +922,8 @@ private GemFireCacheImpl(boolean isClient, PoolFactory pf, InternalDistributedSy
+       this.resourceAdvisor = ResourceAdvisor.createResourceAdvisor(this);
+ 
+       // Initialize the advisor here, but wait to exchange profiles until cache is fully built
+-      this.jmxAdvisor = JmxManagerAdvisor.createJmxManagerAdvisor(new JmxManagerAdvisee(this));
++      this.jmxAdvisor = JmxManagerAdvisor
++          .createJmxManagerAdvisor(new JmxManagerAdvisee(getCacheForProcessingClientRequests()));
+ 
+       this.resourceManager = InternalResourceManager.createResourceManager(this);
+       this.serialNumber = DistributionAdvisor.createSerialNumber();
+@@ -5329,7 +5331,7 @@ private void throwIfClient() {
+       new InternalCacheForClientAccess(this);
+ 
+   @Override
+-  public InternalCache getCacheForProcessingClientRequests() {
++  public InternalCacheForClientAccess getCacheForProcessingClientRequests() {
+     return cacheForClients;
+   }
+ 
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCache.java b/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCache.java
+index 0f97fbfe7633..d44f7ca51773 100644
+--- a/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCache.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCache.java
+@@ -367,5 +367,5 @@ void invokeRegionEntrySynchronizationListenersAfterSynchronization(
+    * application visible regions. Any regions created internally
+    * by Geode will not be accessible from the returned cache.
+    */
+-  InternalCache getCacheForProcessingClientRequests();
++  InternalCacheForClientAccess getCacheForProcessingClientRequests();
+ }
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccess.java b/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccess.java
+index 0b5bc818a7b5..976d591525fc 100644
+--- a/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccess.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/InternalCacheForClientAccess.java
+@@ -138,14 +138,12 @@ public <K, V> Region<K, V> getRegion(String path) {
+   }
+ 
+   /**
+-   * Server-side code using an InternalCacheForClientAccess may need to
+-   * get an Internal Region not normally accesible and may use this method to
+-   * do so. The REST API, for instance, needs to get at a Query store
+-   * region that is not otherwise accessible through the getRegion methods.
++   * This method can be used to locate an internal region.
++   * It should not be invoked with a region name obtained
++   * from a client.
+    */
+   public <K, V> Region<K, V> getInternalRegion(String path) {
+-    Region<K, V> result = delegate.getRegion(path);
+-    return result;
++    return delegate.getRegion(path);
+   }
+ 
+   @Override
+@@ -228,6 +226,16 @@ public <K, V> Region<K, V> createVMRegion(String name, RegionAttributes<K, V> p_
+     return delegate.createVMRegion(name, p_attrs, internalRegionArgs);
+   }
+ 
++  /**
++   * This method allows server-side code to create an internal region. It should
++   * not be invoked with a region name obtained from a client.
++   */
++  public <K, V> Region<K, V> createInternalRegion(String name, RegionAttributes<K, V> p_attrs,
++      InternalRegionArguments internalRegionArgs)
++      throws RegionExistsException, TimeoutException, IOException, ClassNotFoundException {
++    return delegate.createVMRegion(name, p_attrs, internalRegionArgs);
++  }
++
+   @Override
+   public Cache getReconnectedCache() {
+     Cache reconnectedCache = delegate.getReconnectedCache();
+@@ -1201,7 +1209,7 @@ public void setPdxReadSerializedOverride(boolean pdxReadSerialized) {
+   }
+ 
+   @Override
+-  public InternalCache getCacheForProcessingClientRequests() {
++  public InternalCacheForClientAccess getCacheForProcessingClientRequests() {
+     return this;
+   }
+ }
+diff --git a/geode-core/src/main/java/org/apache/geode/internal/cache/xmlcache/CacheCreation.java b/geode-core/src/main/java/org/apache/geode/internal/cache/xmlcache/CacheCreation.java
+index 2ee61267edfa..9e9f9edb75cf 100755
+--- a/geode-core/src/main/java/org/apache/geode/internal/cache/xmlcache/CacheCreation.java
++++ b/geode-core/src/main/java/org/apache/geode/internal/cache/xmlcache/CacheCreation.java
+@@ -119,6 +119,7 @@
+ import org.apache.geode.internal.cache.GemFireCacheImpl;
+ import org.apache.geode.internal.cache.InitialImageOperation;
+ import org.apache.geode.internal.cache.InternalCache;
++import org.apache.geode.internal.cache.InternalCacheForClientAccess;
+ import org.apache.geode.internal.cache.InternalRegion;
+ import org.apache.geode.internal.cache.InternalRegionArguments;
+ import org.apache.geode.internal.cache.LocalRegion;
+@@ -2407,7 +2408,7 @@ public void registerPdxMetaData(Object instance) {
+   }
+ 
+   @Override
+-  public InternalCache getCacheForProcessingClientRequests() {
++  public InternalCacheForClientAccess getCacheForProcessingClientRequests() {
+     throw new UnsupportedOperationException("Should not be invoked");
+   }
+ }
+diff --git a/geode-core/src/main/java/org/apache/geode/management/ManagementService.java b/geode-core/src/main/java/org/apache/geode/management/ManagementService.java
+index eb2e80855cb0..d99961d45a42 100755
+--- a/geode-core/src/main/java/org/apache/geode/management/ManagementService.java
++++ b/geode-core/src/main/java/org/apache/geode/management/ManagementService.java
+@@ -38,7 +38,8 @@ public abstract class ManagementService {
+    * @param cache Cache for which to get the management service.
+    */
+   public static ManagementService getManagementService(Cache cache) {
+-    return BaseManagementService.getManagementService((InternalCache) cache);
++    return BaseManagementService
++        .getManagementService(((InternalCache) cache).getCacheForProcessingClientRequests());
+   }
+ 
+   /**
+diff --git a/geode-core/src/main/java/org/apache/geode/management/cli/GfshCommand.java b/geode-core/src/main/java/org/apache/geode/management/cli/GfshCommand.java
+index c3f06651daf7..bc5103b7b942 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/cli/GfshCommand.java
++++ b/geode-core/src/main/java/org/apache/geode/management/cli/GfshCommand.java
+@@ -76,7 +76,10 @@ public void authorize(ResourcePermission.Resource resource,
+   }
+ 
+   public Cache getCache() {
+-    return cache;
++    if (cache == null) {
++      return null;
++    }
++    return cache.getCacheForProcessingClientRequests();
+   }
+ 
+   public <T extends ManagementService> T getManagementService() {
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/BaseManagementService.java b/geode-core/src/main/java/org/apache/geode/management/internal/BaseManagementService.java
+index bd9e584ccafa..4f9ebcf47cbc 100755
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/BaseManagementService.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/BaseManagementService.java
+@@ -24,6 +24,7 @@
+ import org.apache.geode.distributed.DistributedSystemDisconnectedException;
+ import org.apache.geode.distributed.internal.InternalDistributedSystem;
+ import org.apache.geode.internal.cache.InternalCache;
++import org.apache.geode.internal.cache.InternalCacheForClientAccess;
+ import org.apache.geode.internal.logging.LogService;
+ import org.apache.geode.management.ManagementService;
+ 
+@@ -69,7 +70,7 @@ protected BaseManagementService() {}
+    *
+    * @param cache defines the scope of resources to be managed
+    */
+-  public static ManagementService getManagementService(InternalCache cache) {
++  public static ManagementService getManagementService(InternalCacheForClientAccess cache) {
+     synchronized (instances) {
+       BaseManagementService service = instances.get(cache);
+       if (service == null) {
+@@ -83,7 +84,7 @@ public static ManagementService getManagementService(InternalCache cache) {
+ 
+   public static ManagementService getExistingManagementService(InternalCache cache) {
+     synchronized (instances) {
+-      BaseManagementService service = (BaseManagementService) instances.get(cache);
++      BaseManagementService service = instances.get(cache.getCacheForProcessingClientRequests());
+       return service;
+     }
+   }
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/FederatingManager.java b/geode-core/src/main/java/org/apache/geode/management/internal/FederatingManager.java
+index 8b231ad5dd9c..801dd6b1a3e0 100755
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/FederatingManager.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/FederatingManager.java
+@@ -357,8 +357,9 @@ public DistributedMember call() {
+         String monitoringRegionName = ManagementConstants.MONITORING_REGION + "_" + appender;
+         String notificationRegionName = ManagementConstants.NOTIFICATION_REGION + "_" + appender;
+ 
+-        if (cache.getRegion(monitoringRegionName) != null
+-            && cache.getRegion(notificationRegionName) != null) {
++
++        if (cache.getInternalRegion(monitoringRegionName) != null
++            && cache.getInternalRegion(notificationRegionName) != null) {
+           return member;
+         }
+ 
+@@ -415,7 +416,7 @@ public DistributedMember call() {
+                 return null;
+               }
+               proxyMonitoringRegion =
+-                  cache.createVMRegion(monitoringRegionName, monitoringRegionAttrs,
++                  cache.createInternalRegion(monitoringRegionName, monitoringRegionAttrs,
+                       internalRegionArguments);
+               proxyMonitoringRegionCreated = true;
+ 
+@@ -434,7 +435,7 @@ public DistributedMember call() {
+                 return null;
+               }
+               proxyNotificationRegion =
+-                  cache.createVMRegion(notificationRegionName, notifRegionAttrs,
++                  cache.createInternalRegion(notificationRegionName, notifRegionAttrs,
+                       internalRegionArguments);
+               proxyNotificationRegionCreated = true;
+             } catch (TimeoutException | RegionExistsException | IOException
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/JmxManagerAdvisee.java b/geode-core/src/main/java/org/apache/geode/management/internal/JmxManagerAdvisee.java
+index 7f250ef5e160..14a114911108 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/JmxManagerAdvisee.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/JmxManagerAdvisee.java
+@@ -24,7 +24,7 @@
+ import org.apache.geode.distributed.internal.DistributionManager;
+ import org.apache.geode.distributed.internal.InternalDistributedSystem;
+ import org.apache.geode.internal.admin.SSLConfig;
+-import org.apache.geode.internal.cache.InternalCache;
++import org.apache.geode.internal.cache.InternalCacheForClientAccess;
+ import org.apache.geode.internal.net.SSLConfigurationFactory;
+ import org.apache.geode.internal.net.SocketCreator;
+ import org.apache.geode.internal.security.SecurableCommunicationChannel;
+@@ -37,10 +37,10 @@
+ public class JmxManagerAdvisee implements DistributionAdvisee {
+ 
+   private final int serialNumber;
+-  private final InternalCache cache;
++  private final InternalCacheForClientAccess cache;
+   private JmxManagerProfile myMostRecentProfile;
+ 
+-  public JmxManagerAdvisee(InternalCache cache) {
++  public JmxManagerAdvisee(InternalCacheForClientAccess cache) {
+     this.serialNumber = DistributionAdvisor.createSerialNumber();
+     this.cache = cache;
+   }
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/JmxManagerLocator.java b/geode-core/src/main/java/org/apache/geode/management/internal/JmxManagerLocator.java
+index a0c0202d2546..f662e6d21908 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/JmxManagerLocator.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/JmxManagerLocator.java
+@@ -21,8 +21,6 @@
+ 
+ import org.apache.geode.CancelException;
+ import org.apache.geode.SystemFailure;
+-import org.apache.geode.cache.Cache;
+-import org.apache.geode.cache.CacheFactory;
+ import org.apache.geode.cache.GemFireCache;
+ import org.apache.geode.cache.execute.FunctionContext;
+ import org.apache.geode.cache.execute.FunctionService;
+@@ -32,6 +30,7 @@
+ import org.apache.geode.distributed.internal.tcpserver.TcpHandler;
+ import org.apache.geode.distributed.internal.tcpserver.TcpServer;
+ import org.apache.geode.internal.cache.InternalCache;
++import org.apache.geode.internal.cache.InternalCacheForClientAccess;
+ import org.apache.geode.internal.cache.execute.InternalFunction;
+ import org.apache.geode.internal.logging.LogService;
+ import org.apache.geode.management.AlreadyRunningException;
+@@ -41,10 +40,10 @@
+ public class JmxManagerLocator implements TcpHandler {
+   private static final Logger logger = LogService.getLogger();
+ 
+-  private InternalCache cache;
++  private InternalCacheForClientAccess cache;
+ 
+   public JmxManagerLocator(InternalCache internalCache) {
+-    this.cache = internalCache;
++    this.cache = internalCache.getCacheForProcessingClientRequests();
+   }
+ 
+   @Override
+@@ -71,7 +70,7 @@ public void shutDown() {
+   @Override
+   public void restarting(DistributedSystem ds, GemFireCache cache,
+       InternalConfigurationPersistenceService sharedConfig) {
+-    this.cache = (InternalCache) cache;
++    this.cache = ((InternalCache) cache).getCacheForProcessingClientRequests();
+   }
+ 
+   @Override
+@@ -203,7 +202,8 @@ public static class StartJmxManagerFunction implements InternalFunction {
+     @Override
+     public void execute(FunctionContext context) {
+       try {
+-        Cache cache = CacheFactory.getAnyInstance();
++        InternalCache cache =
++            ((InternalCache) context.getCache()).getCacheForProcessingClientRequests();
+         if (cache != null) {
+           ManagementService ms = ManagementService.getExistingManagementService(cache);
+           if (ms != null) {
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/LocalManager.java b/geode-core/src/main/java/org/apache/geode/management/internal/LocalManager.java
+index 95f656d2f256..c36479e4879a 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/LocalManager.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/LocalManager.java
+@@ -151,7 +151,7 @@ public CachePerfStats getCachePerfStats() {
+ 
+         try {
+           repo.setLocalMonitoringRegion(
+-              cache.createVMRegion(ManagementConstants.MONITORING_REGION + "_" + appender,
++              cache.createInternalRegion(ManagementConstants.MONITORING_REGION + "_" + appender,
+                   monitoringRegionAttrs, internalArgs));
+           monitoringRegionCreated = true;
+ 
+@@ -167,7 +167,7 @@ public CachePerfStats getCachePerfStats() {
+ 
+         try {
+           repo.setLocalNotificationRegion(
+-              cache.createVMRegion(ManagementConstants.NOTIFICATION_REGION + "_" + appender,
++              cache.createInternalRegion(ManagementConstants.NOTIFICATION_REGION + "_" + appender,
+                   notifRegionAttrs, internalArgs));
+           notifRegionCreated = true;
+         } catch (TimeoutException e) {
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/ManagementAgent.java b/geode-core/src/main/java/org/apache/geode/management/internal/ManagementAgent.java
+index 31737fed2bd5..ddd60a9556ba 100755
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/ManagementAgent.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/ManagementAgent.java
+@@ -55,6 +55,7 @@
+ import org.apache.geode.internal.GemFireVersion;
+ import org.apache.geode.internal.admin.SSLConfig;
+ import org.apache.geode.internal.cache.InternalCache;
++import org.apache.geode.internal.cache.InternalCacheForClientAccess;
+ import org.apache.geode.internal.logging.LogService;
+ import org.apache.geode.internal.net.SSLConfigurationFactory;
+ import org.apache.geode.internal.net.SocketCreator;
+@@ -142,6 +143,14 @@ private boolean isServerNode(InternalCache cache) {
+         && !cache.isClient());
+   }
+ 
++  public static InternalCacheForClientAccess getCache() {
++    InternalCache cache = (InternalCache) CacheFactory.getAnyInstance();
++    if (cache != null) {
++      return cache.getCacheForProcessingClientRequests();
++    }
++    return null;
++  }
++
+   public synchronized void startAgent(InternalCache cache) {
+     // Do not start Management REST service if developer REST service is already
+     // started.
+@@ -191,7 +200,7 @@ public synchronized void stopAgent() {
+ 
+   private void startHttpService(boolean isServer) {
+     final SystemManagementService managementService = (SystemManagementService) ManagementService
+-        .getManagementService(CacheFactory.getAnyInstance());
++        .getManagementService(getCache());
+ 
+     final ManagerMXBean managerBean = managementService.getManagerMXBean();
+ 
+@@ -305,7 +314,7 @@ private void startHttpService(boolean isServer) {
+ 
+           // set cache property for developer REST service running
+           if (isRestWebAppAdded) {
+-            InternalCache cache = (InternalCache) CacheFactory.getAnyInstance();
++            InternalCache cache = getCache();
+             cache.setRESTServiceRunning(true);
+ 
+             // create region to hold query information (queryId, queryString).
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/ManagementFunction.java b/geode-core/src/main/java/org/apache/geode/management/internal/ManagementFunction.java
+index aae18fcd936b..35a15532d15b 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/ManagementFunction.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/ManagementFunction.java
+@@ -24,7 +24,6 @@
+ import org.apache.logging.log4j.Logger;
+ 
+ import org.apache.geode.cache.execute.FunctionContext;
+-import org.apache.geode.internal.cache.GemFireCacheImpl;
+ import org.apache.geode.internal.cache.InternalCache;
+ import org.apache.geode.internal.cache.execute.InternalFunction;
+ import org.apache.geode.internal.logging.LogService;
+@@ -72,7 +71,7 @@ public void execute(FunctionContext fc) {
+ 
+     boolean executedSuccessfully = false;
+ 
+-    InternalCache cache = GemFireCacheImpl.getInstance();
++    InternalCache cache = ((InternalCache) fc.getCache()).getCacheForProcessingClientRequests();
+ 
+     Object[] functionArguments = (Object[]) fc.getArguments();
+ 
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/Manager.java b/geode-core/src/main/java/org/apache/geode/management/internal/Manager.java
+index 916cbd74552a..20ea590ec5a7 100755
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/Manager.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/Manager.java
+@@ -16,6 +16,7 @@
+ 
+ import org.apache.geode.distributed.internal.InternalDistributedSystem;
+ import org.apache.geode.internal.cache.InternalCache;
++import org.apache.geode.internal.cache.InternalCacheForClientAccess;
+ 
+ /**
+  * The Manager is a 7.0 JMX Agent which is hosted within a GemFire process. Only one instance is
+@@ -26,7 +27,7 @@
+  */
+ public abstract class Manager {
+ 
+-  protected InternalCache cache;
++  protected InternalCacheForClientAccess cache;
+ 
+   /**
+    * depicts whether this node is a Managing node or not
+@@ -51,7 +52,7 @@ public abstract class Manager {
+   public Manager(ManagementResourceRepo repo, InternalDistributedSystem system,
+       InternalCache cache) {
+     this.repo = repo;
+-    this.cache = cache;
++    this.cache = cache.getCacheForProcessingClientRequests();
+     this.system = system;
+   }
+ 
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/SystemManagementService.java b/geode-core/src/main/java/org/apache/geode/management/internal/SystemManagementService.java
+index 6e9028d65c6b..2f069d402050 100755
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/SystemManagementService.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/SystemManagementService.java
+@@ -33,6 +33,7 @@
+ import org.apache.geode.distributed.internal.ResourceEvent;
+ import org.apache.geode.distributed.internal.membership.InternalDistributedMember;
+ import org.apache.geode.internal.cache.InternalCache;
++import org.apache.geode.internal.cache.InternalCacheForClientAccess;
+ import org.apache.geode.internal.logging.LogService;
+ import org.apache.geode.management.AlreadyRunningException;
+ import org.apache.geode.management.AsyncEventQueueMXBean;
+@@ -94,7 +95,7 @@ public class SystemManagementService extends BaseManagementService {
+    */
+   private MBeanJMXAdapter jmxAdapter;
+ 
+-  private InternalCache cache;
++  private InternalCacheForClientAccess cache;
+ 
+   private FederatingManager federatingManager;
+ 
+@@ -116,11 +117,12 @@ public class SystemManagementService extends BaseManagementService {
+ 
+   private UniversalListenerContainer universalListenerContainer = new UniversalListenerContainer();
+ 
+-  public static BaseManagementService newSystemManagementService(InternalCache cache) {
++  public static BaseManagementService newSystemManagementService(
++      InternalCacheForClientAccess cache) {
+     return new SystemManagementService(cache).init();
+   }
+ 
+-  protected SystemManagementService(InternalCache cache) {
++  protected SystemManagementService(InternalCacheForClientAccess cache) {
+     this.cache = cache;
+     this.system = (InternalDistributedSystem) cache.getDistributedSystem();
+     // This is a safe check to ensure Management service does not start for a
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/beans/BeanUtilFuncs.java b/geode-core/src/main/java/org/apache/geode/management/internal/beans/BeanUtilFuncs.java
+index fab0bbd5398a..14d9005e4c5b 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/beans/BeanUtilFuncs.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/beans/BeanUtilFuncs.java
+@@ -26,11 +26,11 @@
+ import java.util.zip.GZIPInputStream;
+ import java.util.zip.GZIPOutputStream;
+ 
+-import org.apache.geode.cache.CacheFactory;
+ import org.apache.geode.distributed.DistributedMember;
+ import org.apache.geode.distributed.internal.DistributionConfig;
+ import org.apache.geode.internal.cache.InternalCache;
+ import org.apache.geode.management.GemFireProperties;
++import org.apache.geode.management.internal.ManagementAgent;
+ import org.apache.geode.management.internal.cli.CliUtil;
+ 
+ /**
+@@ -123,7 +123,7 @@ public static DistributedMember getDistributedMemberByNameOrId(String memberName
+     DistributedMember memberFound = null;
+ 
+     if (memberNameOrId != null) {
+-      InternalCache cache = (InternalCache) CacheFactory.getAnyInstance();
++      InternalCache cache = ManagementAgent.getCache();
+       Set<DistributedMember> memberSet = CliUtil.getAllMembers(cache);
+       for (DistributedMember member : memberSet) {
+         if (memberNameOrId.equals(member.getId()) || memberNameOrId.equals(member.getName())) {
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/beans/CacheServerBridge.java b/geode-core/src/main/java/org/apache/geode/management/internal/beans/CacheServerBridge.java
+index 36bc96ebaa97..89a36a19fd53 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/beans/CacheServerBridge.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/beans/CacheServerBridge.java
+@@ -24,7 +24,6 @@
+ 
+ import org.apache.logging.log4j.Logger;
+ 
+-import org.apache.geode.cache.CacheFactory;
+ import org.apache.geode.cache.Region;
+ import org.apache.geode.cache.query.CqClosedException;
+ import org.apache.geode.cache.query.CqException;
+@@ -405,8 +404,6 @@ public String toString() {
+   }
+ 
+   public Version getClientVersion(ClientConnInfo connInfo) {
+-    InternalCache cache = (InternalCache) CacheFactory.getAnyInstance();
+-
+     if (cache.getCacheServers().size() == 0) {
+       return null;
+     }
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/beans/QueryDataFunction.java b/geode-core/src/main/java/org/apache/geode/management/internal/beans/QueryDataFunction.java
+index a8a5bfcf9ec9..e265817e525c 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/beans/QueryDataFunction.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/beans/QueryDataFunction.java
+@@ -30,7 +30,6 @@
+ import org.apache.logging.log4j.Logger;
+ 
+ import org.apache.geode.SystemFailure;
+-import org.apache.geode.cache.CacheFactory;
+ import org.apache.geode.cache.DataPolicy;
+ import org.apache.geode.cache.Region;
+ import org.apache.geode.cache.execute.Function;
+@@ -57,6 +56,7 @@
+ import org.apache.geode.internal.logging.LogService;
+ import org.apache.geode.management.DistributedRegionMXBean;
+ import org.apache.geode.management.ManagementService;
++import org.apache.geode.management.internal.ManagementAgent;
+ import org.apache.geode.management.internal.ManagementConstants;
+ import org.apache.geode.management.internal.SystemManagementService;
+ import org.apache.geode.management.internal.cli.CliUtil;
+@@ -126,7 +126,8 @@ public String getId() {
+   private QueryDataFunctionResult selectWithType(final FunctionContext context, String queryString,
+       final boolean showMember, final String regionName, final int limit,
+       final int queryResultSetLimit, final int queryCollectionsDepth) throws Exception {
+-    InternalCache cache = getCache();
++    InternalCache cache =
++        ((InternalCache) context.getCache()).getCacheForProcessingClientRequests();
+     Function localQueryFunc = new LocalQueryFunction("LocalQueryFunction", regionName, showMember)
+         .setOptimizeForWrite(true);
+     queryString = applyLimitClause(queryString, limit, queryResultSetLimit);
+@@ -346,7 +347,7 @@ public static Object queryData(final String query, final String members, final i
+       }
+     }
+ 
+-    InternalCache cache = (InternalCache) CacheFactory.getAnyInstance();
++    InternalCache cache = ManagementAgent.getCache();
+     try {
+ 
+       SystemManagementService service =
+@@ -434,10 +435,6 @@ public static Object queryData(final String query, final String members, final i
+     }
+   }
+ 
+-  private InternalCache getCache() {
+-    return (InternalCache) CacheFactory.getAnyInstance();
+-  }
+-
+   private static class JsonisedErrorMessage {
+ 
+     private static String message = "message";
+@@ -525,7 +522,8 @@ public LocalQueryFunction setOptimizeForWrite(final boolean optimizeForWrite) {
+ 
+     @Override
+     public void execute(final FunctionContext context) {
+-      InternalCache cache = getCache();
++      InternalCache cache =
++          ((InternalCache) context.getCache()).getCacheForProcessingClientRequests();
+       QueryService queryService = cache.getQueryService();
+       String qstr = (String) context.getArguments();
+       Region r = cache.getRegion(regionName);
+@@ -545,10 +543,6 @@ public void execute(final FunctionContext context) {
+       }
+     }
+ 
+-    private InternalCache getCache() {
+-      return (InternalCache) CacheFactory.getAnyInstance();
+-    }
+-
+     @Override
+     public String getId() {
+       return this.id;
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/DataCommandFunction.java b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/DataCommandFunction.java
+index 8c8ca61ba6e1..3da2b6a85542 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/DataCommandFunction.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/DataCommandFunction.java
+@@ -103,7 +103,8 @@ public void setOptimizeForWrite(boolean optimizeForWrite) {
+   @Override
+   public void execute(FunctionContext functionContext) {
+     try {
+-      InternalCache cache = (InternalCache) functionContext.getCache();
++      InternalCache cache =
++          ((InternalCache) functionContext.getCache()).getCacheForProcessingClientRequests();
+       DataCommandRequest request = (DataCommandRequest) functionContext.getArguments();
+       if (logger.isDebugEnabled()) {
+         logger.debug("Executing function : \n{}\n on member {}", request,
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/DestroyIndexFunction.java b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/DestroyIndexFunction.java
+index 326569f5fef0..914a7ef1c85b 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/DestroyIndexFunction.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/DestroyIndexFunction.java
+@@ -23,6 +23,7 @@
+ import org.apache.geode.cache.execute.FunctionContext;
+ import org.apache.geode.cache.query.Index;
+ import org.apache.geode.cache.query.QueryService;
++import org.apache.geode.internal.cache.InternalCache;
+ import org.apache.geode.management.cli.CliFunction;
+ import org.apache.geode.management.internal.cli.i18n.CliStrings;
+ 
+@@ -36,7 +37,7 @@ public CliFunctionResult executeFunction(FunctionContext context) {
+ 
+     CliFunctionResult result;
+     try {
+-      Cache cache = context.getCache();
++      Cache cache = ((InternalCache) context.getCache()).getCacheForProcessingClientRequests();
+       memberId = cache.getDistributedSystem().getDistributedMember().getId();
+       QueryService queryService = cache.getQueryService();
+       String indexName = indexInfo.getName();
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/ExportDataFunction.java b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/ExportDataFunction.java
+index 97580838c1bf..093130a47ba5 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/ExportDataFunction.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/ExportDataFunction.java
+@@ -22,6 +22,7 @@
+ import org.apache.geode.cache.snapshot.RegionSnapshotService;
+ import org.apache.geode.cache.snapshot.SnapshotOptions;
+ import org.apache.geode.cache.snapshot.SnapshotOptions.SnapshotFormat;
++import org.apache.geode.internal.cache.InternalCache;
+ import org.apache.geode.internal.cache.execute.InternalFunction;
+ import org.apache.geode.internal.cache.snapshot.SnapshotOptionsImpl;
+ import org.apache.geode.management.internal.cli.i18n.CliStrings;
+@@ -46,7 +47,7 @@ public void execute(FunctionContext context) {
+     final boolean parallel = Boolean.parseBoolean(args[2]);
+ 
+     try {
+-      Cache cache = context.getCache();
++      Cache cache = ((InternalCache) context.getCache()).getCacheForProcessingClientRequests();
+       Region<?, ?> region = cache.getRegion(regionName);
+       String hostName = cache.getDistributedSystem().getDistributedMember().getHost();
+       if (region != null) {
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/ExportLogsFunction.java b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/ExportLogsFunction.java
+index 89c4010ae988..ceecbed3d141 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/ExportLogsFunction.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/ExportLogsFunction.java
+@@ -37,6 +37,7 @@
+ import org.apache.geode.cache.execute.FunctionContext;
+ import org.apache.geode.distributed.internal.DistributionConfig;
+ import org.apache.geode.internal.cache.InternalCache;
++import org.apache.geode.internal.cache.InternalCacheForClientAccess;
+ import org.apache.geode.internal.cache.InternalRegionArguments;
+ import org.apache.geode.internal.cache.execute.InternalFunction;
+ import org.apache.geode.internal.logging.LogService;
+@@ -121,7 +122,8 @@ public void execute(final FunctionContext context) {
+   public static Region createOrGetExistingExportLogsRegion(boolean isInitiatingMember,
+       InternalCache cache) throws IOException, ClassNotFoundException {
+ 
+-    Region exportLogsRegion = cache.getRegion(EXPORT_LOGS_REGION);
++    InternalCacheForClientAccess cacheForClientAccess = cache.getCacheForProcessingClientRequests();
++    Region exportLogsRegion = cacheForClientAccess.getInternalRegion(EXPORT_LOGS_REGION);
+     if (exportLogsRegion == null) {
+       AttributesFactory<String, Configuration> regionAttrsFactory = new AttributesFactory<>();
+       regionAttrsFactory.setDataPolicy(DataPolicy.EMPTY);
+@@ -133,14 +135,16 @@ public static Region createOrGetExistingExportLogsRegion(boolean isInitiatingMem
+       InternalRegionArguments internalArgs = new InternalRegionArguments();
+       internalArgs.setIsUsedForMetaRegion(true);
+       exportLogsRegion =
+-          cache.createVMRegion(EXPORT_LOGS_REGION, regionAttrsFactory.create(), internalArgs);
++          cacheForClientAccess.createInternalRegion(EXPORT_LOGS_REGION, regionAttrsFactory.create(),
++              internalArgs);
+     }
+ 
+     return exportLogsRegion;
+   }
+ 
+   public static void destroyExportLogsRegion(InternalCache cache) {
+-    Region exportLogsRegion = cache.getRegion(EXPORT_LOGS_REGION);
++    Region exportLogsRegion =
++        cache.getCacheForProcessingClientRequests().getInternalRegion(EXPORT_LOGS_REGION);
+     if (exportLogsRegion == null) {
+       return;
+     }
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/GetRegionDescriptionFunction.java b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/GetRegionDescriptionFunction.java
+index f483cc8ff691..2e449804341a 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/GetRegionDescriptionFunction.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/GetRegionDescriptionFunction.java
+@@ -18,6 +18,7 @@
+ import org.apache.geode.cache.Cache;
+ import org.apache.geode.cache.Region;
+ import org.apache.geode.cache.execute.FunctionContext;
++import org.apache.geode.internal.cache.InternalCache;
+ import org.apache.geode.internal.cache.execute.InternalFunction;
+ import org.apache.geode.management.internal.cli.domain.RegionDescriptionPerMember;
+ 
+@@ -30,7 +31,7 @@ public class GetRegionDescriptionFunction implements InternalFunction {
+   public void execute(FunctionContext context) {
+     String regionPath = (String) context.getArguments();
+     try {
+-      Cache cache = context.getCache();
++      Cache cache = ((InternalCache) context.getCache()).getCacheForProcessingClientRequests();
+       Region<?, ?> region = cache.getRegion(regionPath);
+ 
+       if (region != null) {
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/ImportDataFunction.java b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/ImportDataFunction.java
+index 1d0248db7a67..92dbd84bbb68 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/ImportDataFunction.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/ImportDataFunction.java
+@@ -22,6 +22,7 @@
+ import org.apache.geode.cache.snapshot.RegionSnapshotService;
+ import org.apache.geode.cache.snapshot.SnapshotOptions;
+ import org.apache.geode.cache.snapshot.SnapshotOptions.SnapshotFormat;
++import org.apache.geode.internal.cache.InternalCache;
+ import org.apache.geode.internal.cache.execute.InternalFunction;
+ import org.apache.geode.management.internal.cli.i18n.CliStrings;
+ 
+@@ -46,7 +47,8 @@ public void execute(FunctionContext context) {
+     final boolean parallel = (boolean) args[3];
+ 
+     try {
+-      final Cache cache = context.getCache();
++      final Cache cache =
++          ((InternalCache) context.getCache()).getCacheForProcessingClientRequests();
+       final Region<?, ?> region = cache.getRegion(regionName);
+       final String hostName = cache.getDistributedSystem().getDistributedMember().getHost();
+       if (region != null) {
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/RegionAlterFunction.java b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/RegionAlterFunction.java
+index cd2ff3effd32..fe531855594d 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/RegionAlterFunction.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/RegionAlterFunction.java
+@@ -32,6 +32,7 @@
+ import org.apache.geode.cache.execute.ResultSender;
+ import org.apache.geode.internal.ClassPathLoader;
+ import org.apache.geode.internal.cache.AbstractRegion;
++import org.apache.geode.internal.cache.InternalCache;
+ import org.apache.geode.internal.cache.PartitionedRegion;
+ import org.apache.geode.internal.cache.execute.InternalFunction;
+ import org.apache.geode.internal.cache.partitioned.PRLocallyDestroyedException;
+@@ -62,7 +63,7 @@ public boolean isHA() {
+   public void execute(FunctionContext context) {
+     ResultSender<Object> resultSender = context.getResultSender();
+ 
+-    Cache cache = context.getCache();
++    Cache cache = ((InternalCache) context.getCache()).getCacheForProcessingClientRequests();
+     String memberNameOrId =
+         CliUtil.getMemberNameOrId(cache.getDistributedSystem().getDistributedMember());
+ 
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/RegionCreateFunction.java b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/RegionCreateFunction.java
+index 91c164cd9290..26ca760bd788 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/RegionCreateFunction.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/RegionCreateFunction.java
+@@ -42,6 +42,7 @@
+ import org.apache.geode.cache.util.ObjectSizer;
+ import org.apache.geode.compression.Compressor;
+ import org.apache.geode.internal.ClassPathLoader;
++import org.apache.geode.internal.cache.InternalCache;
+ import org.apache.geode.internal.cache.execute.InternalFunction;
+ import org.apache.geode.internal.cache.xmlcache.CacheXml;
+ import org.apache.geode.internal.logging.LogService;
+@@ -75,7 +76,7 @@ public boolean isHA() {
+   public void execute(FunctionContext context) {
+     ResultSender<Object> resultSender = context.getResultSender();
+ 
+-    Cache cache = context.getCache();
++    Cache cache = ((InternalCache) context.getCache()).getCacheForProcessingClientRequests();
+     String memberNameOrId = context.getMemberName();
+ 
+     RegionFunctionArgs regionCreateArgs = (RegionFunctionArgs) context.getArguments();
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/RegionDestroyFunction.java b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/RegionDestroyFunction.java
+index b3d812a0b4da..029595acf3c3 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/RegionDestroyFunction.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/RegionDestroyFunction.java
+@@ -18,6 +18,7 @@
+ import org.apache.geode.cache.Region;
+ import org.apache.geode.cache.RegionDestroyedException;
+ import org.apache.geode.cache.execute.FunctionContext;
++import org.apache.geode.internal.cache.InternalCache;
+ import org.apache.geode.internal.cache.execute.InternalFunction;
+ import org.apache.geode.internal.cache.xmlcache.CacheXml;
+ import org.apache.geode.internal.logging.LogService;
+@@ -55,7 +56,7 @@ public void execute(FunctionContext context) {
+       }
+ 
+       regionPath = (String) arguments;
+-      Cache cache = context.getCache();
++      Cache cache = ((InternalCache) context.getCache()).getCacheForProcessingClientRequests();
+       Region<?, ?> region = cache.getRegion(regionPath);
+       // the region is already destroyed by another member
+       if (region == null) {
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/UserFunctionExecution.java b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/UserFunctionExecution.java
+index 06f16476315f..75035022f74e 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/UserFunctionExecution.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/cli/functions/UserFunctionExecution.java
+@@ -57,7 +57,7 @@ public class UserFunctionExecution implements InternalFunction<Object[]> {
+ 
+   @Override
+   public void execute(FunctionContext<Object[]> context) {
+-    Cache cache = context.getCache();
++    Cache cache = ((InternalCache) context.getCache()).getCacheForProcessingClientRequests();
+     DistributedMember member = cache.getDistributedSystem().getDistributedMember();
+ 
+     String[] functionArgs = null;
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/cli/modes/CommandModes.java b/geode-core/src/main/java/org/apache/geode/management/internal/cli/modes/CommandModes.java
+index c50fbf3e957b..1163f5fe2071 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/cli/modes/CommandModes.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/cli/modes/CommandModes.java
+@@ -21,16 +21,17 @@
+ import java.util.HashMap;
+ import java.util.Map;
+ 
++import org.apache.logging.log4j.Logger;
+ import org.json.JSONArray;
+ import org.json.JSONException;
+ import org.json.JSONObject;
+ 
+-import org.apache.geode.LogWriter;
+-import org.apache.geode.cache.Cache;
+-import org.apache.geode.cache.CacheFactory;
++import org.apache.geode.internal.logging.LogService;
+ 
+ public class CommandModes {
+ 
++  private static final Logger logger = LogService.getLogger();
++
+   public static final String DEFAULT_MODE = "default";
+ 
+   public Map<String, Map<String, CommandMode>> getModeMap() {
+@@ -86,9 +87,7 @@ private void parseModes(String str) throws JSONException {
+   }
+ 
+   private void logException(Exception e) {
+-    Cache cache = CacheFactory.getAnyInstance();
+-    LogWriter logger = cache.getLogger();
+-    logger.warning("Error parsing command mode descriptor", e);
++    logger.warn("Error parsing command mode descriptor", e);
+   }
+ 
+   private void addCommandMode(String commandName) throws JSONException, IOException {
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/configuration/domain/XmlEntity.java b/geode-core/src/main/java/org/apache/geode/management/internal/configuration/domain/XmlEntity.java
+index 9fa2e9dab47a..dc38aeb3f620 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/configuration/domain/XmlEntity.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/configuration/domain/XmlEntity.java
+@@ -90,7 +90,8 @@ public static XmlEntityBuilder builder() {
+   }
+ 
+   private static CacheProvider createDefaultCacheProvider() {
+-    return () -> (InternalCache) CacheFactory.getAnyInstance();
++    return () -> ((InternalCache) CacheFactory.getAnyInstance())
++        .getCacheForProcessingClientRequests();
+   }
+ 
+   /**
+diff --git a/geode-core/src/main/java/org/apache/geode/management/internal/configuration/functions/GetRegionNamesFunction.java b/geode-core/src/main/java/org/apache/geode/management/internal/configuration/functions/GetRegionNamesFunction.java
+index 4a123a5687bd..8bb3b3459b70 100644
+--- a/geode-core/src/main/java/org/apache/geode/management/internal/configuration/functions/GetRegionNamesFunction.java
++++ b/geode-core/src/main/java/org/apache/geode/management/internal/configuration/functions/GetRegionNamesFunction.java
+@@ -19,7 +19,6 @@
+ import java.util.Set;
+ 
+ import org.apache.geode.cache.execute.FunctionContext;
+-import org.apache.geode.internal.cache.GemFireCacheImpl;
+ import org.apache.geode.internal.cache.InternalCache;
+ import org.apache.geode.internal.cache.InternalRegion;
+ import org.apache.geode.internal.cache.execute.InternalFunction;
+@@ -27,7 +26,7 @@
+ public class GetRegionNamesFunction implements InternalFunction {
+   @Override
+   public void execute(FunctionContext context) {
+-    InternalCache cache = GemFireCacheImpl.getInstance();
++    InternalCache cache = (InternalCache) context.getCache();
+ 
+     Set<String> regions =
+         cache.getApplicationRegions().stream().map(InternalRegion::getName).collect(toSet());
+diff --git a/geode-core/src/test/java/org/apache/geode/management/internal/cli/commands/ExportLogsCommandTest.java b/geode-core/src/test/java/org/apache/geode/management/internal/cli/commands/ExportLogsCommandTest.java
+index ab21998b5530..5a340dc37d2e 100644
+--- a/geode-core/src/test/java/org/apache/geode/management/internal/cli/commands/ExportLogsCommandTest.java
++++ b/geode-core/src/test/java/org/apache/geode/management/internal/cli/commands/ExportLogsCommandTest.java
+@@ -24,6 +24,7 @@
+ import static org.mockito.Mockito.eq;
+ import static org.mockito.Mockito.mock;
+ import static org.mockito.Mockito.spy;
++import static org.mockito.Mockito.when;
+ 
+ import java.util.ArrayList;
+ import java.util.HashSet;
+@@ -40,6 +41,7 @@
+ import org.apache.geode.distributed.DistributedMember;
+ import org.apache.geode.distributed.internal.membership.InternalDistributedMember;
+ import org.apache.geode.internal.cache.InternalCache;
++import org.apache.geode.internal.cache.InternalCacheForClientAccess;
+ import org.apache.geode.management.ManagementException;
+ import org.apache.geode.management.cli.Result;
+ import org.apache.geode.management.internal.cli.functions.SizeExportLogsFunction;
+@@ -157,6 +159,8 @@ public void parseSizeLimit_sizeWith_T_shouldReturnMegabytesSize() {
+   @Test
+   public void testTotalEstimateSizeExceedsLocatorAvailableDisk() throws Exception {
+     final InternalCache mockCache = mock(InternalCache.class);
++    final InternalCacheForClientAccess mockCacheFilter = mock(InternalCacheForClientAccess.class);
++    when(mockCache.getCacheForProcessingClientRequests()).thenReturn(mockCacheFilter);
+     final ExportLogsCommand realCmd = new ExportLogsCommand();
+     ExportLogsCommand spyCmd = spy(realCmd);
+ 
+@@ -198,6 +202,8 @@ public void testTotalEstimateSizeExceedsLocatorAvailableDisk() throws Exception
+   @Test
+   public void testTotalEstimateSizeExceedsUserSpecifiedValue() throws Exception {
+     final InternalCache mockCache = mock(InternalCache.class);
++    final InternalCacheForClientAccess mockCacheFilter = mock(InternalCacheForClientAccess.class);
++    when(mockCache.getCacheForProcessingClientRequests()).thenReturn(mockCacheFilter);
+     final ExportLogsCommand realCmd = new ExportLogsCommand();
+     ExportLogsCommand spyCmd = spy(realCmd);
+ 
+@@ -239,6 +245,8 @@ public void testTotalEstimateSizeExceedsUserSpecifiedValue() throws Exception {
+   @Test
+   public void estimateLogSizeExceedsServerDisk() throws Exception {
+     final InternalCache mockCache = mock(InternalCache.class);
++    final InternalCacheForClientAccess mockCacheFilter = mock(InternalCacheForClientAccess.class);
++    when(mockCache.getCacheForProcessingClientRequests()).thenReturn(mockCacheFilter);
+     final ExportLogsCommand realCmd = new ExportLogsCommand();
+     ExportLogsCommand spyCmd = spy(realCmd);
+ 
+diff --git a/geode-core/src/test/java/org/apache/geode/management/internal/cli/functions/RegionDestroyFunctionTest.java b/geode-core/src/test/java/org/apache/geode/management/internal/cli/functions/RegionDestroyFunctionTest.java
+index 4bfcbd9ce59d..4eaea73c6bae 100644
+--- a/geode-core/src/test/java/org/apache/geode/management/internal/cli/functions/RegionDestroyFunctionTest.java
++++ b/geode-core/src/test/java/org/apache/geode/management/internal/cli/functions/RegionDestroyFunctionTest.java
+@@ -32,6 +32,7 @@
+ import org.apache.geode.cache.execute.FunctionContext;
+ import org.apache.geode.cache.execute.ResultSender;
+ import org.apache.geode.internal.cache.InternalCache;
++import org.apache.geode.internal.cache.InternalCacheForClientAccess;
+ 
+ 
+ public class RegionDestroyFunctionTest {
+@@ -39,6 +40,7 @@ public class RegionDestroyFunctionTest {
+   private RegionDestroyFunction function;
+   private FunctionContext context;
+   private InternalCache cache;
++  private InternalCacheForClientAccess filterCache;
+   private ResultSender resultSender;
+   private ArgumentCaptor<CliFunctionResult> resultCaptor;
+ 
+@@ -47,10 +49,12 @@ public void before() {
+     function = spy(RegionDestroyFunction.class);
+     context = mock(FunctionContext.class);
+     cache = mock(InternalCache.class);
++    filterCache = mock(InternalCacheForClientAccess.class);
+     resultSender = mock(ResultSender.class);
+     when(context.getCache()).thenReturn(cache);
+     when(context.getResultSender()).thenReturn(resultSender);
+     when(context.getArguments()).thenReturn("testRegion");
++    when(cache.getCacheForProcessingClientRequests()).thenReturn(filterCache);
+     resultCaptor = ArgumentCaptor.forClass(CliFunctionResult.class);
+   }
+ 
+@@ -67,7 +71,7 @@ public void functionContextIsWrong() throws Exception {
+   @Test
+   public void regionAlreadyDestroyed() throws Exception {
+     when(context.getFunctionId()).thenReturn(RegionDestroyFunction.class.getName());
+-    when(cache.getRegion(any())).thenReturn(null);
++    when(filterCache.getRegion(any())).thenReturn(null);
+     function.execute(context);
+ 
+     verify(resultSender).lastResult(resultCaptor.capture());
+@@ -82,7 +86,7 @@ public void regionAlreadyDestroyed() throws Exception {
+   public void regionAlreadyDestroyed_throwException() throws Exception {
+     when(context.getFunctionId()).thenReturn(RegionDestroyFunction.class.getName());
+     Region region = mock(Region.class);
+-    when(cache.getRegion(any())).thenReturn(region);
++    when(filterCache.getRegion(any())).thenReturn(region);
+     doThrow(mock(RegionDestroyedException.class)).when(region).destroyRegion();
+     function.execute(context);
+ 
+@@ -98,7 +102,7 @@ public void regionAlreadyDestroyed_throwException() throws Exception {
+   public void illegalStateExceptionWillNotThrowExceptionToCommand() throws Exception {
+     when(context.getFunctionId()).thenReturn(RegionDestroyFunction.class.getName());
+     Region region = mock(Region.class);
+-    when(cache.getRegion(any())).thenReturn(region);
++    when(filterCache.getRegion(any())).thenReturn(region);
+     doThrow(new IllegalStateException("message")).when(region).destroyRegion();
+ 
+     function.execute(context);
+diff --git a/geode-dunit/src/main/java/org/apache/geode/management/internal/security/GfshCommandsSecurityTestBase.java b/geode-dunit/src/main/java/org/apache/geode/management/internal/security/GfshCommandsSecurityTestBase.java
+index 17c38fa049dc..fb84691925da 100644
+--- a/geode-dunit/src/main/java/org/apache/geode/management/internal/security/GfshCommandsSecurityTestBase.java
++++ b/geode-dunit/src/main/java/org/apache/geode/management/internal/security/GfshCommandsSecurityTestBase.java
+@@ -44,7 +44,8 @@ public class GfshCommandsSecurityTestBase {
+   public static ServerStarterRule serverStarter =
+       new ServerStarterRule().withJMXManager().withHttpService()
+           .withSecurityManager(SimpleTestSecurityManager.class)
+-          .withRegion(RegionShortcut.REPLICATE_PERSISTENT, "persistentRegion");
++          .withRegion(RegionShortcut.REPLICATE_PERSISTENT, "persistentRegion")
++          .withEmbeddedLocator();
+ 
+   @Rule
+   public GfshCommandRule gfshConnection =
+@@ -166,6 +167,15 @@ private void runCommandsPermittedAndForbiddenBy(String permission) throws Except
+     }
+   }
+ 
++  @Test
++  @ConnectionConfiguration(user = "data,cluster", password = "data,cluster")
++  public void modifyInternalRegionSuperUser() {
++    CommandResult result =
++        gfshConnection.executeCommand("put --key=key1 --value=value1 --region=PdxTypes");
++    assertThat(result.getStatus()).isEqualTo(Result.Status.ERROR);
++    assertThat(result.getMessageFromContent()).contains("Unauthorized");
++  }
++
+   @Test
+   @ConnectionConfiguration(user = "data", password = "data")
+   public void testGetPostProcess() throws Exception {
+diff --git a/geode-web-api/src/main/java/org/apache/geode/rest/internal/web/controllers/CommonCrudController.java b/geode-web-api/src/main/java/org/apache/geode/rest/internal/web/controllers/CommonCrudController.java
+index 52737b3aacbf..6ffd726b87d5 100644
+--- a/geode-web-api/src/main/java/org/apache/geode/rest/internal/web/controllers/CommonCrudController.java
++++ b/geode-web-api/src/main/java/org/apache/geode/rest/internal/web/controllers/CommonCrudController.java
+@@ -77,10 +77,8 @@ public ResponseEntity<?> regions() {
+     headers.setLocation(toUri());
+     final Set<Region<?, ?>> regions = new HashSet<>();
+     for (InternalRegion region : getCache().getApplicationRegions()) {
+-      if (region instanceof Region) {
+-        regions.add(region);
+-      }
+-    } ;
++      regions.add(region);
++    }
+     String listRegionsAsJson = JSONUtils.formulateJsonForListRegions(regions, "regions");
+     return new ResponseEntity<>(listRegionsAsJson, headers, HttpStatus.OK);
+   }

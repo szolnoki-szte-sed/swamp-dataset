@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/SAP/project-kb",
+        "software_system(CPE)": [
+            "cpe:2.3:a:apache:tika:1.9:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/apache/tika/commit/98672cdd92b6325ff78c763955a7c045b364095b",
+        "version_end_excluding": {
+            "apache:tika": "unknown"
+        },
+        "path": {
+            "file_path": "tika-server/src/main/java/org/apache/tika/server/resource/TikaResource.java"
+        }
+    },
+    "programming_language": "JAVA",
+    "licences": {
+        "database": "Apache",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2015-3271"
+        ],
+        "CWE": [
+            "CWE-200"
+        ]
+    }
+}

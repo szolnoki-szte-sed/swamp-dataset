@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:theforeman:foreman:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/theforeman/foreman/commit/0f35fe14acf0d0d3b55e9337bc5e2b9640ff2372",
+        "version_end_excluding": {
+            "theforeman:foreman": "unknown"
+        },
+        "path": {
+            "file_path": "app/helpers/form_helper.rb"
+        }
+    },
+    "programming_language": "ruby",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "GNU General Public License v3.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2016-6319"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

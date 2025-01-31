@@ -1,0 +1,36 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:facebook:hhvm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:4.24.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:4.25.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:4.26.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:4.27.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:4.28.0:*:*:*:*:*:*:*",
+            "cpe:2.3:a:facebook:hhvm:4.28.1:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/facebook/hhvm/commit/524d2e60cfe910406ec6109e4286d7edd545ab36",
+        "version_end_excluding": {
+            "facebook:hhvm": "unknown"
+        },
+        "path": {
+            "file_path": "hphp/runtime/ext/mbstring/ext_mbstring.cpp"
+        }
+    },
+    "programming_language": "cpp",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-11930"
+        ],
+        "CWE": [
+            "CWE-763"
+        ]
+    }
+}

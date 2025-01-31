@@ -1,0 +1,44 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phppgadmin:phppgadmin:3.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:3.5.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:4.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:3.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:5.0.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:3.4.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:3.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:4.1.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:3.5.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:3.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:4.2.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:4.2.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:3.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:2.2.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:phppgadmin:phppgadmin:5.0.0:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/phppgadmin/phppgadmin/commit/1df248203de055f97e092b50b1dd9643ccb73842",
+        "version_end_excluding": {
+            "phppgadmin:phppgadmin": "unknown"
+        },
+        "path": {
+            "file_path": "HISTORY"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2011-3598"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

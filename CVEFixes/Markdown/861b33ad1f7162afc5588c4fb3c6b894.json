@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:jenkins:jenkins:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/jenkinsci/jenkins/commit/36342d71e29e0620f803a7470ce96c61761648d8",
+        "version_end_excluding": {
+            "jenkins:jenkins": "unknown"
+        },
+        "path": {
+            "file_path": "core/src/main/resources/lib/hudson/project/config-upstream-pseudo-trigger.jelly"
+        }
+    },
+    "programming_language": "markdown",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2013-7330"
+        ],
+        "CWE": [
+            "CWE-264"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:troglobit:uftpd:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/troglobit/uftpd/commit/455b47d3756aed162d2d0ef7f40b549f3b5b30fe",
+        "version_end_excluding": {
+            "troglobit:uftpd": "unknown"
+        },
+        "path": {
+            "file_path": "src/common.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "ISC License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2020-20277"
+        ],
+        "CWE": [
+            "CWE-22"
+        ]
+    }
+}

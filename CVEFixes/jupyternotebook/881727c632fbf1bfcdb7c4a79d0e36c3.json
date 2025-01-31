@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:microweber:microweber:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/microweber/microweber/commit/867bdda1b4660b0795ad7f87ab5abe9e44b2b318",
+        "version_end_excluding": {
+            "microweber:microweber": "1.2.12"
+        },
+        "path": {
+            "file_path": "composer.json"
+        }
+    },
+    "programming_language": "jupyternotebook",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-0921"
+        ],
+        "CWE": [
+            "CWE-434"
+        ]
+    }
+}

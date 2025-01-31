@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:livehelperchat:live_helper_chat:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/livehelperchat/livehelperchat/commit/edef7a8387be718d0de2dfd1e722789afb0461bc",
+        "version_end_excluding": {
+            "livehelperchat:live_helper_chat": "3.99"
+        },
+        "path": {
+            "file_path": "lhc_web/design/defaulttheme/tpl/lhchat/lists/additional_column_body.tpl.php"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Apache License 2.0"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-1530"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

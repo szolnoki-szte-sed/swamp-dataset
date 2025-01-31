@@ -1,0 +1,76 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:xmlsoft:libxml2:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:fedoraproject:fedora:34:*:*:*:*:*:*:*",
+            "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-005:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2022-001:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2020-001:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-001:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-002:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-003:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-004:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-006:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-007:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2021-008:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:iphone_os:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:watchos:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:tvos:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:ipados:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:10.15.7:security_update_2022-003:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+            "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:snapdrive:-:*:*:*:*:unix:*:*",
+            "cpe:2.3:a:netapp:snapmanager:-:*:*:*:*:oracle:*:*",
+            "cpe:2.3:a:netapp:ontap_select_deploy_administration_utility:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:clustered_data_ontap:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:smi-s_provider:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:clustered_data_ontap_antivirus_connector:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:solidfire_\\&_hci_management_node:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:active_iq_unified_manager:-:*:*:*:*:vmware_vsphere:*:*",
+            "cpe:2.3:a:netapp:manageability_software_development_kit:-:*:*:*:*:*:*:*",
+            "cpe:2.3:a:netapp:solidfire\\,_enterprise_sds_\\&_hci_storage_node:-:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/GNOME/libxml2/commit/652dd12a858989b14eed4e84e453059cd3ba340e",
+        "version_end_excluding": {
+            "xmlsoft:libxml2": "2.9.13",
+            "fedoraproject:fedora": "unknown",
+            "debian:debian_linux": "unknown",
+            "apple:macos": "11.6.6",
+            "apple:iphone_os": "15.5",
+            "apple:watchos": "8.6",
+            "apple:tvos": "15.5",
+            "apple:ipados": "15.5",
+            "netapp:snapdrive": "unknown",
+            "netapp:snapmanager": "unknown",
+            "netapp:ontap_select_deploy_administration_utility": "unknown",
+            "netapp:clustered_data_ontap": "unknown",
+            "netapp:smi-s_provider": "unknown",
+            "netapp:clustered_data_ontap_antivirus_connector": "unknown",
+            "netapp:solidfire_\\&_hci_management_node": "unknown",
+            "netapp:active_iq_unified_manager": "unknown",
+            "netapp:manageability_software_development_kit": "unknown",
+            "netapp:solidfire\\,_enterprise_sds_\\&_hci_storage_node": "unknown"
+        },
+        "path": {
+            "file_path": "result/XInclude/ns1.xml.rdr"
+        }
+    },
+    "programming_language": "batchfile",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-23308"
+        ],
+        "CWE": [
+            "CWE-416"
+        ]
+    }
+}

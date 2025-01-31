@@ -1,0 +1,37 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:mit:kerberos_5:1.11:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.3:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.4:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.11.5:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.12:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.12.1:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.12.2:*:*:*:*:*:*:*",
+            "cpe:2.3:a:mit:kerberos_5:1.13:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/krb5/krb5/commit/82dc33da50338ac84c7b4102dc6513d897d0506a",
+        "version_end_excluding": {
+            "mit:kerberos_5": "unknown"
+        },
+        "path": {
+            "file_path": "src/lib/gssapi/krb5/context_time.c"
+        }
+    },
+    "programming_language": "c",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Unknown"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2014-5352"
+        ],
+        "CWE": [
+            "NVD-CWE-Other"
+        ]
+    }
+}

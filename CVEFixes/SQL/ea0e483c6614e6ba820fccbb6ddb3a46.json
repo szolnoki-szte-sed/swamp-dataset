@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:phpvms:phpvms:2.1.934:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/nshahzad/phpVMS/commit/7303aa072061388eba06f0c5a701c688096ebccc",
+        "version_end_excluding": {
+            "phpvms:phpvms": "unknown"
+        },
+        "path": {
+            "file_path": "core/version"
+        }
+    },
+    "programming_language": "sql",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "BSD 3-Clause \"New\" or \"Revised\" License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2012-6552"
+        ],
+        "CWE": [
+            "NVD-CWE-noinfo"
+        ]
+    }
+}

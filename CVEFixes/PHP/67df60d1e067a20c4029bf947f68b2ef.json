@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:yetiforce:yetiforce_customer_relationship_management:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/yetiforcecompany/yetiforcecrm/commit/a9ad9ee089b575855b9e5e202b4990a15811e8d2",
+        "version_end_excluding": {
+            "yetiforce:yetiforce_customer_relationship_management": "6.4.0"
+        },
+        "path": {
+            "file_path": "modules/Rss/models/Record.php"
+        }
+    },
+    "programming_language": "php",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "Other"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2022-2885"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "original_source": {
+        "database(url)": "https://github.com/secureIT-project/CVEfixes",
+        "software_system(CPE)": [
+            "cpe:2.3:a:dollarshaveclub:shave:*:*:*:*:*:*:*:*"
+        ],
+        "fix_commit": "https://github.com/dollarshaveclub/shave/commit/da7371b0531ba14eae48ef1bb1456a3de4cfa954",
+        "version_end_excluding": {
+            "dollarshaveclub:shave": "2.5.3"
+        },
+        "path": {
+            "file_path": "package.json"
+        }
+    },
+    "programming_language": "shell",
+    "licences": {
+        "database": "MIT",
+        "affected_repository": "MIT License"
+    },
+    "related_vulnerability_entry": {
+        "CVE": [
+            "CVE-2019-12313"
+        ],
+        "CWE": [
+            "CWE-79"
+        ]
+    }
+}

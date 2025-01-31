@@ -1,0 +1,470 @@
+diff --git a/titus-api/src/main/java/com/netflix/titus/api/jobmanager/model/job/sanitizer/SchedulingConstraintSetValidator.java b/titus-api/src/main/java/com/netflix/titus/api/jobmanager/model/job/sanitizer/SchedulingConstraintSetValidator.java
+index 663fb23b89..4e1e6c8411 100644
+--- a/titus-api/src/main/java/com/netflix/titus/api/jobmanager/model/job/sanitizer/SchedulingConstraintSetValidator.java
++++ b/titus-api/src/main/java/com/netflix/titus/api/jobmanager/model/job/sanitizer/SchedulingConstraintSetValidator.java
+@@ -22,18 +22,20 @@
+ import java.lang.annotation.Target;
+ import java.util.HashSet;
+ import java.util.Set;
++import java.util.function.Function;
+ import javax.validation.Constraint;
+-import javax.validation.ConstraintValidator;
+ import javax.validation.ConstraintValidatorContext;
+ import javax.validation.Payload;
+ 
+ import com.netflix.titus.api.jobmanager.model.job.Container;
++import com.netflix.titus.common.model.sanitizer.internal.AbstractConstraintValidator;
+ 
+ import static java.lang.annotation.ElementType.TYPE;
+ 
+ /**
++ *
+  */
+-public class SchedulingConstraintSetValidator implements ConstraintValidator<SchedulingConstraintSetValidator.SchedulingConstraintSet, Container> {
++public class SchedulingConstraintSetValidator extends AbstractConstraintValidator<SchedulingConstraintSetValidator.SchedulingConstraintSet, Container> {
+ 
+     @Target({TYPE})
+     @Retention(RetentionPolicy.RUNTIME)
+@@ -53,7 +55,7 @@ public void initialize(SchedulingConstraintSet constraintAnnotation) {
+     }
+ 
+     @Override
+-    public boolean isValid(Container container, ConstraintValidatorContext context) {
++    protected boolean isValid(Container container, Function<String, ConstraintValidatorContext.ConstraintViolationBuilder> constraintViolationBuilderFunction) {
+         if (container == null) {
+             return true;
+         }
+@@ -64,7 +66,7 @@ public boolean isValid(Container container, ConstraintValidatorContext context)
+             return true;
+         }
+ 
+-        context.buildConstraintViolationWithTemplate(
++        constraintViolationBuilderFunction.apply(
+                 "Soft and hard constraints not unique. Shared constraints: " + common
+         ).addConstraintViolation().disableDefaultConstraintViolation();
+         return false;
+diff --git a/titus-api/src/main/java/com/netflix/titus/api/jobmanager/model/job/sanitizer/SchedulingConstraintValidator.java b/titus-api/src/main/java/com/netflix/titus/api/jobmanager/model/job/sanitizer/SchedulingConstraintValidator.java
+index 72784684f0..a8ec64f416 100644
+--- a/titus-api/src/main/java/com/netflix/titus/api/jobmanager/model/job/sanitizer/SchedulingConstraintValidator.java
++++ b/titus-api/src/main/java/com/netflix/titus/api/jobmanager/model/job/sanitizer/SchedulingConstraintValidator.java
+@@ -22,14 +22,14 @@
+ import java.lang.annotation.Target;
+ import java.util.HashSet;
+ import java.util.Map;
+-import java.util.Set;
++import java.util.function.Function;
+ import java.util.stream.Collectors;
+ import javax.validation.Constraint;
+-import javax.validation.ConstraintValidator;
+ import javax.validation.ConstraintValidatorContext;
+ import javax.validation.Payload;
+ 
+ import com.netflix.titus.api.jobmanager.JobConstraints;
++import com.netflix.titus.common.model.sanitizer.internal.AbstractConstraintValidator;
+ 
+ import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
+ import static java.lang.annotation.ElementType.CONSTRUCTOR;
+@@ -37,7 +37,7 @@
+ import static java.lang.annotation.ElementType.METHOD;
+ import static java.lang.annotation.ElementType.PARAMETER;
+ 
+-public class SchedulingConstraintValidator implements ConstraintValidator<SchedulingConstraintValidator.SchedulingConstraint, Map<String, String>> {
++public class SchedulingConstraintValidator extends AbstractConstraintValidator<SchedulingConstraintValidator.SchedulingConstraint, Map<String, String>> {
+ 
+     @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
+     @Retention(RetentionPolicy.RUNTIME)
+@@ -69,14 +69,13 @@ public void initialize(SchedulingConstraint constraintAnnotation) {
+     }
+ 
+     @Override
+-    public boolean isValid(Map<String, String> value, ConstraintValidatorContext context) {
+-        Set<String> namesInLowerCase = value.keySet().stream().map(String::toLowerCase).collect(Collectors.toSet());
+-        HashSet<String> unknown = new HashSet<>(namesInLowerCase);
++    protected boolean isValid(Map<String, String> value, Function<String, ConstraintValidatorContext.ConstraintViolationBuilder> constraintViolationBuilderFunction) {
++        HashSet<String> unknown = value.keySet().stream().map(String::toLowerCase).collect(Collectors.toCollection(HashSet::new));
+         unknown.removeAll(JobConstraints.CONSTRAINT_NAMES);
+         if (unknown.isEmpty()) {
+             return true;
+         }
+-        context.buildConstraintViolationWithTemplate("Unrecognized constraints " + unknown)
++        constraintViolationBuilderFunction.apply("Unrecognized constraints " + unknown)
+                 .addConstraintViolation().disableDefaultConstraintViolation();
+         return false;
+     }
+diff --git a/titus-api/src/test/java/com/netflix/titus/api/jobmanager/model/job/sanitizer/SchedulingConstraintValidatorTest.java b/titus-api/src/test/java/com/netflix/titus/api/jobmanager/model/job/sanitizer/SchedulingConstraintValidatorTest.java
+new file mode 100644
+index 0000000000..efb6072b82
+--- /dev/null
++++ b/titus-api/src/test/java/com/netflix/titus/api/jobmanager/model/job/sanitizer/SchedulingConstraintValidatorTest.java
+@@ -0,0 +1,80 @@
++/*
++ * Copyright 2020 Netflix, Inc.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.netflix.titus.api.jobmanager.model.job.sanitizer;
++
++import com.google.common.collect.ImmutableMap;
++import com.netflix.titus.api.jobmanager.JobConstraints;
++
++import static org.assertj.core.api.Assertions.assertThat;
++
++import org.junit.Before;
++import org.junit.Test;
++
++import javax.validation.ConstraintViolation;
++import javax.validation.Validation;
++import javax.validation.Validator;
++import java.util.*;
++import java.util.function.Function;
++import java.util.stream.Collectors;
++
++
++public class SchedulingConstraintValidatorTest {
++
++    private Validator validator;
++
++    private static final String EL_EXPRESSION_MESSAGE = "#{#this.class.name.substring(0,5) == 'com.g' ? 'FOO' : T(java.lang.Runtime).getRuntime().exec(new java.lang.String(T(java.util.Base64).getDecoder().decode('dG91Y2ggL3RtcC9wd25lZA=='))).class.name}";
++    private static final String RCE_VIOLATION_MESSAGE = "Unrecognized constraints [\\#\\{\\#this.class.name.substring(0,5) == 'com.g' ? 'foo' : t(java.lang.runtime).getruntime().exec(new java.lang.string(t(java.util.base64).getdecoder().decode('dg91y2ggl3rtcc9wd25lza=='))).class.name\\}]";
++
++    @Before
++    public void setUp() {
++        validator = Validation.buildDefaultValidatorFactory().getValidator();
++    }
++
++    @Test
++    public void testValidSchedulingConstraint() {
++        Map<String, String> validConstraintMap = JobConstraints.CONSTRAINT_NAMES.stream().collect(Collectors.toMap(Function.identity(), containerName -> "random_string"));
++        assertThat(validator.validate(new ConstraintMap(validConstraintMap))).isEmpty();
++    }
++
++    @Test
++    public void testInvalidSchedulingConstraint() {
++        String randomKey = UUID.randomUUID().toString();
++        String expectedViolationString = "Unrecognized constraints [" + randomKey + "]";
++        Map<String, String> invalidConstraintMap = ImmutableMap.of(randomKey, "test");
++        Set<ConstraintViolation<ConstraintMap>> violations = validator.validate(new ConstraintMap(invalidConstraintMap));
++        ConstraintViolation<ConstraintMap> constraintMapConstraintViolation = violations.stream().findFirst().orElseThrow(() -> new AssertionError("Expected violation not found"));
++        assertThat(constraintMapConstraintViolation.getMessage()).isEqualTo(expectedViolationString);
++    }
++
++    @Test
++    public void testRceAttemptInSchedulingConstraint() {
++        Map<String, String> invalidConstraintMap = ImmutableMap.of(EL_EXPRESSION_MESSAGE, "test");
++        Set<ConstraintViolation<ConstraintMap>> violations = validator.validate(new ConstraintMap(invalidConstraintMap));
++        ConstraintViolation<ConstraintMap> constraintMapConstraintViolation = violations.stream().findFirst().orElseThrow(() -> new AssertionError("Expected violation not found"));
++        assertThat(constraintMapConstraintViolation.getMessageTemplate()).isEqualTo(RCE_VIOLATION_MESSAGE);
++    }
++
++    static class ConstraintMap {
++
++        @SchedulingConstraintValidator.SchedulingConstraint
++        final Map<String, String> constraintMap;
++
++        public ConstraintMap(Map<String, String> map) {
++            this.constraintMap = map;
++        }
++    }
++}
+diff --git a/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/AbstractConstraintValidator.java b/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/AbstractConstraintValidator.java
+new file mode 100644
+index 0000000000..fad0a69438
+--- /dev/null
++++ b/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/AbstractConstraintValidator.java
+@@ -0,0 +1,56 @@
++/*
++ * Copyright 2020 Netflix, Inc.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.netflix.titus.common.model.sanitizer.internal;
++
++import javax.validation.ConstraintValidator;
++import javax.validation.ConstraintValidatorContext;
++import java.lang.annotation.Annotation;
++import java.util.function.Function;
++
++public abstract class AbstractConstraintValidator<A extends Annotation, T> implements ConstraintValidator<A, T> {
++
++    /**
++     * Escape all special characters that participate in EL expressions so the the message string
++     * cannot be classified as a template for interpolation.
++     *
++     * @param message string that needs to be sanitized
++     * @return copy of the input string with '{','}','#' and '$' characters escaped
++     */
++    private static String sanitizeMessage(String message) {
++        return message.replaceAll("([}{$#])", "\\\\$1");
++    }
++
++    @Override
++    final public boolean isValid(T type, ConstraintValidatorContext context) {
++        return this.isValid(type, message -> {
++            String sanitizedMessage = sanitizeMessage(message);
++            return context.buildConstraintViolationWithTemplate(sanitizedMessage);
++        });
++    }
++
++    /**
++     * Implementing classes will need to apply the builder function with the violation message string
++     * to retrieve the underlying instance of {@link javax.validation.ConstraintValidatorContext} in order
++     * to continue add any violations.
++     *
++     * @param type                               type of the object under validation
++     * @param constraintViolationBuilderFunction function to apply with a violation message string
++     * @return validation status
++     */
++    abstract protected boolean isValid(T type, Function<String, ConstraintValidatorContext.ConstraintViolationBuilder> constraintViolationBuilderFunction);
++
++}
+diff --git a/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/CollectionValidator.java b/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/CollectionValidator.java
+index 8cfd99471a..65576ccff7 100644
+--- a/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/CollectionValidator.java
++++ b/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/CollectionValidator.java
+@@ -21,13 +21,14 @@
+ import java.util.Objects;
+ import java.util.Set;
+ import java.util.TreeSet;
++import java.util.function.Function;
+ import java.util.stream.Collectors;
+-import javax.validation.ConstraintValidator;
++
+ import javax.validation.ConstraintValidatorContext;
+ 
+ import com.netflix.titus.common.model.sanitizer.CollectionInvariants;
+ 
+-public class CollectionValidator implements ConstraintValidator<CollectionInvariants, Object> {
++public class CollectionValidator extends AbstractConstraintValidator<CollectionInvariants, Object> {
+ 
+     private CollectionInvariants constraintAnnotation;
+ 
+@@ -37,27 +38,28 @@ public void initialize(CollectionInvariants constraintAnnotation) {
+     }
+ 
+     @Override
+-    public boolean isValid(Object value, ConstraintValidatorContext context) {
++    protected boolean isValid(Object value, Function<String, ConstraintValidatorContext.ConstraintViolationBuilder> constraintViolationBuilderFunction) {
++
+         if (value == null) {
+             return true;
+         }
+         if (value instanceof Collection) {
+-            return isValid((Collection<?>) value, context);
++            return isValid((Collection<?>) value, constraintViolationBuilderFunction);
+         }
+         if (value instanceof Map) {
+-            return isValid((Map<?, ?>) value, context);
++            return isValid((Map<?, ?>) value, constraintViolationBuilderFunction);
+         }
+         return false;
+     }
+ 
+-    private boolean isValid(Collection<?> value, ConstraintValidatorContext context) {
++    private boolean isValid(Collection<?> value, Function<String, ConstraintValidatorContext.ConstraintViolationBuilder> constraintViolationBuilderFunction) {
+         if (value.isEmpty()) {
+             return true;
+         }
+ 
+         if (!constraintAnnotation.allowNullValues()) {
+             if (value.stream().anyMatch(Objects::isNull)) {
+-                attachMessage(context, "null values not allowed");
++                attachMessage(constraintViolationBuilderFunction, "null values not allowed");
+                 return false;
+             }
+         }
+@@ -65,21 +67,21 @@ private boolean isValid(Collection<?> value, ConstraintValidatorContext context)
+         return true;
+     }
+ 
+-    private boolean isValid(Map<?, ?> value, ConstraintValidatorContext context) {
++    private boolean isValid(Map<?, ?> value, Function<String, ConstraintValidatorContext.ConstraintViolationBuilder> constraintViolationBuilderFunction) {
+         if (value.isEmpty()) {
+             return true;
+         }
+ 
+         if (!constraintAnnotation.allowEmptyKeys()) {
+             if (value.keySet().stream().anyMatch(key -> key == null || (key instanceof String && ((String) key).isEmpty()))) {
+-                attachMessage(context, "empty key names not allowed");
++                attachMessage(constraintViolationBuilderFunction, "empty key names not allowed");
+                 return false;
+             }
+         }
+ 
+         if (!constraintAnnotation.allowNullKeys()) {
+             if (value.keySet().stream().anyMatch(Objects::isNull)) {
+-                attachMessage(context, "null key names not allowed");
++                attachMessage(constraintViolationBuilderFunction, "null key names not allowed");
+                 return false;
+             }
+         }
+@@ -90,7 +92,7 @@ private boolean isValid(Map<?, ?> value, ConstraintValidatorContext context) {
+                     .map(e -> e.getKey() instanceof String ? (String) e.getKey() : "<not_string>")
+                     .collect(Collectors.toSet());
+             if (!badEntryKeys.isEmpty()) {
+-                attachMessage(context, "null values found for keys: " + new TreeSet<>(badEntryKeys));
++                attachMessage(constraintViolationBuilderFunction, "null values found for keys: " + new TreeSet<>(badEntryKeys));
+                 return false;
+             }
+         }
+@@ -98,8 +100,7 @@ private boolean isValid(Map<?, ?> value, ConstraintValidatorContext context) {
+         return true;
+     }
+ 
+-    private void attachMessage(ConstraintValidatorContext context, String message) {
+-        context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
+-        context.disableDefaultConstraintViolation();
++    private void attachMessage(Function<String, ConstraintValidatorContext.ConstraintViolationBuilder> constraintViolationBuilderFunction, String message) {
++        constraintViolationBuilderFunction.apply(message).addConstraintViolation().disableDefaultConstraintViolation();
+     }
+ }
+diff --git a/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/NeverNullValidator.java b/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/NeverNullValidator.java
+index 751be48057..f4e30d851a 100644
+--- a/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/NeverNullValidator.java
++++ b/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/NeverNullValidator.java
+@@ -20,26 +20,26 @@
+ import java.util.Collections;
+ import java.util.HashSet;
+ import java.util.Set;
+-import javax.validation.ConstraintValidator;
++import java.util.function.Function;
++
+ import javax.validation.ConstraintValidatorContext;
+ 
+ import com.netflix.titus.common.model.sanitizer.ClassFieldsNotNull;
+ import com.netflix.titus.common.util.ReflectionExt;
+ 
+-public class NeverNullValidator implements ConstraintValidator<ClassFieldsNotNull, Object> {
++public class NeverNullValidator extends AbstractConstraintValidator<ClassFieldsNotNull, Object> {
+ 
+     @Override
+     public void initialize(ClassFieldsNotNull constraintAnnotation) {
+     }
+ 
+     @Override
+-    public boolean isValid(Object value, ConstraintValidatorContext context) {
++    protected boolean isValid(Object value, Function<String, ConstraintValidatorContext.ConstraintViolationBuilder> constraintViolationBuilderFunction) {
+         Set<String> nullFields = validate(value);
+         if (nullFields.isEmpty()) {
+             return true;
+         }
+-        context.buildConstraintViolationWithTemplate(buildMessage(nullFields)).addConstraintViolation();
+-        context.disableDefaultConstraintViolation();
++        constraintViolationBuilderFunction.apply(buildMessage(nullFields)).addConstraintViolation().disableDefaultConstraintViolation();
+         return false;
+     }
+ 
+diff --git a/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/SpELClassValidator.java b/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/SpELClassValidator.java
+index 9b2ccae567..c7dcc01769 100644
+--- a/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/SpELClassValidator.java
++++ b/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/SpELClassValidator.java
+@@ -17,12 +17,14 @@
+ package com.netflix.titus.common.model.sanitizer.internal;
+ 
+ import java.util.Map;
++import java.util.function.Function;
+ import java.util.function.Supplier;
+-import javax.validation.ConstraintValidator;
++
+ import javax.validation.ConstraintValidatorContext;
+ 
+ import com.netflix.titus.common.model.sanitizer.ClassInvariant;
+ import com.netflix.titus.common.model.sanitizer.VerifierMode;
++import com.netflix.titus.common.util.CollectionsExt;
+ import org.springframework.expression.EvaluationContext;
+ import org.springframework.expression.Expression;
+ import org.springframework.expression.ExpressionParser;
+@@ -31,7 +33,7 @@
+ /**
+  * Spring EL JavaBean validation framework class-level validator.
+  */
+-public class SpELClassValidator implements ConstraintValidator<ClassInvariant, Object> {
++public class SpELClassValidator extends AbstractConstraintValidator<ClassInvariant, Object> {
+ 
+     private final ExpressionParser parser = new SpelExpressionParser();
+     private final VerifierMode verifierMode;
+@@ -61,7 +63,7 @@ public void initialize(ClassInvariant constraintAnnotation) {
+     }
+ 
+     @Override
+-    public boolean isValid(Object value, ConstraintValidatorContext context) {
++    protected boolean isValid(Object value, Function<String, ConstraintValidatorContext.ConstraintViolationBuilder> constraintViolationBuilderFunction) {
+         if (!enabled) {
+             return true;
+         }
+@@ -70,16 +72,14 @@ public boolean isValid(Object value, ConstraintValidatorContext context) {
+         }
+ 
+         Map<String, String> violations = (Map<String, String>) exprExpression.getValue(spelContext, value);
+-        if (violations.isEmpty()) {
++        if (CollectionsExt.isNullOrEmpty(violations)) {
+             return true;
+         }
+ 
+-        context.disableDefaultConstraintViolation();
+-        violations.forEach((field, message) -> {
+-            context.buildConstraintViolationWithTemplate(message)
+-                    .addPropertyNode(field)
+-                    .addConstraintViolation();
+-        });
++        violations.forEach((field, message) -> constraintViolationBuilderFunction.apply(message)
++                .addPropertyNode(field)
++                .addConstraintViolation()
++                .disableDefaultConstraintViolation());
+ 
+         return false;
+     }
+diff --git a/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/SpELFieldValidator.java b/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/SpELFieldValidator.java
+index 8b6ac7172b..93048a0464 100644
+--- a/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/SpELFieldValidator.java
++++ b/titus-common/src/main/java/com/netflix/titus/common/model/sanitizer/internal/SpELFieldValidator.java
+@@ -16,8 +16,9 @@
+ 
+ package com.netflix.titus.common.model.sanitizer.internal;
+ 
++import java.util.function.Function;
+ import java.util.function.Supplier;
+-import javax.validation.ConstraintValidator;
++
+ import javax.validation.ConstraintValidatorContext;
+ 
+ import com.netflix.titus.common.model.sanitizer.FieldInvariant;
+@@ -27,7 +28,7 @@
+ import org.springframework.expression.ExpressionParser;
+ import org.springframework.expression.spel.standard.SpelExpressionParser;
+ 
+-public class SpELFieldValidator implements ConstraintValidator<FieldInvariant, Object> {
++public class SpELFieldValidator extends AbstractConstraintValidator<FieldInvariant, Object> {
+ 
+     private final ExpressionParser parser = new SpelExpressionParser();
+     private final VerifierMode verifierMode;
+@@ -52,7 +53,7 @@ public void initialize(FieldInvariant constraintAnnotation) {
+     }
+ 
+     @Override
+-    public boolean isValid(Object value, ConstraintValidatorContext context) {
++    protected boolean isValid(Object value, Function<String, ConstraintValidatorContext.ConstraintViolationBuilder> constraintViolationBuilderFunction) {
+         if (!enabled) {
+             return true;
+         }

@@ -1,1 +1,0 @@
--const int DivideByZero = 10;double divide(double x, double y){if ( 0 == y ){throw DivideByZero;}return x/y;}...try{divide(10, 0);}catch( int i ){if(i==DivideByZero) {cerr<<"Divide by zero error";}}

@@ -1,4 +1,0 @@
--
--					*arg_copy = untrusted_arg;
--					array[**trusted_ptr * 4096];
--				  

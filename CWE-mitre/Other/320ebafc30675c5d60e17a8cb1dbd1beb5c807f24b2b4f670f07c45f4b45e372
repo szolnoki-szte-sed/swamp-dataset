@@ -1,1 +1,0 @@
--A security researcher found 86 S3 buckets that could be accessed without authentication (CWE-306) and stored data unencrypted (CWE-312). These buckets exposed over 1000 GB of data and 1.6 million files including physical addresses, phone numbers, tax documents, pictures of driver's license IDs, etc. [REF-1296] [REF-1295]

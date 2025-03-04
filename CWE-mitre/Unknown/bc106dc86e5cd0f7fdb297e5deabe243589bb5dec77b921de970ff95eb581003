@@ -1,2 +1,0 @@
--GET /cgi-bin/vulnerable.cgi HTTP/1.1Cookie: user=AdministratorCookie: loggedin=true
--                     [body of request]

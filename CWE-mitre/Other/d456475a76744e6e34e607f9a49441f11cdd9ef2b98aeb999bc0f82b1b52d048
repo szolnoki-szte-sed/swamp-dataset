@@ -1,1 +1,0 @@
--All microarchitectural registers in this chip can be accessed through the debug interface. As a result, even an untrusted debugger can access this data and retrieve sensitive manufacturing data.

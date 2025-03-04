@@ -1,8 +1,0 @@
--
--			BigRational::from_integer(BigInt::from(108))
--			
--			  - ((BigRational::from_integer(BigInt::from(815))
--			  - BigRational::from_integer(BigInt::from(1500)) / z)
--			  / y)
--			
--		      

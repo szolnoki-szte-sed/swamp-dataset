@@ -1,7 +1,0 @@
--
--						input logic [255:0] hmac_key_i,
--						input logic         hmac_patch_en,
--						... 
--						reg [255:0] hmac_key_reg;
--						...
--						

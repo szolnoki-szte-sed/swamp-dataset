@@ -1,1 +1,0 @@
--int myfunction() throw(std::exception) {if (0) throw out_of_range();throw length_error();}

@@ -1,9 +1,0 @@
--
--					    if (NEED_TO_SHIFT)
--					    {
--					    
--					      reg_bit -= bit_number_from_elsewhere;
--					    
--					    }
--					    return reg_bit;
--					  

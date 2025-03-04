@@ -1,1 +1,0 @@
--SELECT * FROM items WHERE owner = <userName> AND itemname = <itemName>;

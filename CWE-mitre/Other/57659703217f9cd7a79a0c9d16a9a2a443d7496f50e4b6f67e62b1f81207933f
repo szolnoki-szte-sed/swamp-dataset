@@ -1,9 +1,0 @@
--
--					  "nightly-key-signing-server":
--					  
--					  listenaddr     => "127.0.0.1",
--					  port           => "9100",
--					  code_tag       => "SIGNING_SERVER",
--					  
--					  }
--					

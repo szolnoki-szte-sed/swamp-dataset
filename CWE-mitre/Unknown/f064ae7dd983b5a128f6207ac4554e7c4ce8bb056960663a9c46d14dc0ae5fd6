@@ -1,1 +1,0 @@
--public void setID(int ID){synchronized(this){this.ID = ID;}}

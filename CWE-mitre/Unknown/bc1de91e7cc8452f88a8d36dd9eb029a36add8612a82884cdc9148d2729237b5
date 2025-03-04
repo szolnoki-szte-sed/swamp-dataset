@@ -1,4 +1,0 @@
--
--                     - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {if (!url) {return NO;}NSString *action = [url host];if([action isEqualToString: @"replaceFileText"]) {NSDictionary *dict = [self parseQueryStringExampleFunction:[url query]];
--                           //this function will write contents to a specified file
--                           FileObject *objectFile = [self writeToFile:[dict objectForKey: @"file"] withText:[dict objectForKey: @"text"]];}return YES;}

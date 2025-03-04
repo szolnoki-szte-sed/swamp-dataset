@@ -1,1 +1,0 @@
--public int computeAverageResponseTime (int totalTime, int numRequests) throws ArithmeticException {if (numRequests == 0) {System.out.println("Division by zero attempted!");throw ArithmeticException;}return totalTime / numRequests;}

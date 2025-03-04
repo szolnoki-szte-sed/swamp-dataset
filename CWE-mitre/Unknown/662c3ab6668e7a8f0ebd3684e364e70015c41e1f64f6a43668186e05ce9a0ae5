@@ -1,2 +1,0 @@
--javap -c ConnMngr.class22: ldc #36; //String jdbc:mysql://ixne.com/rxsql24: ldc #38; //String scott26: ldc #17; //String tiger
--                  

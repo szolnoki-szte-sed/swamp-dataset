@@ -1,8 +1,0 @@
--
--							void* cfg;
--							
--							cfg = get_config_state();
--							save_config_state(cfg);
--							
--							go_to_sleep();
--						

@@ -1,8 +1,0 @@
--
--                          input [15:0] Data_in,
--                          input Clk,
--                          input ip_resetn,
--                          input global_resetn,
--                          input write,
--                          output reg [15:0] Data_out
--						

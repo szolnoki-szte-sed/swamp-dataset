@@ -1,1 +1,0 @@
--try {doExchange();}catch (Exception e) {logger.error("doExchange failed", e);}

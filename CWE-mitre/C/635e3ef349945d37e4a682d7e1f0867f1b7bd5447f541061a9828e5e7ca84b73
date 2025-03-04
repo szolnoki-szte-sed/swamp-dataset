@@ -1,5 +1,0 @@
--
--	      ... // Do some real work here
--	      // Modify value of flg on done condition
--	      if (flg) { do_something_recursive (flg); }    // returns when flg changes to 0
--	    

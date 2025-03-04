@@ -63,3 +63,71 @@ CWE MITRE is the organization responsible for curating and maintaining the CWE l
 
 ### project-KB
 Project-KB provides a Java code snippet collection along with a database in CSV format. In this CSV file, we found commit information and CVE identifiers. Using this information, we collected the commits containing the vulnerable code snippets, and by using the [NVD API](https://nvd.nist.gov/developers/vulnerabilities) and [GitHub API](https://docs.github.com/en/rest), we gathered the additional information needed to build the knowledgebase.
+
+## Knowledgebase statistics
+
+| Programming Language | Number of items |
+|----------------------|----------------|
+| BATCHFILE | 4 |
+| C | 4181 |
+| COFFEESCRIPT | 18 |
+| CPP | 753 |
+| CSS | 82 |
+| C_SHARP | 122 |
+| ERLANG | 4 |
+| GO | 594 |
+| HASKELL | 8 |
+| HTML | 177 |
+| JAVA | 1059 |
+| JAVASCRIPT | 755 |
+| JSON | 526 |
+| JSP | 21 |
+| JUPYTERNOTEBOOK | 2 |
+| LUA | 13 |
+| MARKDOWN | 303 |
+| OBJECTIVE_C | 14 |
+| PERL | 29 |
+| PHP | 3120 |
+| POWERSHELL | 2 |
+| PYTHON | 1116 |
+| RUBY | 456 |
+| RUST | 139 |
+| SCALA | 23 |
+| SHELL | 34 |
+| SQL | 17 |
+| TYPESCRIPT | 375 |
+| UNKNOWN | 647 |
+| VERILOG | 2 |
+| X86_ASSEMBLY | 3 |
+| XML | 94 |
+| batchfile | 25 |
+| c | 455 |
+| c_sharp | 19 |
+| coffeescript | 39 |
+| cpp | 108 |
+| css | 13 |
+| erlang | 2 |
+| go | 47 |
+| haskell | 8 |
+| html | 81 |
+| java | 66 |
+| javascript | 225 |
+| jupyternotebook | 13 |
+| lua | 7 |
+| markdown | 85 |
+| matlab | 2 |
+| objective_c | 31 |
+| perl | 24 |
+| php | 521 |
+| powershell | 6 |
+| python | 94 |
+| r | 1 |
+| ruby | 100 |
+| rust | 8 |
+| scala | 24 |
+| shell | 75 |
+| sql | 56 |
+| tex | 4 |
+| typescript | 59 |
+| unknown | 23 |
+| **Total** | **16914** |
